@@ -19,7 +19,7 @@
             @yield('content')
         </main>
         <footer>
-
+            <x-footer />
         </footer>
     <body>
     </body>
