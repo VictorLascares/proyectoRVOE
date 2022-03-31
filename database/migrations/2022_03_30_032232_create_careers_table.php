@@ -14,7 +14,8 @@ return new class extends Migration
     public function up()
     {
         Schema::create('careers', function (Blueprint $table) {
-            $table->id();
+            $table->id('idCarrera');
+            $table->string('nombre')->nullable(false);
             $table->timestamps();
         });
     }

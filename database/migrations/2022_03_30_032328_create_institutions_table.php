@@ -14,7 +14,9 @@ return new class extends Migration
     public function up()
     {
         Schema::create('institutions', function (Blueprint $table) {
-            $table->id();
+            $table->id('idInstitucion');
+            $table->string('nombre')->nullable(false);
+            $table->string('director',60)->nullable();
             $table->timestamps();
         });
     }
