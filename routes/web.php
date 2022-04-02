@@ -1,7 +1,8 @@
 <?php
-
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\InstitutionController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -18,5 +19,7 @@ Route::get('/', function () {
 });
 
 
-
+//****************USER ROUTES*****************
+//SELECT USERS
+Route::get('users', [UserController::class,'index']);
 

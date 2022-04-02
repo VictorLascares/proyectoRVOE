@@ -21,9 +21,7 @@ class Requisition extends Model
         'duracion',
         'estado',
         'institucion_id',
-        'career_id',
-        'create_at',
-        'update_at'
+        'career_id'
     ];
 
     /**

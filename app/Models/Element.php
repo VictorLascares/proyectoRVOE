@@ -20,9 +20,7 @@ class Element extends Model
         'observacion',
         'noEvaluacion',
         'ponderacion',
-        'requisition_id',
-        'create_at',
-        'update_at'
+        'requisition_id'
     ];
 
     /**

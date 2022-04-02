@@ -47,14 +47,12 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $user = New User();
-
         $user->tipoUsuario = $request->tipoUsuario;
-        $user->nombres=$request->nombres;
-        $user->apellidos=$request->apellidos;
-        $user->telefono=$request->telefono;
-        $user->contrasenia=$request->contrasenia;
-        $user->correo=$request->correo;
-
+        $user->nombres = $request->nombres;
+        $user->apellidos = $request->apellidos;
+        $user->telefono = $request->telefono;
+        $user->contrasenia = $request->contrasenia;
+        $user->correo = $request->correo;
         $data = $user->save();
         if(!$data){
             return response()->json([
@@ -76,12 +74,12 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($user)
     {
-        $user = User::find($id);
-        if(isset($user)){
+        $data = User::find($user);
+        if(isset($data)){
             return response()->json([
-                'users'=>$user
+                'users'=>$data
             ]);
         }
         else{
@@ -109,14 +107,10 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request,$id)
+    public function update(Request $request,$user)
     {
-        $user = User::find($id);
-        $user->nombres = $request->nombres;
-        $user->apellidos=$request->apellidos;
-        $user->telefono=$request->telefono;
-        $user->correo=$request->correo;
-        $data = $user->save();
+        $data = User::find($user);
+        $data->update($request->all());
         if(!$data){
             return response()->json([
                 'status'=>400,
@@ -126,19 +120,27 @@ class UserController extends Controller
         else{
             return response()->json([
                 'status'=>200,
-                'message'=>'Data successfully saved'
+                'message'=>'Data successfully updated'
             ]);
         }
     }
 
-    public function updatePSW(Request $request, $id){
-        $user = User::find($id);
-        $user->contrasenia = $request->contrasenia;
-        $user->save();
-        if(isset($user)){
+    /**
+     * Update the password to User.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+
+    public function updatePSW(Request $request, $user){
+        $data = User::find($user);
+        $data->contrasenia = $request->contrasenia;
+        $data->save();
+        if(isset($data)){
             return response()->json([
                 'status'=>200,
-                'message'=>'Data successfully saved'
+                'message'=>'Data successfully updated'
             ]);
         }
         else{
@@ -155,11 +157,11 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($user)
     {
-        $user = User::find($id);
-        $user->delete();
-        if(!$user){
+        $data = User::find($user);
+        $data->delete();
+        if(!$data){
             return response()->json([
                 'status'=>400,
                 'error'=>"something went wrong"
@@ -168,7 +170,7 @@ class UserController extends Controller
         else{
             return response()->json([
                 'status'=>200,
-                'message'=>'Data successfully saved'
+                'message'=>'Data successfully destroyed'
             ]);
         }
     }

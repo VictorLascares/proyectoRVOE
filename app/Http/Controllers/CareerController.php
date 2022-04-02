@@ -46,7 +46,25 @@ class CareerController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $career = New Career();
+        
+        $career->nombre = $request->nombre;
+        $career->titulo = $request->titulo;
+        $career->institution_id = $request->institution_id;
+        $data = $career->save();
+
+        if(!$data){
+            return response()->json([
+                'status'=>400,
+                'error'=>"something went wrong"
+            ]);
+        }
+        else{
+            return response()->json([
+                'status'=>200,
+                'message'=>'Data successfully saved'
+            ]);
+        }
     }
 
     /**
@@ -55,9 +73,19 @@ class CareerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($career)
     {
-        //
+        $data= Career::find($career);
+        if(isset($data)){
+            return response()->json([
+                'careers'=>$data
+            ]);
+        }
+        else{
+            return response()->json([
+                'error'=>'Data not found'
+            ]);
+        }
     }
 
     /**
@@ -78,9 +106,22 @@ class CareerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $career)
     {
-        //
+        $data = Career::find($career);
+        $data->update($request->all());
+        if(!$data){
+            return response()->json([
+                'status'=>400,
+                'error'=>"something went wrong"
+            ]);
+        }
+        else{
+            return response()->json([
+                'status'=>200,
+                'message'=>'Data successfully updated'
+            ]);
+        }
     }
 
     /**
@@ -89,8 +130,21 @@ class CareerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($career)
     {
-        //
+        $data = Career::find($career);
+        $data->delete();
+        if(!$data){
+            return response()->json([
+                'status'=>400,
+                'error'=>"something went wrong"
+            ]);
+        }
+        else{
+            return response()->json([
+                'status'=>200,
+                'message'=>'Data successfully destroyed'
+            ]);
+        }
     }
 }

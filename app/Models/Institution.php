@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Institution extends Model
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasFactory;
     public $timestamps = false;
     /**
      * The attributes that are mass assignable.

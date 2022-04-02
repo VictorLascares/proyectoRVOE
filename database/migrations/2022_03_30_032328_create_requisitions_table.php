@@ -20,7 +20,6 @@ return new class extends Migration
             $table->string('modalidad')->nullable();
             $table->integer('duracion')->nullable();
             $table->enum('estado',['activo','latencia','revocado','inactivo','pendiente'])->nullable(false)->default('pendiente');
-            $table->foreignId('institution_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('career_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
         });

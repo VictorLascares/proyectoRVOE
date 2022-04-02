@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Institution;
 
 class InstitutionController extends Controller
 {
@@ -13,7 +14,17 @@ class InstitutionController extends Controller
      */
     public function index()
     {
-        //
+        $institutions = Institution::all();
+        if(isset($institutions)){
+            return response()->json([
+                'institutions'=>$institutions
+            ]);
+        }
+        else{
+            return response()->json([
+                'error'=>'Data not found'
+            ]);
+        }
     }
 
     /**
@@ -34,7 +45,22 @@ class InstitutionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $institution = New Institution();
+        $institution->nombre = $request->nombre;
+        $institution->director = $request->director;
+        $data = $institution->save();
+        if(!$data){
+            return response()->json([
+                'status'=>400,
+                'error'=>"something went wrong"
+            ]);
+        }
+        else{
+            return response()->json([
+                'status'=>200,
+                'message'=>'Data successfully saved'
+            ]);
+        }
     }
 
     /**
@@ -43,9 +69,19 @@ class InstitutionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($institution)
     {
-        //
+        $data = Institution::find($institution);
+        if(isset($data)){
+            return response()->json([
+                'careers'=>$data
+            ]);
+        }
+        else{
+            return response()->json([
+                'error'=>'Data not found'
+            ]);
+        }
     }
 
     /**
@@ -66,9 +102,23 @@ class InstitutionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $institution)
     {
-        //
+        $data = Institution::find($institution);
+        $data->update($request->all());
+        if(!$data){
+            return response()->json([
+                'status'=>400,
+                'error'=>"something went wrong"
+            ]);
+        }
+        else{
+            return response()->json([
+                'status'=>200,
+                'message'=>'Data successfully updated'
+            ]);
+        }
+
     }
 
     /**
@@ -77,8 +127,21 @@ class InstitutionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($institution)
     {
-        //
+        $data = Institution::find($institution);
+        $data->delete();
+        if(!$data){
+            return response()->json([
+                'status'=>400,
+                'error'=>"something went wrong"
+            ]);
+        }
+        else{
+            return response()->json([
+                'status'=>200,
+                'message'=>'Data successfully destroyed'
+            ]);
+        }
     }
 }
