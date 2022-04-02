@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Career extends Model
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasFactory;
     public $timestamps = false;
 
     /**

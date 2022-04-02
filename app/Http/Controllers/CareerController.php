@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Career;
 
 class CareerController extends Controller
 {
@@ -13,7 +14,18 @@ class CareerController extends Controller
      */
     public function index()
     {
-        //
+        $careers = Career::all();
+
+        if(isset($careers)){
+            return response()->json([
+                'careers'=>$careers
+            ]);
+        }
+        else{
+            return response()->json([
+                'error'=>'Data not found'
+            ]);
+        }
     }
 
     /**

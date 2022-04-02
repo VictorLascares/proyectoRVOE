@@ -48,6 +48,7 @@ class UserController extends Controller
     {
         $user = New User();
 
+        $user->tipoUsuario = $request->tipoUsuario;
         $user->nombres=$request->nombres;
         $user->apellidos=$request->apellidos;
         $user->telefono=$request->telefono;
@@ -77,7 +78,17 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        //
+        $user = User::find($id);
+        if(isset($user)){
+            return response()->json([
+                'users'=>$user
+            ]);
+        }
+        else{
+            return response()->json([
+                'error'=>'Data not found'
+            ]);
+        }
     }
 
     /**
@@ -98,9 +109,44 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request,$id)
     {
-        //
+        $user = User::find($id);
+        $user->nombres = $request->nombres;
+        $user->apellidos=$request->apellidos;
+        $user->telefono=$request->telefono;
+        $user->correo=$request->correo;
+        $data = $user->save();
+        if(!$data){
+            return response()->json([
+                'status'=>400,
+                'error'=>"something went wrong"
+            ]);
+        }
+        else{
+            return response()->json([
+                'status'=>200,
+                'message'=>'Data successfully saved'
+            ]);
+        }
+    }
+
+    public function updatePSW(Request $request, $id){
+        $user = User::find($id);
+        $user->contrasenia = $request->contrasenia;
+        $user->save();
+        if(isset($user)){
+            return response()->json([
+                'status'=>200,
+                'message'=>'Data successfully saved'
+            ]);
+        }
+        else{
+            return response()->json([
+                'status'=>400,
+                'error'=>"something went wrong"
+            ]);
+        }
     }
 
     /**
@@ -111,6 +157,19 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $user = User::find($id);
+        $user->delete();
+        if(!$user){
+            return response()->json([
+                'status'=>400,
+                'error'=>"something went wrong"
+            ]);
+        }
+        else{
+            return response()->json([
+                'status'=>200,
+                'message'=>'Data successfully saved'
+            ]);
+        }
     }
 }
