@@ -18,7 +18,7 @@ return new class extends Migration
             $table->enum('meta',['solicitud','ubicacion','renovacion'])->nullable(false);
             $table->string('rvoe')->nullable();
             $table->string('modalidad')->nullable();
-            $table->integer('duracion')->nullable();
+            $table->double('duracion',8,2)->nullable();
             $table->enum('estado',['activo','latencia','revocado','inactivo','pendiente'])->nullable(false)->default('pendiente');
             $table->foreignId('career_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();

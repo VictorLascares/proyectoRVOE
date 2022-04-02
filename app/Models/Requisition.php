@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Requisition extends Model
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasFactory;
 
     /**
      * The attributes that are mass assignable.
@@ -20,7 +20,6 @@ class Requisition extends Model
         'modalidad',
         'duracion',
         'estado',
-        'institucion_id',
         'career_id'
     ];
 

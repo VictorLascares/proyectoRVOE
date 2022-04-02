@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CareerController;
 use App\Http\Controllers\InstitutionController;
+use App\Http\Controllers\RequisitionController;
+use App\Http\Controllers\ElementController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -56,7 +58,14 @@ Route::resource('institution', InstitutionController::class);
 //CREATE INSTITUTION
 //Route::post('institution', [InstitutionController::class,'store']);
 
+//****************REQUISITION ROUTES*****************
+//CRUD REQUISITION
+Route::resource('requisition',RequisitionController::class);
 
+
+//****************ELEMENT ROUTES*****************
+//CRUD ELEMENT
+Route::resource('element',ElementController::class);
 
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {

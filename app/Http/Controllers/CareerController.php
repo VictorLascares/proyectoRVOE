@@ -78,7 +78,7 @@ class CareerController extends Controller
         $data= Career::find($career);
         if(isset($data)){
             return response()->json([
-                'careers'=>$data
+                'career'=>$data
             ]);
         }
         else{

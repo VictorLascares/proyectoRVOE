@@ -74,7 +74,7 @@ class InstitutionController extends Controller
         $data = Institution::find($institution);
         if(isset($data)){
             return response()->json([
-                'careers'=>$data
+                'institution'=>$data
             ]);
         }
         else{

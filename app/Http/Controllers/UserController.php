@@ -79,7 +79,7 @@ class UserController extends Controller
         $data = User::find($user);
         if(isset($data)){
             return response()->json([
-                'users'=>$data
+                'user'=>$data
             ]);
         }
         else{
