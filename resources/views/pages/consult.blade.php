@@ -4,6 +4,7 @@
     <x-navbar />
 @endsection
 @section('main-content')
+<x-login />
 <div class="container-sm p-4 my-5">
     <form class="row g-3">
         <div class="col-md-6">

@@ -23,3 +23,15 @@ Route::get('/login', function () {
 Route::get('/consult', function () {
     return view('pages.consult');
 });
+Route::get('/users', function () {
+    return view('users.index');
+});
+Route::get('/editUser', function () {
+    return view('users.edit');
+});
+Route::get('/showUser', function () {
+    return view('users.show');
+});
+Route::get('/createUser', function () {
+    return view('users.create');
+});
