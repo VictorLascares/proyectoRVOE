@@ -4,7 +4,7 @@
     <x-navbar />
 @endsection
 @section('main-content')
-    <x-carousel />
+    <x-login />
 @endsection
 @section('footer')
     <x-footer />

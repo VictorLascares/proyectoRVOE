@@ -5,7 +5,7 @@
             <a class="nav-link text-center" href="{{ url('/')}}">Inicio</a>
           </li>
           <li class="nav-item text-center">
-            <a class="nav-link" href="#">Consultar <span class="text-uppercase">rvoe</span></a>
+            <a class="nav-link" href="{{ url('consult')}}">Consultar <span class="text-uppercase">rvoe</span></a>
           </li>
         </ul>
     </div>
