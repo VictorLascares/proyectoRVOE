@@ -2,5 +2,5 @@
     <a href="#">
         <img src="{{ asset('img/Logo_gob_mx.svg') }}" alt="">
     </a>
-    <a class="text-decoration-none text-light" href="#">Iniciar Sesion</a>
+    <a class="text-decoration-none text-light" href="{{ url('login')}}">Iniciar Sesion</a>
 </div>
