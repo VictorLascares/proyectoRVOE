@@ -5,12 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class User extends Model
-{    
+class Career extends Model
+{
     use HasFactory;
     public $timestamps = false;
-
-    protected $table="users";
 
     /**
      * The attributes that are mass assignable.
@@ -18,12 +16,8 @@ class User extends Model
      * @var string[]
      */
     protected $fillable = [
-        'tipoUsuario',
-        'contrasenia',
-        'nombres',
-        'apellidos',
-        'correo',
-        'telefono'
+        'nombre',
+        'titulo'
     ];
 
     /**

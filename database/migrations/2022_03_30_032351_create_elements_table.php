@@ -14,14 +14,13 @@ return new class extends Migration
     public function up()
     {
         Schema::create('elements', function (Blueprint $table) {
-            $table->id('noFormato');
+            $table->id();
             $table->string('nombre')->nullable(false);
-            $table->boolean('valido')->nullable(false);
+            $table->boolean('valido')->default(true);
             $table->string('observacion')->nullable();
-            $table->integer('noEvaluacion')->nullable(false);
+            $table->integer('noEvaluacion')->default('1');
             $table->integer('ponderacion')->nullable();
-            $table->integer('noRequisicion');
-            $table->foreign('noRequisicion')->references('noRequisicion')->on('requisitions')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('requisition_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
         });
     }

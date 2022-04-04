@@ -1,7 +1,8 @@
 <?php
-
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\InstitutionController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -16,22 +17,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('pages.home');
 });
-Route::get('/login', function () {
-    return view('auth.login');
-});
 
-Route::get('/consult', function () {
-    return view('pages.consult');
-});
-Route::get('/users', function () {
-    return view('users.index');
-});
-Route::get('/editUser', function () {
-    return view('users.edit');
-});
-Route::get('/showUser', function () {
-    return view('users.show');
-});
-Route::get('/createUser', function () {
-    return view('users.create');
-});
+
+//****************USER ROUTES*****************
+//SELECT USERS
+Route::get('users', [UserController::class,'index']);
