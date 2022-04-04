@@ -15,17 +15,19 @@ class UserController extends Controller
     public function index()
     {
         $users = User::all();
+        $i = 1;
 
-        if(isset($users)){
-            return response()->json([
-                'users'=>$users
-            ]);
-        }
-        else{
-            return response()->json([
-                'error'=>'Data not found'
-            ]);
-        }
+        // if(isset($users)){
+        //     return response()->json([
+        //         'users'=>$users
+        //     ]);
+        // }
+        // else{
+        //     return response()->json([
+        //         'error'=>'Data not found'
+        //     ]);
+        // }
+        return view('users.index', compact('users', 'i'));
     }
 
     /**
@@ -35,7 +37,8 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        // 
+        return view('users.create');
     }
 
     /**
@@ -54,18 +57,19 @@ class UserController extends Controller
         $user->contrasenia = $request->contrasenia;
         $user->correo = $request->correo;
         $data = $user->save();
-        if(!$data){
-            return response()->json([
-                'status'=>400,
-                'error'=>"something went wrong"
-            ]);
-        }
-        else{
-            return response()->json([
-                'status'=>200,
-                'message'=>'Data successfully saved'
-            ]);
-        }
+        // if(!$data){
+        //     return response()->json([
+        //         'status'=>400,
+        //         'error'=>"something went wrong"
+        //     ]);
+        // }
+        // else{
+        //     return response()->json([
+        //         'status'=>200,
+        //         'message'=>'Data successfully saved'
+        //     ]);
+        // }
+        return redirect('/api/user');
     }
 
     /**

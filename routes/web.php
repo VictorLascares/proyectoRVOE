@@ -17,6 +17,9 @@ use App\Http\Controllers\InstitutionController;
 Route::get('/', function () {
     return view('pages.home');
 });
+Route::get('/consult', function () {
+    return view('pages.consult');
+});
 
 
 //****************USER ROUTES*****************
