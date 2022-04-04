@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
+
 
 class UserController extends Controller
 {
@@ -28,6 +30,37 @@ class UserController extends Controller
         }
     }
 
+    public function login(Request $request){
+        $user= User::where('correo', $request->correo)->first();
+        // print_r($data);
+            if (!$user || !Hash::check($request->contrasenia, $user->contrasenia)) {
+                return response([
+                    'message' => ['These credentials do not match our records.']
+                ], 404);
+            }
+        
+            $token = $user->createToken('my-app-token')->plainTextToken;
+        
+            $response = [
+                'user' => $user,
+                'token' => $token
+            ];
+        
+            return response($response, 201);
+    }
+
+
+    public function logout($user){
+        // Revoke a specific user token
+        // Revoke a specific token...
+        //$data = User::find($user);
+        //$data->tokens()->delete();
+        auth()->user()->tokens()->delete();
+        return[
+            'message' => 'Logeed out'
+        ];
+        
+    }
     /**
      * Show the form for creating a new resource.
      *
