@@ -17,19 +17,19 @@ class UserController extends Controller
     public function index()
     {
         $users = User::all();
-        
 
-        // if(isset($users)){
-        //     return response()->json([
-        //         'users'=>$users
-        //     ]);
-        // }
-        // else{
-        //     return response()->json([
-        //         'error'=>'Data not found'
-        //     ]);
-        // }
-        return view('users.index', compact('users'));
+        $token = csrf_token();
+        if(isset($users)){
+            return response()->json([
+                'users'=>$users,
+                'tocken'=>$token
+            ]);
+        }
+        else{
+            return response()->json([
+                'error'=>'Data not found'
+            ]);
+        }
     }
 
     public function login(Request $request){
