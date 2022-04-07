@@ -18,6 +18,7 @@ return new class extends Migration
             $table->enum('tipoUsuario',['planeacion','direccion','administrador'])->default('direccion');
             $table->string('contrasenia')->nullable(false);
             $table->string('nombres',40)->nullable(false);
+            $table->tinyInteger('activo')->default('0');
             $table->string('apellidos',40)->nullable(false);
             $table->string('correo',80)->nullable(false)->unique();
             $table->string('telefono',10)->nullable();

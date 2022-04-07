@@ -17,10 +17,11 @@ class UserController extends Controller
     public function index()
     {
         $users = User::all();
-
+        $token = csrf_token();
         if(isset($users)){
             return response()->json([
-                'users'=>$users
+                'users'=>$users,
+                'tocken'=>$token
             ]);
         }
         else{
