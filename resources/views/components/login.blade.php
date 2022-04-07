@@ -7,17 +7,18 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-          <form class="mb-2">
+        <form class="mb-2" method="POST" action="{{  url('api/login') }}">
+          @csrf
               <div class="form-floating mb-3">
-                  <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+                  <input type="email" class="form-control" id="floatingInput" name="correo" placeholder="name@example.com">
                   <label for="floatingInput">Correo Electrónico</label>
               </div>
               <div class="form-floating">
-                  <input type="password" class="form-control" id="floatingPassword" placeholder="Contraseña">
+                  <input type="password" class="form-control"  name="contrasenia" id="floatingPassword" placeholder="Contraseña">
                   <label for="floatingPassword">Contraseña</label>
               </div>
               <div class="d-grid mt-4">
-                  <button class="btn btn-success text-uppercase" type="button">Iniciar Sesión</button>
+                  <button class="btn btn-success text-uppercase" type="submit">Iniciar Sesión</button>
               </div>
           </form>
       </div>

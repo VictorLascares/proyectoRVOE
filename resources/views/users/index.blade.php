@@ -14,11 +14,16 @@
                         <h2 class="card-title text-center">
                             Administrar usuarios
                         </h2>
-                        <form action="{{ route('user.store')}}" method="POST" enctype="multipart/form-data">
+                        <form action="{{ route('user.create')}}" method="GET" enctype="multipart/form-data">
                             @csrf
-                            <a href="{{route('user.create')}}" class="btn btn-danger"><i class="bi bi-x-circle"></i> Eliminar<a/>
-                            <a href="{{route('user.create')}}" class="btn btn-success"><i class="bi bi-plus-circle"></i> Nuevo Usuario<a/>
+                            <input type="hidden" name="_token" id="csrf-token" value="{{  $token }}" />
+                            <button type="submit" class="btn btn-success"><i class="bi bi-plus-circle"></i> Nuevo Usuario<button/>
+                                @php
+                                    var_dump(Session::token());
+                                    var_dump($token);
+                                @endphp
                         </form>
+                        {{-- <a href="{{route('user.create')}}" class="btn btn-danger"><i class="bi bi-x-circle"></i> Eliminar<a/> --}}
                     </div>
                 </div>
                 <div class="card-body">
@@ -56,7 +61,7 @@
                                                         <a href="#" class="btn btn-primary">
                                                             <i class="bi bi-pencil-square"></i>
                                                         </a>
-                                                        <form action="{{ route('users.destroy',$user->id}}"></form>
+                                                        <form action=""></form>
                                                             @method('DELETE')
                                                             <button type="submit" class="btn btn-danger">
                                                                 <i class="bi bi-trash"></i>

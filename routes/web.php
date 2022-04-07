@@ -20,6 +20,9 @@ Route::get('/', function () {
 Route::get('/consult', function () {
     return view('pages.consult');
 });
+Route::get('/dashboard', function () {
+    return view('pages.dashboard');
+});
 
 
 //****************USER ROUTES*****************

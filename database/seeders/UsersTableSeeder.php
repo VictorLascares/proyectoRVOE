@@ -17,10 +17,10 @@ class UsersTableSeeder extends Seeder
     public function run()
     {
         DB::table('users')->insert([
-            'nombres' => 'John Doe',
-            'apellidos' => 'Coello Martínez',
-            'correo' => 'john@doe.com',
-            'contrasenia' => Hash::make('secretosdeto2')
+            'nombres' => 'Victor Manuel',
+            'apellidos' => 'Lascares Gallardo',
+            'correo' => 'victor@correo.com',
+            'contrasenia' => Hash::make('admin')
         ]);
     }
 }

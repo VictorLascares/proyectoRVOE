@@ -17,7 +17,7 @@ class UserController extends Controller
     public function index()
     {
         $users = User::all();
-        $i = 1;
+        
 
         // if(isset($users)){
         //     return response()->json([
@@ -29,7 +29,7 @@ class UserController extends Controller
         //         'error'=>'Data not found'
         //     ]);
         // }
-        return view('users.index', compact('users', 'i'));
+        return view('users.index', compact('users'));
     }
 
     public function login(Request $request){
@@ -42,13 +42,13 @@ class UserController extends Controller
             }
         
             $token = $user->createToken('my-app-token')->plainTextToken;
-        
-            $response = [
-                'user' => $user,
-                'token' => $token
-            ];
-        
-            return response($response, 201);
+            $users = User::all();
+            // $response = [
+            //     'user' => $user,
+            //     'token' => $token
+            // ];
+            // return redirect()->route('users')->with( ['token' => $token] );
+            return  view('users.index', compact('token', 'users'));
     }
 
 
@@ -102,7 +102,7 @@ class UserController extends Controller
         //         'message'=>'Data successfully saved'
         //     ]);
         // }
-        return redirect('/api/user');
+        return redirect('/users');
     }
 
     /**
