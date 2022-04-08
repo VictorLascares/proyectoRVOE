@@ -35,7 +35,7 @@ Route::get('/dashboard', function () {
 //All secure URL's
 //****************USER ROUTES*****************
 //CRUD USER
-Route::resource('user', UserController::class);
+Route::resource('users', UserController::class);
 //CREATE USER
 //Route::post('user', [UserController::class,'store']);
 //SELECT USERS
@@ -66,11 +66,15 @@ Route::resource('career', CareerController::class);
 //Route::put('career/{id}', [CareerController::class,'update']);
 //DELETE CAREER
 //Route::put('career/{id}', [CareerController::class,'update']);
+
+
 //****************INSTITUTION ROUTES*****************
 //CRUD INSTITUTION
 Route::resource('institution', InstitutionController::class);
 //CREATE INSTITUTION
 //Route::post('institution', [InstitutionController::class,'store']);
+
+
 //****************REQUISITION ROUTES*****************
 //CRUD REQUISITION
 Route::resource('requisition',RequisitionController::class);
@@ -79,11 +83,6 @@ Route::resource('requisition',RequisitionController::class);
 //CRUD ELEMENT
 Route::resource('element',ElementController::class);
     
-
-
-//****************USER ROUTES*****************
-//SELECT USERS
-Route::get('users', [UserController::class,'index']);
 
 
 //*************************AUTH USER**************************
@@ -102,3 +101,7 @@ Route::get('register', function(){
 });
 
 Route::post('/verificarcorreo',['App\Http\Controllers\RegisterController','verificarCorreo']);
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

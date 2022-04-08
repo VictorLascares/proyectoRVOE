@@ -1,5 +1,5 @@
 
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header text-center">
@@ -7,7 +7,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <form class="mb-2" method="POST" action="{{  url('api/login') }}">
+        <form class="mb-2" method="POST" action="{{  url('/validar') }}">
           @csrf
               <div class="form-floating mb-3">
                   <input type="email" class="form-control" id="floatingInput" name="correo" placeholder="name@example.com">

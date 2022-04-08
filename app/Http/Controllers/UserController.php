@@ -19,50 +19,20 @@ class UserController extends Controller
         $users = User::all();
 
         $token = csrf_token();
-        if(isset($users)){
-            return response()->json([
-                'users'=>$users,
-                'tocken'=>$token
-            ]);
-        }
-        else{
-            return response()->json([
-                'error'=>'Data not found'
-            ]);
-        }
+        // if(isset($users)){
+        //     return response()->json([
+        //         'users'=>$users,
+        //         'tocken'=>$token
+        //     ]);
+        // }
+        // else{
+        //     return response()->json([
+        //         'error'=>'Data not found'
+        //     ]);
+        // }
+        return view('usuarios.index', compact('users'));
     }
 
-    public function login(Request $request){
-        $user= User::where('correo', $request->correo)->first();
-        // print_r($data);
-            if (!$user || !Hash::check($request->contrasenia, $user->contrasenia)) {
-                return response([
-                    'message' => ['These credentials do not match our records.']
-                ], 404);
-            }
-        
-            $token = $user->createToken('my-app-token')->plainTextToken;
-            $users = User::all();
-            // $response = [
-            //     'user' => $user,
-            //     'token' => $token
-            // ];
-            // return redirect()->route('users')->with( ['token' => $token] );
-            return  view('users.index', compact('token', 'users'));
-    }
-
-
-    public function logout($user){
-        // Revoke a specific user token
-        // Revoke a specific token...
-        //$data = User::find($user);
-        //$data->tokens()->delete();
-        auth()->user()->tokens()->delete();
-        return[
-            'message' => 'Logeed out'
-        ];
-        
-    }
     /**
      * Show the form for creating a new resource.
      *
@@ -71,9 +41,8 @@ class UserController extends Controller
     public function create()
     {
         // 
-        return view('users.create');
+        return view('auth.register');
     }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -87,24 +56,12 @@ class UserController extends Controller
         $user->nombres = $request->nombres;
         $user->apellidos = $request->apellidos;
         $user->telefono = $request->telefono;
-        $user->contrasenia = $request->contrasenia;
+        $user->contrasenia =Hash::make($request->contrasenia);
         $user->correo = $request->correo;
-        $data = $user->save();
-        // if(!$data){
-        //     return response()->json([
-        //         'status'=>400,
-        //         'error'=>"something went wrong"
-        //     ]);
-        // }
-        // else{
-        //     return response()->json([
-        //         'status'=>200,
-        //         'message'=>'Data successfully saved'
-        //     ]);
-        // }
-        return redirect('/users');
+        $user->save();
+        return redirect('users');
     }
-
+    
     /**
      * Display the specified resource.
      *
@@ -134,7 +91,8 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user = User::find($id)->first();
+        return view('usuarios.edit', compact('user'));
     }
 
     /**
@@ -148,19 +106,53 @@ class UserController extends Controller
     {
         $data = User::find($user);
         $data->update($request->all());
-        if(!$data){
-            return response()->json([
-                'status'=>400,
-                'error'=>"something went wrong"
-            ]);
-        }
-        else{
-            return response()->json([
-                'status'=>200,
-                'message'=>'Data successfully updated'
-            ]);
-        }
+        return redirect('users');
     }
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($user)
+    {
+        $data = User::find($user);
+        $data->delete();
+        
+        return redirect('users');
+    }
+
+    public function login(Request $request){
+        $user= User::where('correo', $request->correo)->first();
+        // print_r($data);
+            if (!$user || !Hash::check($request->contrasenia, $user->contrasenia)) {
+                return response([
+                    'message' => ['These credentials do not match our records.']
+                ], 404);
+            }
+        
+            $token = $user->createToken('my-app-token')->plainTextToken;
+            $users = User::all();
+            // $response = [
+            //     'user' => $user,
+            //     'token' => $token
+            // ];
+            // return redirect()->route('users')->with( ['token' => $token] );
+            return  view('users.index', compact('token', 'users'));
+    }
+    public function logout($user){
+        // Revoke a specific user token
+        // Revoke a specific token...
+        //$data = User::find($user);
+        //$data->tokens()->delete();
+        auth()->user()->tokens()->delete();
+        return[
+            'message' => 'Logeed out'
+        ];
+        
+    }
+
+
 
     /**
      * Update the password to User.
@@ -188,27 +180,4 @@ class UserController extends Controller
         }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($user)
-    {
-        $data = User::find($user);
-        $data->delete();
-        if(!$data){
-            return response()->json([
-                'status'=>400,
-                'error'=>"something went wrong"
-            ]);
-        }
-        else{
-            return response()->json([
-                'status'=>200,
-                'message'=>'Data successfully destroyed'
-            ]);
-        }
-    }
 }

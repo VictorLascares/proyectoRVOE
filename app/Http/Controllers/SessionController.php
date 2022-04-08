@@ -5,11 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 
 class SessionController extends Controller
 {
     public function iniciar(){
-        return view('iniciar');
+        return view('pages.dashboard');
     }
 
     public function salir(){
@@ -21,7 +22,8 @@ class SessionController extends Controller
         $nombre = $request->input('correo');
         $usuario = User::where('correo',$nombre)->first();
         if(is_null($usuario)){
-            return redirect('/login')->with('error','Usuario no registrado');
+            $error = 'Usuario no registrado';
+            return view('pages.dashboard', compact('nombre'));
         }
         else{
             $password = $request->input('contrasenia');
@@ -30,8 +32,11 @@ class SessionController extends Controller
                 Auth::login($usuario);
                 return redirect('/iniciar');
             }else{
-                return redirect('/login')->with('error','Usuario o Password incorrecto.');
+                $error = 'Usuario o Password incorrecto.';
+                return redirect('/')->with(compact('error'));
             }
         }
     }
 }
+    
+// return view('iniciar',compact('contador','products','i','categories','compras','l','productsA','centregados','cnoentregados','gananciamercado'));
