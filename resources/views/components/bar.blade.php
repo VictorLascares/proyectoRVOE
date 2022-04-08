@@ -2,5 +2,7 @@
     <a href="{{ url('/')}}">
         <img src="{{ asset('img/Logo_gob_mx.svg') }}" alt="">
     </a>
-    <button type="button" data-bs-target="#loginModal" class="text-light" data-bs-toggle="modal" style="background-color:transparent">Iniciar Sesion</button>
+    @guest
+        <button type="button" data-bs-target="#loginModal" class="text-light" data-bs-toggle="modal" style="background-color:transparent">Iniciar Sesion</button>
+    @endguest
 </div>

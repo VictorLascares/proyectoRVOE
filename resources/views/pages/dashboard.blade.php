@@ -5,9 +5,6 @@
 @endsection
 @section('main-content')
     <div class="new-request">
-        @php
-            var_dump($nombre)
-        @endphp
         <img src="{{ asset('img/nuevo.svg')}}" alt="Icono de nuevo">
     </div>
 @endsection
