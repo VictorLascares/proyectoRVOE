@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 
@@ -19,17 +20,6 @@ class UserController extends Controller
         $users = User::all();
 
         $token = csrf_token();
-        // if(isset($users)){
-        //     return response()->json([
-        //         'users'=>$users,
-        //         'tocken'=>$token
-        //     ]);
-        // }
-        // else{
-        //     return response()->json([
-        //         'error'=>'Data not found'
-        //     ]);
-        // }
         return view('usuarios.index', compact('users'));
     }
 
@@ -133,23 +123,11 @@ class UserController extends Controller
         
             $token = $user->createToken('my-app-token')->plainTextToken;
             $users = User::all();
-            // $response = [
-            //     'user' => $user,
-            //     'token' => $token
-            // ];
-            // return redirect()->route('users')->with( ['token' => $token] );
             return  view('users.index', compact('token', 'users'));
     }
-    public function logout($user){
-        // Revoke a specific user token
-        // Revoke a specific token...
-        //$data = User::find($user);
-        //$data->tokens()->delete();
-        auth()->user()->tokens()->delete();
-        return[
-            'message' => 'Logeed out'
-        ];
-        
+    public function logout(){
+        Auth::logout();
+        return redirect(('/'));
     }
 
 

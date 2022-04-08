@@ -49,7 +49,7 @@ Route::resource('users', UserController::class);
 //UPDATE PASSWORD
 Route::put('user/update/{id}',[UserController::class,'updatePSW']);
 //LOGOUT USER
-Route::get('logout/{user}',[UserController::class,'logout']);
+Route::get('logout',[UserController::class,'logout']);
 //LOGIN USER
 Route::post('login',[SessionController::class,'login']);
 

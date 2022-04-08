@@ -57,10 +57,13 @@
                                                 <td>{{ $user->telefono }}</td>
                                                 <td>{{ $user->tipoUsuario}}</td>
                                                 <td class="d-flex justify-content-center gap-1">
-                                                    <a href="#" class="btn btn-warning">
+                                                    <button type="button" class="btn btn-success">
+                                                        <i class="bi bi-key"></i>
+                                                    </button>
+                                                    <a href="#" class="btn btn-success">
                                                         <i class="bi bi-eye"></i>
                                                     </a>
-                                                    <a href="#" class="btn btn-primary">
+                                                    <a href="{{ route('users.edit', $user->id) }}" class="btn btn-success">
                                                         <i class="bi bi-pencil-square"></i>
                                                     </a>
                                                     <form method="POST" action="{{ route('users.destroy', $user->id)}}">

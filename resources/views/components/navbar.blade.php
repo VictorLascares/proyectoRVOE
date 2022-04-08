@@ -8,14 +8,15 @@
             <a class="nav-link text-uppercase" href="{{ url('consult')}}">Consultar rvoe</a>
           </li>
           @auth
-            @if (Auth::user()->tipoUsuario = 'administrador')
+            @if (Auth::user()->tipoUsuario == 'administrador')
               <li class="nav-item text-center">
                 <a class="nav-link text-uppercase" href="{{ url('users')}}">Usuarios</a>
               </li>
+            @else
+              <li class="nav-item text-center">
+                <a class="nav-link text-uppercase" href="{{ url('dashboard')}}">Solicitudes</span></a>
+              </li>
             @endif
-            <li class="nav-item text-center">
-              <a class="nav-link text-uppercase" href="{{ url('dashboard')}}">Solicitudes</span></a>
-            </li>
           @endauth
         </ul>
     </div>
