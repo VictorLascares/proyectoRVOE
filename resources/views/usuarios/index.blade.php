@@ -14,14 +14,10 @@
                         <h2 class="card-title text-center">
                             Administrar usuarios
                         </h2>
-                        <form action="{{ route('user.create')}}" method="GET" enctype="multipart/form-data">
+                        <form action="{{ route('users.create')}}" method="GET" enctype="multipart/form-data">
                             @csrf
-                            <input type="hidden" name="_token" id="csrf-token" value="{{  $token }}" />
+                            <input type="hidden" name="_token" id="csrf-token" value="" />
                             <button type="submit" class="btn btn-success"><i class="bi bi-plus-circle"></i> Nuevo Usuario<button/>
-                                @php
-                                    var_dump(Session::token());
-                                    var_dump($token);
-                                @endphp
                         </form>
                         {{-- <a href="{{route('user.create')}}" class="btn btn-danger"><i class="bi bi-x-circle"></i> Eliminar<a/> --}}
                     </div>

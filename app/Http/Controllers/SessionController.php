@@ -10,7 +10,8 @@ use App\Models\User;
 class SessionController extends Controller
 {
     public function iniciar(){
-        return view('pages.dashboard');
+        $nombre = Auth::user()->nombres;
+        return view('pages.dashboard', compact('nombre'));
     }
 
     public function salir(){
@@ -30,7 +31,7 @@ class SessionController extends Controller
             $password_bd = $usuario->contrasenia;
             if(Hash::check($password, $password_bd)){
                 Auth::login($usuario);
-                return redirect('/iniciar');
+                return redirect('iniciar', );
             }else{
                 $error = 'Usuario o Password incorrecto.';
                 return redirect('/')->with(compact('error'));
@@ -38,5 +39,3 @@ class SessionController extends Controller
         }
     }
 }
-    
-// return view('iniciar',compact('contador','products','i','categories','compras','l','productsA','centregados','cnoentregados','gananciamercado'));
