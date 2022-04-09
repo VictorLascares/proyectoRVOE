@@ -18,6 +18,7 @@ class Institution extends Model
         'nombre',
         'director',        
     ];
+    
 
     /**
      * The attributes that should be hidden for serialization.

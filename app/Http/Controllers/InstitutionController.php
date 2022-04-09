@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Institution;
-
+use Illuminate\Support\Facades\DB;
 class InstitutionController extends Controller
 {
     /**
@@ -48,6 +48,13 @@ class InstitutionController extends Controller
         $institution = New Institution();
         $institution->nombre = $request->nombre;
         $institution->director = $request->director;
+        $logo = $request->file('logo');
+        if(!is_null($logo)){
+            $ruta_destino = public_path('img/logos/');
+            $nombre_de_archivo = time().'.'.$logo->getClientOriginalExtension();
+            $logo->move($ruta_destino,$nombre_de_archivo);
+            $institution->logo= $nombre_de_archivo;
+        }
         $data = $institution->save();
         if(!$data){
             return response()->json([
@@ -72,9 +79,17 @@ class InstitutionController extends Controller
     public function show($institution)
     {
         $data = Institution::find($institution);
+        $careers = DB::table('institutions')
+        ->join('careers','institutions.id','=','careers.institution_id')
+        ->select('careers.*')
+        ->where('institutions.id',$institution)
+        ->get();
+
+
         if(isset($data)){
             return response()->json([
-                'institution'=>$data
+                'institution'=>$data,
+                'career'=>$careers
             ]);
         }
         else{
@@ -105,7 +120,23 @@ class InstitutionController extends Controller
     public function update(Request $request, $institution)
     {
         $data = Institution::find($institution);
-        $data->update($request->all());
+        $logo = $request->file('logo');
+        $nombre_logo = $data->logo;
+        if(!is_null($logo)){
+            unlink(public_path('img/logos/'.$nombre_logo));
+            $ruta_destino = public_path('img/logos/');
+            $nombre_de_archivo = time().'.'.$logo->getClientOriginalExtension();
+            $logo->move($ruta_destino,$nombre_de_archivo);
+            $data->logo= $nombre_de_archivo;
+        }
+        if(!is_null($request->nombre)){
+            $data->nombre = $request->nombre;
+        }
+        if(!is_null($request->director)){
+            $data->nombre = $request->director;
+        }
+        $data->save();
+            
         if(!$data){
             return response()->json([
                 'status'=>400,
@@ -130,6 +161,8 @@ class InstitutionController extends Controller
     public function destroy($institution)
     {
         $data = Institution::find($institution);
+        $path = $data->logo;
+        unlink(public_path('img/logos/'.$path));
         $data->delete();
         if(!$data){
             return response()->json([
