@@ -70,7 +70,7 @@ Route::resource('career', CareerController::class);
 
 //****************INSTITUTION ROUTES*****************
 //CRUD INSTITUTION
-Route::resource('institution', InstitutionController::class);
+Route::resource('institutions', InstitutionController::class);
 //CREATE INSTITUTION
 //Route::post('institution', [InstitutionController::class,'store']);
 
