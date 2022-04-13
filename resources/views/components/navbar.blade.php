@@ -16,6 +16,9 @@
               <li class="nav-item text-center">
                 <a class="nav-link text-uppercase" href="{{ url('dashboard')}}">Solicitudes</span></a>
               </li>
+              <li class="nav-item text-center">
+                <a class="nav-link text-uppercase" href="{{ url('institutions')}}">Instituciones</span></a>
+              </li>
             @endif
           @endauth
         </ul>

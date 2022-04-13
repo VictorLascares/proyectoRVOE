@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Institution;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Queue\RedisQueue;
+
 class InstitutionController extends Controller
 {
     /**
@@ -15,16 +17,7 @@ class InstitutionController extends Controller
     public function index()
     {
         $institutions = Institution::all();
-        if(isset($institutions)){
-            return response()->json([
-                'institutions'=>$institutions
-            ]);
-        }
-        else{
-            return response()->json([
-                'error'=>'Data not found'
-            ]);
-        }
+        return view('instituciones.index', compact('institutions'));
     }
 
     /**
@@ -34,7 +27,7 @@ class InstitutionController extends Controller
      */
     public function create()
     {
-        //
+        return view('instituciones.create');
     }
 
     /**
@@ -46,6 +39,13 @@ class InstitutionController extends Controller
     public function store(Request $request)
     {
         $institution = New Institution();
+        $imagen = $request->logotipo;
+        if(!is_null($imagen)){
+            $ruta_destino = public_path('img/institutions/');
+            $nombre_de_archivo = time().'.'.$imagen->getClientOriginalExtension();
+            $imagen->move($ruta_destino,$nombre_de_archivo);
+            $institution->logotipo = $nombre_de_archivo;
+        }
         $institution->nombre = $request->nombre;
         $institution->director = $request->director;
         $logo = $request->file('logo');
@@ -55,19 +55,9 @@ class InstitutionController extends Controller
             $logo->move($ruta_destino,$nombre_de_archivo);
             $institution->logo= $nombre_de_archivo;
         }
-        $data = $institution->save();
-        if(!$data){
-            return response()->json([
-                'status'=>400,
-                'error'=>"something went wrong"
-            ]);
-        }
-        else{
-            return response()->json([
-                'status'=>200,
-                'message'=>'Data successfully saved'
-            ]);
-        }
+        $institution->save();
+        
+        return redirect('institutions');
     }
 
     /**
