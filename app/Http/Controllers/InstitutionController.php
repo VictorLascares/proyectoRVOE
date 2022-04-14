@@ -48,15 +48,8 @@ class InstitutionController extends Controller
         }
         $institution->nombre = $request->nombre;
         $institution->director = $request->director;
-        $logo = $request->file('logo');
-        if(!is_null($logo)){
-            $ruta_destino = public_path('img/logos/');
-            $nombre_de_archivo = time().'.'.$logo->getClientOriginalExtension();
-            $logo->move($ruta_destino,$nombre_de_archivo);
-            $institution->logo= $nombre_de_archivo;
-        }
-        $institution->save();
-        
+        $institution->save();        
+
         return redirect('institutions');
     }
 
@@ -110,14 +103,14 @@ class InstitutionController extends Controller
     public function update(Request $request, $institution)
     {
         $data = Institution::find($institution);
-        $logo = $request->file('logo');
-        $nombre_logo = $data->logo;
-        if(!is_null($logo)){
-            unlink(public_path('img/logos/'.$nombre_logo));
-            $ruta_destino = public_path('img/logos/');
-            $nombre_de_archivo = time().'.'.$logo->getClientOriginalExtension();
-            $logo->move($ruta_destino,$nombre_de_archivo);
-            $data->logo= $nombre_de_archivo;
+        $logotipo = $request->file('logo');
+        $nombre_logo = $data->logotipo;
+        if(!is_null($logotipo)){
+            unlink(public_path('img/institutions/'.$nombre_logo));
+            $ruta_destino = public_path('img/institutions/');
+            $nombre_de_archivo = time().'.'.$logotipo->getClientOriginalExtension();
+            $logotipo->move($ruta_destino,$nombre_de_archivo);
+            $data->logotipo= $nombre_de_archivo;
         }
         if(!is_null($request->nombre)){
             $data->nombre = $request->nombre;
@@ -151,8 +144,8 @@ class InstitutionController extends Controller
     public function destroy($institution)
     {
         $data = Institution::find($institution);
-        $path = $data->logo;
-        unlink(public_path('img/logos/'.$path));
+        $path = $data->logotipo;
+        unlink(public_path('img/institutions/'.$path));
         $data->delete();
         if(!$data){
             return response()->json([
