@@ -1,62 +1,55 @@
 @extends('layouts.layout')
 @section('header')
-    <x-bar  />
-    <x-navbar />
+  <x-bar />
+  <x-navbar />
 @endsection
 @section('main-content')
-<div class="container-fluid py-5">
+  <div class="container-fluid pb-5 mb-4">
     <div class="row pt-4">
-        <div class="col-md-12">
-            <div class="card">
-                <div class="card-header d-flex justify-content-between align-items-center">
-                    <h1 class="card-title text-uppercase">Instituciones</h1>
-                    <a href="{{route('institutions.create')}}" class="btn btn-success">Nueva Institución</a>
-                </div>
-                <div class="card-body">
-                    <div class="row row-cols-1 row-cols-md-3 g-4">
-                        @foreach ($institutions as $institution)
-                            <div class="col">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <h3 class="text-center  card-title">{{$institution->nombre}}<h3>
-                                    </div>
-                                    <div class="card-body">
-                                        <img src="{{ asset("img/institutions/".$institution->logotipo) }}" class="card-img-top" alt="Logo de la Institución">
-                                    </div>
-                                    <div class="card-footer">
-                                        <div class="d-flex justify-content-center">
-                                            <div class="d-flex gap-2">
-                                                <form action="">
-                                                    @csrf
-                                                    <button type="submit" class="btn btn-success">
-                                                        <i class="bi bi-eye"></i>
-                                                    </button>
-                                                </form>
-                                                <form action="">
-                                                    <button class="btn btn-success">
-                                                        <i class="bi bi-pencil-square"></i>
-                                                    </button>
-                                                </form>
-                                                <form method="POST" action="">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger">
-                                                        <i class="bi bi-trash"></i>
-                                                    </button>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header d-flex justify-content-between align-items-center">
+            <h1 class="card-title text-uppercase">Instituciones</h1>
+            <a href="{{ route('institutions.create') }}" class="btn btn-success">Nueva Institución</a>
+          </div>
+          <div class="card-body">
+            <div class="d-flex flex-column justify-content-center align-items-center gap-2">
+              @foreach ($institutions as $institution)
+                <a class="text-decoration-none text-dark institution" href="">
+                  <div class="card p-2" style="max-width: 600px;">
+                    <div class="row g-0">
+                      <div class="col-md-4">
+                        <img src="{{ asset('img/institutions/' . $institution->logotipo) }}" class="img-fluid rounded-start" alt="Logo de la Institución">
+                      </div>
+                      <div class="col-md-8">
+                        <div class="card-body">
+                          <h3 class="text-center card-title">{{ $institution->nombre }}<h3>
+                          <p class="fs-5 text-center">Director(a): {{$institution->director}}</p>
                         </div>
-                    @endforeach
-                </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="institution__overlay rounded"></div>
+                </a>
+              @endforeach
             </div>
+          </div>
+          <div class="card-footer d-flex justify-content-center">
+            <nav aria-label="Page navigation example">
+              <ul class="pagination m-0">
+                <li class="page-item"><a class="page-link  text-success" href="#">Previous</a></li>
+                <li class="page-item"><a class="page-link  text-success" href="#">1</a></li>
+                <li class="page-item"><a class="page-link  text-success" href="#">2</a></li>
+                <li class="page-item"><a class="page-link  text-success" href="#">3</a></li>
+                <li class="page-item"><a class="page-link  text-success" href="#">Next</a></li>
+              </ul>
+            </nav>
+          </div>
         </div>
+      </div>
     </div>
-</div>
+  </div>
 @endsection
 @section('footer')
-    <x-footer />
+  <x-footer />
 @endsection

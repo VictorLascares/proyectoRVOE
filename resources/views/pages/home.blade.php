@@ -1,12 +1,11 @@
 @extends('layouts.layout')
 @section('header')
-    <x-bar />
-    <x-navbar />
+  <x-bar />
+  <x-navbar />
 @endsection
 @section('main-content')
-    <x-login />
+  <x-login />
 @endsection
 @section('footer')
-    <x-footer />
+  <x-footer />
 @endsection
-
