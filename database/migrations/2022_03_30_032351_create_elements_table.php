@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('observacion')->nullable();
             $table->integer('noEvaluacion')->nullabe(false);
             $table->integer('ponderacion')->nullable();
+            $table->integer('noRevision')->default('1');
             $table->foreignId('requisition_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
         });

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Requisition;
+use App\Models\Element;
+
 
 class RequisitionController extends Controller
 {
@@ -52,6 +54,16 @@ class RequisitionController extends Controller
         $requisition->duracion = $request->duracion;
         $requisition->career_id = $request->career_id;
         $data = $requisition->save();
+
+        $elementsName = ['Anexo 1', 'Anexo 2', 'Anexo 3', 'Anexo 4', 'Anexo 5'];
+        foreach($elementsName as $elementName){
+            $element = New Element();
+            $element->nombre = $elementName;
+            $element->noEvaluacion = 1;
+            $element->requisition_id = $requisition->id;
+            $element->save();
+        }
+
         if(!$data){
             return response()->json([
                 'status'=>400,
