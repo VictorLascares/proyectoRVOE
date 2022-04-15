@@ -9,7 +9,7 @@
     <form class="row g-3">
       <div class="col-md-6">
         <div class="form-floating mb-3">
-          <input type="email" class="form-control" id="floatingInput" placeholder="Nombre de la Institución">
+          <input type="text" class="form-control" id="floatingInput" placeholder="Nombre de la Institución">
           <label for="floatingInput">Nombre de la Institución</label>
         </div>
       </div>

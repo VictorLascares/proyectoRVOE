@@ -55,7 +55,7 @@ Route::post('login',[SessionController::class,'login']);
 
 //****************CAREER ROUTES*****************
 //CRUD CAREER
-Route::resource('career', CareerController::class);
+Route::resource('careers', CareerController::class);
 //SELECT CAREER
 //Route::get('careers', [CareerController::class,'index']);
 //CREATE CAREER

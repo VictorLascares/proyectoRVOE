@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Institution;
+use App\Models\Career;
 use Illuminate\Queue\RedisQueue;
 
 class InstitutionController extends Controller
@@ -59,16 +60,9 @@ class InstitutionController extends Controller
    */
   public function show($institution)
   {
-    $data = Institution::find($institution);
-    if (isset($data)) {
-      return response()->json([
-        'institution' => $data
-      ]);
-    } else {
-      return response()->json([
-        'error' => 'Data not found'
-      ]);
-    }
+    $institution = Institution::find($institution);
+    $careers = Career::all();
+    return view('instituciones.show', compact('institution', 'careers'));
   }
 
   /**

@@ -4,7 +4,7 @@
   <x-navbar />
 @endsection
 @section('main-content')
-  <div class="container-fluid pb-5 mb-4">
+  <div class="container-sm pb-5 mb-4">
     <div class="row pt-4">
       <div class="col-md-12">
         <div class="card">
@@ -15,7 +15,7 @@
           <div class="card-body">
             <div class="d-flex flex-column justify-content-center align-items-center gap-2">
               @foreach ($institutions as $institution)
-                <a class="text-decoration-none text-dark institution" href="">
+                <a class="text-decoration-none text-dark institution" href="{{ route('institutions.show', $institution)}}">
                   <div class="card p-2" style="max-width: 600px;">
                     <div class="row g-0">
                       <div class="col-md-4">
