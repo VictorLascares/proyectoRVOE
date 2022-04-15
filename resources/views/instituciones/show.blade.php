@@ -45,12 +45,10 @@
     <section>
       <div class="d-flex justify-content-between align-items-center">
         <h2 class="">Carreras</h2>
-        <form action="">
-          <a data-bs-target="#loginModal" data-bs-toggle="modal" type="submit" class="btn btn-success">
-            <i class="bi bi-plus-circle"></i>
+        <button type="button" data-bs-target="#careersModal" data-bs-toggle="modal" type="submit" class="btn btn-success">
+          <i class="bi bi-plus-circle"></i>
             Nueva Carrera
-          </a>
-        </form>
+        </button>
       </div>
 
       <div class="list-group mt-3">
@@ -62,11 +60,11 @@
         @endforeach
       </div>
 
-      <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal fade" id="careersModal" tabindex="-1" aria-labelledby="careersModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
           <div class="modal-content">
             <div class="modal-header text-center">
-              <h5 class="modal-title text-uppercase w-100" id="exampleModalLabel">Nueva Carrera</h5>
+              <h5 class="modal-title text-uppercase w-100" id="careersModalLabel">Nueva Carrera</h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">

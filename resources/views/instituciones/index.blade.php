@@ -10,7 +10,7 @@
         <div class="card">
           <div class="card-header d-flex justify-content-between align-items-center">
             <h1 class="card-title text-uppercase">Instituciones</h1>
-            <a href="{{ route('institutions.create') }}" class="btn btn-success">Nueva Institución</a>
+            <button type="button"  data-bs-target="#institutionsModal" data-bs-toggle="modal" class="btn btn-success">Nueva Institución</button>
           </div>
           <div class="card-body">
             <div class="d-flex flex-column justify-content-center align-items-center gap-2">
@@ -44,6 +44,36 @@
                 <li class="page-item"><a class="page-link  text-success" href="#">Next</a></li>
               </ul>
             </nav>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" id="institutionsModal" tabindex="-1" aria-labelledby="institutionsModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header text-center">
+            <h5 class="modal-title text-uppercase w-100" id="institutionsModalLabel">Nueva Institución</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form class="mb-2" method="POST" action="{{ route('institutions.store') }}" enctype="multipart/form-data">
+              @csrf
+              <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="institutionName" name="nombre" placeholder="Nombre de la Institución">
+                <label for="institutionName">Nombre de la Institución</label>
+              </div>
+              <div class="form-floating mb-3">
+                <input type="text" class="form-control" name="director" id="directorName"
+                  placeholder="Nombre del Director">
+                <label for="directorName">Nombre del Director</label>
+              </div>
+              <div class="input-group form-group mb-3">
+                <input type="file" class="form-control" id="institutionLogo" name="logotipo">
+              </div>
+              <div class="d-grid mt-4">
+                <button class="btn btn-success text-uppercase" type="submit">Agregar</button>
+              </div>
+            </form>
           </div>
         </div>
       </div>
