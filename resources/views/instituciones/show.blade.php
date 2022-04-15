@@ -5,7 +5,10 @@
 @endsection
 @section('main-content')
   <div class="container mb-5 mt-4">
-    <form class="row g-2 mb-5">
+    <div class="d-flex justify-content-center mb-3">
+      <img src="{{ asset('img/institutions/' . $institution->logotipo) }}" class="img-fluid rounded-start" style="max-width: 100px" alt="Logo de la Institución">
+    </div>
+    <form class="row g-2 mb-3">
       <div class="col-md-6">
         <div class="form-floating mb-2">
           <input type="text" class="form-control" id="institutionName" placeholder="Nombre de la Institución" value="{{$institution->nombre}}">
@@ -23,25 +26,30 @@
           <input type="file" class="form-control" id="institutionLogo" name="logotipo">
         </div>
       </div>
-      <div class="d-flex justify-content-center gap-2">
-        <form action="" class="mb-2 d-flex justify-content-end">
-          <button class="btn btn-danger" type="submit">
-            <i class="bi bi-trash"></i>
-            Eliminar
-          </button>
-        </form>
-        <button class="btn btn-success" type="submit">
-          <i class="bi bi-arrow-repeat"></i>
-          Actualizar
-        </button>
-      </div>
     </form>
+    <div class="d-flex align-items-center justify-content-center gap-2 mb-5">
+      <form method="POST" action="{{route('institutions.destroy', $institution->id)}}" class="d-flex justify-content-end">
+        @csrf
+        @method('DELETE')
+        <button class="btn btn-danger" type="submit">
+          <i class="bi bi-trash"></i>
+          Eliminar
+        </button>
+      </form>
+      <button class="btn btn-success" type="submit">
+        <i class="bi bi-arrow-repeat"></i>
+        Actualizar
+      </button>
+    </div>
 
     <section>
       <div class="d-flex justify-content-between align-items-center">
         <h2 class="">Carreras</h2>
         <form action="">
-          <a data-bs-target="#loginModal" data-bs-toggle="modal" type="submit" class="btn btn-success">Nueva Carrera</a>
+          <a data-bs-target="#loginModal" data-bs-toggle="modal" type="submit" class="btn btn-success">
+            <i class="bi bi-plus-circle"></i>
+            Nueva Carrera
+          </a>
         </form>
       </div>
 

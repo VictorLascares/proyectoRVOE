@@ -87,17 +87,7 @@ class InstitutionController extends Controller
   {
     $data = Institution::find($institution);
     $data->update($request->all());
-    if (!$data) {
-      return response()->json([
-        'status' => 400,
-        'error' => "something went wrong"
-      ]);
-    } else {
-      return response()->json([
-        'status' => 200,
-        'message' => 'Data successfully updated'
-      ]);
-    }
+    return redirect('institutions');
   }
 
   /**
@@ -110,16 +100,6 @@ class InstitutionController extends Controller
   {
     $data = Institution::find($institution);
     $data->delete();
-    if (!$data) {
-      return response()->json([
-        'status' => 400,
-        'error' => "something went wrong"
-      ]);
-    } else {
-      return response()->json([
-        'status' => 200,
-        'message' => 'Data successfully destroyed'
-      ]);
-    }
+    return redirect('institutions');
   }
 }
