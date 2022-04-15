@@ -78,6 +78,7 @@ Route::resource('institutions', InstitutionController::class);
 //****************REQUISITION ROUTES*****************
 //CRUD REQUISITION
 Route::resource('requisition',RequisitionController::class);
+Route::get('requisition/create/{career_id}', [RequisitionController::class,'crearPorCarrera']);
 
 //****************ELEMENT ROUTES*****************
 //CRUD ELEMENT

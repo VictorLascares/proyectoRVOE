@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Career;
+use Illuminate\Support\Facades\DB;
 
 class CareerController extends Controller
 {
@@ -76,9 +77,15 @@ class CareerController extends Controller
     public function show($career)
     {
         $data= Career::find($career);
+        $requisitions = DB::table('careers')
+        ->join('requisitions','careers.id','=','requisitions.career_id')
+        ->select('requisitions.*')
+        ->where('careers.id',$career)
+        ->get();
         if(isset($data)){
             return response()->json([
-                'career'=>$data
+                'career'=>$data,
+                'requisitions'=>$requisitions
             ]);
         }
         else{

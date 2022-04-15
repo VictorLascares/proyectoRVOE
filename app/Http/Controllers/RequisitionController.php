@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Requisition;
 use App\Models\Element;
+use App\Models\Institution;
+use App\Models\Career;
 
 
 class RequisitionController extends Controller
@@ -37,7 +39,25 @@ class RequisitionController extends Controller
      */
     public function create()
     {
-        //
+        $institutions = Institution::all();
+        $careers = Career::all();
+
+        return response()->json([
+            'institutions'=>$institutions,
+            'careers'=>$careers
+        ]);
+    }
+
+    /**
+     * Vista para crear la requisicion conociendo la carrera
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function crearPorCarrera($career_id)
+    {
+        return response()->json([
+            'career'=>$career_id
+        ]);
     }
 
     /**
