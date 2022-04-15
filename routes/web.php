@@ -7,8 +7,8 @@ use App\Http\Controllers\CareerController;
 use App\Http\Controllers\InstitutionController;
 use App\Http\Controllers\RequisitionController;
 use App\Http\Controllers\ElementController;
-use App\Http\Controllers\RegisterContoller;
-use App\Http\Controllers\SessionContoller;
+use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\SessionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -78,6 +78,7 @@ Route::resource('institutions', InstitutionController::class);
 //****************REQUISITION ROUTES*****************
 //CRUD REQUISITION
 Route::resource('requisition',RequisitionController::class);
+Route::get('requisition/create/{career_id}', [RequisitionController::class,'crearPorCarrera']);
 
 //****************ELEMENT ROUTES*****************
 //CRUD ELEMENT
@@ -102,6 +103,3 @@ Route::get('register', function(){
 
 Route::post('/verificarcorreo',['App\Http\Controllers\RegisterController','verificarCorreo']);
 
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

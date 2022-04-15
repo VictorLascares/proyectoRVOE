@@ -20,6 +20,7 @@ class Element extends Model
         'observacion',
         'noEvaluacion',
         'ponderacion',
+        'noRevision',
         'requisition_id'
     ];
 

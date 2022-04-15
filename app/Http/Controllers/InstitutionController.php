@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Institution;
 use App\Models\Career;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Queue\RedisQueue;
 
 class InstitutionController extends Controller
@@ -49,6 +50,7 @@ class InstitutionController extends Controller
     $institution->nombre = $request->nombre;
     $institution->director = $request->director;
     $institution->save();
+
     return redirect('institutions');
   }
 
@@ -60,9 +62,24 @@ class InstitutionController extends Controller
    */
   public function show($institution)
   {
-    $institution = Institution::find($institution);
-    $careers = Career::all();
-    return view('instituciones.show', compact('institution', 'careers'));
+    $data = Institution::find($institution);
+    $careers = DB::table('institutions')
+      ->join('careers', 'institutions.id', '=', 'careers.institution_id')
+      ->select('careers.*')
+      ->where('institutions.id', $institution)
+      ->get();
+
+
+    if (isset($data)) {
+      return response()->json([
+        'institution' => $data,
+        'career' => $careers
+      ]);
+    } else {
+      return response()->json([
+        'error' => 'Data not found'
+      ]);
+    }
   }
 
   /**
@@ -86,8 +103,34 @@ class InstitutionController extends Controller
   public function update(Request $request, $institution)
   {
     $data = Institution::find($institution);
-    $data->update($request->all());
-    return redirect('institutions');
+    $logotipo = $request->file('logo');
+    $nombre_logo = $data->logotipo;
+    if (!is_null($logotipo)) {
+      unlink(public_path('img/institutions/' . $nombre_logo));
+      $ruta_destino = public_path('img/institutions/');
+      $nombre_de_archivo = time() . '.' . $logotipo->getClientOriginalExtension();
+      $logotipo->move($ruta_destino, $nombre_de_archivo);
+      $data->logotipo = $nombre_de_archivo;
+    }
+    if (!is_null($request->nombre)) {
+      $data->nombre = $request->nombre;
+    }
+    if (!is_null($request->director)) {
+      $data->nombre = $request->director;
+    }
+    $data->save();
+
+    if (!$data) {
+      return response()->json([
+        'status' => 400,
+        'error' => "something went wrong"
+      ]);
+    } else {
+      return response()->json([
+        'status' => 200,
+        'message' => 'Data successfully updated'
+      ]);
+    }
   }
 
   /**
@@ -99,7 +142,19 @@ class InstitutionController extends Controller
   public function destroy($institution)
   {
     $data = Institution::find($institution);
+    $path = $data->logotipo;
+    unlink(public_path('img/institutions/' . $path));
     $data->delete();
-    return redirect('institutions');
+    if (!$data) {
+      return response()->json([
+        'status' => 400,
+        'error' => "something went wrong"
+      ]);
+    } else {
+      return response()->json([
+        'status' => 200,
+        'message' => 'Data successfully destroyed'
+      ]);
+    }
   }
 }

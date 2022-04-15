@@ -20,7 +20,8 @@ class Requisition extends Model
         'modalidad',
         'duracion',
         'estado',
-        'career_id'
+        'career_id',
+        'formatoInstalaciones'
     ];
 
     /**

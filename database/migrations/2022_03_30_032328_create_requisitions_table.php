@@ -15,12 +15,13 @@ return new class extends Migration
     {
         Schema::create('requisitions', function (Blueprint $table) {
             $table->id();
-            $table->enum('meta',['solicitud','ubicacion','renovacion'])->nullable(false);
+            $table->enum('meta',['solicitud','domicilio','planEstudios'])->nullable(false);
             $table->string('rvoe')->nullable();
             $table->string('modalidad')->nullable();
             $table->double('duracion',8,2)->nullable();
-            $table->enum('estado',['activo','latencia','revocado','inactivo','pendiente'])->nullable(false)->default('pendiente');
+            $table->enum('estado',['activo','latencia','revocado','inactivo','pendiente','rechazado'])->nullable(false)->default('pendiente');
             $table->foreignId('career_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
+            $table->string('formatoInstalaciones')->nullable();
             $table->timestamps();
         });
     }
