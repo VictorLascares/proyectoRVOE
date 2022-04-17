@@ -54,33 +54,23 @@ class CareerController extends Controller
     return redirect(route('institutions.show', $request->institution_id));
   }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($career)
-    {
-        $data= Career::find($career);
-        $requisitions = DB::table('careers')
-        ->join('requisitions','careers.id','=','requisitions.career_id')
-        ->select('requisitions.*')
-        ->where('careers.id',$career)
-        ->get();
-        if(isset($data)){
-            return response()->json([
-                'career'=>$data,
-                'requisitions'=>$requisitions
-            ]);
-        }
-        else{
-            return response()->json([
-                'error'=>'Data not found'
-            ]);
-        }
-    }
-  
+  /**
+   * Display the specified resource.
+   *
+   * @param  int  $id
+   * @return \Illuminate\Http\Response
+   */
+  public function show($career)
+  {
+    $career = Career::find($career);
+    $requisitions = DB::table('careers')
+      ->join('requisitions', 'careers.id', '=', 'requisitions.career_id')
+      ->select('requisitions.*')
+      ->where('careers.id', $career->id)
+      ->get();
+    return view('carreras.show', compact('career','requisitions'));
+  }
+
 
   /**
    * Show the form for editing the specified resource.
@@ -104,17 +94,7 @@ class CareerController extends Controller
   {
     $data = Career::find($career);
     $data->update($request->all());
-    if (!$data) {
-      return response()->json([
-        'status' => 400,
-        'error' => "something went wrong"
-      ]);
-    } else {
-      return response()->json([
-        'status' => 200,
-        'message' => 'Data successfully updated'
-      ]);
-    }
+    return redirect('institutions');
   }
 
   /**
@@ -125,18 +105,8 @@ class CareerController extends Controller
    */
   public function destroy($career)
   {
-    $data = Career::find($career);
-    $data->delete();
-    if (!$data) {
-      return response()->json([
-        'status' => 400,
-        'error' => "something went wrong"
-      ]);
-    } else {
-      return response()->json([
-        'status' => 200,
-        'message' => 'Data successfully destroyed'
-      ]);
-    }
+    $career = Career::find($career);
+    $career->delete();
+    return redirect('institutions');
   }
 }

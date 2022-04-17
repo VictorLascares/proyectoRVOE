@@ -13,12 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('careers', function (Blueprint $table) {
+        Schema::create('municipalities', function (Blueprint $table) {
             $table->id();
             $table->string('nombre')->nullable(false);
-            $table->string('titulo')->nullable(false);
-            $table->string('modalidad')->nullable();
-            $table->double('duracion', 8, 2)->nullable();
+            $table->string('clave')->nullable(false);
             $table->foreignId('institution_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
         });
     }
@@ -30,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('careers');
+        Schema::dropIfExists('municipalities');
     }
 };

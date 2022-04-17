@@ -4,10 +4,9 @@
   <x-navbar />
 @endsection
 @section('main-content')
-  <div class="container mb-5 mt-4">
-    <div class="d-flex align-items-center justify-content-end gap-2">
-      <form method="POST" action="{{ route('institutions.destroy', $institution->id) }}"
-        class="d-flex justify-content-end">
+<div class="container mb-5 mt-4">
+    <div class="d-flex align-items-center justify-content-end gap-2 mb-5">
+      <form method="POST" action="{{ route('careers.destroy', $career->id) }}" class="d-flex justify-content-end">
         @csrf
         @method('DELETE')
         <button class="btn btn-danger" type="submit">
@@ -16,34 +15,24 @@
         </button>
       </form>
     </div>
-    <div class="d-flex justify-content-center mb-3">
-      <img src="{{ asset('img/institutions/' . $institution->logotipo) }}" class="img-fluid rounded-start"
-        style="max-width: 100px" alt="Logo de la Institución">
-    </div>
-    <form class="row g-2 mb-3" action="{{ route('institutions.update', $institution->id) }}" method="POST"
-      enctype="multipart/form-data">
-      @method('PUT')
+    <form class="row g-2 mb-3" method="POST" action="{{ route('careers.update', $career->id) }}">
       @csrf
+      @method('PUT')
       <div class="col-md-6">
         <div class="form-floating mb-2">
-          <input name="nombre" type="text" class="form-control" id="institutionName"
-            placeholder="Nombre de la Institución" value="{{ $institution->nombre }}">
-          <label for="institutionName">Nombre de la Institución</label>
+          <input name="nombre" type="text" class="form-control" id="careerName" placeholder="Nombre de la Carrera"
+            value="{{ $career->nombre }}">
+          <label for="careerName">Nombre de la Carrera</label>
         </div>
       </div>
       <div class="col-md-6">
         <div class="form-floating">
-          <input name="director" type="text" class="form-control" id="institutionName" placeholder="Nombre del Director"
-            value="{{ $institution->director }}">
-          <label for="institutionName">Nombre del Director</label>
+          <input name="titulo" type="text" class="form-control" id="careerTitle" placeholder="Titulo de la Carrera"
+            value="{{ $career->titulo }}">
+          <label for="institutionName">Titulo de la Carrera</label>
         </div>
       </div>
-      <div class="col-12">
-        <div class="input-group form-group">
-          <input type="file" class="form-control" id="institutionLogo" name="logotipo">
-        </div>
-      </div>
-      <div class="d-flex justify-content-center">
+      <div class="d-flex justify-content-center align-items-center">
         <button class="btn btn-success" type="submit">
           <i class="bi bi-arrow-repeat"></i>
           Actualizar
@@ -51,34 +40,23 @@
       </div>
     </form>
 
-    <section class="pb-5">
+    <section>
       <div class="d-flex justify-content-between align-items-center">
-        <h2 class="">Carreras</h2>
+        <h2 class="">Requisiciones</h2>
         <button type="button" data-bs-target="#careersModal" data-bs-toggle="modal" type="submit" class="btn btn-success">
           <i class="bi bi-plus-circle"></i>
-          Nueva Carrera
+          Nueva Requisición
         </button>
       </div>
 
       <div class="list-group mt-3">
-        @foreach ($careers as $career)
-          <a href="{{ route('careers.show', $career->id) }}"
+        @foreach ($requisitions as $requisition)
+          <a href=""
             class="d-flex justify-content-between text-decoration-none text-dark list-group-item list-group-item-action align-items-center">
-            <p class="m-0">{{ $career->nombre }}</p>
-            <p class="m-0">{{ $career->titulo }}</p>
+            <p class="m-0"></p>
+            <p class="m-0"></p>
           </a>
         @endforeach
-      </div>
-      <div class="d-flex justify-content-center align-items-center mt-4">
-        <nav aria-label="Page navigation example">
-          <ul class="pagination m-0">
-            <li class="page-item"><a class="page-link  text-success" href="#">Previous</a></li>
-            <li class="page-item"><a class="page-link  text-success" href="#">1</a></li>
-            <li class="page-item"><a class="page-link  text-success" href="#">2</a></li>
-            <li class="page-item"><a class="page-link  text-success" href="#">3</a></li>
-            <li class="page-item"><a class="page-link  text-success" href="#">Next</a></li>
-          </ul>
-        </nav>
       </div>
 
       <div class="modal fade" id="careersModal" tabindex="-1" aria-labelledby="careersModalLabel" aria-hidden="true">
@@ -89,7 +67,7 @@
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-              <form class="mb-2" method="POST" action="{{ route('careers.store', $institution->id) }}">
+              <form class="mb-2" method="POST" action="">
                 @csrf
                 <div class="form-floating mb-3">
                   <input type="text" class="form-control" id="carreerName" name="nombre"
@@ -100,7 +78,7 @@
                   <input type="text" class="form-control" name="titulo" id="careerTitle" placeholder="Contraseña">
                   <label for="careerTitle">Titulo de la Carrera</label>
                 </div>
-                <input type="hidden" name="institution_id" value="{{ $institution->id }}">
+                <input type="hidden" name="institution_id" value="">
                 <div class="d-grid mt-4">
                   <button class="btn btn-success text-uppercase" type="submit">Agregar</button>
                 </div>

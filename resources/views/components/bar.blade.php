@@ -3,8 +3,7 @@
     <img src="{{ asset('img/Logo_gob_mx.svg') }}" alt="">
   </a>
   @guest
-    <button type="button" data-bs-target="#loginModal" class="text-light" data-bs-toggle="modal"
-      style="background-color:transparent">Iniciar Sesion</button>
+    <button type="button" data-bs-target="#loginModal" class="text-light" data-bs-toggle="modal" style="background-color:transparent">Iniciar Sesion</button>
   @endguest
   @auth
     <a href="{{ url('logout') }}" class="text-light text-decoration-none" style="background-color:transparent">Cerrar

@@ -62,24 +62,13 @@ class InstitutionController extends Controller
    */
   public function show($institution)
   {
-    $data = Institution::find($institution);
+    $institution = Institution::find($institution);
     $careers = DB::table('institutions')
       ->join('careers', 'institutions.id', '=', 'careers.institution_id')
       ->select('careers.*')
-      ->where('institutions.id', $institution)
+      ->where('institutions.id', $institution->id)
       ->get();
-
-
-    if (isset($data)) {
-      return response()->json([
-        'institution' => $data,
-        'career' => $careers
-      ]);
-    } else {
-      return response()->json([
-        'error' => 'Data not found'
-      ]);
-    }
+    return view('instituciones.show', compact('institution', 'careers'));
   }
 
   /**
@@ -116,21 +105,10 @@ class InstitutionController extends Controller
       $data->nombre = $request->nombre;
     }
     if (!is_null($request->director)) {
-      $data->nombre = $request->director;
+      $data->director = $request->director;
     }
     $data->save();
-
-    if (!$data) {
-      return response()->json([
-        'status' => 400,
-        'error' => "something went wrong"
-      ]);
-    } else {
-      return response()->json([
-        'status' => 200,
-        'message' => 'Data successfully updated'
-      ]);
-    }
+    return redirect('institutions');
   }
 
   /**
@@ -145,16 +123,6 @@ class InstitutionController extends Controller
     $path = $data->logotipo;
     unlink(public_path('img/institutions/' . $path));
     $data->delete();
-    if (!$data) {
-      return response()->json([
-        'status' => 400,
-        'error' => "something went wrong"
-      ]);
-    } else {
-      return response()->json([
-        'status' => 200,
-        'message' => 'Data successfully destroyed'
-      ]);
-    }
+    return redirect('institutions');
   }
 }
