@@ -49,6 +49,8 @@ class CareerController extends Controller
     $career = new Career();
     $career->nombre = $request->nombre;
     $career->titulo = $request->titulo;
+    $career->modalidad = $request->modalidad;
+    $career->duracion = $request->duracion;
     $career->institution_id = $request->institution_id;
     $career->save();
     return redirect(route('institutions.show', $request->institution_id));

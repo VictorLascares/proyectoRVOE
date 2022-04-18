@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Institution;
 use App\Models\Career;
+use App\Models\Municipality;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Queue\RedisQueue;
 
@@ -17,8 +18,9 @@ class InstitutionController extends Controller
    */
   public function index()
   {
+    $municipalities = Municipality::all();
     $institutions = Institution::all();
-    return view('instituciones.index', compact('institutions'));
+    return view('instituciones.index', compact('institutions', 'municipalities'));
   }
 
   /**
@@ -49,6 +51,7 @@ class InstitutionController extends Controller
     }
     $institution->nombre = $request->nombre;
     $institution->director = $request->director;
+    $institution->municipalitie_id = $request->municipalitie_id;
     $institution->save();
 
     return redirect('institutions');
@@ -63,12 +66,13 @@ class InstitutionController extends Controller
   public function show($institution)
   {
     $institution = Institution::find($institution);
+    $municipalities = Municipality::all();
     $careers = DB::table('institutions')
       ->join('careers', 'institutions.id', '=', 'careers.institution_id')
       ->select('careers.*')
       ->where('institutions.id', $institution->id)
       ->get();
-    return view('instituciones.show', compact('institution', 'careers'));
+    return view('instituciones.show', compact('institution', 'careers', 'municipalities'));
   }
 
   /**
@@ -106,6 +110,9 @@ class InstitutionController extends Controller
     }
     if (!is_null($request->director)) {
       $data->director = $request->director;
+    }
+    if (!is_null($request->municipalitie_id)) {
+      $data->municipalitie_id = $request->municipalitie_id;
     }
     $data->save();
     return redirect('institutions');

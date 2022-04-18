@@ -32,6 +32,23 @@
           <label for="institutionName">Titulo de la Carrera</label>
         </div>
       </div>
+      <div class="col-md-6">
+        <div class="form-floating mb-3">
+          <select id="careerModality" class="form-control" name="modalidad" required>
+            <option selected disabled>-- Seleccione la Modalidad --</option>
+            <option value="Presencial">Presencial</option>
+            <option value="Distancia">Distancia</option>
+            <option value="Hibrida">Hibrida</option>
+          </select>
+          <label for="careerModality" class="form-label">Modalidad de la Carrera</label>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-floating">
+          <input type="number" class="form-control" name="duracion" value="{{ $career->duracion }}" id="careerDuration" placeholder="Duración de la Carrera">
+          <label for="careerDuration">Duración de la Carrera</label>
+        </div>
+      </div>
       <div class="d-flex justify-content-center align-items-center">
         <button class="btn btn-success" type="submit">
           <i class="bi bi-arrow-repeat"></i>
