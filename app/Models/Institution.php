@@ -16,7 +16,9 @@ class Institution extends Model
      */
     protected $fillable = [
         'nombre',
-        'director',        
+        'director',  
+        'logotipo',
+        'municipalitie_id'          
     ];
     
 

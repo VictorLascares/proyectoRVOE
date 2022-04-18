@@ -69,8 +69,6 @@ class RequisitionController extends Controller
     {
         $requisition = New Requisition();
         $requisition->meta = $request->meta;
-        $requisition->modalidad = $request->modalidad;
-        $requisition->duracion = $request->duracion;
         $requisition->career_id = $request->career_id;
         $data = $requisition->save();
 
