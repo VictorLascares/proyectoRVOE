@@ -7,58 +7,133 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
-## About Laravel
+```
+  
+  INSERT INTO municipalities (nombre, clave)
+  VALUES 
+  ('Acacoyagua', '001'),
+  ('Acala', '002'),
+  ('Acapetahua', '003'),
+  ('Altamirano', '004'),
+  ('Amatán', '005'),
+  ('Amatenango de la Frontera', '006'),
+  ('Amatenango del Valle', '007'),
+  ('Ángel Albino Corzo', '008'),
+  ('Arriaga', '009'),
+  ('Bejucal de Ocampo', '010'),
+  ('Bella Vista', '011'),
+  ('Berriozábal', '012'),
+  ('Bochil', '013'),
+  ('El Bosque', '014'),
+  ('Cacahoatán', '015'),
+  ('Catazajá', '016'),
+  ('Cintalapa', '017'),
+  ('Coapilla', '018'),
+  ('Comitán de Domínguez', '019'),
+  ('La Concordia', '020'),
+  ('Copainalá', '021'),
+  ('Chalchihuitán', '022'),
+  ('Chamula', '023'),
+  ('Chanal', '024'),
+  ('Chapultenango', '025'),
+  ('Chenalhó', '026'),
+  ('Chiapa de Corzo', '027'),
+  ('Chiapilla', '028'),
+  ('Chicoasén', '029'),
+  ('Chicomuselo', '030'),
+  ('Chilón', '031'),
+  ('Escuintla', '032'),
+  ('Francisco León', '033'),
+  ('Frontera Comalapa', '034'),
+  ('Frontera Hidalgo', '035'),
+  ('La Grandeza', '036'),
+  ('Huehuetán', '037'),
+  ('Huixtán', '038'),
+  ('Huitiupán', '039'),
+  ('Huixtla', '040'),
+  ('La Independencia', '041'),
+  ('Ixhuatán', '042'),
+  ('Ixtacomitán', '043'),
+  ('Ixtapa', '044'),
+  ('Ixtapangajoya', '045'),
+  ('Jiquipilas', '046'),
+  ('Jitotol', '047'),
+  ('Juárez', '048'),
+  ('Larráinzar', '049'),
+  ('La Libertad', '050'),
+  ('Mapastepec', '051'),
+  ('Las Margaritas','052'),
+  ('Mazapa de Madero','053'),
+  ('Mazatán','054'),
+  ('Metapa','055'),
+  ('Mitontic','056'),
+  ('Motozintla','057'),
+  ('Nicolás Ruíz','058'),
+  ('Ocosingo','059'),
+  ('Ocotepec','060'),
+  ('Ocozocoautla de Espinosa','061'),
+  ('Ostuacán','062'),
+  ('Osumacinta','063'),
+  ('Oxchuc','064'),
+  ('Palenque','065'),
+  ('Pantelhó','066'),
+  ('Pantepec','067'),
+  ('Pichucalco','068'),
+  ('Pijijiapan','069'),
+  ('El Porvenir','070'),
+  ('Villa Comaltitlán','071'),
+  ('Pueblo Nuevo Solistahuacán','072'),
+  ('Rayón','073'),
+  ('Reforma','074'),
+  ('Las Rosas','075'),
+  ('Sabanilla','076'),
+  ('Salto de Agua','077'),
+  ('San Cristóbal de las Casas','078'),
+  ('San Fernando','079'),
+  ('Siltepec','080'),
+  ('Simojovel','081'),
+  ('Sitalá','082'),
+  ('Socoltenango','083'),
+  ('Solosuchiapa','084'),
+  ('Soyaló','085'),
+  ('Suchiapa','086'),
+  ('Suchiate','087'),
+  ('Sunuapa','088'),
+  ('Tapachula','089'),
+  ('Tapalapa','090'),
+  ('Tapilula','091'),
+  ('Tecpatán','092'),
+  ('Tenejapa','093'),
+  ('Teopisca','094'),
+  ('Tila','095'),
+  ('Tonalá','096'),
+  ('Totolapa','097'),
+  ('La Trinitaria','098'),
+  ('Tumbalá','099'),
+  ('Tuxtla Gutiérrez','100'),
+  ('Tuxtla Chico','101'),
+  ('Tuzantán','102'),
+  ('Tzimol','103'),
+  ('Unión Juárez','104'),
+  ('Venustiano Carranza','105'),
+  ('Villa Corzo','106'),
+  ('Villaflores','107'),
+  ('Yajalón','108'),
+  ('San Lucas','109'),
+  ('Zinacantán','110'),
+  ('San Juan Cancuc','111'),
+  ('Aldama','112'),
+  ('Benemérito de las Américas','113'),
+  ('Maravilla Tenejapa','114'),
+  ('Marqués de Comillas','115'),
+  ('Montecristo de Guerrero','116'),
+  ('San Andrés Duraznal','117'),
+  ('Santiago el Pinar','118'),
+  ('Capitán Luis Ángel Vidal','119'),
+  ('Rincón Chamula San Pedro','120'),
+  ('El Parral','121'),
+  ('Emiliano Zapata','122'),
+  ('Mezcalapa','123'),
+  ('Honduras de la Sierra','124');
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
-
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
-
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
-
-## Learning Laravel
-
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
-
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
-
-## Laravel Sponsors
-
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
-
-### Premium Partners
-
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+```

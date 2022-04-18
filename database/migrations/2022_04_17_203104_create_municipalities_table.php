@@ -17,7 +17,6 @@ return new class extends Migration
             $table->id();
             $table->string('nombre')->nullable(false);
             $table->string('clave')->nullable(false);
-            $table->foreignId('institution_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

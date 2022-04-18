@@ -22,7 +22,6 @@ return new class extends Migration
             $table->integer('ponderacion')->nullable();
             $table->integer('noRevision')->default('1');
             $table->foreignId('requisition_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
-            $table->timestamps();
         });
     }
 
