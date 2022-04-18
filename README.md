@@ -8,7 +8,7 @@
 </p>
 
 ```
-  
+
   INSERT INTO municipalities (nombre, clave)
   VALUES 
   ('Acacoyagua', '001'),

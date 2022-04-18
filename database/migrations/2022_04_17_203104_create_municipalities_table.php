@@ -6,27 +6,27 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
-    public function up()
-    {
-        Schema::create('municipalities', function (Blueprint $table) {
-            $table->id();
-            $table->string('nombre')->nullable(false);
-            $table->string('clave')->nullable(false);
-        });
-    }
+  /**
+   * Run the migrations.
+   *
+   * @return void
+   */
+  public function up()
+  {
+    Schema::create('municipalities', function (Blueprint $table) {
+      $table->id();
+      $table->string('nombre')->nullable(false);
+      $table->string('clave')->nullable(false);
+    });
+  }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
-    {
-        Schema::dropIfExists('municipalities');
-    }
+  /**
+   * Reverse the migrations.
+   *
+   * @return void
+   */
+  public function down()
+  {
+    Schema::dropIfExists('municipalities');
+  }
 };
