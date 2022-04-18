@@ -104,15 +104,8 @@ class InstitutionController extends Controller
         $data->logotipo = $nombre_de_archivo;
       }
     }
-    if (!is_null($request->nombre)) {
-      $data->nombre = $request->nombre;
-    }
-    if (!is_null($request->director)) {
-      $data->director = $request->director;
-    }
-    if (!is_null($request->director)) {
-      $data->director = $request->director;
-    }
+    $data->nombre = $request->nombre;
+    $data->director = $request->director;
     $data->save();
     return redirect('institutions');
   }

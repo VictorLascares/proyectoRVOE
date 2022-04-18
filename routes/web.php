@@ -24,9 +24,8 @@ use App\Http\Controllers\SessionController;
 Route::get('/', function () {
     return view('pages.home');
 });
-Route::get('/consult', function () {
-    return view('pages.consult');
-});
+Route::get('/consult', [RequisitionController::class,'searchRequisition']);
+
 Route::get('/dashboard', function () {
     return view('pages.dashboard');
 });

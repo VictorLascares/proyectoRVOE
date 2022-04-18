@@ -7,6 +7,7 @@ use App\Models\Requisition;
 use App\Models\Element;
 use App\Models\Institution;
 use App\Models\Career;
+use App\Models\Municipalitie;
 
 
 class RequisitionController extends Controller
@@ -172,5 +173,19 @@ class RequisitionController extends Controller
         'message' => 'Data successfully destroyed'
       ]);
     }
+  }
+
+  //Funcion para vista de busqueda de RVOE
+  public function searchRequisition(){
+    $institutions = Institution::all();
+    $minicipalities = Municipalitie::all();
+
+    return view('pages.consult');
+  }
+
+  //Funcion para buscar 
+  public function showRequisition(Request $request){
+
+
   }
 }
