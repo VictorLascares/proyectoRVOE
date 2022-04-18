@@ -96,14 +96,16 @@ class InstitutionController extends Controller
   public function update(Request $request, $institution)
   {
     $data = Institution::find($institution);
-    $logotipo = $request->file('logo');
+    $logotipo = $request->file('logotipo');
     $nombre_logo = $data->logotipo;
-    if (!is_null($logotipo)) {
-      unlink(public_path('img/institutions/' . $nombre_logo));
-      $ruta_destino = public_path('img/institutions/');
-      $nombre_de_archivo = time() . '.' . $logotipo->getClientOriginalExtension();
-      $logotipo->move($ruta_destino, $nombre_de_archivo);
-      $data->logotipo = $nombre_de_archivo;
+    if($nombre_logo != null){
+      if (!is_null($logotipo)) {
+        unlink(public_path('img/institutions/' . $nombre_logo));
+        $ruta_destino = public_path('img/institutions/');
+        $nombre_de_archivo = time() . '.' . $logotipo->getClientOriginalExtension();
+        $logotipo->move($ruta_destino, $nombre_de_archivo);
+        $data->logotipo = $nombre_de_archivo;
+      }
     }
     if (!is_null($request->nombre)) {
       $data->nombre = $request->nombre;

@@ -17,8 +17,6 @@ class Requisition extends Model
     protected $fillable = [
         'meta',
         'rvoe',
-        'modalidad',
-        'duracion',
         'estado',
         'career_id',
         'formatoInstalaciones'
