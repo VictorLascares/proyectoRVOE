@@ -37,4 +37,8 @@ class Requisition extends Model
      */
     protected $casts = [
     ];
+
+    public function scopeRvoe($query,$rvoe){
+        return $query->where('rvoe',$rvoe);
+    }
 }

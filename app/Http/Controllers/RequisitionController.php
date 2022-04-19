@@ -188,5 +188,23 @@ class RequisitionController extends Controller
   //Funcion para buscar 
   public function showRequisition(Request $request)
   {
+    if(!is_null($request->rvoe)){
+      $requisition = Requisition::rvoe($request->rvoe)->first();
+      if (!$requisition) {
+        return response()->json([
+          'status' => "No se encontró la requisición"
+        ]);
+      } else {
+        return response()->json([
+          'requisition' => $requisition
+          
+        ]);
+      }
+    }
+  }
+
+  //Funcion para realizar evaluaciónes
+  public function revision(){
+
   }
 }

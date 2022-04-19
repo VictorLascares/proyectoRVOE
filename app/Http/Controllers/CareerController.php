@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Career;
+use App\Models\Area;
 use Illuminate\Support\Facades\DB;
 
 class CareerController extends Controller
@@ -48,10 +49,10 @@ class CareerController extends Controller
   {
     $career = new Career();
     $career->nombre = $request->nombre;
-    $career->titulo = $request->titulo;
     $career->modalidad = $request->modalidad;
     $career->duracion = $request->duracion;
-    $career->area = $request->area;
+    //$area = Area::findbyname($request->input('area'))->first();
+    $career->area_id = $request->area_id;
     $career->institution_id = $request->institution_id;
     $career->save();
     return redirect(route('institutions.show', $request->institution_id));

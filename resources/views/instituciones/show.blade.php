@@ -79,7 +79,11 @@
           <a href="{{ route('careers.show', $career->id) }}"
             class="d-flex justify-content-between text-decoration-none text-dark list-group-item list-group-item-action align-items-center">
             <p class="m-0">{{ $career->nombre }}</p>
-            <p class="m-0">{{ $career->titulo }}</p>
+            @foreach ($areas as $area)
+              @if($career->area_id == $area->id)
+                <p class="m-0">{{ $area->nombre }}</p>
+              @endif
+            @endforeach
           </a>
         @endforeach
       </div>
@@ -111,23 +115,18 @@
                   <label for="careerName">Nombre de la Carrera</label>
                 </div>
                 <div class="form-floating mb-3">
-                  <input type="text" class="form-control" name="titulo" id="careerTitle"
-                    placeholder="Titulo de la Carrera">
-                  <label for="careerTitle">Titulo de la Carrera</label>
-                </div>
-                <div class="form-floating mb-3">
-                  <select id="careerArea" class="form-control" name="area" required>
+                  <select id="careerArea" class="form-control" name="area_id" required>
                     <option selected disabled>-- Seleccione el área de estudios --</option>
-                    <option value="">Arquitectura, Urbanismo y Diseño</option>
-                    <option value="">Artes</option>
-                    <option value="">Agronomía Veterinaria</option>
-                    <option value="">Ciencias Biológicas</option>
-                    <option value="">Ciencias Físico Matemáticas</option>
-                    <option value="">Ciencias Sociales</option>
-                    <option value="">Económico Administrativas</option>
-                    <option value="">Educación</option>
-                    <option value="">Humanidades</option>
-                    <option value="">Ingenierías</option>
+                    <option value="1">Arquitectura, Urbanismo y Diseño</option>
+                    <option value="2">Artes</option>
+                    <option value="3">Agronomía Veterinaria</option>
+                    <option value="4">Ciencias Biológicas</option>
+                    <option value="5">Ciencias Físico Matemáticas</option>
+                    <option value="6">Ciencias Sociales</option>
+                    <option value="7">Económico Administrativas</option>
+                    <option value="8">Educación</option>
+                    <option value="9">Humanidades</option>
+                    <option value="10">Ingenierías</option>
                   </select>
                   <label for="careerArea" class="form-label">Área de Estudio</label>
                 </div>

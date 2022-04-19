@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Institution;
 use App\Models\Career;
+use App\Models\Area;
 use App\Models\Municipality;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Queue\RedisQueue;
@@ -72,7 +73,8 @@ class InstitutionController extends Controller
       ->select('careers.*')
       ->where('institutions.id', $institution->id)
       ->get();
-    return view('instituciones.show', compact('institution', 'careers', 'municipalities'));
+    $areas = Area::all();
+    return view('instituciones.show', compact('institution', 'careers', 'municipalities','areas'));
   }
 
   /**
