@@ -19,7 +19,8 @@ class Career extends Model
         'nombre',
         'titulo',
         'modalidad',
-        'duracion'
+        'duracion',
+        'area'
     ];
 
     /**

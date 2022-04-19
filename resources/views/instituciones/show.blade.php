@@ -44,10 +44,8 @@
             aria-label="Floating label select example">
             <option selected disabled>Selecciona un municipio</option>
             @foreach ($municipalities as $municipality)
-              <option @if ($municipality->id == $institution->municipalitie_id)
-                selected
-              @endif
-                value="{{ $municipality->id }}">{{ $municipality->nombre }}
+              <option @if ($municipality->id == $institution->municipalitie_id) selected @endif value="{{ $municipality->id }}">
+                {{ $municipality->nombre }}
               </option>
             @endforeach
           </select>
@@ -108,12 +106,30 @@
               <form class="mb-2" method="POST" action="{{ route('careers.store', $institution->id) }}">
                 @csrf
                 <div class="form-floating mb-3">
-                  <input type="text" class="form-control" id="carreerName" name="nombre" placeholder="Nombre de la Carrera">
+                  <input type="text" class="form-control" id="carreerName" name="nombre"
+                    placeholder="Nombre de la Carrera">
                   <label for="careerName">Nombre de la Carrera</label>
                 </div>
                 <div class="form-floating mb-3">
-                  <input type="text" class="form-control" name="titulo" id="careerTitle" placeholder="Titulo de la Carrera">
+                  <input type="text" class="form-control" name="titulo" id="careerTitle"
+                    placeholder="Titulo de la Carrera">
                   <label for="careerTitle">Titulo de la Carrera</label>
+                </div>
+                <div class="form-floating mb-3">
+                  <select id="careerArea" class="form-control" name="area" required>
+                    <option selected disabled>-- Seleccione el área de estudios --</option>
+                    <option value="">Arquitectura, Urbanismo y Diseño</option>
+                    <option value="">Artes</option>
+                    <option value="">Agronomía Veterinaria</option>
+                    <option value="">Ciencias Biológicas</option>
+                    <option value="">Ciencias Físico Matemáticas</option>
+                    <option value="">Ciencias Sociales</option>
+                    <option value="">Económico Administrativas</option>
+                    <option value="">Educación</option>
+                    <option value="">Humanidades</option>
+                    <option value="">Ingenierías</option>
+                  </select>
+                  <label for="careerArea" class="form-label">Área de Estudio</label>
                 </div>
                 <div class="row">
                   <div class="col-md-6">
@@ -129,7 +145,8 @@
                   </div>
                   <div class="col-md-6">
                     <div class="form-floating">
-                      <input type="number" class="form-control" name="duracion" id="careerDuration" placeholder="Duración de la Carrera">
+                      <input type="number" class="form-control" name="duracion" id="careerDuration"
+                        placeholder="Duración de la Carrera">
                       <label for="careerDuration">Duración de la Carrera</label>
                     </div>
                   </div>

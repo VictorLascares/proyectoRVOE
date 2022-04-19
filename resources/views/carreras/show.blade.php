@@ -67,7 +67,12 @@
         </button>
       </div>
 
-      <div class="list-group mt-3">
+      <table class="table">
+        <thead>
+          <tr>
+            
+          </tr>
+        </thead>        
         @foreach ($requisitions as $requisition)
           <a href=""
             class="d-flex justify-content-between text-decoration-none text-dark list-group-item list-group-item-action align-items-center">
@@ -75,7 +80,7 @@
             <p class="m-0"></p>
           </a>
         @endforeach
-      </div>
+      </table>
 
       <div class="modal fade" id="careersModal" tabindex="-1" aria-labelledby="careersModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">

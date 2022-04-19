@@ -137,3 +137,19 @@
   ('Honduras de la Sierra','124');
 
 ```
+
+```
+  INSERT INTO areas (nombre)
+  VALUES
+  ('Arquitectura, Urbanismo y Diseño'),
+  ('Artes'),
+  ('Agronomía Veterinaria'),
+  ('Ciencias Biológicas'),
+  ('Ciencias Físico Matemáticas'),
+  ('Ciencias Sociales'),
+  ('Económico Administrativas'),
+  ('Educación'),
+  ('Humanidades'),
+  ('Ingenierías');
+
+```
