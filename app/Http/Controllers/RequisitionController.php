@@ -32,69 +32,70 @@ class RequisitionController extends Controller
     }
   }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        $institutions = Institution::all();
-        $careers = Career::all();
+  /**
+   * Show the form for creating a new resource.
+   *
+   * @return \Illuminate\Http\Response
+   */
+  public function create()
+  {
+    $institutions = Institution::all();
+    $careers = Career::all();
 
-        return response()->json([
-            'institutions'=>$institutions,
-            'careers'=>$careers
-        ]);
+    return response()->json([
+      'institutions' => $institutions,
+      'careers' => $careers
+    ]);
+  }
+
+  /**
+   * Vista para crear la requisicion conociendo la carrera
+   *
+   * @return \Illuminate\Http\Response
+   */
+  public function crearPorCarrera(Request $request, $career_id)
+  {
+    $requisition = new Requisition();
+    $requisition->meta = $request->meta;
+    $requisition->career_id = $career_id;
+    $requisition->save();
+    return redirect(route('careers.show',$career_id));
+  }
+
+  /**
+   * Store a newly created resource in storage.
+   *
+   * @param  \Illuminate\Http\Request  $request
+   * @return \Illuminate\Http\Response
+   */
+  public function store(Request $request)
+  {
+    $requisition = new Requisition();
+    $requisition->meta = $request->meta;
+    $requisition->career_id = $request->career_id;
+    $data = $requisition->save();
+
+    $elementsName = ['Anexo 1', 'Anexo 2', 'Anexo 3', 'Anexo 4', 'Anexo 5'];
+    foreach ($elementsName as $elementName) {
+      $element = new Element();
+      $element->nombre = $elementName;
+      $element->noEvaluacion = 1;
+      $element->requisition_id = $requisition->id;
+      $element->save();
     }
 
-    /**
-     * Vista para crear la requisicion conociendo la carrera
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function crearPorCarrera($career_id)
-    {
-        return response()->json([
-            'career'=>$career_id
-        ]);
+    if (!$data) {
+      return response()->json([
+        'status' => 400,
+        'error' => "something went wrong"
+      ]);
+    } else {
+      return response()->json([
+        'status' => 200,
+        'message' => 'Data successfully saved'
+      ]);
     }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        $requisition = New Requisition();
-        $requisition->meta = $request->meta;
-        $requisition->career_id = $request->career_id;
-        $data = $requisition->save();
-
-        $elementsName = ['Anexo 1', 'Anexo 2', 'Anexo 3', 'Anexo 4', 'Anexo 5'];
-        foreach($elementsName as $elementName){
-            $element = New Element();
-            $element->nombre = $elementName;
-            $element->noEvaluacion = 1;
-            $element->requisition_id = $requisition->id;
-            $element->save();
-        }
-
-        if(!$data){
-            return response()->json([
-                'status'=>400,
-                'error'=>"something went wrong"
-            ]);
-        }
-        else{
-            return response()->json([
-                'status'=>200,
-                'message'=>'Data successfully saved'
-            ]);
-        }
-    }
+  }
 
 
   /**
@@ -176,7 +177,8 @@ class RequisitionController extends Controller
   }
 
   //Funcion para vista de busqueda de RVOE
-  public function searchRequisition(){
+  public function searchRequisition()
+  {
     $institutions = Institution::all();
     $minicipalities = Municipalitie::all();
 
@@ -184,8 +186,7 @@ class RequisitionController extends Controller
   }
 
   //Funcion para buscar 
-  public function showRequisition(Request $request){
-
-
+  public function showRequisition(Request $request)
+  {
   }
 }

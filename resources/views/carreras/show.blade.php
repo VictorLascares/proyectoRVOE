@@ -4,7 +4,7 @@
   <x-navbar />
 @endsection
 @section('main-content')
-<div class="container mb-5 mt-4">
+  <div class="container mb-5 mt-4">
     <div class="d-flex align-items-center justify-content-end gap-2 mb-5">
       <form method="POST" action="{{ route('careers.destroy', $career->id) }}" class="d-flex justify-content-end">
         @csrf
@@ -45,7 +45,8 @@
       </div>
       <div class="col-md-6">
         <div class="form-floating">
-          <input type="number" class="form-control" name="duracion" value="{{ $career->duracion }}" id="careerDuration" placeholder="Duración de la Carrera">
+          <input type="number" class="form-control" name="duracion" value="{{ $career->duracion }}"
+            id="careerDuration" placeholder="Duración de la Carrera">
           <label for="careerDuration">Duración de la Carrera</label>
         </div>
       </div>
@@ -80,22 +81,22 @@
         <div class="modal-dialog modal-dialog-centered">
           <div class="modal-content">
             <div class="modal-header text-center">
-              <h5 class="modal-title text-uppercase w-100" id="careersModalLabel">Nueva Carrera</h5>
+              <h5 class="modal-title text-uppercase w-100" id="careersModalLabel">Nueva Requisición</h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-              <form class="mb-2" method="POST" action="">
+              <form class="mb-2" method="POST" action="{{ url('requisition/create',$career->id)}}">
                 @csrf
                 <div class="form-floating mb-3">
-                  <input type="text" class="form-control" id="carreerName" name="nombre"
-                    placeholder="Nombre de la Carrera">
-                  <label for="careerName">Nombre de la Carrera</label>
+                  <select id="requisitionGoal" class="form-control" name="meta" required>
+                    <option selected disabled>-- Seleccione la Meta --</option>
+                    <option value="solicitud">Solicitud</option>
+                    <option value="domicilio">Domicilio</option>
+                    <option value="planEstudios">Plan de Estudios</option>
+                  </select>
+                  <label for="careerModality" class="form-label">Meta de la Requisición</label>
                 </div>
-                <div class="form-floating">
-                  <input type="text" class="form-control" name="titulo" id="careerTitle" placeholder="Contraseña">
-                  <label for="careerTitle">Titulo de la Carrera</label>
-                </div>
-                <input type="hidden" name="institution_id" value="">
+                <input type="hidden" name="career_id" value="{{$career->id}}">
                 <div class="d-grid mt-4">
                   <button class="btn btn-success text-uppercase" type="submit">Agregar</button>
                 </div>
