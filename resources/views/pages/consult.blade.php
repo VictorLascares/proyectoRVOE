@@ -9,40 +9,65 @@
     <form class="row g-3">
       <div class="col-md-6">
         <div class="form-floating mb-3">
-          <input type="text" class="form-control" id="floatingInput" placeholder="Nombre de la Institución">
-          <label for="floatingInput">Nombre de la Institución</label>
+          <select id="institutionsSelect" class="form-control">
+            <option selected disabled>-- Seleccione una Institución --</option>
+            @foreach ($institutions as $institution)
+                <option value="{{ $institution->id }}">{{$institution->nombre}}</option>
+            @endforeach
+          </select>
+          <label for="institutionSelect" class="form-label">Instituciones</label>
         </div>
       </div>
       <div class="col-md-6">
         <div class="form-floating mb-3">
-          <select id="inputState" class="form-control text-center">
+          <select id="inputState" class="form-control">
             <option selected disabled>-- Seleccione el área de estudios --</option>
+            <option value="">Arquitectura, Urbanismo y Diseño</option>
+            <option value="">Artes</option>
+            <option value="">Agronomía Veterinaria</option>
+            <option value="">Ciencias Biológicas</option>
+            <option value="">Ciencias Físico Matemáticas</option>
+            <option value="">Ciencias Sociales</option>
+            <option value="">Económico Administrativas</option>
+            <option value="">Educación</option>
+            <option value="">Humanidades</option>
+            <option value="">Ingenierías</option>
           </select>
           <label for="inputState" class="form-label"> Area de estudios</label>
         </div>
       </div>
       <div class="col-md-6">
         <div class="form-floating mb-3">
-          <select id="inputState" class="form-control text-center">
+          <select id="municipalitySelect" class="form-control">
             <option selected disabled>-- Seleccione un Municipio --</option>
+            @foreach ($municipalities as $municipality)
+                <option value="{{ $municipality->id }}">{{$municipality->nombre}}</option>
+            @endforeach
           </select>
-          <label for="inputState" class="form-label">Municipio</label>
+          <label for="municipalitySelect" class="form-label">Municipio</label>
         </div>
       </div>
       <div class="col-md-6">
         <div class="form-floating mb-3">
-          <select id="inputState" class="form-control text-center">
+          <select id="inputState" class="form-control">
             <option selected disabled>-- Seleccione la modalidad --</option>
+            <option value="Presencial">Presencial</option>
+            <option value="Distancia">Distancia</option>
+            <option value="Hibrida">Hibrida</option>
           </select>
           <label for="inputState" class="form-label">Modalidad</label>
         </div>
       </div>
       <div class="col-md-6">
         <div class="form-floating mb-3">
-          <select id="inputState" class="form-control text-center">
+          <select id="inputState" class="form-control">
             <option selected disabled>-- Seleccione el status --</option>
             <option>Activo</option>
             <option>Inactivo</option>
+            <option>Latencia</option>
+            <option>Revocado</option>
+            <option>Pendiente</option>
+            <option>Revocado</option>
           </select>
           <label for="inputState" class="form-label">Status</label>
         </div>

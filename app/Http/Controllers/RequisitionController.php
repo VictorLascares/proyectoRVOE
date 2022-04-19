@@ -180,9 +180,9 @@ class RequisitionController extends Controller
   public function searchRequisition()
   {
     $institutions = Institution::all();
-    $minicipalities = Municipalitie::all();
+    $municipalities = Municipalitie::all();
 
-    return view('pages.consult');
+    return view('pages.consult', compact('institutions', 'municipalities'));
   }
 
   //Funcion para buscar 
