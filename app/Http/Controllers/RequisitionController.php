@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Area;
 use Illuminate\Http\Request;
 use App\Models\Requisition;
 use App\Models\Element;
@@ -181,8 +182,9 @@ class RequisitionController extends Controller
   {
     $institutions = Institution::all();
     $municipalities = Municipalitie::all();
+    $areas = Area::all();
 
-    return view('pages.consult', compact('institutions', 'municipalities'));
+    return view('pages.consult', compact('institutions', 'municipalities', 'areas'));
   }
 
   //Funcion para buscar 

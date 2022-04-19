@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Area;
 use Illuminate\Http\Request;
 use App\Models\Institution;
 use App\Models\Career;
-use App\Models\Area;
 use App\Models\Municipality;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Queue\RedisQueue;
@@ -68,12 +68,12 @@ class InstitutionController extends Controller
   {
     $institution = Institution::find($institution);
     $municipalities = Municipality::all();
+    $areas = Area::all();
     $careers = DB::table('institutions')
       ->join('careers', 'institutions.id', '=', 'careers.institution_id')
       ->select('careers.*')
       ->where('institutions.id', $institution->id)
       ->get();
-    $areas = Area::all();
     return view('instituciones.show', compact('institution', 'careers', 'municipalities','areas'));
   }
 

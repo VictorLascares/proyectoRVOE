@@ -4,7 +4,7 @@
   <x-navbar />
 @endsection
 @section('main-content')
-  <div class="container mb-5 mt-4">
+  <div class="container mb-5 mt-4 pb-5">
     <div class="d-flex align-items-center justify-content-end gap-2 mb-5">
       <form method="POST" action="{{ route('careers.destroy', $career->id) }}" class="d-flex justify-content-end">
         @csrf
@@ -70,16 +70,20 @@
       <table class="table">
         <thead>
           <tr>
-            
+            <th scope="col">Meta</th>
+            <th scope="col">Creación</th>
+            <th scope="col">Ultima Actualización</th>
           </tr>
-        </thead>        
-        @foreach ($requisitions as $requisition)
-          <a href=""
-            class="d-flex justify-content-between text-decoration-none text-dark list-group-item list-group-item-action align-items-center">
-            <p class="m-0"></p>
-            <p class="m-0"></p>
-          </a>
-        @endforeach
+        </thead>
+        <tbody>
+          @foreach ($requisitions as $requisition)
+            <tr>
+              <th>{{$requisition->meta}}</th>
+              <th>{{$requisition->created_at}}</th>
+              <th>{{$requisition->updated_at}}</th>
+            </tr>
+          @endforeach
+        </tbody>
       </table>
 
       <div class="modal fade" id="careersModal" tabindex="-1" aria-labelledby="careersModalLabel" aria-hidden="true">
@@ -90,7 +94,7 @@
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-              <form class="mb-2" method="POST" action="{{ url('requisition/create',$career->id)}}">
+              <form class="mb-2" method="POST" action="{{ url('requisition/create', $career->id) }}">
                 @csrf
                 <div class="form-floating mb-3">
                   <select id="requisitionGoal" class="form-control" name="meta" required>
@@ -101,7 +105,7 @@
                   </select>
                   <label for="careerModality" class="form-label">Meta de la Requisición</label>
                 </div>
-                <input type="hidden" name="career_id" value="{{$career->id}}">
+                <input type="hidden" name="career_id" value="{{ $career->id }}">
                 <div class="d-grid mt-4">
                   <button class="btn btn-success text-uppercase" type="submit">Agregar</button>
                 </div>

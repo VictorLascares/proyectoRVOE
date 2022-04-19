@@ -51,7 +51,6 @@ class CareerController extends Controller
     $career->nombre = $request->nombre;
     $career->modalidad = $request->modalidad;
     $career->duracion = $request->duracion;
-    //$area = Area::findbyname($request->input('area'))->first();
     $career->area_id = $request->area_id;
     $career->institution_id = $request->institution_id;
     $career->save();

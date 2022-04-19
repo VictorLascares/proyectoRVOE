@@ -117,16 +117,9 @@
                 <div class="form-floating mb-3">
                   <select id="careerArea" class="form-control" name="area_id" required>
                     <option selected disabled>-- Seleccione el área de estudios --</option>
-                    <option value="1">Arquitectura, Urbanismo y Diseño</option>
-                    <option value="2">Artes</option>
-                    <option value="3">Agronomía Veterinaria</option>
-                    <option value="4">Ciencias Biológicas</option>
-                    <option value="5">Ciencias Físico Matemáticas</option>
-                    <option value="6">Ciencias Sociales</option>
-                    <option value="7">Económico Administrativas</option>
-                    <option value="8">Educación</option>
-                    <option value="9">Humanidades</option>
-                    <option value="10">Ingenierías</option>
+                    @foreach ($areas as $area)
+                      <option value="{{$area->id}}">{{$area->nombre}}</option>
+                    @endforeach
                   </select>
                   <label for="careerArea" class="form-label">Área de Estudio</label>
                 </div>
