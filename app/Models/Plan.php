@@ -15,4 +15,8 @@ class Plan extends Model
         'ponderacion',
         'comentario',
     ];
+
+    public function scopeSearchrequisitionid($query,$requisition_id){
+        return $query->where('requisition_id',$requisition_id);
+    }
 }

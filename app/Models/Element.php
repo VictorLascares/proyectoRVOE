@@ -21,7 +21,7 @@ class Element extends Model
         'existente',
         'observacion'
     ];
-    
+
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -40,9 +40,5 @@ class Element extends Model
 
     public function scopeSearchrequisitionid($query,$requisition_id){
         return $query->where('requisition_id',$requisition_id);
-    }
-
-    public function scopeSearchnoevaluacion($query,$noEvaluacion){
-        return $query->where('noEvaluacion',$noEvaluacion);
     }
 }

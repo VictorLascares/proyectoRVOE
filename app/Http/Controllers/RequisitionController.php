@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Area;
 use Illuminate\Http\Request;
 use App\Models\Requisition;
+use App\Models\Format;
 use App\Models\Element;
+use App\Models\Plan;
 use App\Models\Institution;
 use App\Models\Career;
 use App\Models\Municipality;
@@ -62,6 +64,14 @@ class RequisitionController extends Controller
     $requisition->career_id = $request->career_id;
     $data = $requisition->save();
 
+    $formatsName = ['Plan de estudios', 'Mapa curricular', 'Programas de estudios', 'Estructura e instalaciones', 'Plataforma tecnológica'];
+    foreach ($formatsName as $formatName) {
+      $format = new Format();
+      $format->formato = $formatName;
+      $format->requisition_id = $requisition->id;
+      $format->save();
+    }
+
     return redirect(route('requisition.show',$requisition->id));
   }
 
@@ -77,13 +87,19 @@ class RequisitionController extends Controller
     $data = Requisition::find($requisition);
     $career = Career::find($data->career_id);
     $institution = Institution::find($career->institution_id);
+    $formats = Format::searchrequisitionid($data->id)->get();
+    $elements = Element::searchrequisitionid($data->id)->get();
+    $plans = Plan::searchrequisitionid($data->id)->get();
 
 
     if (isset($data)) {
       return response()->json([
         'requisition' => $data,
         'career' => $career,
-        'institution' => $institution
+        'institution' => $institution,
+        'formatos' => $formats,
+        'elementos' => $elements,
+        'planes' => $plans
       ]);
     } else {
       return response()->json([
