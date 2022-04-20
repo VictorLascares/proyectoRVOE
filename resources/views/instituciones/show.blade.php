@@ -79,7 +79,11 @@
           <a href="{{ route('careers.show', $career->id) }}"
             class="d-flex justify-content-between text-decoration-none text-dark list-group-item list-group-item-action align-items-center">
             <p class="m-0">{{ $career->nombre }}</p>
-            <p class="m-0">{{ $career->titulo }}</p>
+            @foreach ($areas as $area)
+              @if($career->area_id == $area->id)
+                <p class="m-0">{{ $area->nombre }}</p>
+              @endif
+            @endforeach
           </a>
         @endforeach
       </div>
@@ -109,11 +113,6 @@
                   <input type="text" class="form-control" id="carreerName" name="nombre"
                     placeholder="Nombre de la Carrera">
                   <label for="careerName">Nombre de la Carrera</label>
-                </div>
-                <div class="form-floating mb-3">
-                  <input type="text" class="form-control" name="titulo" id="careerTitle"
-                    placeholder="Titulo de la Carrera">
-                  <label for="careerTitle">Titulo de la Carrera</label>
                 </div>
                 <div class="form-floating mb-3">
                   <select id="careerArea" class="form-control" name="area_id" required>

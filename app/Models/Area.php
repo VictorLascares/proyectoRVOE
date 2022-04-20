@@ -13,4 +13,8 @@ class Area extends Model
     protected $fillable = [
         'nombre',
     ];
+
+    public function scopefindbyname($query,$nombre){
+        return $query->where('nombre',$nombre);
+    }
 }

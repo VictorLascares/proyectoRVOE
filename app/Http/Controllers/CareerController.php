@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Career;
+use App\Models\Area;
 use Illuminate\Support\Facades\DB;
 
 class CareerController extends Controller
@@ -48,7 +49,6 @@ class CareerController extends Controller
   {
     $career = new Career();
     $career->nombre = $request->nombre;
-    $career->titulo = $request->titulo;
     $career->modalidad = $request->modalidad;
     $career->duracion = $request->duracion;
     $career->area_id = $request->area_id;
