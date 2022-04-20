@@ -8,7 +8,7 @@ use App\Models\Requisition;
 use App\Models\Element;
 use App\Models\Institution;
 use App\Models\Career;
-use App\Models\Municipalitie;
+use App\Models\Municipality;
 
 
 class RequisitionController extends Controller
@@ -50,20 +50,6 @@ class RequisitionController extends Controller
   }
 
   /**
-   * Vista para crear la requisicion conociendo la carrera
-   *
-   * @return \Illuminate\Http\Response
-   */
-  public function crearPorCarrera(Request $request, $career_id)
-  {
-    $requisition = new Requisition();
-    $requisition->meta = $request->meta;
-    $requisition->career_id = $career_id;
-    $requisition->save();
-    return redirect(route('careers.show',$career_id));
-  }
-
-  /**
    * Store a newly created resource in storage.
    *
    * @param  \Illuminate\Http\Request  $request
@@ -76,7 +62,7 @@ class RequisitionController extends Controller
     $requisition->career_id = $request->career_id;
     $data = $requisition->save();
 
-    $elementsName = ['Anexo 1', 'Anexo 2', 'Anexo 3', 'Anexo 4', 'Anexo 5'];
+    $elementsName = ['Plan de estudios', 'Mapa curricular', 'Programas de estudios', 'Estructura e instalaciones', 'Plataforma tecnológica'];
     foreach ($elementsName as $elementName) {
       $element = new Element();
       $element->nombre = $elementName;
@@ -85,17 +71,7 @@ class RequisitionController extends Controller
       $element->save();
     }
 
-    if (!$data) {
-      return response()->json([
-        'status' => 400,
-        'error' => "something went wrong"
-      ]);
-    } else {
-      return response()->json([
-        'status' => 200,
-        'message' => 'Data successfully saved'
-      ]);
-    }
+    return redirect(route('requisition.show',$requisition->id));
   }
 
 
@@ -108,9 +84,21 @@ class RequisitionController extends Controller
   public function show($requisition)
   {
     $data = Requisition::find($requisition);
+    $career = Career::find($data->career_id);
+    $institution = Institution::find($career->institution_id);
+    $firstElements = Element::searchrequisitionid($data->id)->searchnoevaluacion('1')->get();
+    $secondElements = Element::searchrequisitionid($data->id)->searchnoevaluacion('2')->get();
+    $thirdElements = Element::searchrequisitionid($data->id)->searchnoevaluacion('3')->get();
+
+
     if (isset($data)) {
       return response()->json([
-        'requisition' => $data
+        'requisition' => $data,
+        'career' => $career,
+        'institution' => $institution,
+        'elementos evaluacion 1' => $firstElements,
+        'elementos evaluacion 2' => $secondElements,
+        'elementos evaluacion 3' => $thirdElements
       ]);
     } else {
       return response()->json([
@@ -181,14 +169,14 @@ class RequisitionController extends Controller
   public function searchRequisition()
   {
     $institutions = Institution::all();
-    $municipalities = Municipalitie::all();
+    $municipalities = Municipality::all();
     $areas = Area::all();
 
     return view('pages.consult', compact('institutions', 'municipalities', 'areas'));
   }
 
-  //Funcion para buscar 
-  public function showRequisition(Request $request)
+  //Funcion para buscar RVOE
+  public function showRVOE(Request $request)
   {
     if(!is_null($request->rvoe)){
       $requisition = Requisition::rvoe($request->rvoe)->first();
@@ -208,5 +196,13 @@ class RequisitionController extends Controller
   //Funcion para realizar evaluaciónes
   public function revision(){
 
+  }
+
+  //Funcion para ver las requisiciones
+  public function showRequisition(){
+    $institutions = Institution::all();
+    $careers = Career::all();
+
+    return view('pages.dashboard');
   }
 }

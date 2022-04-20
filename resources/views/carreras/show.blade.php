@@ -94,9 +94,10 @@
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-              <form class="mb-2" method="POST" action="{{ url('requisition/create', $career->id) }}">
+              <form class="mb-2" method="POST" action="{{ route('requisition.store') }}">
                 @csrf
                 <div class="form-floating mb-3">
+                  <input type="hidden" value="{{$career->id}}" name="career_id">
                   <select id="requisitionGoal" class="form-control" name="meta" required>
                     <option selected disabled>-- Seleccione la Meta --</option>
                     <option value="solicitud">Solicitud</option>

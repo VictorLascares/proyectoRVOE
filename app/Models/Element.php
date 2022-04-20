@@ -41,4 +41,12 @@ class Element extends Model
      */
     protected $casts = [
     ];
+
+    public function scopeSearchrequisitionid($query,$requisition_id){
+        return $query->where('requisition_id',$requisition_id);
+    }
+
+    public function scopeSearchnoevaluacion($query,$noEvaluacion){
+        return $query->where('noEvaluacion',$noEvaluacion);
+    }
 }

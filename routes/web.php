@@ -25,10 +25,7 @@ Route::get('/', function () {
     return view('pages.home');
 });
 Route::get('/consult', [RequisitionController::class,'searchRequisition']);
-
-Route::get('/dashboard', function () {
-    return view('pages.dashboard');
-});
+Route::get('/dashboard', [RequisitionController::class,'showRequisition']);
 
 
 //All secure URL's
