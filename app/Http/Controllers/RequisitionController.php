@@ -62,15 +62,6 @@ class RequisitionController extends Controller
     $requisition->career_id = $request->career_id;
     $data = $requisition->save();
 
-    $elementsName = ['Plan de estudios', 'Mapa curricular', 'Programas de estudios', 'Estructura e instalaciones', 'Plataforma tecnológica'];
-    foreach ($elementsName as $elementName) {
-      $element = new Element();
-      $element->nombre = $elementName;
-      $element->noEvaluacion = 1;
-      $element->requisition_id = $requisition->id;
-      $element->save();
-    }
-
     return redirect(route('requisition.show',$requisition->id));
   }
 
@@ -86,19 +77,13 @@ class RequisitionController extends Controller
     $data = Requisition::find($requisition);
     $career = Career::find($data->career_id);
     $institution = Institution::find($career->institution_id);
-    $firstElements = Element::searchrequisitionid($data->id)->searchnoevaluacion('1')->get();
-    $secondElements = Element::searchrequisitionid($data->id)->searchnoevaluacion('2')->get();
-    $thirdElements = Element::searchrequisitionid($data->id)->searchnoevaluacion('3')->get();
 
 
     if (isset($data)) {
       return response()->json([
         'requisition' => $data,
         'career' => $career,
-        'institution' => $institution,
-        'elementos evaluacion 1' => $firstElements,
-        'elementos evaluacion 2' => $secondElements,
-        'elementos evaluacion 3' => $thirdElements
+        'institution' => $institution
       ]);
     } else {
       return response()->json([

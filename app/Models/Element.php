@@ -17,15 +17,11 @@ class Element extends Model
      * @var string[]
      */
     protected $fillable = [
-        'nombre',
-        'valido',
-        'observacion',
-        'noEvaluacion',
-        'ponderacion',
-        'noRevision',
-        'requisition_id'
+        'elemeto',
+        'existente',
+        'observacion'
     ];
-
+    
     /**
      * The attributes that should be hidden for serialization.
      *
