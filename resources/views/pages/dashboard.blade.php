@@ -6,13 +6,13 @@
 @section('main-content')
   <main>
     <div class="new-request">
-      <img data-bs-target="#loginModal" data-bs-toggle="modal" src="{{ asset('img/nuevo.svg') }}" alt="Icono de nuevo">
+      <img data-bs-target="#requisitionModal" data-bs-toggle="modal" src="{{ asset('img/nuevo.svg') }}" alt="Icono de nuevo">
     </div>
-    <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="requisitionModal" tabindex="-1" aria-labelledby="requisitionModal" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-header text-center">
-            <h5 class="modal-title text-uppercase w-100" id="exampleModalLabel">Nueva Solicitud</h5>
+            <h5 class="modal-title text-uppercase w-100">Nueva Requisicion</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">

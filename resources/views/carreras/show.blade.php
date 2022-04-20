@@ -78,9 +78,9 @@
         <tbody>
           @foreach ($requisitions as $requisition)
             <tr>
-              <th>{{$requisition->meta}}</th>
-              <th>{{$requisition->created_at}}</th>
-              <th>{{$requisition->updated_at}}</th>
+              <td>{{$requisition->meta}}</td>
+              <td>{{$requisition->created_at}}</td>
+              <td>{{$requisition->updated_at}}</td>
             </tr>
           @endforeach
         </tbody>
