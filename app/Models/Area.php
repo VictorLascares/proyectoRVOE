@@ -14,7 +14,7 @@ class Area extends Model
         'nombre',
     ];
 
-    public function scopefindbyname($query,$nombre){
+    public function scopeFindbyname($query,$nombre){
         return $query->where('nombre',$nombre);
     }
 }

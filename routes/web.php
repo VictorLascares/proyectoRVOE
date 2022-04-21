@@ -9,6 +9,8 @@ use App\Http\Controllers\RequisitionController;
 use App\Http\Controllers\ElementController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\SessionController;
+use App\Http\Controllers\FormatController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -24,24 +26,12 @@ use App\Http\Controllers\SessionController;
 Route::get('/', function () {
     return view('pages.home');
 });
-Route::get('/consult', [RequisitionController::class,'searchRequisition']);
-Route::get('/dashboard', [RequisitionController::class,'showRequisition']);
 
 
 //All secure URL's
 //****************USER ROUTES*****************
 //CRUD USER
 Route::resource('users', UserController::class);
-//CREATE USER
-//Route::post('user', [UserController::class,'store']);
-//SELECT USERS
-//Route::get('users', [UserController::class,'index']);
-//UPDATE USER
-//Route::put('user/{id}', [UserController::class,'update']);
-//VIEW USER
-//Route::get('user/{id}', [UserController::class,'show']);
-//DELETE USER
-//Route::delete('user/{id}', [UserController::class,'destroy']);
 //UPDATE PASSWORD
 Route::put('user/update/{id}',[UserController::class,'updatePSW']);
 //LOGOUT USER
@@ -52,34 +42,32 @@ Route::post('login',[SessionController::class,'login']);
 //****************CAREER ROUTES*****************
 //CRUD CAREER
 Route::resource('careers', CareerController::class);
-//SELECT CAREER
-//Route::get('careers', [CareerController::class,'index']);
-//CREATE CAREER
-//Route::post('career', [CareerController::class,'store']);
-//VIEW CAREER
-//Route::get('career/{id}', [CareerController::class,'show']);
-//UPDATE CAREER
-//Route::put('career/{id}', [CareerController::class,'update']);
-//DELETE CAREER
-//Route::put('career/{id}', [CareerController::class,'update']);
 
 
 //****************INSTITUTION ROUTES*****************
 //CRUD INSTITUTION
 Route::resource('institutions', InstitutionController::class);
-//CREATE INSTITUTION
-//Route::post('institution', [InstitutionController::class,'store']);
 
 
 //****************REQUISITION ROUTES*****************
 //CRUD REQUISITION
 Route::resource('requisition',RequisitionController::class);
+
 Route::post('requisition/create/{career_id}', [RequisitionController::class,'crearPorCarrera']);
 
-//****************ELEMENT ROUTES*****************
-//CRUD ELEMENT
-Route::resource('element',ElementController::class);
-    
+//Ruta para consultar rvoe
+Route::get('/consult', [RequisitionController::class,'searchRequisition']);
+//Ruta para ver las requisiciones en el inicio
+Route::get('/dashboard', [RequisitionController::class,'showRequisition']);
+
+
+
+
+//****************FORMATS ROUTES*****************
+//Ruta para realizar evaluación de los formatos
+Route::get('/evaluate/formats/{requisition_id}', [FormatController::class,'evaluateFormats']);
+//Ruta para actualizar los formatos
+Route::get('/update/formats', [FormatController::class,'updateFormats']);
 
 
 //*************************AUTH USER**************************

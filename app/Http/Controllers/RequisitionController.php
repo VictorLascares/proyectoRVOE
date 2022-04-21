@@ -23,16 +23,12 @@ class RequisitionController extends Controller
   public function index()
   {
     $requisitions = Requisition::all();
+    $careers = Career::all();
 
-    if (isset($requisitions)) {
-      return response()->json([
-        'requisitions' => $requisitions
-      ]);
-    } else {
-      return response()->json([
-        'error' => 'Data not found'
-      ]);
-    }
+    $institutions = Institution::all();
+    $careers = Career::all();
+
+    return view('pages.dashboard');
   }
 
   /**
@@ -87,7 +83,6 @@ class RequisitionController extends Controller
     $data = Requisition::find($requisition);
     $career = Career::find($data->career_id);
     $institution = Institution::find($career->institution_id);
-    $formats = Format::searchrequisitionid($data->id)->get();
     $elements = Element::searchrequisitionid($data->id)->get();
     $plans = Plan::searchrequisitionid($data->id)->get();
 
@@ -96,10 +91,7 @@ class RequisitionController extends Controller
       return response()->json([
         'requisition' => $data,
         'career' => $career,
-        'institution' => $institution,
-        'formatos' => $formats,
-        'elementos' => $elements,
-        'planes' => $plans
+        'institution' => $institution
       ]);
     } else {
       return response()->json([
@@ -166,7 +158,7 @@ class RequisitionController extends Controller
     }
   }
 
-  //Funcion para vista de busqueda de RVOE
+  //Funcion para vista de busqueda de RVOE ---PENDIENTE
   public function searchRequisition()
   {
     $institutions = Institution::all();
@@ -176,7 +168,7 @@ class RequisitionController extends Controller
     return view('pages.consult', compact('institutions', 'municipalities', 'areas'));
   }
 
-  //Funcion para buscar RVOE
+  //Funcion para buscar RVOE ---PENDIENTE
   public function showRVOE(Request $request)
   {
     if(!is_null($request->rvoe)){
@@ -193,17 +185,5 @@ class RequisitionController extends Controller
       }
     }
   }
-
-  //Funcion para realizar evaluaciónes
-  public function revision(){
-
-  }
-
-  //Funcion para ver las requisiciones
-  public function showRequisition(){
-    $institutions = Institution::all();
-    $careers = Career::all();
-
-    return view('pages.dashboard');
-  }
+  
 }
