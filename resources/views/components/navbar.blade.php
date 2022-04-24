@@ -14,7 +14,7 @@
           </li>
         @else
           <li class="nav-item text-center">
-            <a class="nav-link text-uppercase" href="{{ url('dashboard') }}">Solicitudes</span></a>
+            <a class="nav-link text-uppercase" href="{{ url('iniciar') }}">Solicitudes</span></a>
           </li>
           <li class="nav-item text-center">
             <a class="nav-link text-uppercase" href="{{ url('institutions') }}">Instituciones</span></a>

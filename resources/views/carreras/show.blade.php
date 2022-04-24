@@ -27,18 +27,24 @@
       </div>
       <div class="col-md-6">
         <div class="form-floating">
-          <input name="titulo" type="text" class="form-control" id="careerTitle" placeholder="Titulo de la Carrera"
-            value="{{ $career->titulo }}">
-          <label for="institutionName">Titulo de la Carrera</label>
+          <select id="careerArea" class="form-control" name="area_id" required>
+            <option selected disabled>-- Seleccione el Area --</option>
+            @foreach ($areas as $area)
+              <option @if ($area->id == $career->area_id) selected @endif value="{{ $area->id }}">
+                {{ $area->nombre }}
+              </option>
+            @endforeach
+          </select>
+          <label for="careerArea" class="form-label">Area de la Carrera</label>
         </div>
       </div>
       <div class="col-md-6">
         <div class="form-floating mb-3">
           <select id="careerModality" class="form-control" name="modalidad" required>
             <option selected disabled>-- Seleccione la Modalidad --</option>
-            <option value="Presencial">Presencial</option>
-            <option value="Distancia">Distancia</option>
-            <option value="Hibrida">Hibrida</option>
+            <option value="Presencial" @if ($career->modalidad == 'Presencial') selected @endif>Presencial</option>
+            <option value="Distancia" @if ($career->modalidad == 'Distancia') selected @endif>Distancia</option>
+            <option value="Hibrida" @if ($career->modalidad == 'Hibrida') selected @endif>Hibrida</option>
           </select>
           <label for="careerModality" class="form-label">Modalidad de la Carrera</label>
         </div>
