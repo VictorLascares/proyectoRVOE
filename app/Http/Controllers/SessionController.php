@@ -31,7 +31,11 @@ class SessionController extends Controller
             $password_bd = $usuario->contrasenia;
             if(Hash::check($password, $password_bd)){
                 Auth::login($usuario);
-                return redirect('iniciar', );
+                if($usuario->tipoUsuario == 'administrador'){
+                  return redirect('users');
+                } else {
+                  return redirect('iniciar');
+                }
             }else{
                 $error = 'Usuario o Password incorrecto.';
                 return redirect('/')->with(compact('error'));
