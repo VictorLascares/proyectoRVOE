@@ -80,8 +80,8 @@
             class="d-flex justify-content-between text-decoration-none text-dark list-group-item list-group-item-action align-items-center">
             <p class="m-0">{{ $career->nombre }}</p>
             @foreach ($areas as $area)
-              @if($career->area_id == $area->id)
-                <p class="m-0">{{ $area->nombre }}</p>
+              @if ($area->id == $career->area_id)
+                <p class="m-0">{{ $area->nombre }}</p>  
               @endif
             @endforeach
           </a>

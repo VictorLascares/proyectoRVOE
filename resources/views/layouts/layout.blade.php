@@ -404,7 +404,6 @@
     @yield('main-content')
   </main>
   @yield('footer')
+  <script src="{{ asset('js/app.js') }}" defer></script>
 </body>
-<script src="{{ asset('js/app.js') }}" defer></script>
-
 </html>

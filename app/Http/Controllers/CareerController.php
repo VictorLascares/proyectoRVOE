@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Area;
 use Illuminate\Http\Request;
 use App\Models\Career;
-use App\Models\Area;
 use Illuminate\Support\Facades\DB;
 
 class CareerController extends Controller
@@ -65,13 +65,14 @@ class CareerController extends Controller
    */
   public function show($career)
   {
+    $areas= Area::all();
     $career = Career::find($career);
     $requisitions = DB::table('careers')
       ->join('requisitions', 'careers.id', '=', 'requisitions.career_id')
       ->select('requisitions.*')
       ->where('careers.id', $career->id)
       ->get();
-    return view('carreras.show', compact('career','requisitions'));
+    return view('carreras.show', compact('career','requisitions', 'areas'));
   }
 
 

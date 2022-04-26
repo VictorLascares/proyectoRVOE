@@ -83,7 +83,7 @@ class FormatController extends Controller
                 $elementsName = ['Piso', 'Laboratorio', 'Computadoras', 'Sanitizantes', 'Baños limpios'];
                 foreach ($elementsName as $elementName) {
                     $element = new Element();
-                    $element->elemeto = $elementName;
+                    $element->elemento = $elementName;
                     $element->requisition_id = $requisition->id;
                     $element->save();
                 }   

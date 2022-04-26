@@ -17,7 +17,7 @@ class Element extends Model
      * @var string[]
      */
     protected $fillable = [
-        'elemeto',
+        'elemento',
         'existente',
         'observacion'
     ];
@@ -43,6 +43,6 @@ class Element extends Model
     }
 
     public function scopeSearchElemento($query,$element){
-        return $query->where('elemeto',$element);
+        return $query->where('elemento',$element);
     }
 }
