@@ -16,7 +16,6 @@ return new class extends Migration
     Schema::create('careers', function (Blueprint $table) {
       $table->id();
       $table->string('nombre')->nullable(false);
-      $table->string('titulo')->nullable(false);
       $table->enum('modalidad', ['Presencial', 'Distancia', 'Hibrida'])->nullable(false);
       $table->integer('duracion')->nullable(false);
       $table->foreignId('institution_id')->constrained()->onUpdate('cascade')->onDelete('cascade');

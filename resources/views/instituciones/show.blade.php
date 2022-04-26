@@ -115,11 +115,6 @@
                   <label for="careerName">Nombre de la Carrera</label>
                 </div>
                 <div class="form-floating mb-3">
-                  <input type="text" class="form-control" name="titulo" id="careerTitle"
-                    placeholder="Titulo de la Carrera">
-                  <label for="careerTitle">Titulo de la Carrera</label>
-                </div>
-                <div class="form-floating mb-3">
                   <select id="careerArea" class="form-control" name="area_id" required>
                     <option selected disabled>-- Seleccione el área de estudios --</option>
                     @foreach ($areas as $area)

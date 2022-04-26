@@ -50,6 +50,7 @@ class InstitutionController extends Controller
       $imagen->move($ruta_destino, $nombre_de_archivo);
       $institution->logotipo = $nombre_de_archivo;
     }
+
     $institution->nombre = $request->nombre;
     $institution->director = $request->director;
     $institution->municipalitie_id = $request->municipalitie_id;
@@ -103,6 +104,13 @@ class InstitutionController extends Controller
     if($nombre_logo != null){
       if (!is_null($logotipo)) {
         unlink(public_path('img/institutions/' . $nombre_logo));
+        $ruta_destino = public_path('img/institutions/');
+        $nombre_de_archivo = time() . '.' . $logotipo->getClientOriginalExtension();
+        $logotipo->move($ruta_destino, $nombre_de_archivo);
+        $data->logotipo = $nombre_de_archivo;
+      }
+    }else{
+      if (!is_null($logotipo)) {
         $ruta_destino = public_path('img/institutions/');
         $nombre_de_archivo = time() . '.' . $logotipo->getClientOriginalExtension();
         $logotipo->move($ruta_destino, $nombre_de_archivo);

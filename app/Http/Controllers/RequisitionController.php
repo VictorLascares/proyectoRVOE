@@ -5,10 +5,13 @@ namespace App\Http\Controllers;
 use App\Models\Area;
 use Illuminate\Http\Request;
 use App\Models\Requisition;
+use App\Models\Format;
 use App\Models\Element;
+use App\Models\Plan;
 use App\Models\Institution;
 use App\Models\Career;
-use App\Models\Municipalitie;
+use App\Models\Municipality;
+use Illuminate\Support\Facades\Auth;
 
 
 class RequisitionController extends Controller
@@ -21,8 +24,9 @@ class RequisitionController extends Controller
   public function index()
   {
     $requisitions = Requisition::all();
-    $institutions=Institution::all();
-    return view('requisiciones.index', compact('requisitions', 'institutions'));
+    $careers = Career::all();
+    $institutions = Institution::all();
+    return view('requisiciones.index', compact('requisitions', 'careers', 'institutions'));
   }
 
   /**
@@ -42,20 +46,6 @@ class RequisitionController extends Controller
   }
 
   /**
-   * Vista para crear la requisicion conociendo la carrera
-   *
-   * @return \Illuminate\Http\Response
-   */
-  public function crearPorCarrera(Request $request, $career_id)
-  {
-    $requisition = new Requisition();
-    $requisition->meta = $request->meta;
-    $requisition->career_id = $career_id;
-    $requisition->save();
-    return redirect(route('careers.show',$career_id));
-  }
-
-  /**
    * Store a newly created resource in storage.
    *
    * @param  \Illuminate\Http\Request  $request
@@ -68,26 +58,15 @@ class RequisitionController extends Controller
     $requisition->career_id = $request->career_id;
     $data = $requisition->save();
 
-    $elementsName = ['Anexo 1', 'Anexo 2', 'Anexo 3', 'Anexo 4', 'Anexo 5'];
-    foreach ($elementsName as $elementName) {
-      $element = new Element();
-      $element->nombre = $elementName;
-      $element->noEvaluacion = 1;
-      $element->requisition_id = $requisition->id;
-      $element->save();
+    $formatsName = ['Plan de estudios', 'Mapa curricular', 'Programas de estudios', 'Estructura e instalaciones', 'Plataforma tecnológica'];
+    foreach ($formatsName as $formatName) {
+      $format = new Format();
+      $format->formato = $formatName;
+      $format->requisition_id = $requisition->id;
+      $format->save();
     }
 
-    if (!$data) {
-      return response()->json([
-        'status' => 400,
-        'error' => "something went wrong"
-      ]);
-    } else {
-      return response()->json([
-        'status' => 200,
-        'message' => 'Data successfully saved'
-      ]);
-    }
+    return redirect(route('careers.show',$request->career_id));
   }
 
 
@@ -99,16 +78,26 @@ class RequisitionController extends Controller
    */
   public function show($requisition)
   {
-    $data = Requisition::find($requisition);
-    if (isset($data)) {
-      return response()->json([
-        'requisition' => $data
-      ]);
-    } else {
-      return response()->json([
-        'error' => 'Data not found'
-      ]);
-    }
+    if(Auth::user() != null){
+      $data = Requisition::find($requisition);
+      $career = Career::find($data->career_id);
+      $institution = Institution::find($career->institution_id);
+      $elements = Element::searchrequisitionid($data->id)->get();
+      $plans = Plan::searchrequisitionid($data->id)->get();
+
+
+      if (isset($data)) {
+        return response()->json([
+          'requisition' => $data,
+          'career' => $career,
+          'institution' => $institution
+        ]);
+      } else {
+        return response()->json([
+          'error' => 'Data not found'
+        ]);
+      }
+    }    
   }
 
   /**
@@ -169,18 +158,32 @@ class RequisitionController extends Controller
     }
   }
 
-  //Funcion para vista de busqueda de RVOE
+  //Funcion para vista de busqueda de RVOE ---PENDIENTE
   public function searchRequisition()
   {
     $institutions = Institution::all();
-    $municipalities = Municipalitie::all();
+    $municipalities = Municipality::all();
     $areas = Area::all();
 
     return view('pages.consult', compact('institutions', 'municipalities', 'areas'));
   }
 
-  //Funcion para buscar 
-  public function showRequisition(Request $request)
+  //Funcion para buscar RVOE ---PENDIENTE
+  public function showRVOE(Request $request)
   {
+    if(!is_null($request->rvoe)){
+      $requisition = Requisition::rvoe($request->rvoe)->first();
+      if (!$requisition) {
+        return response()->json([
+          'status' => "No se encontró la requisición"
+        ]);
+      } else {
+        return response()->json([
+          'requisition' => $requisition
+          
+        ]);
+      }
+    }
   }
+  
 }

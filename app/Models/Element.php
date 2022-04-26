@@ -17,13 +17,9 @@ class Element extends Model
      * @var string[]
      */
     protected $fillable = [
-        'nombre',
-        'valido',
-        'observacion',
-        'noEvaluacion',
-        'ponderacion',
-        'noRevision',
-        'requisition_id'
+        'elemento',
+        'existente',
+        'observacion'
     ];
 
     /**
@@ -41,4 +37,12 @@ class Element extends Model
      */
     protected $casts = [
     ];
+
+    public function scopeSearchrequisitionid($query,$requisition_id){
+        return $query->where('requisition_id',$requisition_id);
+    }
+
+    public function scopeSearchElemento($query,$element){
+        return $query->where('elemento',$element);
+    }
 }

@@ -17,10 +17,8 @@ class Career extends Model
      */
     protected $fillable = [
         'nombre',
-        'titulo',
         'modalidad',
-        'duracion',
-        'area'
+        'duracion'
     ];
 
     /**
