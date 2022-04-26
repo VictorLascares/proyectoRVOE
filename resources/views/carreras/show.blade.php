@@ -100,7 +100,7 @@
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-              <form class="mb-2" method="POST" action="{{ route('requisition.store') }}">
+              <form class="mb-2" method="POST" action="{{ route('requisitions.store') }}">
                 @csrf
                 <div class="form-floating mb-3">
                   <input type="hidden" value="{{$career->id}}" name="career_id">

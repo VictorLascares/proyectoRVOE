@@ -25,9 +25,9 @@ class RequisitionController extends Controller
   {
     $requisitions = Requisition::all();
     $careers = Career::all();
-    $institutions = Institution::all();
-
-    return view('pages.dashboard');
+    $institutions = Institution::all();iew('pages.dashboard');
+    
+    return view('requisiciones.index', compact('requisitions', 'careers', 'institutions'));
   }
 
   /**
@@ -67,7 +67,7 @@ class RequisitionController extends Controller
       $format->save();
     }
 
-    return redirect(route('requisition.show',$requisition->id));
+    return redirect(route('careers.show',$request->career_id));
   }
 
 

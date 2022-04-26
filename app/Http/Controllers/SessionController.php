@@ -7,14 +7,14 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Models\Institution;
+use App\Models\Requisition;
 
 class SessionController extends Controller
 {
   public function iniciar()
   {
-    $institutions=Institution::all();
     $nombre = Auth::user()->nombres;
-    return view('pages.dashboard', compact('nombre','institutions'));
+    return redirect('requisitions');
   }
 
   public function salir()
