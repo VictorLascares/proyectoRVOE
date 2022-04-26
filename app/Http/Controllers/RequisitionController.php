@@ -25,8 +25,7 @@ class RequisitionController extends Controller
   {
     $requisitions = Requisition::all();
     $careers = Career::all();
-    $institutions = Institution::all();iew('pages.dashboard');
-    
+    $institutions = Institution::all();
     return view('requisiciones.index', compact('requisitions', 'careers', 'institutions'));
   }
 
