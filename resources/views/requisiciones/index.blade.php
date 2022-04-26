@@ -4,6 +4,28 @@
   <x-navbar />
 @endsection
 @section('main-content')
+  <div class="container-fluid py-4">
+    <div class="row row-cols-1 row-cols-md-5 g-4">
+      @foreach ($requisitions as $requisition)
+        <div class="col">
+          <a href="" class="text-decoration-none text-dark">
+            <div class="card
+              @switch($requisition->estado)
+                @case('pendiente')
+                @case('latencia')
+                  bg-warning
+                  @break     
+              @endswitch"
+            >
+              <div class="card-body">
+                <p class="card-text text-center text-uppercase">{{$requisition->estado}}</p>
+              </div>
+            </div>            
+          </a>
+        </div>
+      @endforeach
+    </div>
+  </div>
   <div class="new-request">
     <img data-bs-target="#loginModal" data-bs-toggle="modal" src="{{ asset('img/nuevo.svg') }}" alt="Icono de nuevo">
   </div>

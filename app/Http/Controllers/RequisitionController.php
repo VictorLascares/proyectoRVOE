@@ -21,16 +21,8 @@ class RequisitionController extends Controller
   public function index()
   {
     $requisitions = Requisition::all();
-
-    if (isset($requisitions)) {
-      return response()->json([
-        'requisitions' => $requisitions
-      ]);
-    } else {
-      return response()->json([
-        'error' => 'Data not found'
-      ]);
-    }
+    $institutions=Institution::all();
+    return view('requisiciones.index', compact('requisitions', 'institutions'));
   }
 
   /**
