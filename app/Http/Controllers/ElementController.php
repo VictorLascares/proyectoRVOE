@@ -38,56 +38,18 @@ class ElementController extends Controller
         if($requisition->noEvaluacion == 4 && $requisition->estado == 'pendiente'){
             $imagen = $request->formatoInstalaciones;
             if (!is_null($imagen)){
-                $elementsName = ['Piso', 'Laboratorio', 'Computadoras', 'Sanitizantes', 'Baños limpios'];
-                foreach ($elementsName as $elementName) {
+                for ($elementName = 1; $elementName < 53; $elementName++) {
                     $element = Element::searchElemento($elementName)->searchrequisitionid($requisition->id)->first();
-                    switch($elementName){
-                        case 'Piso':
-                            $element->existente = $request->elemento1;
-                            if($request->elemento1 == 'false'){
-                                $requisition->estado = 'rechazado';
-                            }
-                            if(!is_null($request->elemento1j)){
-                                $element->observacion = $request->elemento1j;
-                            }
-                            break;
-                        case 'Laboratorio':
-                            $element->existente = $request->elemento2;
-                            if($request->elemento2 == 'false'){
-                                $requisition->estado = 'rechazado';
-                            }  
-                            if(!is_null($request->elemento2j)){
-                                $element->observacion = $request->elemento2j;
-                            }                      
-                            break;
-                        case 'Computadoras':
-                            $element->existente = $request->elemento3;
-                            if($request->elemento3 == 'false'){
-                                $requisition->estado = 'rechazado';
-                            }   
-                            if(!is_null($request->elemento3j)){
-                                $element->observacion = $request->elemento2j;
-                            }                     
-                            break;
-                        case 'Sanitizantes':
-                            $element->existente = $request->elemento4;
-                            if($request->elemento4 == 'false'){
-                                $requisition->estado = 'rechazado';
-                            }                        
-                            if(!is_null($request->elemento4j)){
-                                $element->observacion = $request->elemento4j;
-                            }
-                            break; 
-                        case 'Baños limpios':
-                            $element->existente = $request->elemento5;
-                            if($request->elemento5 == 'false'){
-                                $requisition->estado = 'rechazado';
-                            }                      
-                            if(!is_null($request->elemento5j)){
-                                $element->observacion = $request->elemento5j;
-                            }  
-                            break;       
-                    }                
+                    $elemento = 'elemento'.$elementName;
+                    $element->existente = $request->input($elemento);
+                    $noRequired = [7,12,14,15,17,18,19,20,21,22,23,24,25,26,27,28,31,32,33,34,35,36,37,38,39,41,48,49,50];
+                    if($request->input($elemento) == 'false' && !in_array($elementName,$noRequired)){
+                        $requisition->estado = 'rechazado';
+                    }
+                    $elementoj = $elemento.'j';
+                    if(!is_null($request->input($elementoj))){
+                        $element->observacion = $request->input($elementoj);
+                    }
                     $element->save();
                 }
                 $requisition->noEvaluacion = $requisition->noEvaluacion + 1;

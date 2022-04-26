@@ -80,8 +80,7 @@ class FormatController extends Controller
                 $format->save();
             }
             if($requisition->noEvaluacion == '3'){
-                $elementsName = ['Piso', 'Laboratorio', 'Computadoras', 'Sanitizantes', 'Baños limpios'];
-                foreach ($elementsName as $elementName) {
+                for ($elementName = 1; $elementName < 53; $elementName++) {
                     $element = new Element();
                     $element->elemento = $elementName;
                     $element->requisition_id = $requisition->id;

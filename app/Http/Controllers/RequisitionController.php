@@ -25,9 +25,7 @@ class RequisitionController extends Controller
   {
     $requisitions = Requisition::all();
     $careers = Career::all();
-
     $institutions = Institution::all();
-    $careers = Career::all();
 
     return view('pages.dashboard');
   }
