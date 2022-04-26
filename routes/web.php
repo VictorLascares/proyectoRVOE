@@ -67,7 +67,14 @@ Route::get('/dashboard', [RequisitionController::class,'showRequisition']);
 //Ruta para realizar evaluación de los formatos
 Route::get('/evaluate/formats/{requisition_id}', [FormatController::class,'evaluateFormats']);
 //Ruta para actualizar los formatos
-Route::get('/update/formats', [FormatController::class,'updateFormats']);
+Route::post('/update/formats', [FormatController::class,'updateFormats']);
+
+
+//****************ELEMENTS ROUTES*****************
+//Ruta para realizar evaluación de los elementos
+Route::get('/evaluate/elements/{requisition_id}', [ElementController::class,'evaluateElements']);
+//Ruta para actualizar los elementos
+Route::post('/update/elements', [ElementController::class,'updateElements']);
 
 
 //*************************AUTH USER**************************

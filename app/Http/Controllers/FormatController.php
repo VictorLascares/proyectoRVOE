@@ -7,6 +7,8 @@ use App\Models\Requisition;
 use App\Models\Format;
 use App\Models\Institution;
 use App\Models\Career;
+use App\Models\Element;
+
 
 class FormatController extends Controller
 {
@@ -76,6 +78,15 @@ class FormatController extends Controller
                         break;       
                 }                
                 $format->save();
+            }
+            if($requisition->noEvaluacion == '3'){
+                $elementsName = ['Piso', 'Laboratorio', 'Computadoras', 'Sanitizantes', 'Baños limpios'];
+                foreach ($elementsName as $elementName) {
+                    $element = new Element();
+                    $element->elemeto = $elementName;
+                    $element->requisition_id = $requisition->id;
+                    $element->save();
+                }   
             }
             $requisition->noEvaluacion = $requisition->noEvaluacion + 1;
             $requisition->save();

@@ -11,6 +11,7 @@ use App\Models\Plan;
 use App\Models\Institution;
 use App\Models\Career;
 use App\Models\Municipality;
+use Illuminate\Support\Facades\Auth;
 
 
 class RequisitionController extends Controller
@@ -80,24 +81,26 @@ class RequisitionController extends Controller
    */
   public function show($requisition)
   {
-    $data = Requisition::find($requisition);
-    $career = Career::find($data->career_id);
-    $institution = Institution::find($career->institution_id);
-    $elements = Element::searchrequisitionid($data->id)->get();
-    $plans = Plan::searchrequisitionid($data->id)->get();
+    if(Auth::user() != null){
+      $data = Requisition::find($requisition);
+      $career = Career::find($data->career_id);
+      $institution = Institution::find($career->institution_id);
+      $elements = Element::searchrequisitionid($data->id)->get();
+      $plans = Plan::searchrequisitionid($data->id)->get();
 
 
-    if (isset($data)) {
-      return response()->json([
-        'requisition' => $data,
-        'career' => $career,
-        'institution' => $institution
-      ]);
-    } else {
-      return response()->json([
-        'error' => 'Data not found'
-      ]);
-    }
+      if (isset($data)) {
+        return response()->json([
+          'requisition' => $data,
+          'career' => $career,
+          'institution' => $institution
+        ]);
+      } else {
+        return response()->json([
+          'error' => 'Data not found'
+        ]);
+      }
+    }    
   }
 
   /**

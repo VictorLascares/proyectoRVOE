@@ -41,4 +41,8 @@ class Element extends Model
     public function scopeSearchrequisitionid($query,$requisition_id){
         return $query->where('requisition_id',$requisition_id);
     }
+
+    public function scopeSearchElemento($query,$element){
+        return $query->where('elemeto',$element);
+    }
 }
