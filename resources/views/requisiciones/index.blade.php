@@ -27,17 +27,17 @@
     </div>
   </div>
   <div class="new-request">
-    <img data-bs-target="#loginModal" data-bs-toggle="modal" src="{{ asset('img/nuevo.svg') }}" alt="Icono de nuevo">
+    <img data-bs-target="#requisitionModal" data-bs-toggle="modal" src="{{ asset('img/nuevo.svg') }}" alt="Icono de nuevo">
   </div>
-  <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal fade" id="requisitionModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header text-center">
-          <h5 class="modal-title text-uppercase w-100" id="exampleModalLabel">Nueva Solicitud</h5>
+          <h5 class="modal-title text-uppercase w-100" id="exampleModalLabel">Nueva Requisición</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <form class="mb-2" method="POST" action="{{ url('/validar') }}">
+          <form class="mb-2" method="POST" action="{{ route('requisitions.store') }}">
             @csrf
             <div class="form-floating mb-3">
               <select id="requisitionGoal" class="form-control" name="meta" required>
@@ -58,13 +58,13 @@
               <label for="institutions" class="form-label">Institución</label>
             </div>
             <div class="form-floating">
-              <select id="careers" class="form-control">
+              <select id="careers" class="form-control" name="career_id">
                 <option selected disabled>-- Seleccione la Carrera --</option>
               </select>
               <label for="careers" class="form-label">Carrera</label>
             </div>
             <div class="d-grid mt-4">
-              <button class="btn btn-success text-uppercase" type="submit">Iniciar Sesión</button>
+              <button class="btn btn-success text-uppercase" type="submit">Agregar</button>
             </div>
           </form>
         </div>

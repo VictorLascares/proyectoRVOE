@@ -66,7 +66,7 @@ class RequisitionController extends Controller
       $format->save();
     }
 
-    return redirect(route('careers.show',$request->career_id));
+    return redirect('requisitions');
   }
 
 
