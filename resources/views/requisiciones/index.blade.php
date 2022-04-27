@@ -48,7 +48,7 @@
               </select>
               <label for="careerModality" class="form-label">Meta de la Requisición</label>
             </div>
-            <div class="form-floating">
+            <div class="form-floating  mb-3">
               <select id="institutions" class="form-control">
                 <option selected disabled>-- Seleccione la Institución --</option>
                 @foreach ($institutions as $institution)
@@ -56,6 +56,12 @@
                 @endforeach
               </select>
               <label for="institutions" class="form-label">Institución</label>
+            </div>
+            <div class="form-floating">
+              <select id="careers" class="form-control">
+                <option selected disabled>-- Seleccione la Carrera --</option>
+              </select>
+              <label for="careers" class="form-label">Carrera</label>
             </div>
             <div class="d-grid mt-4">
               <button class="btn btn-success text-uppercase" type="submit">Iniciar Sesión</button>
@@ -68,17 +74,19 @@
 @endsection
 @section('footer')
   <x-footer />
+@endsection
+@section('script')
   <script>
-    const institutions = document.querySelector('#institutions')
-
-    institutions.addEventListener('change', () => {
-      fetch('')
-        .then(response => response.json())
-        .then(data => console.log(data))
-        .catch(err => {
-          console.log(err)
-        });
-
+    $(document).ready(function(){
+      $('#institutions').on('change', function(){
+        let institutionId = $(this).val()
+        $.get('careers', {institutionId: institutionId}, function (careers) {
+          $('#careers').empty()
+          $.each(careers, function (index, value) { 
+            $('#careers').append(`<option value='${index}'>${value}</option>`)
+          });
+        })
+      })
     })
   </script>
 @endsection

@@ -42,7 +42,7 @@ Route::post('login',[SessionController::class,'login']);
 //****************CAREER ROUTES*****************
 //CRUD CAREER
 Route::resource('careers', CareerController::class);
-
+Route::get('careers', [CareerController::class,'getCareers']);
 
 //****************INSTITUTION ROUTES*****************
 //CRUD INSTITUTION
