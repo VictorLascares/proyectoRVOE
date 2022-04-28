@@ -80,23 +80,12 @@ class RequisitionController extends Controller
   {
     if(Auth::user() != null){
       $data = Requisition::find($requisition);
+      $formats = Format::where('requisition_id', $data->id)->get();
       $career = Career::find($data->career_id);
       $institution = Institution::find($career->institution_id);
       $elements = Element::searchrequisitionid($data->id)->get();
       $plans = Plan::searchrequisitionid($data->id)->get();
-
-
-      if (isset($data)) {
-        return response()->json([
-          'requisition' => $data,
-          'career' => $career,
-          'institution' => $institution
-        ]);
-      } else {
-        return response()->json([
-          'error' => 'Data not found'
-        ]);
-      }
+      return view('requisiciones.show', compact('data', 'career', 'institution', 'elements','plans', 'formats'));
     }    
   }
 

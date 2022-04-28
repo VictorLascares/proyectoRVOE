@@ -1,12 +1,7 @@
 .new-request {
-    position: fixed;
-    bottom: 5rem;
-    right: 3rem;
-}
-
-.new-request img {
-    width: 40px;
-}
-.new-request img:hover {
-    cursor: pointer;
+  position: fixed;
+  bottom: 5rem;
+  right: 3rem;
+  -webkit-box-shadow: 0px 0px 15px 5px rgba(0,0,0,0.48); 
+  box-shadow: 0px 0px 15px 5px rgba(0,0,0,0.48);
 }
