@@ -33,4 +33,9 @@ class Municipality extends Model
    * @var array
    */
   protected $casts = [];
+
+  public function scopeSearchMunicipality($query, $Municipality_id)
+  {
+    return $query->where('id', $Municipality_id);
+  }
 }
