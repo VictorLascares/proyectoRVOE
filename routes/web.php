@@ -10,6 +10,8 @@ use App\Http\Controllers\ElementController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\SessionController;
 use App\Http\Controllers\FormatController;
+use App\Http\Controllers\PlanController;
+
 
 
 /*
@@ -74,6 +76,12 @@ Route::post('/update/formats', [FormatController::class,'updateFormats']);
 Route::get('/evaluate/elements/{requisition_id}', [ElementController::class,'evaluateElements']);
 //Ruta para actualizar los elementos
 Route::post('/update/elements', [ElementController::class,'updateElements']);
+
+//****************PLANS ROUTES*****************
+//Ruta para realizar evaluación de los elementos
+Route::get('/evaluate/plans/{requisition_id}', [PlanController::class,'evaluatePlans']);
+//Ruta para actualizar los elementos
+Route::post('/update/plans', [PlanController::class,'updatePlans']);
 
 
 //*************************AUTH USER**************************

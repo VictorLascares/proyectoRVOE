@@ -18,6 +18,8 @@ class Requisition extends Model
         'meta',
         'rvoe',
         'estado',
+        'cata',
+        'noEvaluacion',
         'career_id',
         'formatoInstalaciones'
     ];
@@ -40,5 +42,13 @@ class Requisition extends Model
 
     public function scopeRvoe($query,$rvoe){
         return $query->where('rvoe',$rvoe);
+    }
+
+    public function scopeSearchcareerid($query,$career_id){
+        return $query->where('career_id',$career_id);
+    }
+
+    public function scopeCheckpendiente($query){
+        return $query->where('estado','pendiente');
     }
 }

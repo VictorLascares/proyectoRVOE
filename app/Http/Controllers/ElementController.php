@@ -8,6 +8,7 @@ use App\Models\Requisition;
 use App\Models\Element;
 use App\Models\Institution;
 use App\Models\Career;
+use App\Models\Plan;
 
 class ElementController extends Controller
 {
@@ -37,7 +38,7 @@ class ElementController extends Controller
         $requisition = Requisition::find($request->requisition_id);
         if($requisition->noEvaluacion == 4 && $requisition->estado == 'pendiente'){
             $imagen = $request->formatoInstalaciones;
-            if (!is_null($imagen)){
+            //if (!is_null($imagen)){
                 for ($elementName = 1; $elementName < 53; $elementName++) {
                     $element = Element::searchElemento($elementName)->searchrequisitionid($requisition->id)->first();
                     $elemento = 'elemento'.$elementName;
@@ -46,7 +47,7 @@ class ElementController extends Controller
                     if($request->input($elemento) == 'false' && !in_array($elementName,$noRequired)){
                         $requisition->estado = 'rechazado';
                     }
-                    $elementoj = $elemento.'j';
+                    $elementoj = $elemento.'o';
                     if(!is_null($request->input($elementoj))){
                         $element->observacion = $request->input($elementoj);
                     }
@@ -54,12 +55,19 @@ class ElementController extends Controller
                 }
                 $requisition->noEvaluacion = $requisition->noEvaluacion + 1;
                 //Guardar imagen
-                $ruta_destino = public_path('img/formatos/instalaciones');
-                $nombre_de_archivo = time() . '.' . $imagen->getClientOriginalExtension();
-                $imagen->move($ruta_destino, $nombre_de_archivo);
-                $requisition->formatoInstalaciones = $nombre_de_archivo;
+              //  $ruta_destino = public_path('img/formatos/instalaciones');
+                //$nombre_de_archivo = time() . '.' . $imagen->getClientOriginalExtension();
+                //$imagen->move($ruta_destino, $nombre_de_archivo);
+                //$requisition->formatoInstalaciones = $nombre_de_archivo;
+                //Se crean los planes para evaluación
+                for ($planName = 1; $planName < 4; $planName++) {
+                    $plan = new Plan();
+                    $plan->plan = $planName;
+                    $plan->requisition_id = $requisition->id;
+                    $plan->save();
+                } 
                 $requisition->save();
-            }
+            //}
         }
         if (!$requisition) {
             return response()->json([

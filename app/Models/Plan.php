@@ -19,4 +19,8 @@ class Plan extends Model
     public function scopeSearchrequisitionid($query,$requisition_id){
         return $query->where('requisition_id',$requisition_id);
     }
+
+    public function scopeSearchPlan($query,$plan){
+        return $query->where('plan',$plan);
+    }
 }

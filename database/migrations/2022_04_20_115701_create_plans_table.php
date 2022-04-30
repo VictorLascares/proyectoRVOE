@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('plans', function (Blueprint $table) {
             $table->id();
-            $table->string('plan')->nullable(false);
+            $table->integer('plan')->nullable(false);
             $table->integer('ponderacion')->nullable();
             $table->string('comentario')->nullable();
             $table->foreignId('requisition_id')->constrained()->onUpdate('cascade')->onDelete('cascade');

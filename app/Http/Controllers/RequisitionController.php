@@ -54,19 +54,24 @@ class RequisitionController extends Controller
   public function store(Request $request)
   {
     $requisition = new Requisition();
-    $requisition->meta = $request->meta;
-    $requisition->career_id = $request->career_id;
-    $data = $requisition->save();
-
-    $formatsName = ['Plan de estudios', 'Mapa curricular', 'Programas de estudios', 'Estructura e instalaciones', 'Plataforma tecnológica'];
-    foreach ($formatsName as $formatName) {
-      $format = new Format();
-      $format->formato = $formatName;
-      $format->requisition_id = $requisition->id;
-      $format->save();
+    $requisitionsP = Requisition::searchcareerid($request->career_id)->checkpendiente()->first();
+    if(is_null($requisitionsP)){
+      $requisition->meta = $request->meta;
+      $requisition->career_id = $request->career_id;
+      $data = $requisition->save();
+      for ($formatName = 1; $formatName < 6; $formatName++) {
+        $format = new Format();
+        $format->formato = $formatName;
+        $format->requisition_id = $requisition->id;
+        $format->save();
+      } 
+      return redirect('requisitions');
+    }else{
+      return response()->json([
+        'status' => 400,
+        'error' => "Se encuentra una requisición abierta"
+      ]);
     }
-
-    return redirect('requisitions');
   }
 
 
