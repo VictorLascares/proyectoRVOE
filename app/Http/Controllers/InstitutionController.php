@@ -53,6 +53,7 @@ class InstitutionController extends Controller
 
     $institution->nombre = $request->nombre;
     $institution->director = $request->director;
+    $institution->direccion = $request->direccion;
     $institution->municipalitie_id = $request->municipalitie_id;
     $institution->save();
 
@@ -119,6 +120,7 @@ class InstitutionController extends Controller
     }
     $data->nombre = $request->nombre;
     $data->director = $request->director;
+    $data->direccion = $request->direccion;
 
     $data->save();
     return redirect('institutions');

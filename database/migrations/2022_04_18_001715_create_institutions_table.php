@@ -17,6 +17,7 @@ return new class extends Migration
       $table->id();
       $table->string('nombre')->nullable(false);
       $table->string('director', 60)->nullable();
+      $table->string('direccion')->nullable(false);
       $table->string('logotipo')->nullable();
       $table->foreignId('municipalitie_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
     });

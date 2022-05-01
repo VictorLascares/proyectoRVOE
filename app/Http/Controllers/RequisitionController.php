@@ -194,15 +194,16 @@ class RequisitionController extends Controller
       $mesI = $mes[ltrim(date("m",strtotime($requisition->created_at)), "0") - 1];
       $diaI = date("d",strtotime($requisition->created_at));
       $mesA = $mes[ltrim(date("m",strtotime($requisition->created_at."+ 3 month")), "0") - 1]; 
+      $diaA = date("d",strtotime($requisition->created_at."+ 3 month"));
       $institucion = $institution->nombre;
       $municipio = $municipalitie->nombre;
-      $direccion = 'Por definir'; 
+      $direccion = $institution->direccion; 
 
       if($requisition->cata == true){
-        $resultado = 'cumple con los requisitos mínimos de esta disposición.';
+        $resultado = 'cumple con los requisitos mínimos de esta disposición';
         $resultadoF = 'Favorable';
       }else{
-        $resultado = 'no cumple con los requisitos mínimos de esta disposición.';
+        $resultado = 'no cumple con los requisitos mínimos de esta disposición';
         $resultadoF = 'No Favorable';
       }
 
@@ -213,7 +214,7 @@ class RequisitionController extends Controller
         case 'domicilio':
           $meta = 'el cambio de domicilio';
           break;
-        case 'planEstudio':
+        case 'planEstudios':
           $meta = 'el cambio de plan de estudios';
           break;
       }
@@ -230,6 +231,8 @@ class RequisitionController extends Controller
       $template->setValue('institucion',$institucion);
       $template->setValue('municipio',$municipio);
       $template->setValue('direccion',$direccion);
+      $template->setValue('diaA',$diaA);
+
 
 
       $tempFile = tempnam(sys_get_temp_dir(),'PHPWord');

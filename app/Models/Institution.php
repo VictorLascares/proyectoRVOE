@@ -18,6 +18,7 @@ class Institution extends Model
     'nombre',
     'director',
     'logotipo',
+    'direccion',
     'municipalitie_id'
   ];
 
