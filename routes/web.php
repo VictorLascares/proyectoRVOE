@@ -101,3 +101,6 @@ Route::get('register', function(){
 
 Route::post('/verificarcorreo',['App\Http\Controllers\RegisterController','verificarCorreo']);
 
+
+//Descargar archivo OTA
+Route::get('/download/{requisition_id}',[RequisitionController::class,'downloadOta']);

@@ -179,5 +179,74 @@ class RequisitionController extends Controller
       }
     }
   }
+
+  public function downloadOta($requisition_id){
+    $requisition = Requisition::find($requisition_id);
+    
+    try {
+      //code...
+
+      $career = Career::find($requisition->career_id);
+      $institution = Institution::find($career->institution_id);
+      $municipalitie = Municipality::find($institution->municipalitie_id);
+      $mes = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"];
+      $anioI = date("Y",strtotime($requisition->created_at));
+      $mesI = $mes[ltrim(date("m",strtotime($requisition->created_at)), "0") - 1];
+      $diaI = date("d",strtotime($requisition->created_at));
+      $mesA = $mes[ltrim(date("m",strtotime($requisition->created_at."+ 3 month")), "0") - 1]; 
+      $institucion = $institution->nombre;
+      $municipio = $municipalitie->nombre;
+      $direccion = 'Por definir'; 
+
+      if($requisition->cata == true){
+        $resultado = 'cumple con los requisitos mínimos de esta disposición.';
+        $resultadoF = 'Favorable';
+      }else{
+        $resultado = 'no cumple con los requisitos mínimos de esta disposición.';
+        $resultadoF = 'No Favorable';
+      }
+
+      switch($requisition->meta){
+        case 'solicitud':
+          $meta = 'el tramite de solicitud';
+          break;
+        case 'domicilio':
+          $meta = 'el cambio de domicilio';
+          break;
+        case 'planEstudio':
+          $meta = 'el cambio de plan de estudios';
+          break;
+      }
+
+      $template = new \PhpOffice\PhpWord\TemplateProcessor('DOCUMENTO_OTA.docx');
+
+      $template->setValue('resultado',$resultado);
+      $template->setValue('meta',$meta);
+      $template->setValue('anioI',$anioI);
+      $template->setValue('mesI',$mesI);
+      $template->setValue('diaI',$diaI);
+      $template->setValue('mesA',$mesA);
+      $template->setValue('resultadoF',$resultadoF);
+      $template->setValue('institucion',$institucion);
+      $template->setValue('municipio',$municipio);
+      $template->setValue('direccion',$direccion);
+
+
+      $tempFile = tempnam(sys_get_temp_dir(),'PHPWord');
+      $template->saveAs($tempFile);
+
+      $header = [
+            "Content-Type: application/octet-stream",
+      ];
+
+      return response()->download($tempFile, 'DOCUMENTO_OTA.docx', $header)->deleteFileAfterSend($shouldDelete = true);
+  
+    } catch (\PhpOffice\PhpWord\Exception\Exception $e) {
+      //throw $th;
+      return back($e->getCode());
+    }
+  
+
+  }
   
 }
