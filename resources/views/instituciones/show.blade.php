@@ -53,6 +53,12 @@
         </div>
       </div>
       <div class="col-12">
+        <div class="form-floating">
+          <textarea name="direccion" class="form-control resize-none" id="address" placeholder="Dirección">{{$institution->direccion}}</textarea>
+          <label for="address">Dirección</label>
+        </div>
+      </div>
+      <div class="col-12">
         <div class="input-group form-group">
           <input type="file" class="form-control" id="institutionLogo" name="logotipo">
         </div>
@@ -81,7 +87,7 @@
             <p class="m-0">{{ $career->nombre }}</p>
             @foreach ($areas as $area)
               @if ($area->id == $career->area_id)
-                <p class="m-0">{{ $area->nombre }}</p>  
+                <p class="m-0">{{ $area->nombre }}</p>
               @endif
             @endforeach
           </a>
@@ -118,7 +124,7 @@
                   <select id="careerArea" class="form-control" name="area_id" required>
                     <option selected disabled>-- Seleccione el área de estudios --</option>
                     @foreach ($areas as $area)
-                      <option value="{{$area->id}}">{{$area->nombre}}</option>
+                      <option value="{{ $area->id }}">{{ $area->nombre }}</option>
                     @endforeach
                   </select>
                   <label for="careerArea" class="form-label">Área de Estudio</label>

@@ -83,6 +83,10 @@
                 </select>
                 <label for="municipality">Municipio</label>
               </div>
+              <div class="form-floating mb-3">
+                <textarea name="direccion" class="form-control resize-none" id="address" placeholder="Dirección"></textarea>
+                <label for="address">Dirección</label>
+              </div>
               <div class="input-group form-group mb-3">
                 <input type="file" class="form-control" id="institutionLogo" name="logotipo">
               </div>

@@ -54,6 +54,19 @@
       height: auto
     }
 
+    textarea:focus,
+    input:focus,
+    select:focus,
+    button:focus {
+      outline: 0px !important;
+      -webkit-appearance: none;
+      box-shadow: none !important;
+    }
+
+    .resize-none {
+      resize: none;
+    }
+
     .bg-white {
       --bg-opacity: 1;
       background-color: #fff;
@@ -393,9 +406,10 @@
     }
 
     .requisition {
-      -webkit-box-shadow: 0px 0px 15px 5px rgba(0,0,0,0.48); 
-      box-shadow: 0px 0px 15px 5px rgba(0,0,0,0.48);
+      -webkit-box-shadow: 0px 0px 15px 5px rgba(0, 0, 0, 0.48);
+      box-shadow: 0px 0px 15px 5px rgba(0, 0, 0, 0.48);
     }
+
   </style>
   <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 </head>

@@ -50,13 +50,11 @@ class InstitutionController extends Controller
       $imagen->move($ruta_destino, $nombre_de_archivo);
       $institution->logotipo = $nombre_de_archivo;
     }
-
     $institution->nombre = $request->nombre;
     $institution->director = $request->director;
     $institution->direccion = $request->direccion;
     $institution->municipalitie_id = $request->municipalitie_id;
     $institution->save();
-
     return redirect('institutions');
   }
 
