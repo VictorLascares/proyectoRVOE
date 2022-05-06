@@ -43,7 +43,7 @@ class FormatController extends Controller
                 $formatoj = $formato.'j';
                 $format->valido = true;
                 if($request->input($formato) == false){
-                    $format->justificacion = $request->formatoj;
+                    $format->justificacion = $request->$formatoj;
                     $format->valido = false;
                     $requisition->estado = 'rechazado';
                 }

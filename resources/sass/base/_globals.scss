@@ -1,7 +1,29 @@
 html {
-    position: relative;
-    min-height: 100%;
+  position: relative;
+  min-height: 100%;
 }
+
 body {
-    margin-bottom: 60px; /* Margin bottom by footer height */
+  margin-bottom: 60px;
+  /* Margin bottom by footer height */
+}
+
+.resize-none {
+  resize: none;
+}
+
+.disabled {
+  pointer-events: none;
+  cursor: default;
+  color: gray;
+  opacity: 0.6;
+}
+
+textarea:focus,
+input:focus,
+select:focus,
+button:focus {
+  outline: 0px !important;
+  -webkit-appearance: none;
+  box-shadow: none !important;
 }
