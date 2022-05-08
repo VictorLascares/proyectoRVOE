@@ -56,4 +56,8 @@ class Requisition extends Model
     public function scopeSearchDate($query,$year){
         return $query->whereYear('created_at', '=', $year);
     }
+
+    public function scopeNoSolicitud($query){
+        return $query->whereNotNull('numero_solicitud');
+    }
 }
