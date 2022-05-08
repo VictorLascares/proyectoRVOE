@@ -17,6 +17,7 @@ class Requisition extends Model
     protected $fillable = [
         'meta',
         'rvoe',
+        'numero_solicitud',
         'estado',
         'cata',
         'noEvaluacion',
@@ -50,5 +51,9 @@ class Requisition extends Model
 
     public function scopeCheckpendiente($query){
         return $query->where('estado','pendiente');
+    }
+
+    public function scopeSearchDate($query,$year){
+        return $query->whereYear('created_at', '=', $year);
     }
 }

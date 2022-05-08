@@ -16,6 +16,7 @@ return new class extends Migration
     Schema::create('requisitions', function (Blueprint $table) {
       $table->id();
       $table->enum('meta', ['solicitud', 'domicilio', 'planEstudios'])->nullable(false);
+      $table->integer('numero_solicitud')->nullable();
       $table->string('rvoe')->nullable()->unique();
       $table->string('formatoInstalaciones')->nullable();
       $table->enum('estado', ['activo', 'latencia', 'revocado', 'inactivo', 'pendiente', 'rechazado'])->nullable(false)->default('pendiente');

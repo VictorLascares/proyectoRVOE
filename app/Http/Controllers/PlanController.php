@@ -47,6 +47,16 @@ class PlanController extends Controller
                 //Se evalua si la requisición es o no favorable
                 if($request->input($planNumber) <= 60){
                     $requisition->cata = false;
+                }else{
+                    $requisition->estado = 'activo';
+                    $year = date('Y');
+                    $requisitions = Requisition::searchDate($year);
+                    if(is_null($requisitions)){
+                        $requisitions->numero_solicitud = 1;
+                    }else{
+                        $no_requisitions = count($requisitions);
+                        $requisitions->numero_solicitud = $no_requisitions + 1;
+                    }
                 }
                 
                 $plan->save();
