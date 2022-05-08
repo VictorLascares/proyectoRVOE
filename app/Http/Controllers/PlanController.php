@@ -45,16 +45,6 @@ class PlanController extends Controller
       $requisition->noEvaluacion = $requisition->noEvaluacion + 1;
       $requisition->save();
     }
-    if (!$requisition) {
-      return response()->json([
-        'status' => 400,
-        'error' => "something went wrong"
-      ]);
-    } else {
-      return response()->json([
-        'status' => 200,
-        'message' => 'Data successfully updated'
-      ]);
-    }
+    return redirect(route('requisitions.show',$requisition->id));
   }
 }
