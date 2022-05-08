@@ -55,7 +55,7 @@
           <div class="bg-danger p-4 rounded-circle">
             <i class="text-light bi bi-list-task h4"></i>
           </div>
-          <a href="#" data-bs-toggle="modal" data-bs-target="#eva3Modal">
+          <a href="{{url('/evaluate/plans',$data->id)}}">
             Evaluar
           </a>
         </div>
@@ -64,7 +64,7 @@
           <div class="bg-danger p-4 rounded-circle">
             <i class="text-light bi bi-filetype-doc h4"></i>
           </div>
-          <a href="">Evaluar</a>
+          <a download="OTAReq-{{$data->id}}" href="{{url('/download',$data->id)}}">Descargar</a>
         </div>
       </div>
     </div>

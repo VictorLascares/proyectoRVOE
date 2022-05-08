@@ -26,8 +26,8 @@ class ElementController extends Controller
     public function updateElements(Request $request){
         $requisition = Requisition::find($request->requisition_id);
         if($requisition->noEvaluacion == 4 && $requisition->estado == 'pendiente'){
-            $imagen = $request->formatoInstalaciones;
-            if (!is_null($imagen)){
+            /* $imagen = $request->formatoInstalaciones; */
+            /* if (!is_null($imagen)){ */
                 for ($elementName = 1; $elementName < 53; $elementName++) {
                     $element = Element::searchElemento($elementName)->searchrequisitionid($requisition->id)->first();
                     $elemento = 'elemento'.$elementName;
@@ -44,10 +44,10 @@ class ElementController extends Controller
                 }
                 $requisition->noEvaluacion = $requisition->noEvaluacion + 1;
                 //Guardar imagen
-                $ruta_destino = public_path('img/formatos/instalaciones');
-                $nombre_de_archivo = time() . '.' . $imagen->getClientOriginalExtension();
-                $imagen->move($ruta_destino, $nombre_de_archivo);
-                $requisition->formatoInstalaciones = $nombre_de_archivo;
+                /* $ruta_destino = public_path('img/formatos/instalaciones'); */
+                /* $nombre_de_archivo = time() . '.' . $imagen->getClientOriginalExtension(); */
+                /* $imagen->move($ruta_destino, $nombre_de_archivo); */
+                /* $requisition->formatoInstalaciones = $nombre_de_archivo; */
                 // Se crean los planes para evaluación
                 for ($planName = 1; $planName < 4; $planName++) {
                     $plan = new Plan();
@@ -56,19 +56,8 @@ class ElementController extends Controller
                     $plan->save();
                 } 
                 $requisition->save();
-            }
+            /* } */
         }
-        if (!$requisition) {
-            return response()->json([
-              'status' => 400,
-              'error' => "something went wrong"
-            ]);
-        } else {
-            return response()->json([
-              'status' => 200,
-              'message' => 'Data successfully updated'
-            ]);
-        }
-
+      return redirect(route('requisitions.show',$requisition->id));
     }
 }
