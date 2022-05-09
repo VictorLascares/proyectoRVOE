@@ -24,21 +24,26 @@
             <i class="text-light bi bi-file-earmark-text h4"></i>
           </div>
           <ul class="p-0">
-            <li class="list-unstyled">
-              <a href="#" data-bs-toggle="modal" data-bs-target="#review1Modal">
-                Revision 1
-              </a>
-            </li>
-            <li class="list-unstyled">
-              <a href="#" data-bs-toggle="modal" data-bs-target="#review2Modal">
-                Revision 2
-              </a>
-            </li>
-            <li class="list-unstyled">
-              <a href="#" data-bs-toggle="modal" data-bs-target="#review3Modal">
-                Revision 3
-              </a>
-            </li>
+            @if($data->noEvaluacion == 1)
+              <li class="list-unstyled">
+                <a href="#" data-bs-toggle="modal" data-bs-target="#review1Modal">
+                Revision 1</a>
+              </li>
+            @else
+              @if($data->noEvaluacion == 2)
+                <li class="list-unstyled">
+                  <a href="#" data-bs-toggle="modal" data-bs-target="#review2Modal">
+                    Revision 2
+                  </a>
+                </li>
+              @else
+                <li class="list-unstyled">
+                  <a href="#" data-bs-toggle="modal" data-bs-target="#review3Modal">
+                    Revision 3
+                  </a>
+                </li>
+              @endif
+            @endif
           </ul>
         </div>
         <div class="d-flex flex-column align-items-center gap-2">
