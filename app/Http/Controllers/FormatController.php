@@ -61,6 +61,6 @@ class FormatController extends Controller
             $requisition->save();
 
         }
-        return redirect('requisitions');
+        return redirect(route('requisitions.show',$requisition->id));
     }
 }
