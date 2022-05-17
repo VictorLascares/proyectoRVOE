@@ -20,56 +20,35 @@
       <div class="d-flex justify-content-center gap-5">
         <div class="d-flex flex-column align-items-center gap-2">
           <h5 class="text-center w-75 text-uppercase">Evaluacion de formatos</h5>
-          <div class="bg-danger p-4 rounded-circle">
+          <button @if ($data->noEvaluacion < 4) data-bs-target="#review{{ $data->noEvaluacion }}Modal" @endif
+            data-bs-toggle="modal" type="button" class="@if($data->noEvaluacion > 3) disabled @endif btn btn-danger p-4">
             <i class="text-light bi bi-file-earmark-text h4"></i>
-          </div>
-          <ul class="p-0">
-            @if($data->noEvaluacion == 1)
-              <li class="list-unstyled">
-                <a href="#" data-bs-toggle="modal" data-bs-target="#review1Modal">
-                Revision 1</a>
-              </li>
-            @else
-              @if($data->noEvaluacion == 2)
-                <li class="list-unstyled">
-                  <a href="#" data-bs-toggle="modal" data-bs-target="#review2Modal">
-                    Revision 2
-                  </a>
-                </li>
-              @else
-                <li class="list-unstyled">
-                  <a href="#" data-bs-toggle="modal" data-bs-target="#review3Modal">
-                    Revision 3
-                  </a>
-                </li>
-              @endif
+          </button>
+          <p>
+            Revision @if ($data->noEvaluacion < 4)
+              {{$data->noEvaluacion}}
+            @else 
+              3
             @endif
-          </ul>
+          </p>
         </div>
         <div class="d-flex flex-column align-items-center gap-2">
           <h5 class="text-center w-75 text-uppercase">Evaluacion de las Instalaciones</h4>
-            <div class="bg-danger p-4 rounded-circle">
+            <a href="{{ url('/evaluate/elements', $data->id) }}" class="@if($data->noEvaluacion != 4) disabled @endif btn btn-danger p-4">
               <i class="text-light bi bi-building h4"></i>
-            </div>
-            <a href="{{url('/evaluate/elements',$data->id)}}">
-              Evaluar
             </a>
         </div>
         <div class="d-flex flex-column align-items-center gap-2">
           <h5 class="text-center w-75 text-uppercase">Evaluacion de los Planes</h5>
-          <div class="bg-danger p-4 rounded-circle">
+          <a href="{{ url('/evaluate/plans', $data->id) }}" class="@if($data->noEvaluacion != 5) disabled @endif btn btn-danger p-4">
             <i class="text-light bi bi-list-task h4"></i>
-          </div>
-          <a href="{{url('/evaluate/plans',$data->id)}}">
-            Evaluar
           </a>
         </div>
         <div class="d-flex flex-column align-items-center gap-2">
           <h5 class="text-center w-75 text-uppercase">Generacion de la OTA</h5>
-          <div class="bg-danger p-4 rounded-circle">
-            <i class="text-light bi bi-filetype-doc h4"></i>
-          </div>
-          <a download="OTAReq-{{$data->id}}" href="{{url('/download',$data->id)}}">Descargar</a>
+          <a download="OTAReq-{{ $data->id }}" href="{{ url('/download', $data->id) }}" class="@if($data->noEvaluacion != 6) disabled @endif btn btn-danger p-4">
+            <i class="text-light bi bi-cloud-download h4"></i>
+          </a>
         </div>
       </div>
     </div>
@@ -115,11 +94,14 @@
                     @endswitch
                   </p>
                   <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-                    <input type="radio" class="btn-check" name="anexo{{ $loop->iteration }}" id="btnYes-{{$format->id}}" autocomplete="off" @if ($format->valido) checked @endif>
-                    <label class="btn btn-outline-success text-uppercase" for="btnYes-{{$format->id}}">Si</label>
+                    <input type="radio" class="btn-check" name="anexo{{ $loop->iteration }}"
+                      id="btnYes-{{ $format->id }}" autocomplete="off"
+                      @if ($format->valido) checked @endif>
+                    <label class="btn btn-outline-success text-uppercase" for="btnYes-{{ $format->id }}">Si</label>
 
-                    <input type="radio" class="btn-check btn-No" name="anexo{{ $loop->iteration }}" id="btnNo-{{$format->id}}" autocomplete="off" @if (!$format->valido) checked @endif>
-                    <label class="btn btn-outline-danger text-uppercase" for="btnNo-{{$format->id}}">No</label>
+                    <input type="radio" class="btn-check btn-No" name="anexo{{ $loop->iteration }}"
+                      id="btnNo-{{ $format->id }}" autocomplete="off" @if (!$format->valido) checked @endif>
+                    <label class="btn btn-outline-danger text-uppercase" for="btnNo-{{ $format->id }}">No</label>
                   </div>
                 </div>
               @endforeach
@@ -153,19 +135,24 @@
                       @switch($format->formato)
                         @case(1)
                           Plan de Estudios
-                          @break
+                        @break
+
                         @case(2)
                           Mapa Curricular
-                          @break
+                        @break
+
                         @case(3)
                           Programa de Estudio
-                          @break
+                        @break
+
                         @case(4)
                           Estructura e instalaciones
-                          @break
+                        @break
+
                         @case(5)
                           Plataforma Tecnológica
-                          @break
+                        @break
+
                         @default
                           Formato desconocido
                       @endswitch
@@ -173,7 +160,7 @@
                   </div>
                   <div class="form-floating">
                     <input name="anexo{{ $loop->iteration }}j" type="text" class="form-control" id="justificacion"
-                      placeholder="Justificación" value="{{$format->justificacion}}">
+                      placeholder="Justificación" value="{{ $format->justificacion }}">
                     <label for="justificacion">Justificación</label>
                   </div>
                 </div>
@@ -208,19 +195,24 @@
                       @switch($format->formato)
                         @case(1)
                           Plan de Estudios
-                          @break
+                        @break
+
                         @case(2)
                           Mapa Curricular
-                          @break
+                        @break
+
                         @case(3)
                           Programa de Estudio
-                          @break
+                        @break
+
                         @case(4)
                           Estructura e instalaciones
-                          @break
+                        @break
+
                         @case(5)
                           Plataforma Tecnológica
-                          @break
+                        @break
+
                         @default
                           Formato desconocido
                       @endswitch
@@ -228,7 +220,7 @@
                   </div>
                   <div class="form-floating">
                     <input name="anexo{{ $loop->iteration }}j" type="text" class="form-control" id="justificacion"
-                      placeholder="Justificación" value="{{$format->justificacion}}">
+                      placeholder="Justificación" value="{{ $format->justificacion }}">
                     <label for="justificacion">Justificación</label>
                   </div>
                 </div>
@@ -240,7 +232,7 @@
           </div>
         </div>
       </div>
-    </div> 
+    </div>
   </div>
 @endsection
 @section('footer')
@@ -260,7 +252,7 @@
 
     function verificarEstado(e) {
       const checkBox = e.target
-      if(checkBox.classList.contains('btn-No')) {
+      if (checkBox.classList.contains('btn-No')) {
         console.log('si');
         checkBox.value = !this.checked
       } else {

@@ -55,7 +55,7 @@ class RequisitionController extends Controller
   {
     $requisition = new Requisition();
     $requisitionsP = Requisition::searchcareerid($request->career_id)->checkpendiente()->first();
-    if(is_null($requisitionsP)){
+    if (is_null($requisitionsP)) {
       $requisition->meta = $request->meta;
       $requisition->career_id = $request->career_id;
       $data = $requisition->save();
@@ -64,9 +64,9 @@ class RequisitionController extends Controller
         $format->formato = $formatName;
         $format->requisition_id = $requisition->id;
         $format->save();
-      } 
+      }
       return redirect('requisitions');
-    }else{
+    } else {
       return response()->json([
         'status' => 400,
         'error' => "Se encuentra una requisición abierta"
@@ -83,15 +83,15 @@ class RequisitionController extends Controller
    */
   public function show($requisition)
   {
-    if(Auth::user() != null){
+    if (Auth::user() != null) {
       $data = Requisition::find($requisition);
       $formats = Format::where('requisition_id', $data->id)->get();
       $career = Career::find($data->career_id);
       $institution = Institution::find($career->institution_id);
       $elements = Element::searchrequisitionid($data->id)->get();
       $plans = Plan::searchrequisitionid($data->id)->get();
-      return view('requisiciones.show', compact('data', 'career', 'institution', 'elements','plans', 'formats'));
-    }    
+      return view('requisiciones.show', compact('data', 'career', 'institution', 'elements', 'plans', 'formats'));
+    }
   }
 
   /**
@@ -165,7 +165,7 @@ class RequisitionController extends Controller
   //Funcion para buscar RVOE ---PENDIENTE
   public function showRVOE(Request $request)
   {
-    if(!is_null($request->rvoe)){
+    if (!is_null($request->rvoe)) {
       $requisition = Requisition::rvoe($request->rvoe)->first();
       if (!$requisition) {
         return response()->json([
@@ -174,50 +174,51 @@ class RequisitionController extends Controller
       } else {
         return response()->json([
           'requisition' => $requisition
-          
+
         ]);
       }
     }
   }
 
-  public function downloadOta($requisition_id){
+  public function downloadOta($requisition_id)
+  {
     $requisition = Requisition::find($requisition_id);
-    
-    if($requisition->noEvaluacion == 6){
+
+    if ($requisition->noEvaluacion == 6) {
       try {
         //code...
-  
+
         $career = Career::find($requisition->career_id);
         $institution = Institution::find($career->institution_id);
         $municipalitie = Municipality::find($institution->municipalitie_id);
         $mes = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"];
-        $anioI = date("Y",strtotime($requisition->created_at));
-        $mesI = $mes[ltrim(date("m",strtotime($requisition->created_at)), "0") - 1];
-        $diaI = date("d",strtotime($requisition->created_at));
-        $mesA = $mes[ltrim(date("m",strtotime($requisition->created_at."+ 3 month")), "0") - 1]; 
-        $diaA = date("d",strtotime($requisition->created_at."+ 3 month"));
+        $anioI = date("Y", strtotime($requisition->created_at));
+        $mesI = $mes[ltrim(date("m", strtotime($requisition->created_at)), "0") - 1];
+        $diaI = date("d", strtotime($requisition->created_at));
+        $mesA = $mes[ltrim(date("m", strtotime($requisition->created_at . "+ 3 month")), "0") - 1];
+        $diaA = date("d", strtotime($requisition->created_at . "+ 3 month"));
         $institucion = $institution->nombre;
         $municipio = $municipalitie->nombre;
-        $direccion = $institution->direccion; 
+        $direccion = $institution->direccion;
         $noRequisicion = $requisition->numero_solicitud;
-  
-        if($noRequisicion < 10){
-          $no_solicitud = '00'.$noRequisicion;
-        }else if($noRequisicion < 100){
-          $no_solicitud = '0'.$noRequisicion;
-        }else{
+
+        if ($noRequisicion < 10) {
+          $no_solicitud = '00' . $noRequisicion;
+        } else if ($noRequisicion < 100) {
+          $no_solicitud = '0' . $noRequisicion;
+        } else {
           $no_solicitud = $noRequisicion;
         }
-  
-        if($requisition->cata == true){
+
+        if ($requisition->cata == true) {
           $resultado = 'cumple con los requisitos mínimos de esta disposición';
           $resultadoF = 'Favorable';
-        }else{
+        } else {
           $resultado = 'no cumple con los requisitos mínimos de esta disposición';
           $resultadoF = 'No Favorable';
         }
-  
-        switch($requisition->meta){
+
+        switch ($requisition->meta) {
           case 'solicitud':
             $meta = 'el tramite de solicitud';
             break;
@@ -228,39 +229,35 @@ class RequisitionController extends Controller
             $meta = 'el cambio de plan de estudios';
             break;
         }
-  
+
         $template = new \PhpOffice\PhpWord\TemplateProcessor('DOCUMENTO_OTA.docx');
-  
-        $template->setValue('resultado',$resultado);
-        $template->setValue('meta',$meta);
-        $template->setValue('anioI',$anioI);
-        $template->setValue('mesI',$mesI);
-        $template->setValue('diaI',$diaI);
-        $template->setValue('mesA',$mesA);
-        $template->setValue('resultadoF',$resultadoF);
-        $template->setValue('institucion',$institucion);
-        $template->setValue('municipio',$municipio);
-        $template->setValue('direccion',$direccion);
-        $template->setValue('diaA',$diaA);
-        $template->setValue('noSolicitud',$no_solicitud);
-  
-  
-        $tempFile = tempnam(sys_get_temp_dir(),'PHPWord');
+
+        $template->setValue('resultado', $resultado);
+        $template->setValue('meta', $meta);
+        $template->setValue('anioI', $anioI);
+        $template->setValue('mesI', $mesI);
+        $template->setValue('diaI', $diaI);
+        $template->setValue('mesA', $mesA);
+        $template->setValue('resultadoF', $resultadoF);
+        $template->setValue('institucion', $institucion);
+        $template->setValue('municipio', $municipio);
+        $template->setValue('direccion', $direccion);
+        $template->setValue('diaA', $diaA);
+        $template->setValue('noSolicitud', $no_solicitud);
+
+
+        $tempFile = tempnam(sys_get_temp_dir(), 'PHPWord');
         $template->saveAs($tempFile);
-  
+
         $header = [
-              "Content-Type: application/octet-stream",
+          "Content-Type: application/octet-stream",
         ];
-  
+
         return response()->download($tempFile, 'DOCUMENTO_OTA.docx', $header)->deleteFileAfterSend($shouldDelete = true);
-    
       } catch (\PhpOffice\PhpWord\Exception\Exception $e) {
         //throw $th;
         return back($e->getCode());
       }
     }
-  
-
   }
-  
 }
