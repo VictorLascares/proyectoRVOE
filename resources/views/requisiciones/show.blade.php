@@ -24,7 +24,7 @@
             data-bs-toggle="modal" type="button" class="@if($data->noEvaluacion > 3) disabled @endif btn btn-danger p-4">
             <i class="text-light bi bi-file-earmark-text h4"></i>
           </button>
-          <p>
+          <p> 
             Revision @if ($data->noEvaluacion < 4)
               {{$data->noEvaluacion}}
             @else 
@@ -128,10 +128,9 @@
                 <div class="d-flex justify-content-between align-items-center mb-3 p-2">
                   <div class="form-check">
                     <input type="hidden" name="requisition_id" value="{{ $data->id }}">
-                    <input name="anexo{{ $loop->iteration }}" value="{{ $format->valido }}" class="form-check-input"
-                      type="checkbox" id="flexCheckValido-{{ $format->id }}"
+                    <input name="anexo{{ $loop->iteration }}" value="{{ $format->valido }}" class="review2Checkbox form-check-input" type="checkbox" id="check-review2-{{ $format->id }}"
                       @if ($format->valido) checked @endif>
-                    <label class="form-check-label" for="flexCheckValido{{ $format->id }}">
+                    <label class="form-check-label" for="check-review2-{{ $format->id }}">
                       @switch($format->formato)
                         @case(1)
                           Plan de Estudios
@@ -159,9 +158,9 @@
                     </label>
                   </div>
                   <div class="form-floating">
-                    <input name="anexo{{ $loop->iteration }}j" type="text" class="form-control" id="justificacion"
+                    <input name="anexo{{ $loop->iteration }}j" type="text" class="form-control" id="just-review2-{{ $format->id }}"
                       placeholder="Justificación" value="{{ $format->justificacion }}">
-                    <label for="justificacion">Justificación</label>
+                    <label for="just-review2-{{ $format->id }}">Justificación</label>
                   </div>
                 </div>
               @endforeach
@@ -188,10 +187,10 @@
                 <div class="d-flex justify-content-between align-items-center mb-3 p-2">
                   <div class="form-check">
                     <input type="hidden" name="requisition_id" value="{{ $data->id }}">
-                    <input name="anexo{{ $loop->iteration }}" value="{{ $format->valido }}" class="form-check-input"
-                      type="checkbox" id="flexCheckValido-{{ $format->id }}"
+                    <input name="anexo{{ $loop->iteration }}" value="{{ $format->valido }}" class="form-check-input review3Checkbox"
+                      type="checkbox" id="check-review3-{{ $format->id }}"
                       @if ($format->valido) checked @endif>
-                    <label class="form-check-label" for="flexCheckValido{{ $format->id }}">
+                    <label class="form-check-label" for="check-review3-{{ $format->id }}">
                       @switch($format->formato)
                         @case(1)
                           Plan de Estudios
@@ -219,9 +218,9 @@
                     </label>
                   </div>
                   <div class="form-floating">
-                    <input name="anexo{{ $loop->iteration }}j" type="text" class="form-control" id="justificacion"
+                    <input name="anexo{{ $loop->iteration }}j" type="text" class="form-control" id="just-review3-{{$format->id}}"
                       placeholder="Justificación" value="{{ $format->justificacion }}">
-                    <label for="justificacion">Justificación</label>
+                    <label for="just-review3-{{$format->id}}">Justificación</label>
                   </div>
                 </div>
               @endforeach
@@ -240,25 +239,57 @@
 @endsection
 @section('script')
   <script>
-    const checkBoxes = document.querySelectorAll('.btn-check')
+    const checkBtnRadios = document.querySelectorAll('.btn-check')
+    const checkBoxes1 = document.querySelectorAll('.review2Checkbox')
+    const checkBoxes2 = document.querySelectorAll('.review3Checkbox')
 
     cargarEventListener()
 
     function cargarEventListener() {
-      checkBoxes.forEach(checkBox => {
-        checkBox.addEventListener('click', verificarEstado)
+      checkBtnRadios.forEach( radio => {
+        radio.addEventListener('click', review1)
       });
+
+      checkBoxes1.forEach(checkBox => {
+        checkBox.addEventListener('click', review2)
+      })
+
+      checkBoxes2.forEach(checkBox => {
+        checkBox.addEventListener('click', review3)
+      })
     }
 
-    function verificarEstado(e) {
-      const checkBox = e.target
-      if (checkBox.classList.contains('btn-No')) {
-        console.log('si');
-        checkBox.value = !this.checked
+    function review1(e) {
+      const radioBtn = e.target
+      if (radioBtn.classList.contains('btn-No')) {
+        radioBtn.value = !this.checked
       } else {
-        checkBox.value = this.checked
+        radioBtn.value = this.checked
       }
-      console.log(checkBox)
+    }
+
+    function review2(e) {
+      const checkBox = e.target
+      const id = checkBox.id.split('-')[2]
+      const justInput = document.getElementById(`just-review2-${id}`)
+      checkBox.value = checkBox.checked
+      if(checkBox.value == 'true'){
+        justInput.required = false
+      } else {
+        justInput.required = true
+      }
+    }
+
+    function review3(e) {
+      const checkBox = e.target
+      const id = checkBox.id.split('-')[2]
+      const justInput = document.getElementById(`just-review3-${id}`)
+      checkBox.value = checkBox.checked
+      if(checkBox.value == 'true'){
+        justInput.required = false
+      } else {
+        justInput.required = true
+      }
     }
   </script>
 @endsection
