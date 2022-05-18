@@ -18,8 +18,62 @@ class ElementController extends Controller
         $career = Career::find($requisition->career_id);
         $institution = Institution::find($career->institution_id);
         $elements = Element::searchrequisitionid($requisition->id)->get();
+        $elementName = array(
+          "Documento de posesión legal del inmueble",
+          "El inmueble en el que se impartirá el RVOE",
+          "Dimensiones del predio (m2)",
+          "Dimensiones de construcción (m2)",
+          "Dimensiones útiles para la impartición del Plan y Programas de estudio",
+          "¿En el inmueble se realizan actividades que están directa o indirectamente relacionadas con otros servicios educativos?",
+          "Detallar las actividades que se realizan en el inmueble",
+          "Tipo de estudios que se imparten en el inmueble actualmente",
+          "Descripción del área fisíca destinada para el resguardo de la documentación de control escolar",
+          "Número total de aulas en el inmueble",
+          "Estado de las Aulas destinadas que serán destinadas a la impartición del Plan y Programa de estudio objeto de RVOE",
+          "Número de aulas que serán destinadas a la impartición del Plan y Programas de estudio objeto de RVOE",
+          "Capacidad promedio de cada aula (cupo de alumnos)",
+          "Tipo de ilumminación de las aulas",
+          "Tipo de ventilación de las aulas",
+          "Número total de cubiculos en el inmueble",
+          "Número de cubiculos que serán destinados a la impartición del Plan y Programas de estudio objeto de RVOE",
+          "Estado de los cubilos destinados a la impartición del Plan y Programas de estudio objeto de RVOE",
+          "Tipo de iluminación de los cubiculos",
+          "Tipo de ventilación de los cubiculos",
+          "¿Cuenta con instalaciones especiales?",
+          "Denominación del tipo de instalación",
+          "Cantidad",
+          "Equipo con que cuenta",
+          "Tipo de iluminación",
+          "¿Cuenta con ventilación?",
+          "Tipo de Ventilación",
+          "Asignatura o unidad de aprendizaje que se imparte en la instalación especial",
+          "¿Cuenta con equipo tecnológico?",
+          "Condiciones en las que se encuentra el equipo",
+          "Tipo del equipo tecnológico al servicio del alumno",
+          "Cantidad de equipo tecnológico por alumno",
+          "Ubicación del equipo tecnológico del alumno dentro del inmueble",
+          "Tipo de equipo tecnológico al servicio del administrativo",
+          "Cantidad de equipos por administrativo",
+          "Ubicación del equipo tecnológico del administrativo dentro de l inmueble",
+          "Tipo de equipo tecnológico al servicio del docente",
+          "Cantidad de equipos por docente",
+          "Ubicación del equipo tecnológico del docente dentro del inmueble",
+          "Cuenta con servicio de telefonia",
+          "Total de equipos telefónicos",
+          "¿Cuenta con el servicio de internet?",
+          "Velocidad en MB",
+          "Razonamiento técnico que justifica la idoneidad de las instalaciones para el servicio educativo que se brindará",
+          "Población estudiantil máxima que podrá ser atendida en el inmueble",
+          "¿Existe un plan interno de protección civil?",
+          "Nivel de accesibilidad",
+          "Forma en la que se abastece de agua",
+          "Tipo de drenaje sanitario existente en el inmueble",
+          "Número total de sanitarios en el inmueble",
+          "¿El diseño de la infraestructura educativa incorporó un modelo de sostenibilidad?",
+          "¿El diseño de la infraestructura educativa incorporó el uso de energía sostenible?"
+        );
 
-        return view('requisiciones.instaEva', compact('requisition', 'career', 'institution', 'elements'));
+        return view('requisiciones.instaEva', compact('requisition', 'career', 'institution', 'elements', 'elementName' ));
     }
 
     //Funcion para realizar la actualización de los formatos
