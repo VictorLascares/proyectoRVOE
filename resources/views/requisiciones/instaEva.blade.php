@@ -6,7 +6,7 @@
 @section('main-content')
   <div class="container-lg pb-4 mb-4">
     <h1 class="text-center mt-3">Evaluación de Instalaciones</h1>
-    <form action="{{ url('/update/elements') }}" method="POST" class="p-4">
+    <form action="{{ url('/update/elements') }}" method="POST" class="p-4" nctype="multipart/form-data">
       @csrf
     <table class="table">
       <thead>
@@ -47,6 +47,10 @@
           @endforeach
         </tbody>
       </table>
+      <div class="mb-3">
+        <label for="building-format" class="form-label">Instalaciones</label>
+        <input class="form-control" name="formatoInstalaciones" type="file" id="building-format" required>
+      </div>
       <div class="d-flex justify-content-end">
         <input class="btn btn-success" type="submit" value="Guardar">
       </div>
