@@ -68,30 +68,7 @@
               @foreach ($formats as $format)
                 <div class="d-flex justify-content-between align-items-center mb-2 p-2">
                   <p>
-                    @switch($format->formato)
-                      @case(1)
-                        Plan de Estudios
-                      @break
-
-                      @case(2)
-                        Mapa Curricular
-                      @break
-
-                      @case(3)
-                        Programa de Estudio
-                      @break
-
-                      @case(4)
-                        Estructura e instalaciones
-                      @break
-
-                      @case(5)
-                        Plataforma Tecnológica
-                      @break
-
-                      @default
-                        Formato desconocido
-                    @endswitch
+                    {{$formatNames[$loop->iteration-1]}}
                   </p>
                   <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
                     <input type="radio" class="btn-check" name="anexo{{ $loop->iteration }}"
@@ -131,30 +108,7 @@
                     <input name="anexo{{ $loop->iteration }}" value="{{ $format->valido }}" class="review2Checkbox form-check-input" type="checkbox" id="check-review2-{{ $format->id }}"
                       @if ($format->valido) checked @endif>
                     <label class="form-check-label" for="check-review2-{{ $format->id }}">
-                      @switch($format->formato)
-                        @case(1)
-                          Plan de Estudios
-                        @break
-
-                        @case(2)
-                          Mapa Curricular
-                        @break
-
-                        @case(3)
-                          Programa de Estudio
-                        @break
-
-                        @case(4)
-                          Estructura e instalaciones
-                        @break
-
-                        @case(5)
-                          Plataforma Tecnológica
-                        @break
-
-                        @default
-                          Formato desconocido
-                      @endswitch
+                      {{$formatNames[$loop->iteration-1]}}
                     </label>
                   </div>
                   <div class="form-floating">
@@ -191,30 +145,7 @@
                       type="checkbox" id="check-review3-{{ $format->id }}"
                       @if ($format->valido) checked @endif>
                     <label class="form-check-label" for="check-review3-{{ $format->id }}">
-                      @switch($format->formato)
-                        @case(1)
-                          Plan de Estudios
-                        @break
-
-                        @case(2)
-                          Mapa Curricular
-                        @break
-
-                        @case(3)
-                          Programa de Estudio
-                        @break
-
-                        @case(4)
-                          Estructura e instalaciones
-                        @break
-
-                        @case(5)
-                          Plataforma Tecnológica
-                        @break
-
-                        @default
-                          Formato desconocido
-                      @endswitch
+                      {{$formatNames[$loop->iteration-1]}}
                     </label>
                   </div>
                   <div class="form-floating">

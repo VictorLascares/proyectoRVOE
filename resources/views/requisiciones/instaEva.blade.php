@@ -6,7 +6,7 @@
 @section('main-content')
   <div class="container-lg pb-4 mb-4">
     <h1 class="text-center mt-3">Evaluación de Instalaciones</h1>
-    <form action="{{ url('/update/elements') }}" method="POST" class="p-4" nctype="multipart/form-data">
+    <form action="{{ url('/update/elements') }}" method="POST" class="p-4" enctype="multipart/form-data">
       @csrf
     <table class="table">
       <thead>
@@ -72,7 +72,6 @@
       });
     }
 
-
     function evaluarEstado(e) {
       const checkBox = e.target
       const id = checkBox.id.split('-')[1]
@@ -88,7 +87,6 @@
       } else {
         inputSighting.required = true
       }
-      console.log(inputSighting);
     }
   </script>
 @endsection
