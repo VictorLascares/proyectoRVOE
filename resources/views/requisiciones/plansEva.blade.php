@@ -10,7 +10,7 @@
       <input type="hidden" value="{{$requisition->id}}" name="requisition_id">
       @foreach($plans as $plan)
         <div class="d-flex justify-content-center align-items-center gap-2 mb-3">
-          <p class="m-0">Plan{{$plan->plan}}</p>
+          <p class="m-0">{{$planNames[$loop->iteration-1]}}</p>
           <div class="form-floating">
             <input type="number" class="form-control" id="weighingInput" placeholder="Ponderacion" name="plan{{$loop->iteration}}">
             <label for="weighingInput">Ponderacion</label>

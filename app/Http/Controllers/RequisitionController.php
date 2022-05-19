@@ -110,7 +110,14 @@ class RequisitionController extends Controller
       $institution = Institution::find($career->institution_id);
       $elements = Element::searchrequisitionid($data->id)->get();
       $plans = Plan::searchrequisitionid($data->id)->get();
-      return view('requisiciones.show', compact('data', 'career', 'institution', 'elements', 'plans', 'formats'));
+      $formatNames = array(
+        "Plan de Estudios",
+        "Mapa Curricular",
+        "Programa de Estudio",
+        "Estructura e Instalaciones",
+        "Plataforma Tecnológica"
+      );
+      return view('requisiciones.show', compact('data', 'career', 'institution', 'elements', 'plans', 'formats', 'formatNames'));
     }
   }
 

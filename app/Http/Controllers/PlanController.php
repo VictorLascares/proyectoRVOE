@@ -18,8 +18,13 @@ class PlanController extends Controller
     $career = Career::find($requisition->career_id);
     $institution = Institution::find($career->institution_id);
     $plans = Plan::searchrequisitionid($requisition->id)->get();
+    $planNames = array(
+      "Planes y programas de estudios",
+      "Reglamentos",
+      "Plan de mejora continua"
+    );
 
-    return view('requisiciones.plansEva', compact('requisition', 'career', 'institution', 'plans'));
+    return view('requisiciones.plansEva', compact('requisition', 'career', 'institution', 'plans', 'planNames'));
   }
 
   //Funcion para realizar la actualización de los planes
