@@ -45,4 +45,9 @@ class User extends Authenticatable
      */
     protected $casts = [
     ];
+
+    public function scopeSearchDireccion($query)
+    {
+        return $query->where('tipoUsuario', 'direccion');
+    }
 }
