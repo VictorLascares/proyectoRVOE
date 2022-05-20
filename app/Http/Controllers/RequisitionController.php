@@ -97,7 +97,29 @@ class RequisitionController extends Controller
         "Estructura e Instalaciones",
         "Plataforma Tecnológica"
       );
-      return view('requisiciones.show', compact('data', 'career', 'institution', 'elements', 'plans', 'formats', 'formatNames'));
+      $errors = [];
+      if ($data->estado == 'rechazado') {
+        if($data->noEvaluacion <= 4){
+          foreach ($formats as $format) {
+            if(!$format->valido){
+              array_push($errors,$format);
+            }
+          }
+        }  elseif ($data->noEvaluacion <= 5) {
+          foreach ($elements as $element) {
+            if(!$element->existente){
+              array_push($errors,$element);
+            }
+          }
+        } else {
+          foreach ($plans as $plan) {
+            if($plan->ponderacion < 60){
+              array_push($errors,$plan);
+            }
+          }
+        }
+      }
+      return view('requisiciones.show', compact('data', 'career', 'institution', 'elements', 'plans', 'formats', 'formatNames', 'errors'));
     }
   }
 

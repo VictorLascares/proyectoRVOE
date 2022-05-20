@@ -53,6 +53,22 @@
       </div>
     </div>
 
+    @if (!empty($errors))
+      <div class="pb-4">
+        @foreach ($errors as $error)
+          @if ($error->justificacion)
+              <p class="alert alert-danger">{{$error->justificacion}} ({{$formatNames[$error->formato-1]}})</p>  
+          @else
+            @if ($error->observacion)
+              <p class="alert alert-danger">{{$error->observacion}} (Elemento {{$error->elemento}})</p>  
+            @else
+              <p class="alert alert-danger">{{$error->comentario}} (Plan {{$error->plan}})</p> 
+            @endif                
+          @endif
+        @endforeach
+      </div>
+    @endif
+
 
     <div class="modal fade" id="review1Modal" tabindex="-1" aria-labelledby="review2lLabel" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
