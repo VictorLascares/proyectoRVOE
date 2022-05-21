@@ -9,9 +9,15 @@ use App\Models\Format;
 use App\Models\Element;
 use App\Models\Plan;
 use App\Models\Institution;
+use App\Models\User;
 use App\Models\Career;
 use App\Models\Municipality;
 use Illuminate\Support\Facades\Auth;
+
+
+use Mail;
+ 
+use App\Mail\NotifyMail;
 
 
 class RequisitionController extends Controller
@@ -54,6 +60,8 @@ class RequisitionController extends Controller
   public function store(Request $request)
   {
     $requisition = new Requisition();
+    $career = Career::find($request->career_id);
+    $institution = Institution::find($career->institution_id);
     $requisitionsP = Requisition::searchcareerid($request->career_id)->checkpendiente()->first();
     if (is_null($requisitionsP)) {
       $requisition->meta = $request->meta;
@@ -64,6 +72,18 @@ class RequisitionController extends Controller
         $format->formato = $formatName;
         $format->requisition_id = $requisition->id;
         $format->save();
+      }
+      
+      $users = User::searchDireccion()->get();
+      $meta = $request->meta;
+      if($request->meta == "planEstudios"){
+        $meta = "plan de estudios";
+      }
+      if($request->meta == "domicilio"){
+        $meta = "cambio de domicilio";
+      }
+      foreach($users as $user){
+        Mail::to($user->correo)->send(new NotifyMail($meta,$career,$institution));
       }
       return redirect('requisitions');
     } else {
@@ -278,5 +298,23 @@ class RequisitionController extends Controller
         return back($e->getCode());
       }
     }
+  }
+
+  public function revertirEvaluacion($requisition_id){
+    $requisition = Requisition::find($requisition_id);
+    if($requisition->noEvaluacion != 1){
+      if($requisition->noEvaluacion == 5){
+        $nombre_logo = $requisition->logotipo;
+        if($nombre_logo != null){
+          if (!is_null($logotipo)) {
+            unlink(public_path('img/formatos/instalaciones/' . $nombre_logo));
+          }
+        }  
+      }
+      $requisition->noEvaluacion = $requisition->noEvaluacion - 1;
+      $requisition->estado = 'pendiente';
+      $requisition->save();      
+    }
+    return redirect(route('requisitions.show',$requisition->id));
   }
 }

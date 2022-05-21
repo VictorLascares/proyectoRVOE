@@ -51,7 +51,7 @@
           </a>
         </div>
       </div>
-      <a href="" class="btn btn-success">Modificar Evaluación</a>
+      <a href="{{url('/evaluacion-anterior',$data->id)}}" class="btn btn-success">Modificar Evaluación</a>
     </div>
 
     @if (!empty($errors))

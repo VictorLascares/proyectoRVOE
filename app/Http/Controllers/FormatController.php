@@ -38,14 +38,15 @@ class FormatController extends Controller
   public function updateFormats(Request $request)
   {
     $requisition = Requisition::find($request->requisition_id);
+    $elements = Element::searchrequisitionid($request->requisition_id)->get();
     if ($requisition->noEvaluacion < 4 && $requisition->estado == 'pendiente') {
       for ($formatName = 1; $formatName < 6; $formatName++) {
         $format = Format::searchformato($formatName)->searchrequisitionid($requisition->id)->first();
         $formato = 'anexo' . $formatName;
         $formatoj = $formato . 'j';
         $format->valido = true;
+        $format->justificacion = '';
         if ($request->input($formato) == false || $request->input($formato) == 'false') {
-
           if($requisition->noEvaluacion == 1) {
             $format->justificacion = 'No se encuentra el formato';
           } else {
@@ -57,11 +58,13 @@ class FormatController extends Controller
         $format->save();
       }
       if ($requisition->noEvaluacion == '3') {
-        for ($elementName = 1; $elementName < 53; $elementName++) {
-          $element = new Element();
-          $element->elemento = $elementName;
-          $element->requisition_id = $requisition->id;
-          $element->save();
+        if(is_null($elements)){
+          for ($elementName = 1; $elementName < 53; $elementName++) {
+            $element = new Element();
+            $element->elemento = $elementName;
+            $element->requisition_id = $requisition->id;
+            $element->save();
+          }
         }
       }
       $requisition->noEvaluacion = $requisition->noEvaluacion + 1;

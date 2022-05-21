@@ -104,3 +104,4 @@ Route::post('/verificarcorreo',['App\Http\Controllers\RegisterController','verif
 
 //Descargar archivo OTA
 Route::get('/download/{requisition_id}',[RequisitionController::class,'downloadOta']);
+Route::get('/evaluacion-anterior/{requisition_id}',[RequisitionController::class,'revertirEvaluacion']);

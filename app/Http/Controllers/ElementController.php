@@ -81,6 +81,7 @@ class ElementController extends Controller
   public function updateElements(Request $request)
   {
     $requisition = Requisition::find($request->requisition_id);
+    $plans = Plan::searchrequisitionid($requisition->id)->get();
     if ($requisition->noEvaluacion == 4 && $requisition->estado == 'pendiente') {
       $imagen = $request->formatoInstalaciones;
       if (!is_null($imagen)) {
@@ -105,11 +106,13 @@ class ElementController extends Controller
         $imagen->move($ruta_destino, $nombre_de_archivo);
         $requisition->formatoInstalaciones = $nombre_de_archivo;
         // Se crean los planes para evaluación
-        for ($planName = 1; $planName < 4; $planName++) {
-          $plan = new Plan();
-          $plan->plan = $planName;
-          $plan->requisition_id = $requisition->id;
-          $plan->save();
+        if (is_null($plans)) {
+          for ($planName = 1; $planName < 4; $planName++) {
+            $plan = new Plan();
+            $plan->plan = $planName;
+            $plan->requisition_id = $requisition->id;
+            $plan->save();
+          }
         }
         $requisition->save();
       }
