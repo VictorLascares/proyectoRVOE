@@ -38,7 +38,7 @@ class FormatController extends Controller
   public function updateFormats(Request $request)
   {
     $requisition = Requisition::find($request->requisition_id);
-    $elements = Element::searchrequisitionid($request->requisition_id)->get();
+    $elements = Element::searchrequisitionid($request->requisition_id)->first();
     if ($requisition->noEvaluacion < 4 && $requisition->estado == 'pendiente') {
       for ($formatName = 1; $formatName < 6; $formatName++) {
         $format = Format::searchformato($formatName)->searchrequisitionid($requisition->id)->first();

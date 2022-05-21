@@ -81,7 +81,7 @@ class ElementController extends Controller
   public function updateElements(Request $request)
   {
     $requisition = Requisition::find($request->requisition_id);
-    $plans = Plan::searchrequisitionid($requisition->id)->get();
+    $plans = Plan::searchrequisitionid($request->requisition_id)->first();
     if ($requisition->noEvaluacion == 4 && $requisition->estado == 'pendiente') {
       $imagen = $request->formatoInstalaciones;
       if (!is_null($imagen)) {
