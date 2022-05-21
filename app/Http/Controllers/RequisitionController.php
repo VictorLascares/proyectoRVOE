@@ -309,4 +309,22 @@ class RequisitionController extends Controller
       }
     }
   }
+
+  public function revertirEvaluacion($requisition_id){
+    $requisition = Requisition::find($requisition_id);
+    if($requisition->noEvaluacion != 1){
+      if($requisition->noEvaluacion == 5){
+        $nombre_logo = $requisition->logotipo;
+        if($nombre_logo != null){
+          if (!is_null($logotipo)) {
+            unlink(public_path('img/formatos/instalaciones/' . $nombre_logo));
+          }
+        }  
+      }
+      $requisition->noEvaluacion = $requisition->noEvaluacion - 1;
+      $requisition->estado = 'pendiente';
+      $requisition->save();      
+    }
+  }
+
 }
