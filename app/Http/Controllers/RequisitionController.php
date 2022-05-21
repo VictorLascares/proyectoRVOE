@@ -145,17 +145,7 @@ class RequisitionController extends Controller
   {
     $data = Requisition::find($requisition);
     $data->update($request->all());
-    if (!$data) {
-      return response()->json([
-        'status' => 400,
-        'error' => "something went wrong"
-      ]);
-    } else {
-      return response()->json([
-        'status' => 200,
-        'message' => 'Data successfully updated'
-      ]);
-    }
+    return redirect(route('requisitions.show',$data->id));
   }
 
   /**

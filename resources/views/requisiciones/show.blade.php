@@ -24,10 +24,10 @@
             data-bs-toggle="modal" type="button" class="@if($data->noEvaluacion > 3) disabled @endif btn btn-danger p-4">
             <i class="text-light bi bi-file-earmark-text h4"></i>
           </button>
-          <p> 
+          <p>
             Revision @if ($data->noEvaluacion < 4)
-              {{$data->noEvaluacion}}
-            @else 
+              {{ $data->noEvaluacion }}
+            @else
               3
             @endif
           </p>
@@ -51,19 +51,20 @@
           </a>
         </div>
       </div>
+      <a href="" class="btn btn-success">Modificar Evaluación</a>
     </div>
 
     @if (!empty($errors))
       <div class="pb-4">
         @foreach ($errors as $error)
           @if ($error->justificacion)
-              <p class="alert alert-danger">{{$error->justificacion}} ({{$formatNames[$error->formato-1]}})</p>  
+            <p class="alert alert-danger">{{ $error->justificacion }} ({{ $formatNames[$error->formato - 1] }})</p>
           @else
             @if ($error->observacion)
-              <p class="alert alert-danger">{{$error->observacion}} (Elemento {{$error->elemento}})</p>  
+              <p class="alert alert-danger">{{ $error->observacion }} (Elemento {{ $error->elemento }})</p>
             @else
-              <p class="alert alert-danger">{{$error->comentario}} (Plan {{$error->plan}})</p> 
-            @endif                
+              <p class="alert alert-danger">{{ $error->comentario }} (Plan {{ $error->plan }})</p>
+            @endif
           @endif
         @endforeach
       </div>
@@ -81,22 +82,26 @@
             <form class="mb-2" method="POST" action="{{ url('/update/formats') }}">
               @csrf
               <input type="hidden" name="requisition_id" value="{{ $data->id }}">
-              @foreach ($formats as $format)
-                <div class="d-flex justify-content-between align-items-center mb-2 p-2">
-                  <p>
-                    {{$formatNames[$loop->iteration-1]}}
-                  </p>
-                  <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-                    <input type="radio" class="btn-check" name="anexo{{ $loop->iteration }}"
-                      id="btnYes-{{ $format->id }}" autocomplete="off"
-                      @if ($format->valido) checked @endif>
-                    <label class="btn btn-outline-success text-uppercase" for="btnYes-{{ $format->id }}">Si</label>
-
-                    <input type="radio" class="btn-check btn-No" name="anexo{{ $loop->iteration }}"
-                      id="btnNo-{{ $format->id }}" autocomplete="off" @if (!$format->valido) checked @endif>
-                    <label class="btn btn-outline-danger text-uppercase" for="btnNo-{{ $format->id }}">No</label>
-                  </div>
-                </div>
+              @foreach (range(1, 5) as $item)
+                @foreach ($formats as $format)
+                  @if ($format->formato == $item)
+                    <div class="d-flex justify-content-between align-items-center mb-2 p-2">
+                      <p>
+                        {{ $formatNames[$item - 1] }}
+                      </p>
+                      <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+                        <input type="radio" class="btn-check" name="anexo{{ $item }}"
+                          id="btnYes-{{ $format->id }}" autocomplete="off"
+                          @if ($format->valido) checked @endif>
+                        <label class="btn btn-outline-success text-uppercase" for="btnYes-{{ $format->id }}">Si</label>
+                        <input type="radio" class="btn-check btn-No" name="anexo{{ $item }}"
+                          id="btnNo-{{ $format->id }}" autocomplete="off"
+                          @if (!$format->valido) checked @endif>
+                        <label class="btn btn-outline-danger text-uppercase" for="btnNo-{{ $format->id }}">No</label>
+                      </div>
+                    </div>
+                  @endif
+                @endforeach
               @endforeach
               <div class="d-grid col-6 mx-auto">
                 <button class="btn btn-success" type="submit">Guardar</button>
@@ -117,22 +122,28 @@
           <div class="modal-body">
             <form class="mb-2" method="POST" action="{{ url('/update/formats') }}">
               @csrf
-              @foreach ($formats as $format)
-                <div class="d-flex justify-content-between align-items-center mb-3 p-2">
-                  <div class="form-check">
-                    <input type="hidden" name="requisition_id" value="{{ $data->id }}">
-                    <input name="anexo{{ $loop->iteration }}" value="{{ $format->valido }}" class="review2Checkbox form-check-input" type="checkbox" id="check-review2-{{ $format->id }}"
-                      @if ($format->valido) checked @endif>
-                    <label class="form-check-label" for="check-review2-{{ $format->id }}">
-                      {{$formatNames[$loop->iteration-1]}}
-                    </label>
-                  </div>
-                  <div class="form-floating">
-                    <input name="anexo{{ $loop->iteration }}j" type="text" class="form-control" id="just-review2-{{ $format->id }}"
-                      placeholder="Justificación" value="{{ $format->justificacion }}">
-                    <label for="just-review2-{{ $format->id }}">Justificación</label>
-                  </div>
-                </div>
+              <input type="hidden" name="requisition_id" value="{{ $data->id }}">
+              @foreach (range(1, 5) as $i)
+                @foreach ($formats as $format)
+                  @if ($format->formato == $i)
+                    <div class="d-flex justify-content-between align-items-center mb-3 p-2">
+                      <div class="form-check">
+                        <input name="anexo{{ $i }}" value="{{ $format->valido }}"
+                          class="review2Checkbox form-check-input" type="checkbox" id="check-review2-{{ $format->id }}"
+                          @if ($format->valido) checked @endif>
+                        <label class="form-check-label" for="check-review2-{{ $format->id }}">
+                          {{ $formatNames[$i - 1] }}
+                        </label>
+                      </div>
+                      <div class="form-floating">
+                        <input name="anexo{{$i}}j" type="text" class="form-control"
+                          id="just-review2-{{ $format->id }}" placeholder="Justificación"
+                          value="{{ $format->justificacion }}">
+                        <label for="just-review2-{{ $format->id }}">Justificación</label>
+                      </div>
+                    </div>
+                  @endif
+                @endforeach
               @endforeach
               <div class="d-grid gap-2 col-6 mx-auto">
                 <button class="btn btn-success" type="submit">Guardar</button>
@@ -153,23 +164,28 @@
           <div class="modal-body">
             <form class="mb-2" method="POST" action="{{ url('/update/formats') }}">
               @csrf
-              @foreach ($formats as $format)
-                <div class="d-flex justify-content-between align-items-center mb-3 p-2">
-                  <div class="form-check">
-                    <input type="hidden" name="requisition_id" value="{{ $data->id }}">
-                    <input name="anexo{{ $loop->iteration }}" value="{{ $format->valido }}" class="form-check-input review3Checkbox"
-                      type="checkbox" id="check-review3-{{ $format->id }}"
-                      @if ($format->valido) checked @endif>
-                    <label class="form-check-label" for="check-review3-{{ $format->id }}">
-                      {{$formatNames[$loop->iteration-1]}}
-                    </label>
-                  </div>
-                  <div class="form-floating">
-                    <input name="anexo{{ $loop->iteration }}j" type="text" class="form-control" id="just-review3-{{$format->id}}"
-                      placeholder="Justificación" value="{{ $format->justificacion }}">
-                    <label for="just-review3-{{$format->id}}">Justificación</label>
-                  </div>
-                </div>
+              @foreach (range(1, 5) as $i)
+                @foreach ($formats as $format)
+                  @if ($format->formato == $i)
+                    <div class="d-flex justify-content-between align-items-center mb-3 p-2">
+                      <div class="form-check">
+                        <input type="hidden" name="requisition_id" value="{{ $data->id }}">
+                        <input name="anexo{{ $i }}" value="{{ $format->valido }}"
+                          class="form-check-input review3Checkbox" type="checkbox" id="check-review3-{{ $format->id }}"
+                          @if ($format->valido) checked @endif>
+                        <label class="form-check-label" for="check-review3-{{ $format->id }}">
+                          {{ $formatNames[$i - 1] }}
+                        </label>
+                      </div>
+                      <div class="form-floating">
+                        <input name="anexo{{ $i }}j" type="text" class="form-control"
+                          id="just-review3-{{ $format->id }}" placeholder="Justificación"
+                          value="{{ $format->justificacion }}">
+                        <label for="just-review3-{{ $format->id }}">Justificación</label>
+                      </div>
+                    </div>
+                  @endif
+                @endforeach
               @endforeach
               <div class="d-grid gap-2 col-6 mx-auto">
                 <button class="btn btn-success" type="submit">Guardar</button>
@@ -193,7 +209,7 @@
     cargarEventListener()
 
     function cargarEventListener() {
-      checkBtnRadios.forEach( radio => {
+      checkBtnRadios.forEach(radio => {
         radio.addEventListener('click', review1)
       });
 
@@ -220,7 +236,7 @@
       const id = checkBox.id.split('-')[2]
       const justInput = document.getElementById(`just-review2-${id}`)
       checkBox.value = checkBox.checked
-      if(checkBox.value == 'true'){
+      if (checkBox.value == 'true') {
         justInput.required = false
       } else {
         justInput.required = true
@@ -232,7 +248,7 @@
       const id = checkBox.id.split('-')[2]
       const justInput = document.getElementById(`just-review3-${id}`)
       checkBox.value = checkBox.checked
-      if(checkBox.value == 'true'){
+      if (checkBox.value == 'true') {
         justInput.required = false
       } else {
         justInput.required = true

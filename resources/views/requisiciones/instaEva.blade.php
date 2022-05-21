@@ -19,31 +19,38 @@
       </thead>
         <input type="hidden" name="requisition_id" value="{{ $requisition->id }}">
         <tbody>
-          @foreach ($elements as $element)
-            <tr>
-              <th scope="row">
-                {{$loop->iteration}}
-              </th>
-              <td class="w-50">
-                <p>{{ $elementName[$loop->iteration-1 ] }}</p>
-              </td>
-              <td>
-                <div class="btn-group" role="group">
-                  <input type="radio" class="btn-check" name="elemento{{ $loop->iteration }}"
-                    value="{{ $element->existente }}" id="btnYes-{{ $element->id }}" autocomplete="off"
-                    @if ($element->existente) checked @endif>
-                  <label class="btn btn-outline-success text-uppercase" for="btnYes-{{ $element->id }}">Si</label>
-  
-                  <input type="radio" class="btn-check btn-No" name="elemento{{ $loop->iteration }}"
-                    id="btnNo-{{ $element->id }}" value="{{ $element->existente }}" autocomplete="off"
-                    @if (!$element->existente) checked @endif>
-                  <label class="btn btn-outline-danger text-uppercase" for="btnNo-{{ $element->id }}">No</label>
-                </div>
-              </td>
-              <td class="p-0">
-                <textarea rows="3" id="inputSighting-{{$element->id}}" name="elemento{{ $loop->iteration }}o" placeholder="Observación" class="border-0 w-100 pt-1 resize-none fs-6"></textarea>
-              </td>
-            </tr>
+          @foreach (range(1,52) as $i)
+            @foreach ($elements as $element)
+              @if ($element->elemento == $i)
+                <tr>
+                  <th scope="row">
+                    {{$i}}
+                  </th>
+                  <td class="w-50">
+                    <p>{{ $elementName[$i-1 ] }}</p>
+                  </td>
+                  <td>
+                    <div class="btn-group" role="group">
+                      <input type="radio" class="btn-check" name="elemento{{$i}}"
+                        value="{{ $element->existente }}" id="btnYes-{{ $element->id }}" autocomplete="off"
+                        @if ($element->existente) checked @endif>
+                      <label class="btn btn-outline-success text-uppercase" for="btnYes-{{ $element->id }}">Si</label>
+      
+                      <input type="radio" class="btn-check btn-No" name="elemento{{ $i }}"
+                        id="btnNo-{{ $element->id }}" value="{{ $element->existente }}" autocomplete="off"
+                        @if (!$element->existente) checked @endif>
+                      <label class="btn btn-outline-danger text-uppercase" for="btnNo-{{ $element->id }}">No</label>
+                    </div>
+                  </td>
+                  <td class="p-0">
+                    <div class="form-floating">
+                      <textarea rows="3" name="elemento{{$i}}o" class="form-control rounded-0 resize-none fs-6 border-0" placeholder="Observación" id="inputSighting-{{$element->id}}">{{$element->observacion}}</textarea>
+                      <label for="inputSighting-{{$element->id}}">Observación</label>
+                    </div>
+                  </td>
+                </tr>
+              @endif
+            @endforeach
           @endforeach
         </tbody>
       </table>

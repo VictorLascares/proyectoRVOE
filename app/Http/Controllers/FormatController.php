@@ -45,7 +45,8 @@ class FormatController extends Controller
         $formatoj = $formato . 'j';
         $format->valido = true;
         if ($request->input($formato) == false || $request->input($formato) == 'false') {
-          if (is_null($request->formatoj)) {
+
+          if($requisition->noEvaluacion == 1) {
             $format->justificacion = 'No se encuentra el formato';
           } else {
             $format->justificacion = $request->$formatoj;

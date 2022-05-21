@@ -12,11 +12,11 @@
         <div class="d-flex justify-content-center align-items-center gap-2 mb-3">
           <p class="m-0">{{$planNames[$loop->iteration-1]}}</p>
           <div class="form-floating">
-            <input type="number" class="form-control" id="weighingInput" placeholder="Ponderacion" name="plan{{$loop->iteration}}">
+            <input type="number" class="form-control" id="weighingInput" value={{$plan->ponderacion}} placeholder="Ponderacion" name="plan{{$loop->iteration}}">
             <label for="weighingInput">Ponderacion</label>
           </div>
           <div class="form-floating">
-            <input type="text" class="form-control" id="commentaryInput" placeholder="Comentario" name="plan{{$loop->iteration}}c">
+            <input type="text" class="form-control" id="commentaryInput" placeholder="Comentario" name="plan{{$loop->iteration}}c" value="{{$plan->comentario}}">
             <label for="commentaryInput">Comentario</label>
           </div>
         </div>
