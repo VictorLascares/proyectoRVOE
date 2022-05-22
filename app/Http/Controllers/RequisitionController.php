@@ -62,8 +62,42 @@ class RequisitionController extends Controller
     $requisition = new Requisition();
     $career = Career::find($request->career_id);
     $institution = Institution::find($career->institution_id);
-    $requisitionsP = Requisition::searchcareerid($request->career_id)->checkpendiente()->first();
-    if (is_null($requisitionsP)) {
+    $requisition_max = Requisition::searchcareeridMax($request->career_id)->first();
+    if (!is_null($requisition_max)) {
+      $dateNow = date('Y-m-d');
+      $dateBack = $requisition_max->fecha_vencimiento;
+      $dateNow_time = strtotime($dateNow);
+      $dateBack_time = strtotime($dateBack);
+      if($requisition_max->estado == 'revocado' || ($dateBack_time < $dateNow_time && $requisition_max->fecha_vencimiento != null)){
+        $requisition->meta = $request->meta;
+        $requisition->career_id = $request->career_id;
+        $data = $requisition->save();
+        for ($formatName = 1; $formatName < 6; $formatName++) {
+          $format = new Format();
+          $format->formato = $formatName;
+          $format->requisition_id = $requisition->id;
+          $format->save();
+        }
+        
+        $users = User::searchDireccion()->get();
+        $meta = $request->meta;
+        if($request->meta == "planEstudios"){
+          $meta = "plan de estudios";
+        }
+        if($request->meta == "domicilio"){
+          $meta = "cambio de domicilio";
+        }
+        foreach($users as $user){
+          Mail::to($user->correo)->send(new NotifyMail($meta,$career,$institution));
+        }
+        return redirect('requisitions');
+      }else{
+        return response()->json([
+          'status' => 400,
+          'error' => "No se puede generar una requisición en estos momentos, consulte el historial de requisiciones."
+        ]);
+      }      
+    } else {
       $requisition->meta = $request->meta;
       $requisition->career_id = $request->career_id;
       $data = $requisition->save();
@@ -86,11 +120,6 @@ class RequisitionController extends Controller
         Mail::to($user->correo)->send(new NotifyMail($meta,$career,$institution));
       }
       return redirect('requisitions');
-    } else {
-      return response()->json([
-        'status' => 400,
-        'error' => "Se encuentra una requisición abierta"
-      ]);
     }
   }
 

@@ -8,6 +8,7 @@ use App\Models\Requisition;
 use App\Models\Institution;
 use App\Models\Career;
 use App\Models\Plan;
+use App\Models\User;
 
 class PlanController extends Controller
 {
@@ -49,17 +50,33 @@ class PlanController extends Controller
         $plan->save();
       }
       if ($requisition->cata == true) {
+        $date_vencimiento = date("Y-m-d", strtotime($requisition->created_at . "+ 3 year"));
+        $requisition->fecha_vencimiento = $date_vencimiento;
         $requisition->estado = 'activo';
       }
       $year = date('Y');
-      $no_requisitions = Requisition::searchDate($year)->noSolicitud()->count();
-      if ($no_requisitions == 0) {
-        $requisition->numero_solicitud = 1;
-      } else {
-        $requisition->numero_solicitud = $no_requisitions + 1;
-      }
+      if($requisition->numero_solicitud != null){
+        $no_requisitions = Requisition::searchDate($year)->noSolicitud()->count();
+        if ($no_requisitions == 0) {
+          $requisition->numero_solicitud = 1;
+        } else {
+          $requisition->numero_solicitud = $no_requisitions + 1;
+        }
+      }      
       $requisition->noEvaluacion = $requisition->noEvaluacion + 1;
       $requisition->save();
+      //Notificando Planeación
+      $users = User::searchPlaneacion()->get();
+      $meta = $request->meta;
+      if($request->meta == "planEstudios"){
+        $meta = "plan de estudios";
+      }
+      if($request->meta == "domicilio"){
+        $meta = "cambio de domicilio";
+      }
+      foreach($users as $user){
+        Mail::to($user->correo)->send(new NotifyMail($meta,$career,$institution));
+      }
     }
     return redirect(route('requisitions.show',$requisition->id));
   }
