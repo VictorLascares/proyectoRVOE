@@ -21,7 +21,7 @@
         <div class="d-flex flex-column align-items-center gap-2">
           <h5 class="text-center w-75 text-uppercase">Evaluacion de formatos</h5>
           <button @if ($data->noEvaluacion < 4) data-bs-target="#review{{ $data->noEvaluacion }}Modal" @endif
-            data-bs-toggle="modal" type="button" class="@if($data->noEvaluacion > 3) disabled @endif btn btn-danger p-4">
+            data-bs-toggle="modal" type="button" class="@if($data->noEvaluacion > 3 or $data->estado == 'rechazado') disabled @endif btn btn-danger p-4">
             <i class="text-light bi bi-file-earmark-text h4"></i>
           </button>
           <p>
@@ -34,19 +34,19 @@
         </div>
         <div class="d-flex flex-column align-items-center gap-2">
           <h5 class="text-center w-75 text-uppercase">Evaluacion de las Instalaciones</h4>
-            <a href="{{ url('/evaluate/elements', $data->id) }}" class="@if($data->noEvaluacion != 4) disabled @endif btn btn-danger p-4">
+            <a href="{{ url('/evaluate/elements', $data->id) }}" class="@if($data->noEvaluacion != 4 or $data->estado == 'rechazado') disabled @endif btn btn-danger p-4">
               <i class="text-light bi bi-building h4"></i>
             </a>
         </div>
         <div class="d-flex flex-column align-items-center gap-2">
           <h5 class="text-center w-75 text-uppercase">Evaluacion de los Planes</h5>
-          <a href="{{ url('/evaluate/plans', $data->id) }}" class="@if($data->noEvaluacion != 5) disabled @endif btn btn-danger p-4">
+          <a href="{{ url('/evaluate/plans', $data->id) }}" class="@if($data->noEvaluacion != 5 or $data->estado == 'rechazado') disabled @endif btn btn-danger p-4">
             <i class="text-light bi bi-list-task h4"></i>
           </a>
         </div>
         <div class="d-flex flex-column align-items-center gap-2">
           <h5 class="text-center w-75 text-uppercase">Generacion de la OTA</h5>
-          <a download="OTAReq-{{ $data->id }}" href="{{ url('/download', $data->id) }}" class="@if($data->noEvaluacion != 6) disabled @endif btn btn-danger p-4">
+          <a download="OTAReq-{{ $data->id }}" href="{{ url('/download', $data->id) }}" class="@if($data->noEvaluacion != 6 or $data->estado == 'rechazado') disabled @endif btn btn-danger p-4">
             <i class="text-light bi bi-cloud-download h4"></i>
           </a>
         </div>
@@ -58,12 +58,12 @@
       <div class="pb-4">
         @foreach ($errors as $error)
           @if ($error->justificacion)
-            <p class="alert alert-danger">{{ $error->justificacion }} ({{ $formatNames[$error->formato - 1] }})</p>
+            <p class="alert alert-danger">Revision {{$data->noEvaluacion-1}}.- Evaluación de Formatos - {{ $error->justificacion }} ({{ $formatNames[$error->formato - 1] }})</p>
           @else
             @if ($error->observacion)
-              <p class="alert alert-danger">{{ $error->observacion }} (Elemento {{ $error->elemento }})</p>
+              <p class="alert alert-danger">Evaluación de las Instalaciones.- {{ $error->observacion }} (Elemento {{ $error->elemento }})</p>
             @else
-              <p class="alert alert-danger">{{ $error->comentario }} (Plan {{ $error->plan }})</p>
+              <p class="alert alert-danger">Evaluación de los Planes.-{{ $error->comentario }} (Plan {{ $error->plan }})</p>
             @endif
           @endif
         @endforeach
