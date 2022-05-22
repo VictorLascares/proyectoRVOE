@@ -117,14 +117,13 @@ class CareerController extends Controller
   }
 
   public function getCareers(Request $request) {
-    // if( $request->ajax()){
-      //Autorización
+    if( $request->ajax()){
       $careers = Career::where('institution_id', $request->institutionId)->get();
       $careerArray = array();
       foreach ($careers as $career) {
         $careerArray[$career->id] = $career->nombre;
       }
       return response()->json($careerArray);
-    // }
+    }
   }
 }

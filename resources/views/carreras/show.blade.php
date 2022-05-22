@@ -73,7 +73,7 @@
         </button>
       </div>
 
-      <table class="table">
+      <table class="table able-bordered table-condensed table-striped table-hover">
         <thead>
           <tr>
             <th scope="col">Meta</th>
@@ -83,11 +83,12 @@
         </thead>
         <tbody>
           @foreach ($requisitions as $requisition)
-            <tr>
-              <td>{{$requisition->meta}}</td>
-              <td>{{$requisition->created_at}}</td>
-              <td>{{$requisition->updated_at}}</td>
-            </tr>
+              <tr class="table-row" data-href="{{ route('requisitions.show',$requisition->id) }}">
+                <td>{{ $requisition->meta }}</td>
+                <td>{{ $requisition->created_at }}</td>
+                <td>{{ $requisition->updated_at }}</td>
+              </tr>
+            </a>
           @endforeach
         </tbody>
       </table>
@@ -103,7 +104,7 @@
               <form class="mb-2" method="POST" action="{{ route('requisitions.store') }}">
                 @csrf
                 <div class="form-floating mb-3">
-                  <input type="hidden" value="{{$career->id}}" name="career_id">
+                  <input type="hidden" value="{{ $career->id }}" name="career_id">
                   <select id="requisitionGoal" class="form-control" name="meta" required>
                     <option selected disabled>-- Seleccione la Meta --</option>
                     <option value="solicitud">Solicitud</option>
@@ -126,4 +127,13 @@
 @endsection
 @section('footer')
   <x-footer />
+@endsection
+@section('script')
+  <script>
+    $(document).ready(function($){
+      $(".table-row").click(function() {
+        window.document.location = $(this).data("href");
+      })
+    })
+  </script>
 @endsection

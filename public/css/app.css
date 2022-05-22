@@ -18295,3 +18295,7 @@ textarea.form-control-lg {
   border-radius: 3px;
   cursor: pointer;
 }
+
+.table-row:hover {
+  cursor: pointer;
+}
