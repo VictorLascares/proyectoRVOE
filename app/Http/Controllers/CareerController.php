@@ -47,6 +47,7 @@ class CareerController extends Controller
    */
   public function store(Request $request)
   {
+    //Autenticación
     $career = new Career();
     $career->nombre = $request->nombre;
     $career->modalidad = $request->modalidad;
@@ -96,6 +97,7 @@ class CareerController extends Controller
    */
   public function update(Request $request, $career)
   {
+    //Autorización
     $data = Career::find($career);
     $data->update($request->all());
     return redirect('institutions');
@@ -113,6 +115,7 @@ class CareerController extends Controller
     $career->delete();
     return redirect('institutions');
   }
+
   public function getCareers(Request $request) {
     if( $request->ajax()){
       $careers = Career::where('institution_id', $request->institutionId)->get();

@@ -50,4 +50,9 @@ class User extends Authenticatable
     {
         return $query->where('tipoUsuario', 'direccion');
     }
+
+    public function scopeSearchPlaneacion($query)
+    {
+        return $query->where('tipoUsuario', 'planeacion');
+    }
 }

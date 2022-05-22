@@ -22,6 +22,8 @@ return new class extends Migration
       $table->enum('estado', ['activo', 'latencia', 'revocado', 'inactivo', 'pendiente', 'rechazado'])->nullable(false)->default('pendiente');
       $table->integer('noEvaluacion')->default('1');
       $table->boolean('cata')->nullable(); 
+      $table->date('fecha_vencimiento')->nullable();
+      $table->date('fecha_latencia')->nullable();
       $table->foreignId('career_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
       $table->timestamps();
     });

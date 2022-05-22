@@ -48,13 +48,12 @@ class Requisition extends Model
     public function scopeSearchcareerid($query,$career_id){
         return $query->where('career_id',$career_id);
     }
-
-    public function scopeCheckpendiente($query){
-        return $query->where('estado','pendiente');
+    public function scopeSearchcareeridMax($query,$career_id){
+        return $query->where('career_id',$career_id);
     }
-
-    public function scopeSearchDate($query,$year){
-        return $query->whereYear('created_at', '=', $year);
+    public function scopeCheckpendiente($query){
+        return $query->where('estado','pendiente')
+                     ->max('created_at');
     }
 
     public function scopeNoSolicitud($query){
