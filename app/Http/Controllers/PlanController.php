@@ -55,7 +55,7 @@ class PlanController extends Controller
         $requisition->estado = 'activo';
       }
       $year = date('Y');
-      if($requisition->numero_solicitud != null){
+      if(is_null($requisition->numero_solicitud)){
         $no_requisitions = Requisition::searchDate($year)->noSolicitud()->count();
         if ($no_requisitions == 0) {
           $requisition->numero_solicitud = 1;

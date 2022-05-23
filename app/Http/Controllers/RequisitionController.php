@@ -13,7 +13,7 @@ use App\Models\User;
 use App\Models\Career;
 use App\Models\Municipality;
 use Illuminate\Support\Facades\Auth;
-
+use \DateTime;
 
 use Mail;
  
@@ -32,6 +32,10 @@ class RequisitionController extends Controller
     $requisitions = Requisition::all();
     $careers = Career::all();
     $institutions = Institution::all();
+    foreach($requisitions as $requisition){
+      $this->revisar_activo($requisition->id);
+    }
+    $requisitions = Requisition::all();
     return view('requisiciones.index', compact('requisitions', 'careers', 'institutions'));
   }
 
@@ -44,7 +48,6 @@ class RequisitionController extends Controller
   {
     $institutions = Institution::all();
     $careers = Career::all();
-
     return response()->json([
       'institutions' => $institutions,
       'careers' => $careers
@@ -132,6 +135,7 @@ class RequisitionController extends Controller
    */
   public function show($requisition)
   {
+    $this->revisar_activo($requisition);
     if (Auth::user() != null) {
       $data = Requisition::find($requisition);
       $formats = Format::where('requisition_id', $data->id)->get();
@@ -192,7 +196,28 @@ class RequisitionController extends Controller
    */
   public function update(Request $request, $requisition)
   {
+    $this->revisar_activo($requisition);
     $data = Requisition::find($requisition);
+    if($request->estado == 'latencia' && $data->estado == 'activo'){
+      $date = date('Y-m-d');
+      $date = date('Y-m-d',strtotime($date));
+      $dateMax = date("Y-m-d", strtotime($data->created_at. "+ 2 year"));
+      if($dateMax >= $date){
+        $data->fecha_latencia = $date;
+        $data->estado = $request->estado;
+      }      
+    }else if($request->estado == 'activo' && $data->estado == 'latencia'){
+      $dateLatencia = date_create(date('Y-m-d',strtotime($data->fecha_latencia)));
+      $dateVencimiento = date_create(date('Y-m-d',strtotime($data->fecha_vencimiento)));
+      $diasRestantes = date_diff($dateVencimiento,$dateLatencia);
+      $differenceFormat = '%a';
+      $date = date('Y-m-d');
+      $date = date("Y-m-d", strtotime($date. "+ ".$diasRestantes->format($differenceFormat)." day"));
+      $data->fecha_vencimiento = $date;
+      $data->estado = $request->estado;
+    }else if($request->estado == 'activo' && $data->estado == 'revocado'){
+      $data->estado = $request->estado;
+    }
     $data->update($request->all());
     return redirect(route('requisitions.show',$data->id));
   }
@@ -263,8 +288,10 @@ class RequisitionController extends Controller
         $anioI = date("Y", strtotime($requisition->created_at));
         $mesI = $mes[ltrim(date("m", strtotime($requisition->created_at)), "0") - 1];
         $diaI = date("d", strtotime($requisition->created_at));
-        $mesA = $mes[ltrim(date("m", strtotime($requisition->created_at . "+ 3 month")), "0") - 1];
-        $diaA = date("d", strtotime($requisition->created_at . "+ 3 month"));
+        //$mesA = $mes[ltrim(date("m", strtotime($requisition->created_at . "+ 3 month")), "0") - 1];
+        //$diaA = date("d", strtotime($requisition->created_at . "+ 3 month"));
+        $mesA = $mes[ltrim(date("m", strtotime($requisition->fecha_vencimiento)), "0") - 1];
+        $diaA = date("d", strtotime($requisition->fecha_vencimiento));
         $institucion = $institution->nombre;
         $municipio = $municipalitie->nombre;
         $direccion = $institution->direccion;
@@ -345,4 +372,19 @@ class RequisitionController extends Controller
     }
     return redirect(route('requisitions.show',$requisition->id));
   }
+
+  private function revisar_activo($requisition){
+    $data = Requisition::find($requisition);
+    if($data->estado == 'activo'){
+      $dateNow = date('Y-m-d');
+      $dateVencimiento = $data->fecha_vencimiento;
+      $dateNow_time = strtotime($dateNow);
+      $dateVencimiento_time = strtotime($dateVencimiento);
+      if($dateVencimiento_time < $dateNow_time){
+        $data->estado = 'inactivo';
+        $data->update();
+      }
+    }
+  }
+
 }
