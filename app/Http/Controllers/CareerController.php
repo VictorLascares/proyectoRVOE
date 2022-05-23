@@ -6,6 +6,8 @@ use App\Models\Area;
 use Illuminate\Http\Request;
 use App\Models\Career;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+
 
 class CareerController extends Controller
 {
@@ -47,15 +49,16 @@ class CareerController extends Controller
    */
   public function store(Request $request)
   {
-    //Autenticación
-    $career = new Career();
-    $career->nombre = $request->nombre;
-    $career->modalidad = $request->modalidad;
-    $career->duracion = $request->duracion;
-    $career->area_id = $request->area_id;
-    $career->institution_id = $request->institution_id;
-    $career->save();
-    return redirect(route('institutions.show', $request->institution_id));
+    if (Auth::user() != null) {
+      $career = new Career();
+      $career->nombre = $request->nombre;
+      $career->modalidad = $request->modalidad;
+      $career->duracion = $request->duracion;
+      $career->area_id = $request->area_id;
+      $career->institution_id = $request->institution_id;
+      $career->save();
+      return redirect(route('institutions.show', $request->institution_id));
+    }
   }
 
   /**
@@ -66,14 +69,16 @@ class CareerController extends Controller
    */
   public function show($career)
   {
-    $areas= Area::all();
-    $career = Career::find($career);
-    $requisitions = DB::table('careers')
-      ->join('requisitions', 'careers.id', '=', 'requisitions.career_id')
-      ->select('requisitions.*')
-      ->where('careers.id', $career->id)
-      ->get();
-    return view('carreras.show', compact('career','requisitions', 'areas'));
+    if (Auth::user() != null) {
+      $areas= Area::all();
+      $career = Career::find($career);
+      $requisitions = DB::table('careers')
+        ->join('requisitions', 'careers.id', '=', 'requisitions.career_id')
+        ->select('requisitions.*')
+        ->where('careers.id', $career->id)
+        ->get();
+      return view('carreras.show', compact('career','requisitions', 'areas'));
+    }
   }
 
 
@@ -97,10 +102,11 @@ class CareerController extends Controller
    */
   public function update(Request $request, $career)
   {
-    //Autorización
-    $data = Career::find($career);
-    $data->update($request->all());
-    return redirect('institutions');
+    if (Auth::user() != null) {
+      $data = Career::find($career);
+      $data->update($request->all());
+      return redirect('institutions');
+    }
   }
 
   /**
@@ -111,19 +117,23 @@ class CareerController extends Controller
    */
   public function destroy($career)
   {
-    $career = Career::find($career);
-    $career->delete();
-    return redirect('institutions');
+    if (Auth::user() != null) {
+      $career = Career::find($career);
+      $career->delete();
+      return redirect('institutions');
+    }
   }
 
   public function getCareers(Request $request) {
-    if( $request->ajax()){
-      $careers = Career::where('institution_id', $request->institutionId)->get();
-      $careerArray = array();
-      foreach ($careers as $career) {
-        $careerArray[$career->id] = $career->nombre;
+    if (Auth::user() != null) {
+      if( $request->ajax()){
+        $careers = Career::where('institution_id', $request->institutionId)->get();
+        $careerArray = array();
+        foreach ($careers as $career) {
+          $careerArray[$career->id] = $career->nombre;
+        }
+        return response()->json($careerArray);
       }
-      return response()->json($careerArray);
     }
   }
 }

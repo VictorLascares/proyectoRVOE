@@ -8,7 +8,6 @@ class RegisterController extends Controller
 {
     public function verificarCorreo(Request $request)
     {
-       
         if($request->ajax()){
             $mail = $request->get('correo');
             if($mail){
