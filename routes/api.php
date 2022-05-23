@@ -39,6 +39,7 @@ use App\Http\Controllers\ElementController;
 //     //LOGOUT PASSWORD
 //     Route::get('logout/{user}',[UserController::class,'logout']);
 
+//Route::resource('requisitions',RequisitionController::class);
 
 
 
