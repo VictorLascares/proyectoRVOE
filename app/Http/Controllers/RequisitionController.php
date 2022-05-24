@@ -259,13 +259,11 @@ class RequisitionController extends Controller
   //Funcion para vista de busqueda de RVOE ---PENDIENTE
   public function searchRequisition()
   {
-    if (Auth::user() != null) {
       $institutions = Institution::all();
       $municipalities = Municipality::all();
       $areas = Area::all();
 
       return view('pages.consult', compact('institutions', 'municipalities', 'areas'));
-    }
   }
 
   //Funcion para buscar RVOE ---PENDIENTE
