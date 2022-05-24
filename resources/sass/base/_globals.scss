@@ -1,23 +1,29 @@
 html {
+  box-sizing: border-box;
   position: relative;
   min-height: 100%;
 }
 
+*, *:before, *:after {
+  box-sizing: inherit;
+}
 body {
+  font-family: $fuente_principal;
   margin-bottom: 60px;
-  /* Margin bottom by footer height */
 }
 
-.resize-none {
-  resize: none;
+p {
+  font-size: 1.6rem;
 }
 
-.disabled {
-  pointer-events: none;
-  cursor: default;
-  color: gray;
-  opacity: 0.6;
+a {
+  text-decoration: none;
 }
+
+h1 ,h2 ,h3 {
+  font-family: $fuente_principal;
+}
+
 
 textarea:focus,
 input:focus,

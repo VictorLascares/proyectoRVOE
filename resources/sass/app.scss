@@ -1,15 +1,16 @@
-// Fonts
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;700&display=swap');
-
-//  Globals
-@import './base/globals';
-
-// Variables
-@import './base/variables';
-
+// Bootstrap-icons
 @import '~bootstrap-icons/font/bootstrap-icons';
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
+// Variables
+@import './base/variables';
+// Utilidades
+@import './base/utilidades';
+// Mixins
+@import './base/mixins';
+//  Globals
+@import './base/globals';
+
 
 // Components
 @import './layouts/bar';

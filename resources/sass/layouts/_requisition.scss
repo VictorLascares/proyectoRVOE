@@ -1,3 +1,17 @@
+.requisiciones {
+  @include grid(5,2rem);
+  .requisicion {
+    width: 100%;
+  }
+}
+
+
 .hide {
   display: none;
 }
+
+.evaluaciones {
+  @include grid(4, 0);
+  grid-template-rows: 1fr;
+}
+
