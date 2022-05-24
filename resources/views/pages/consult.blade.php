@@ -5,10 +5,11 @@
 @endsection
 @section('main-content')
   <x-login />
-  <div class="container-sm p-4 my-5">
+  <div class="container-sm my-3 pb-4">
+    <h1 class="text-center mb-4">Consultar <span class="text-uppercase">rvoe</span></h1>
     <form class="row g-3">
       <div class="col-md-6">
-        <div class="form-floating mb-3">
+        <div class="form-floating mb-2">
           <select id="institutionsSelect" class="form-control">
             <option selected disabled>-- Seleccione una Institución --</option>
             @foreach ($institutions as $institution)
@@ -19,7 +20,7 @@
         </div>
       </div>
       <div class="col-md-6">
-        <div class="form-floating mb-3">
+        <div class="form-floating mb-2">
           <select id="inputState" class="form-control">
             <option selected disabled>-- Seleccione el área de estudios --</option>
             @foreach ($areas as $area)
@@ -30,7 +31,7 @@
         </div>
       </div>
       <div class="col-md-6">
-        <div class="form-floating mb-3">
+        <div class="form-floating mb-2">
           <select id="municipalitySelect" class="form-control">
             <option selected disabled>-- Seleccione un Municipio --</option>
             @foreach ($municipalities as $municipality)
@@ -41,7 +42,7 @@
         </div>
       </div>
       <div class="col-md-6">
-        <div class="form-floating mb-3">
+        <div class="form-floating mb-2">
           <select id="inputState" class="form-control">
             <option selected disabled>-- Seleccione la modalidad --</option>
             <option value="Presencial">Presencial</option>
@@ -52,7 +53,7 @@
         </div>
       </div>
       <div class="col-md-6">
-        <div class="form-floating mb-3">
+        <div class="form-floating mb-2">
           <select id="inputState" class="form-control">
             <option selected disabled>-- Seleccione el status --</option>
             <option>Activo</option>
@@ -66,23 +67,19 @@
         </div>
       </div>
       <div class="col-md-6">
-        <div class="form-floating mb-3">
+        <div class="form-floating mb-2">
           <input type="email" class="form-control" id="floatingInput" placeholder="RVOE o acuerdo">
           <label for="floatingInput">RVOE o acuerdo</label>
         </div>
       </div>
-      <div class="col-12">
-        <div class="d-flex gap-2">
-          <div class="col-6">
-            <div class="d-grid">
-              <button type="button" class="btn btn-success btn-lg">Limpiar</button>
-            </div>
-          </div>
-          <div class="col-6">
-            <div class="d-grid">
-              <button type="submit" class="btn btn-success btn-lg">Buscar</button>
-            </div>
-          </div>
+      <div class="col-md-6">
+        <div class="d-grid">
+          <button type="reset" class="text-uppercase boton boton-green py-2 rounded">Limpiar</button>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="d-grid">
+          <button type="submit" class="text-uppercase boton boton-green py-2 rounded">Buscar</button>
         </div>
       </div>
     </form>
