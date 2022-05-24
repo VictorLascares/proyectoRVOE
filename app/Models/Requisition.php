@@ -55,6 +55,9 @@ class Requisition extends Model
         return $query->where('estado','pendiente')
                      ->max('created_at');
     }
+    public function scopeSearchDate($query,$year){
+        return $query->whereYear('created_at',$year);
+    }
 
     public function scopeNoSolicitud($query){
         return $query->whereNotNull('numero_solicitud');
