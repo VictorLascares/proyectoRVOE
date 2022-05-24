@@ -1,0 +1,24 @@
+.resize-none {
+  resize: none;
+}
+
+.disabled {
+  pointer-events: none;
+  cursor: default;
+  color: gray;
+  opacity: 0.6;
+}
+
+.boton {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  border: none;
+  color: white;
+}
+
+.boton-green {
+  background-color: $green-dark;
+  &:hover {
+    background-color: $green;
+  }
+}
