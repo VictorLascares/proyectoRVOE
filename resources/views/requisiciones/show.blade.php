@@ -27,7 +27,7 @@
                   @break
                 @case('latencia')
                 @case('revocado')
-                  <option value="latencia">Activo</option> 
+                  <option value="activo">Activo</option> 
                   @break
             @endswitch
           </select>
