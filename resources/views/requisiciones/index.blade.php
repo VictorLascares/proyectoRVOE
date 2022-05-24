@@ -5,9 +5,12 @@
 @endsection
 @section('main-content')
   <div class="container py-4">
-    <div class="mb-4">
+    <form class="mb-4 filtros">
+      <select id="filtro-anio" class="custom-select">
+        <option selected disabled>Filtrar por Año</option>
+      </select>
       <select id="filtro-estado" class="custom-select">
-        <option selected>Filtrar por estado</option>
+        <option selected disabled>Filtrar por estado</option>
         <option value="activo">Activo</option>
         <option value="latencia">Latencia</option>
         <option value="revocado">Revocado</option>
@@ -15,39 +18,48 @@
         <option value="pendiente">Pendiente</option>
         <option value="rechazado">Rechazado</option>
       </select>
-    </div>
+      <button 
+        type="reset" 
+        id="limpiar-filtro" 
+        class="boton boton-green rounded py-2"
+      >
+        Limpiar Filtros
+      </button>
+    </form>
 
-    <div class="row row-cols-1 row-cols-md-5 g-4">
+    <div class="requisiciones">
       @foreach ($requisitions as $requisition)
-        <div 
-          class="col requisicion"
-          data-estado="{{$requisition->estado}}"
-        >
-          <a href="{{ route('requisitions.show', $requisition->id) }}"
-            class="requisition text-decoration-none text-uppercase fw-bold btn py-4 px-5 @switch($requisition->estado) @case('pendiente')
-              @case('latencia')
-                btn-warning
-                text-dark
-                @break
-              @case('activo')
-                btn-success
-                text-light
-                @break
-              @case('revocado')
-              @case('inactivo')
-              @case('rechazado')
-                text-light
-                btn-danger
-                @break @endswitch"
+          <a 
+            data-fecha="{{ $requisition->created_at->format('m-d-y') }}"
+            data-estado="{{ $requisition->estado }}"
+            href="{{ route('requisitions.show', $requisition->id) }}"
+            class="w-100 rounded requisicion requisition text-center text-decoration-none py-3 @switch($requisition->estado) @case('pendiente')
+            @case('latencia')
+              bg-light-yellow
+              text-dark-yellow
+              @break
+            @case('activo')
+              bg-light-green
+              text-dark-green
+              @break
+            @case('revocado')
+            @case('inactivo')
+            @case('rechazado')
+              bg-light-red 
+              text-dark-red
+            @endswitch"
             style="width: 13rem">
-            {{ $requisition->estado }}
+            <p class="text-uppercase fw-bold m-0">{{ $requisition->estado }}</p>
+            <p class="m-0">{{ $requisition->created_at->format('m-d-Y') }}</p>
           </a>
-        </div>
       @endforeach
     </div>
   </div>
-  <button data-bs-toggle="modal" data-bs-target="#requisitionModal" type="button"
-    class="new-request btn-success h2 py-2 px-3 rounded-1">
+  <button 
+    data-bs-toggle="modal" 
+    data-bs-target="#requisitionModal" 
+    type="button"
+    class="new-request boton boton-green h2 py-2 px-3 rounded">
     +
   </button>
   <div class="modal fade" id="requisitionModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -98,14 +110,19 @@
 @endsection
 @section('script')
   <script>
-    const filtroEstado = document.getElementById('filtro-estado')
+    const filtroEstado = document.querySelector('#filtro-estado')
     const requisiciones = document.querySelectorAll('.requisicion')
+    const btnLimpiarFiltros = document.querySelector('#limpiar-filtro')
+    const filtroAnio = document.querySelector('#filtro-anio')
 
     cargarEventListeners()
 
 
     function cargarEventListeners() {
+      document.addEventListener("DOMContentLoaded", llenarSelectAnios)
       filtroEstado.addEventListener('change', filtrarPorEstado)
+      btnLimpiarFiltros.addEventListener('click', limpiarFiltros)
+      filtroAnio.addEventListener('change', filtrarPorAnio)
     }
 
 
@@ -113,19 +130,44 @@
     function filtrarPorEstado(e) {
       const option = e.target.value
       requisiciones.forEach(req => {
-        if(req.getAttribute('data-estado')!=option){
+        if (req.getAttribute('data-estado') != option) {
           req.classList.add('hide')
-        } else {
-          req.classList.remove('hide')
+        }
+      })
+    }
+
+    function filtrarPorAnio(e) {
+      const anio = e.target.value
+      requisiciones.forEach(req => {
+        if (req.getAttribute('data-fecha').split('-')[2] != anio) {
+          req.classList.add('hide')
         }
       })
     }
 
 
+    function llenarSelectAnios() {
+      const anios = []
+      requisiciones.forEach(req => {
+        const anio = req.getAttribute('data-fecha').split('-')[2]
+        if (!anios.includes(anio)) {
+          anios.push(anio)
+        }
+      });
+      for (let i = 0; i < anios.length; i++) {
+        const option = document.createElement('option')
+        option.value = anios[i]
+        option.textContent = anios[i]
+        filtroAnio.append(option)
+      }
+    }
 
 
-
-
+    function limpiarFiltros() {
+      requisiciones.forEach(req => {
+        req.classList.remove('hide')
+      })
+    }
 
 
     $(document).ready(function() {
