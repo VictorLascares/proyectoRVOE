@@ -14,27 +14,30 @@
       <h2>Requisicion</h2>
       <p class="requisition__state">{{ $data->estado }}</p>
 
-      @if ($data->estado == 'activo' || $data->estado == 'latencia' || $data->estado == 'revocado')
-        <form action="{{route('requisitions.update',$data->id)}}" method="POST" enctype="multipart/form-data">
-          @method('PUT')
-          @csrf
-          <select class="form-select" name="estado">
-            <option selected disabled>Selecciona un estado</option>
-            @switch($data->estado)
-                @case('activo')
-                  <option value="latencia">Latencia</option> 
-                  <option value="revocado">Revocado</option>
-                  @break
-                @case('latencia')
-                @case('revocado')
-                  <option value="activo">Activo</option> 
-                  @break
-            @endswitch
-          </select>
-          <button class="btn btn-success" type="submit">
-            Actualizar estado
-          </button>
-        </form>
+
+      @if (Auth::user()->tipoUsuario == 'administrador')
+        @if ($data->estado == 'activo' || $data->estado == 'latencia' || $data->estado == 'revocado')
+          <form action="{{route('requisitions.update',$data->id)}}" method="POST" enctype="multipart/form-data">
+            @method('PUT')
+            @csrf
+            <select class="form-select" name="estado">
+              <option selected disabled>Selecciona un estado</option>
+              @switch($data->estado)
+                  @case('activo')
+                    <option value="latencia">Latencia</option> 
+                    <option value="revocado">Revocado</option>
+                    @break
+                  @case('latencia')
+                  @case('revocado')
+                    <option value="activo">Activo</option> 
+                    @break
+              @endswitch
+            </select>
+            <button class="btn btn-success" type="submit">
+              Actualizar estado
+            </button>
+          </form>
+        @endif
       @endif
     </div>
 
@@ -43,8 +46,19 @@
       <div class="evaluaciones">
         <div class="d-flex flex-column align-items-center">
           <h3 class="text-center w-75 text-uppercase">Evaluacion de formatos</h3>
-          <button @if ($data->noEvaluacion < 4) data-bs-target="#review{{ $data->noEvaluacion }}Modal" @endif
-            data-bs-toggle="modal" type="button" class="@if($data->noEvaluacion > 3 or $data->estado == 'rechazado') disabled @endif btn btn-danger p-4">
+          <button 
+            id="evaFormatos"
+            @if ($data->noEvaluacion < 4) data-bs-target="#review{{ $data->noEvaluacion }}Modal" @endif
+            data-bs-toggle="modal"
+            data-evaluacion="{{$data->noEvaluacion}}"
+            data-estado="{{$data->estado}}"
+            data-usuario="{{Auth::user()->tipoUsuario}}"
+            type="button" 
+            class="btn btn-danger p-4 @if ($data->noEvaluacion > 3 || $data->estado == 'rechazado')
+              disabled
+            @elseif (Auth::user()->tipoUsuario == 'planeacion' && $data->noEvaluacion == 3)
+              disabled
+            @endif ">
             <i class="text-light bi bi-file-earmark-text h4"></i>
           </button>
           <p>
@@ -57,7 +71,7 @@
         </div>
         <div class="d-flex flex-column align-items-center">
           <h3 class="text-center w-75 text-uppercase">Evaluacion de Instalaciones</h3>
-            <a href="{{ url('/evaluate/elements', $data->id) }}" class="@if($data->noEvaluacion != 4 or $data->estado == 'rechazado') disabled @endif btn btn-danger p-4">
+            <a href="{{ url('/evaluate/elements', $data->id) }}" class="@if($data->noEvaluacion != 4 or $data->estado == 'rechazado' or Auth::user()->tipoUsuario == 'planeacion') disabled @endif btn btn-danger p-4">
               <i class="text-light bi bi-building h4"></i>
             </a>
         </div>
@@ -74,9 +88,11 @@
           </a>
         </div>
       </div>
-      <div class="d-flex justify-content-center">
-        <a href="{{url('/evaluacion-anterior',$data->id)}}" class="btn btn-success">Modificar Evaluación</a>
-      </div>
+      @if (Auth::user()->tipoUsuario == 'administrador')
+        <div class="d-flex justify-content-center">
+          <a href="{{url('/evaluacion-anterior',$data->id)}}" class="btn btn-success">Modificar Evaluación</a>
+        </div>
+      @endif
     </div>
 
     @if (!empty($errors))
@@ -230,6 +246,7 @@
     const checkBtnRadios = document.querySelectorAll('.btn-check')
     const checkBoxes1 = document.querySelectorAll('.review2Checkbox')
     const checkBoxes2 = document.querySelectorAll('.review3Checkbox')
+    const btnFormatos = document.querySelector('#evaFormatos')
 
     cargarEventListener()
 
@@ -245,6 +262,8 @@
       checkBoxes2.forEach(checkBox => {
         checkBox.addEventListener('click', review3)
       })
+
+      document.addEventListener('DOMContentLoaded', deshabilitar)
     }
 
     function review1(e) {
@@ -278,6 +297,19 @@
       } else {
         justInput.required = true
       }
+    }
+
+    function deshabilitar() {
+      // const noEvaluacion = btnFormatos.getAttribute('data-evaluacion')
+      // const estado = btnFormatos.getAttribute('data-estado')
+      // const usuario = btnFormatos.getAttribute('data-usuario')
+      // if (noEvaluacion > 3 || estado == 'rechazado') {
+      //   btnFormatos.classList.add('disabled')
+      // } else {
+      //   if (usuario == 'planeacion' && noEvaluacion == 3) {
+      //     btnFormatos.classList.add('disabled')
+      //   }
+      // }
     }
   </script>
 @endsection

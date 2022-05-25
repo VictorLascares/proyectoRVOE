@@ -2,7 +2,7 @@
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h5 class="modal-title text-uppercase w-100" id="exampleModalLabel">Iniciar Sesión</h5>
+        <h3 class="modal-title text-uppercase w-100" id="exampleModalLabel">Iniciar Sesión</h3>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
@@ -18,7 +18,7 @@
             <label for="floatingPassword">Contraseña</label>
           </div>
           <div class="d-grid mt-4">
-            <button class="btn btn-success text-uppercase" type="submit">Iniciar Sesión</button>
+            <button class="boton boton-green rounded py-2 text-uppercase" type="submit">Iniciar Sesión</button>
           </div>
         </form>
       </div>

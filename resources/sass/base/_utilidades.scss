@@ -15,8 +15,38 @@
 }
 
 .boton-green {
-  background-color: $green-dark;
+  background-color: $dark-green;
   &:hover {
     background-color: $green;
+  }
+}
+
+.bg-light-green {
+  background-color: $light-green;
+}
+
+.bg-light-red {
+  background-color: $light-red;
+}
+.bg-light-yellow {
+  background-color: $light-yellow;
+}
+
+.text-dark-green {
+  color: darken($color: $light-green, $amount: 50%);
+  &:hover {
+    color: darken($color: $light-green, $amount: 50%);
+  }
+}
+.text-dark-red {
+  color: darken($color: $light-red, $amount: 50%);
+  &:hover {
+    color: darken($color: $light-red, $amount: 50%);
+  }
+}
+.text-dark-yellow {
+  color: darken($color: $light-yellow, $amount: 50%);
+  &:hover {
+    color: darken($color: $light-yellow, $amount: 50%);
   }
 }
