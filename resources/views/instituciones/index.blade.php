@@ -5,7 +5,7 @@
 @endsection
 @section('main-content')
   <div class="container-sm py-4 mb-4">
-    <div class="d-flex justify-content-between align-items-center">
+    <div class="d-flex justify-content-between align-items-center mb-3">
       <h1 class="text-uppercase">Instituciones</h1>
       @if (Auth::user()->tipoUsuario == 'planeacion')
         <button type="button" data-bs-target="#institutionsModal" data-bs-toggle="modal"
@@ -28,7 +28,7 @@
         <div class="institution__overlay rounded"></div>
       </a>
     @endforeach
-    <nav class="mt-4 fixed-bottom">
+    <nav class="mt-4">
       <ul class="pagination justify-content-center text-dark m-0">
         <li class="page-item">
           <a class="page-link text-dark" href="#">Previous</a>
@@ -88,7 +88,7 @@
               <input type="file" class="form-control" id="institutionLogo" name="logotipo">
             </div>
             <div class="d-grid mt-4">
-              <button class="btn btn-success text-uppercase" type="submit">Agregar</button>
+              <button class="boton boton-green py-2 rounded text-uppercase" type="submit">Agregar</button>
             </div>
           </form>
         </div>
