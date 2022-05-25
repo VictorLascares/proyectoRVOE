@@ -95,9 +95,6 @@ Route::post('validar',['App\Http\Controllers\SessionController','validar']);
 Route::get('login', function(){
     return view('auth.login');
 });
-Route::get('register', function(){
-    return view('auth.register');
-});
 
 Route::post('/verificarcorreo',['App\Http\Controllers\RegisterController','verificarCorreo']);
 
