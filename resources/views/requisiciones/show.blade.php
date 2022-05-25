@@ -50,9 +50,6 @@
             id="evaFormatos"
             @if ($data->noEvaluacion < 4) data-bs-target="#review{{ $data->noEvaluacion }}Modal" @endif
             data-bs-toggle="modal"
-            data-evaluacion="{{$data->noEvaluacion}}"
-            data-estado="{{$data->estado}}"
-            data-usuario="{{Auth::user()->tipoUsuario}}"
             type="button" 
             class="btn btn-danger p-4 @if ($data->noEvaluacion > 3 || $data->estado == 'rechazado')
               disabled
@@ -246,7 +243,6 @@
     const checkBtnRadios = document.querySelectorAll('.btn-check')
     const checkBoxes1 = document.querySelectorAll('.review2Checkbox')
     const checkBoxes2 = document.querySelectorAll('.review3Checkbox')
-    const btnFormatos = document.querySelector('#evaFormatos')
 
     cargarEventListener()
 
@@ -297,19 +293,6 @@
       } else {
         justInput.required = true
       }
-    }
-
-    function deshabilitar() {
-      // const noEvaluacion = btnFormatos.getAttribute('data-evaluacion')
-      // const estado = btnFormatos.getAttribute('data-estado')
-      // const usuario = btnFormatos.getAttribute('data-usuario')
-      // if (noEvaluacion > 3 || estado == 'rechazado') {
-      //   btnFormatos.classList.add('disabled')
-      // } else {
-      //   if (usuario == 'planeacion' && noEvaluacion == 3) {
-      //     btnFormatos.classList.add('disabled')
-      //   }
-      // }
     }
   </script>
 @endsection
