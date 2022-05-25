@@ -10,6 +10,9 @@ use App\Models\Career;
 use App\Models\Plan;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Mail;
+ 
+use App\Mail\NotifyMail;
 
 class PlanController extends Controller
 {
@@ -70,6 +73,8 @@ class PlanController extends Controller
         $requisition->noEvaluacion = $requisition->noEvaluacion + 1;
         $requisition->save();
         //Notificando Planeación
+        $career = Career::find($requisition->career_id);
+        $institution = Institution::find($career->institution_id);
         $users = User::searchPlaneacion()->get();
         $meta = $request->meta;
         if($request->meta == "planEstudios"){
