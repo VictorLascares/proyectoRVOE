@@ -8,18 +8,15 @@
         <a class="nav-link text-uppercase" href="{{ url('consult') }}">Consultar rvoe</a>
       </li>
       @auth
-        @if (Auth::user()->tipoUsuario == 'administrador')
           <li class="nav-item text-center">
             <a class="nav-link text-uppercase" href="{{ url('users') }}">Usuarios</a>
           </li>
-        @else
           <li class="nav-item text-center">
             <a class="nav-link text-uppercase" href="{{ url('requisitions') }}">Solicitudes</span></a>
           </li>
           <li class="nav-item text-center">
             <a class="nav-link text-uppercase" href="{{ url('institutions') }}">Instituciones</span></a>
           </li>
-        @endif
       @endauth
     </ul>
   </div>

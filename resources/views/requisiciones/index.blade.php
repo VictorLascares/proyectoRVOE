@@ -55,13 +55,15 @@
       @endforeach
     </div>
   </div>
-  <button 
-    data-bs-toggle="modal" 
-    data-bs-target="#requisitionModal" 
-    type="button"
-    class="new-request boton boton-green h2 py-2 px-3 rounded">
-    +
-  </button>
+  @if (Auth::user()->tipoUsuario == 'planeacion')
+    <button 
+      data-bs-toggle="modal" 
+      data-bs-target="#requisitionModal" 
+      type="button"
+      class="new-request boton boton-green h2 py-2 px-3 rounded">
+      +
+    </button>
+  @endif
   <div class="modal fade" id="requisitionModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">

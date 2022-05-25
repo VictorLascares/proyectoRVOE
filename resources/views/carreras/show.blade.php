@@ -5,16 +5,18 @@
 @endsection
 @section('main-content')
   <div class="container mb-5 mt-4 pb-5">
-    <div class="d-flex align-items-center justify-content-end gap-2 mb-5">
-      <form method="POST" action="{{ route('careers.destroy', $career->id) }}" class="d-flex justify-content-end">
-        @csrf
-        @method('DELETE')
-        <button class="btn btn-danger" type="submit">
-          <i class="bi bi-trash"></i>
-          Eliminar
-        </button>
-      </form>
-    </div>
+    @if (Auth::user()->tipoUsuario == 'planeacion')
+      <div class="d-flex align-items-center justify-content-end gap-2 mb-5">
+        <form method="POST" action="{{ route('careers.destroy', $career->id) }}" class="d-flex justify-content-end">
+          @csrf
+          @method('DELETE')
+          <button class="btn btn-danger" type="submit">
+            <i class="bi bi-trash"></i>
+            Eliminar
+          </button>
+        </form>
+      </div>
+    @endif
     <form class="row g-2 mb-3" method="POST" action="{{ route('careers.update', $career->id) }}">
       @csrf
       @method('PUT')
@@ -56,21 +58,25 @@
           <label for="careerDuration">Duración de la Carrera</label>
         </div>
       </div>
-      <div class="d-flex justify-content-center align-items-center">
-        <button class="btn btn-success" type="submit">
-          <i class="bi bi-arrow-repeat"></i>
-          Actualizar
-        </button>
-      </div>
+      @if (Auth::user()->tipoUsuario == 'planeacion')
+        <div class="d-flex justify-content-center align-items-center">
+          <button class="btn btn-success" type="submit">
+            <i class="bi bi-arrow-repeat"></i>
+            Actualizar
+          </button>
+        </div>
+      @endif
     </form>
 
     <section>
       <div class="d-flex justify-content-between align-items-center">
         <h2 class="">Requisiciones</h2>
-        <button type="button" data-bs-target="#careersModal" data-bs-toggle="modal" type="submit" class="btn btn-success">
-          <i class="bi bi-plus-circle"></i>
-          Nueva Requisición
-        </button>
+        @if (Auth::user()->tipoUsuario == 'planeacion')
+          <button type="button" data-bs-target="#careersModal" data-bs-toggle="modal" type="submit" class="btn btn-success">
+            <i class="bi bi-plus-circle"></i>
+            Nueva Requisición
+          </button>
+        @endif
       </div>
 
       <table class="table able-bordered table-condensed table-striped table-hover">

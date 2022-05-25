@@ -10,8 +10,10 @@
         <div class="card">
           <div class="card-header d-flex justify-content-between align-items-center">
             <h1 class="card-title text-uppercase">Instituciones</h1>
-            <button type="button" data-bs-target="#institutionsModal" data-bs-toggle="modal" class="btn btn-success">Nueva
-              Institución</button>
+            @if (Auth::user()->tipoUsuario == 'planeacion')
+              <button type="button" data-bs-target="#institutionsModal" data-bs-toggle="modal" class="btn btn-success">Nueva
+                Institución</button>
+            @endif
           </div>
           <div class="card-body">
             <div class="d-flex flex-column justify-content-center align-items-center gap-2">
