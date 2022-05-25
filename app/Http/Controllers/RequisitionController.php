@@ -373,8 +373,9 @@ class RequisitionController extends Controller
 
   public function revertirEvaluacion($requisition_id){
     if (Auth::user() != null) {
+      $this->revisar_activo($requisition_id);
       $requisition = Requisition::find($requisition_id);
-      if($requisition->noEvaluacion != 1 && $requisition->estado == 'activo' && $requisition->estado != 'rechazado'){
+      if($requisition->noEvaluacion != 1 && in_array($requisition->estado, ['activo','rechazado','pendiente'])){
         if($requisition->noEvaluacion == 5){
           $formatoInstalaciones = $requisition->formatoInstalaciones;
           if($formatoInstalaciones != null){
