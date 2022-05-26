@@ -56,8 +56,8 @@
                   <td>{{ $user->telefono }}</td>
                   <td>{{ $user->tipoUsuario }}</td>
                   <td class="d-flex justify-content-center gap-1">
-                    <a href="{{ route('users.edit', $user->id) }}" class="btn btn-success">
-                      <i class="bi bi-eye"></i>
+                    <a href="{{ route('users.edit', $user->id) }}" class="btn boton-green text-light">
+                      <i class="bi bi-pencil-square"></i>
                     </a>
                     <form method="POST" action="{{ route('users.destroy', $user->id) }}">
                       @csrf
