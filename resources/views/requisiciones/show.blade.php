@@ -258,8 +258,6 @@
       checkBoxes2.forEach(checkBox => {
         checkBox.addEventListener('click', review3)
       })
-
-      document.addEventListener('DOMContentLoaded', deshabilitar)
     }
 
     function review1(e) {

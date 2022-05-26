@@ -10,9 +10,13 @@
       </div>
     @endguest
     @auth
-      <div class="nav-item">
-        <a href="{{ url('logout') }}" class="nav-link text-decoration-none" style="background-color:transparent">Cerrar
-          Sesión</a>
+      <div class="d-flex justify-content-between align-items-center gap-2">
+        <a href="{{ url('logout') }}" class="nav-link">
+          Cerrar Sesión
+        </a>
+        <div title="{{Auth::user()->tipoUsuario}}" style="height: 2rem; width: 2rem" class="bg-light-green text-uppercase rounded-circle text-center py-1">
+          {{substr(Auth::user()->nombres,0,1)}}{{substr(Auth::user()->apellidos,0,1)}}
+        </div>
       </div>
     @endauth
   </div>
