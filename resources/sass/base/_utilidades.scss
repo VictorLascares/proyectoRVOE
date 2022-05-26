@@ -2,6 +2,10 @@
   resize: none;
 }
 
+.hide {
+  display: none;
+}
+
 .disabled {
   pointer-events: none;
   cursor: default;
@@ -19,6 +23,10 @@
   &:hover {
     background-color: $green;
   }
+}
+.border-light-green {
+  border: solid 1px;
+  border-color: $light-green;
 }
 
 .bg-light-green {
