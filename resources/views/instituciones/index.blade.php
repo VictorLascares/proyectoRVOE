@@ -7,7 +7,7 @@
   <div class="container-sm py-4 mb-4">
     <div class="d-flex justify-content-between align-items-center mb-3">
       <h1 class="text-uppercase">Instituciones</h1>
-      @if (Auth::user()->tipoUsuario == 'planeacion')
+      @if (Auth::user()->tipoUsuario != 'direccion')
         <button type="button" data-bs-target="#institutionsModal" data-bs-toggle="modal"
           class="boton boton-green py-2 rounded">Nueva
           Institución</button>
