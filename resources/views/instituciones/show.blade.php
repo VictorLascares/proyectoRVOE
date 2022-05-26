@@ -5,8 +5,9 @@
 @endsection
 @section('main-content')
   <div class="container mb-5 mt-4">
-    @if (Auth::user()->tipoUsuario == 'planeacio')
-      <div class="d-flex align-items-center justify-content-end gap-2">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h2>{{$institution->nombre}}</h2>
+      @if (Auth::user()->tipoUsuario != 'direccion')
         <form method="POST" action="{{ route('institutions.destroy', $institution->id) }}"
           class="d-flex justify-content-end">
           @csrf
@@ -16,13 +17,13 @@
             Eliminar
           </button>
         </form>
-      </div>
-    @endif
+      @endif
+    </div>
     <div class="d-flex justify-content-center mb-3">
       <img src="{{ asset('img/institutions/' . $institution->logotipo) }}" class="img-fluid rounded-start"
-        style="max-width: 100px" alt="Logo de la Institución">
+        style="max-width: 150px" alt="Logo de la Institución">
     </div>
-    <form class="row g-2 mb-3" action="{{ route('institutions.update', $institution->id) }}" method="POST"
+    <form class="row g-2 mb-5" action="{{ route('institutions.update', $institution->id) }}" method="POST"
       enctype="multipart/form-data">
       @method('PUT')
       @csrf
@@ -56,7 +57,8 @@
       </div>
       <div class="col-12">
         <div class="form-floating">
-          <textarea name="direccion" class="form-control resize-none" id="address" placeholder="Dirección">{{$institution->direccion}}</textarea>
+          <textarea name="direccion" class="form-control resize-none" id="address"
+            placeholder="Dirección">{{ $institution->direccion }}</textarea>
           <label for="address">Dirección</label>
         </div>
       </div>
@@ -77,9 +79,10 @@
 
     <section class="pb-5">
       <div class="d-flex justify-content-between align-items-center">
-        <h2 class="">Carreras</h2>
+        <h2>Carreras</h2>
         @if (Auth::user()->tipoUsuario == 'planeacion')
-          <button type="button" data-bs-target="#careersModal" data-bs-toggle="modal" type="submit" class="btn btn-success">
+          <button type="button" data-bs-target="#careersModal" data-bs-toggle="modal" type="submit"
+            class="btn btn-success">
             <i class="bi bi-plus-circle"></i>
             Nueva Carrera
           </button>
@@ -90,10 +93,10 @@
         @foreach ($careers as $career)
           <a href="{{ route('careers.show', $career->id) }}"
             class="d-flex justify-content-between text-decoration-none text-dark list-group-item list-group-item-action align-items-center">
-            <p class="m-0">{{ $career->nombre }}</p>
+            {{ $career->nombre }}
             @foreach ($areas as $area)
               @if ($area->id == $career->area_id)
-                <p class="m-0">{{ $area->nombre }}</p>
+                <span>{{ $area->nombre }}</span>
               @endif
             @endforeach
           </a>

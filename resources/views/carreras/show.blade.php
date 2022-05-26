@@ -5,18 +5,19 @@
 @endsection
 @section('main-content')
   <div class="container mb-5 mt-4 pb-5">
-    @if (Auth::user()->tipoUsuario == 'planeacion')
-      <div class="d-flex align-items-center justify-content-end gap-2 mb-5">
-        <form method="POST" action="{{ route('careers.destroy', $career->id) }}" class="d-flex justify-content-end">
-          @csrf
-          @method('DELETE')
-          <button class="btn btn-danger" type="submit">
-            <i class="bi bi-trash"></i>
-            Eliminar
-          </button>
-        </form>
-      </div>
-    @endif
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h2>{{ $career->nombre }}</h2>
+      @if (Auth::user()->tipoUsuario != 'direccion')
+          <form method="POST" action="{{ route('careers.destroy', $career->id) }}" class="d-flex justify-content-end">
+            @csrf
+            @method('DELETE')
+            <button class="btn btn-danger" type="submit">
+              <i class="bi bi-trash"></i>
+              Eliminar
+            </button>
+          </form>
+      @endif
+    </div>
     <form class="row g-2 mb-3" method="POST" action="{{ route('careers.update', $career->id) }}">
       @csrf
       @method('PUT')
@@ -58,9 +59,9 @@
           <label for="careerDuration">Duración de la Carrera</label>
         </div>
       </div>
-      @if (Auth::user()->tipoUsuario == 'planeacion')
+      @if (Auth::user()->tipoUsuario != 'direccion')
         <div class="d-flex justify-content-center align-items-center">
-          <button class="btn btn-success" type="submit">
+          <button class="btn boton-green text-light" type="submit">
             <i class="bi bi-arrow-repeat"></i>
             Actualizar
           </button>
@@ -70,9 +71,10 @@
 
     <section>
       <div class="d-flex justify-content-between align-items-center">
-        <h2 class="">Requisiciones</h2>
-        @if (Auth::user()->tipoUsuario == 'planeacion')
-          <button type="button" data-bs-target="#careersModal" data-bs-toggle="modal" type="submit" class="btn btn-success">
+        <h2>Requisiciones</h2>
+        @if (Auth::user()->tipoUsuario !== 'direccion')
+          <button type="button" data-bs-target="#careersModal" data-bs-toggle="modal" type="submit"
+            class="btn boton-green text-light">
             <i class="bi bi-plus-circle"></i>
             Nueva Requisición
           </button>
@@ -89,11 +91,11 @@
         </thead>
         <tbody>
           @foreach ($requisitions as $requisition)
-              <tr class="table-row" data-href="{{ route('requisitions.show',$requisition->id) }}">
-                <td>{{ $requisition->meta }}</td>
-                <td>{{ $requisition->created_at }}</td>
-                <td>{{ $requisition->updated_at }}</td>
-              </tr>
+            <tr class="table-row" data-href="{{ route('requisitions.show', $requisition->id) }}">
+              <td>{{ $requisition->meta }}</td>
+              <td>{{ $requisition->created_at }}</td>
+              <td>{{ $requisition->updated_at }}</td>
+            </tr>
             </a>
           @endforeach
         </tbody>
@@ -136,11 +138,10 @@
 @endsection
 @section('script')
   <script>
-    $(document).ready(function($){
+    $(document).ready(function($) {
       $(".table-row").click(function() {
         window.document.location = $(this).data("href");
       })
     })
   </script>
 @endsection
-{{-- latencia, revocado --}}
