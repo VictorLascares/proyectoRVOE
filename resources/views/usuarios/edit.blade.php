@@ -52,12 +52,8 @@
           </div>
         </div>
         <div class="d-flex justify-content-end gap-2">
-          <button 
-            type="button" 
-            class="btn boton-green text-light"
-            data-bs-target="#updateKeyModal"
-            data-bs-toggle="modal"
-          >
+          <button type="button" class="btn boton-green text-light" data-bs-target="#updateKeyModal"
+            data-bs-toggle="modal">
             <i class="bi bi-key"></i>
           </button>
           <button type="submit" class="btn boton-green text-light">Actualizar</button>
@@ -73,18 +69,22 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <form class="mb-2" method="POST" action="">
+          <form id="changePsw" class="mb-2" method="POST" action="{{ url('user/update', $user->id) }}">
+            @method('PUT')
             @csrf
             <div class="form-floating mb-3">
-              <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
-              <label for="floatingPassword">Password</label>
+              <input type="password" class="form-control" id="password" placeholder="Password" required>
+              <label for="password">Nueva Contraseña</label>
             </div>
             <div class="form-floating mb-4">
-              <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
-              <label for="floatingPassword">Password</label>
+              <input type="password" aria-describedby="validationPasswordFeedback" name="contrasenia" class="form-control" id="confirmedPassword" placeholder="Password" required>
+              <label for="confirmedPassword">Confirmar Contraseña</label>
+              <div id="validationPasswordFeedback" class="invalid-feedback">
+                Las contraseñas no coinciden
+              </div>
             </div>
             <div class="d-grid col-6 mx-auto">
-              <button class="btn btn-success" type="submit">Actualizar</button>
+              <button id="btn-change-psw" class="btn boton-green text-light" type="submit">Actualizar</button>
             </div>
           </form>
         </div>
@@ -94,4 +94,26 @@
 @endsection
 @section('footer')
   <x-footer />
+@endsection
+@section('script')
+  <script>
+    const passwordInput = document.querySelector('#password')
+    const confirmedPswInput = document.querySelector('#confirmedPassword')
+    const btnPsw = document.querySelector('#btn-change-psw')
+    const form = document.querySelector('#changePsw')
+
+    initListeners()
+
+    function initListeners() {
+      form.addEventListener('submit', changePassword)
+    }
+
+    function changePassword(e) {
+      if (passwordInput.value != confirmedPswInput.value) {
+        e.preventDefault()
+        confirmedPswInput.classList.add('is-invalid')
+        passwordInput.classList.add('is-invalid')
+      }
+    }
+  </script>
 @endsection
