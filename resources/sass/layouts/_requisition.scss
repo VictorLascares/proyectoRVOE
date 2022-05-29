@@ -97,3 +97,12 @@
     grid-template-rows: 1fr;
   }
 }
+
+.my-custom-scrollbar {
+  position: relative;
+  height: 40vh;
+  overflow: auto;
+  }
+  .table-wrapper-scroll-y {
+  display: block;
+  }
