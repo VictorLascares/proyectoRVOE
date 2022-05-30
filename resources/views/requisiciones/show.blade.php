@@ -145,7 +145,7 @@
                 @endforeach
               @endforeach
               <div class="d-grid col-6 mx-auto">
-                <button class="btn btn-success" type="submit">Guardar</button>
+                <button class="btn boton-green text-light" type="submit">Guardar</button>
               </div>
             </form>
           </div>
@@ -187,7 +187,7 @@
                 @endforeach
               @endforeach
               <div class="d-grid gap-2 col-6 mx-auto">
-                <button class="btn btn-success" type="submit">Guardar</button>
+                <button class="btn boton-green text-light" type="submit">Guardar</button>
               </div>
             </form>
           </div>
@@ -229,7 +229,7 @@
                 @endforeach
               @endforeach
               <div class="d-grid gap-2 col-6 mx-auto">
-                <button class="btn btn-success" type="submit">Guardar</button>
+                <button class="btn boton-green text-light" type="submit">Guardar</button>
               </div>
             </form>
           </div>

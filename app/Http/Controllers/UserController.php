@@ -158,19 +158,9 @@ class UserController extends Controller
   {
     if (Auth::user() != null) {
       $data = User::find($user);
-      $data->contrasenia = $request->contrasenia;
+      $data->contrasenia = Hash::make($request->contrasenia);
       $data->save();
-      if (isset($data)) {
-        return response()->json([
-          'status' => 200,
-          'message' => 'Data successfully updated'
-        ]);
-      } else {
-        return response()->json([
-          'status' => 400,
-          'error' => "something went wrong"
-        ]);
-      }
     }
+    return redirect(route('users.edit', $user));
   }
 }
