@@ -111,6 +111,8 @@
       </div>
     @endif
 
+    <img class="img-fluid" src="{{asset('img/formatos/instalaciones/' . $data->formatoInstalaciones)}}" alt="Formato de instalaciones">
+
     <x-modal>
       <x-slot:idModal>review1Modal</x-slot>
       <x-slot:title>Existencia de Formatos</x-slot>
