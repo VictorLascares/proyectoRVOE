@@ -56,7 +56,7 @@
           @if ($data->noEvaluacion == 1) data-bs-target="#review1Modal" @else data-bs-target="#review2Modal" @endif
           data-bs-toggle="modal" type="button" id="evaFormatos"
           class="m-0 formatos btn btn-danger @if ($data->noEvaluacion > 3 || $data->estado == 'rechazado') disabled
-          @elseif (Auth::user()->tipoUsuario == 'planeacion' && $data->noEvaluacion == 3)
+          @elseif (Auth::user()->tipoUsuario == 'planeacion' && $data->noEvaluacion == 3) disabled @elseif (Auth::user()->tipoUsuario == 'direccion' && ($data->noEvaluacion == 1 || $data->noEvaluacion == 2))
           disabled @endif ">
           <h3 class="text-center text-uppercase">Formatos</h3>
           <i class="text-light bi bi-file-earmark-text h1"></i>
@@ -110,8 +110,10 @@
         @endforeach
       </div>
     @endif
-
-    <img class="img-fluid" src="{{asset('img/formatos/instalaciones/' . $data->formatoInstalaciones)}}" alt="Formato de instalaciones">
+    
+    @if ($data->formatoInstalaciones) 
+      <img class="img-fluid" src="{{asset('img/formatos/instalaciones/' . $data->formatoInstalaciones)}}" alt="Formato de instalaciones">
+    @endif
 
     <x-modal>
       <x-slot:idModal>review1Modal</x-slot>
