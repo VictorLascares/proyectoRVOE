@@ -69,7 +69,7 @@
       </div>
       @if (Auth::user()->tipoUsuario == 'planeacion')
         <div class="d-flex justify-content-center">
-          <button class="btn btn-success" type="submit">
+          <button class="btn boton-green text-light" type="submit">
             <i class="bi bi-arrow-repeat"></i>
             Actualizar
           </button>
@@ -82,7 +82,7 @@
         <h2>Carreras</h2>
         @if (Auth::user()->tipoUsuario == 'planeacion')
           <button type="button" data-bs-target="#careersModal" data-bs-toggle="modal" type="submit"
-            class="btn btn-success">
+            class="btn boton-green text-light">
             <i class="bi bi-plus-circle"></i>
             Nueva Carrera
           </button>
@@ -160,7 +160,7 @@
                 </div>
                 <input type="hidden" name="institution_id" value="{{ $institution->id }}">
                 <div class="d-grid mt-4">
-                  <button class="btn btn-success text-uppercase" type="submit">Agregar</button>
+                  <button class="btn boton-green text-light text-uppercase" type="submit">Agregar</button>
                 </div>
               </form>
             </div>

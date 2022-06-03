@@ -56,7 +56,7 @@
           @if ($data->noEvaluacion == 1) data-bs-target="#review1Modal" @else data-bs-target="#review2Modal" @endif
           data-bs-toggle="modal" type="button" id="evaFormatos"
           class="m-0 formatos btn btn-danger @if ($data->noEvaluacion > 3 || $data->estado == 'rechazado') disabled
-          @elseif (Auth::user()->tipoUsuario == 'planeacion' && $data->noEvaluacion == 3)
+          @elseif (Auth::user()->tipoUsuario == 'planeacion' && $data->noEvaluacion == 3) disabled @elseif (Auth::user()->tipoUsuario == 'direccion' && ($data->noEvaluacion == 1 || $data->noEvaluacion == 2))
           disabled @endif ">
           <h3 class="text-center text-uppercase">Formatos</h3>
           <i class="text-light bi bi-file-earmark-text h1"></i>
@@ -111,76 +111,82 @@
       </div>
     @endif
 
-    <img class="img-fluid" src="{{asset('img/formatos/instalaciones/' . $data->formatoInstalaciones)}}" alt="Formato de instalaciones">
+    @if ($data->formatoInstalaciones)
+      <div class="p-5">
+        <h2 class="mb-4 text-center">Evidencia de Evaluación de las Instalaciones</h2>
+        <img class="img-fluid" src="{{ asset('img/formatos/instalaciones/' . $data->formatoInstalaciones) }}"
+          alt="Formato de instalaciones">
+      </div>
+    @endif
 
     <x-modal>
       <x-slot:idModal>review1Modal</x-slot>
-      <x-slot:title>Existencia de Formatos</x-slot>
-      <x-slot:body>
-        <form class="mb-2" method="POST" action="{{ url('/update/formats') }}">
-          @csrf
-          <input type="hidden" name="requisition_id" value="{{ $data->id }}">
-          @foreach (range(1, 5) as $item)
-            @foreach ($formats as $format)
-              @if ($format->formato == $item)
-                <div class="d-flex justify-content-between align-items-center mb-2 p-2">
-                  <p class="h5">
-                    {{ $formatNames[$item - 1] }}
-                  </p>
-                  <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-                    <input type="radio" class="btn-check" name="anexo{{ $item }}"
-                      id="btnYes-{{ $format->id }}" autocomplete="off"
-                      @if ($format->valido) checked @endif>
-                    <label class="btn btn-outline-success text-uppercase" for="btnYes-{{ $format->id }}">Si</label>
-                    <input type="radio" class="btn-check btn-No" name="anexo{{ $item }}"
-                      id="btnNo-{{ $format->id }}" autocomplete="off"
-                      @if (!$format->valido) checked @endif>
-                    <label class="btn btn-outline-danger text-uppercase" for="btnNo-{{ $format->id }}">No</label>
-                  </div>
-                </div>
-              @endif
-            @endforeach
-          @endforeach
-          <div class="d-grid col-6 mx-auto">
-            <button class="btn boton-green text-light" type="submit">Guardar</button>
-          </div>
-        </form>
-      </x-slot>
+        <x-slot:title>Existencia de Formatos</x-slot>
+          <x-slot:body>
+            <form class="mb-2" method="POST" action="{{ url('/update/formats') }}">
+              @csrf
+              <input type="hidden" name="requisition_id" value="{{ $data->id }}">
+              @foreach (range(1, 5) as $item)
+                @foreach ($formats as $format)
+                  @if ($format->formato == $item)
+                    <div class="d-flex justify-content-between align-items-center mb-2 p-2">
+                      <p class="h5">
+                        {{ $formatNames[$item - 1] }}
+                      </p>
+                      <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+                        <input type="radio" class="btn-check" name="anexo{{ $item }}"
+                          id="btnYes-{{ $format->id }}" autocomplete="off"
+                          @if ($format->valido) checked @endif>
+                        <label class="btn btn-outline-success text-uppercase" for="btnYes-{{ $format->id }}">Si</label>
+                        <input type="radio" class="btn-check btn-No" name="anexo{{ $item }}"
+                          id="btnNo-{{ $format->id }}" autocomplete="off"
+                          @if (!$format->valido) checked @endif>
+                        <label class="btn btn-outline-danger text-uppercase" for="btnNo-{{ $format->id }}">No</label>
+                      </div>
+                    </div>
+                  @endif
+                @endforeach
+              @endforeach
+              <div class="d-grid col-6 mx-auto">
+                <button class="btn boton-green text-light" type="submit">Guardar</button>
+              </div>
+            </form>
+            </x-slot>
     </x-modal>
 
     <x-modal>
       <x-slot:idModal>review2Modal</x-slot>
-      <x-slot:title>Revisión del Contenido</x-slot>
-      <x-slot:body>
-        <form class="mb-2" method="POST" action="{{ url('/update/formats') }}">
-          @csrf
-          <input type="hidden" name="requisition_id" value="{{ $data->id }}">
-          @foreach (range(1, 5) as $i)
-            @foreach ($formats as $format)
-              @if ($format->formato == $i)
-                <div class="d-flex justify-content-between align-items-center mb-3 p-2">
-                  <div class="form-check">
-                    <input name="anexo{{ $i }}" value="{{ $format->valido }}"
-                      class="review2Checkbox form-check-input" type="checkbox" id="check-review2-{{ $format->id }}"
-                      @if ($format->valido) checked @endif>
-                    <label class="form-check-label" for="check-review2-{{ $format->id }}">
-                      {{ $formatNames[$i - 1] }}
-                    </label>
-                  </div>
-                  <div class="form-floating">
-                    <textarea name="anexo{{ $i }}j" class="resize-none form-control" id="just-review2-{{ $format->id }}"
-                      placeholder="Justificación">{{ $format->justificacion }}</textarea>
-                    <label for="just-review2-{{ $format->id }}">Justificación</label>
-                  </div>
-                </div>
-              @endif
-            @endforeach
-          @endforeach
-          <div class="d-grid gap-2 col-6 mx-auto">
-            <button class="btn boton-green text-light" type="submit">Guardar</button>
-          </div>
-        </form>
-      </x-slot>
+        <x-slot:title>Revisión del Contenido</x-slot>
+          <x-slot:body>
+            <form class="mb-2" method="POST" action="{{ url('/update/formats') }}">
+              @csrf
+              <input type="hidden" name="requisition_id" value="{{ $data->id }}">
+              @foreach (range(1, 5) as $i)
+                @foreach ($formats as $format)
+                  @if ($format->formato == $i)
+                    <div class="d-flex justify-content-between align-items-center mb-3 p-2">
+                      <div class="form-check">
+                        <input name="anexo{{ $i }}" value="{{ $format->valido }}"
+                          class="review2Checkbox form-check-input" type="checkbox" id="check-review2-{{ $format->id }}"
+                          @if ($format->valido) checked @endif>
+                        <label class="form-check-label" for="check-review2-{{ $format->id }}">
+                          {{ $formatNames[$i - 1] }}
+                        </label>
+                      </div>
+                      <div class="form-floating">
+                        <textarea name="anexo{{ $i }}j" class="resize-none form-control" id="just-review2-{{ $format->id }}"
+                          placeholder="Justificación">{{ $format->justificacion }}</textarea>
+                        <label for="just-review2-{{ $format->id }}">Justificación</label>
+                      </div>
+                    </div>
+                  @endif
+                @endforeach
+              @endforeach
+              <div class="d-grid gap-2 col-6 mx-auto">
+                <button class="btn boton-green text-light" type="submit">Guardar</button>
+              </div>
+            </form>
+            </x-slot>
     </x-modal>
   </div>
 @endsection
