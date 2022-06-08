@@ -69,6 +69,16 @@ class PlanController extends Controller
           } else {
             $requisition->numero_solicitud = $no_requisitions + 1;
           }
+          //Set numero de RVOE
+          $anioI = date("Y", strtotime($requisition->created_at));
+          if ($requisition->numero_solicitud < 10) {
+            $no_solicitud = '00' . $noRequisicion;
+          } else if ($requisition->numero_solicitud < 100) {
+            $no_solicitud = '0' . $noRequisicion;
+          } else {
+            $no_solicitud = $noRequisicion;
+          }
+          $requisition->rvoe = "SE/SSPE/DP/".$no_solicitud."/".$anioI;
         }      
         $requisition->noEvaluacion = $requisition->noEvaluacion + 1;
         $requisition->save();
