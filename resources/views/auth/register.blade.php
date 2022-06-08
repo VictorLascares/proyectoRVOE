@@ -55,7 +55,7 @@
 
       </div>
       <div class="d-flex justify-content-end">
-        <button type="submit" class="btn btn-success">Crear Usuario</button>
+        <button type="submit" class="btn boton-green text-light">Crear Usuario</button>
       </div>
     </form>
   </div>

@@ -123,7 +123,7 @@
                 </div>
                 <input type="hidden" name="career_id" value="{{ $career->id }}">
                 <div class="d-grid mt-4">
-                  <button class="btn btn-success text-uppercase" type="submit">Agregar</button>
+                  <button class="btn boton-green text-light text-uppercase" type="submit">Agregar</button>
                 </div>
               </form>
             </div>
@@ -132,7 +132,7 @@
       </div>
     </section>
   </div>
-@endsection
+@endsectionp
 @section('footer')
   <x-footer />
 @endsection

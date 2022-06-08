@@ -67,7 +67,7 @@
           <input type="file" class="form-control" id="institutionLogo" name="logotipo">
         </div>
       </div>
-      @if (Auth::user()->tipoUsuario == 'planeacion')
+      @if (Auth::user()->tipoUsuario == 'planeacion' || Auth::user()->tipoUsuario == 'administrador')
         <div class="d-flex justify-content-center">
           <button class="btn boton-green text-light" type="submit">
             <i class="bi bi-arrow-repeat"></i>
@@ -80,7 +80,7 @@
     <section class="pb-5">
       <div class="d-flex justify-content-between align-items-center">
         <h2>Carreras</h2>
-        @if (Auth::user()->tipoUsuario == 'planeacion')
+        @if (Auth::user()->tipoUsuario == 'planeacion' || Auth::user()->tipoUsuario == 'administrador')
           <button type="button" data-bs-target="#careersModal" data-bs-toggle="modal" type="submit"
             class="btn boton-green text-light">
             <i class="bi bi-plus-circle"></i>
