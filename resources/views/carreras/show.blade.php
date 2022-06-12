@@ -1,7 +1,7 @@
-@extends('layouts.layout')
+@extends('layouts.app')
 @section('header')
-  <x-bar />
-  <x-navbar />
+  
+  
 @endsection
 @section('main-content')
   <div class="container mb-5 mt-4 pb-5">
@@ -134,7 +134,7 @@
   </div>
 @endsectionp
 @section('footer')
-  <x-footer />
+  
 @endsection
 @section('script')
   <script>

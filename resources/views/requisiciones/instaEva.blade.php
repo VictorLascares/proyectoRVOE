@@ -1,11 +1,9 @@
-@extends('layouts.layout')
-@section('header')
-  <x-bar />
-  <x-navbar />
+@extends('layouts.app')
+@section('titulo')
+  Evaluación de Instalaciones
 @endsection
-@section('main-content')
+@section('contenido')
   <div class="container-fluid pb-4 mb-4 px-4">
-    <h1 class="text-center mt-3">Evaluación de Instalaciones</h1>
     <form action="{{ url('/update/elements') }}" method="POST" enctype="multipart/form-data">
       @csrf
       <div class="table-wrapper-scroll-y my-custom-scrollbar">
@@ -67,9 +65,6 @@
       </div>
     </form>
   </div>
-@endsection
-@section('footer')
-  <x-footer />
 @endsection
 @section('script')
   <script>

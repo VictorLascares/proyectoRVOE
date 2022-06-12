@@ -1,7 +1,7 @@
-// Bootstrap-icons
-@import '~bootstrap-icons/font/bootstrap-icons';
-// Bootstrap
-@import '~bootstrap/scss/bootstrap';
+@import "~tailwindcss/base.css";
+@import "~tailwindcss/components.css";	
+@import "~tailwindcss/utilities.css";
+
 // Variables
 @import './base/variables';
 // Utilidades
@@ -15,6 +15,7 @@
 // Components
 @import './layouts/bar';
 @import './layouts/navbar';
+@import './layouts/home';
 @import './layouts/institution';
 @import './layouts/request';
 @import './layouts/requisition';

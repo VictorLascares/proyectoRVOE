@@ -1,9 +1,9 @@
-@extends('layouts.layout')
-@section('header')
-  <x-bar />
-  <x-navbar />
+@extends('layouts.app')
+@section('titulo')
+  
+  
 @endsection
-@section('main-content')
+@section('contenido')
   <div class="container mb-4 pt-2 pb-4">
     <div class="solicitud my-4">
       <img class="solicitud__img img-thumbnail" src="{{ asset('img/institutions/' . $institution->logotipo) }}"
@@ -112,8 +112,8 @@
     @endif
 
     @if ($data->formatoInstalaciones)
-      <div class="p-5">
-        <h2 class="mb-4 text-center">Evidencia de Evaluación de las Instalaciones</h2>
+      <div class="p-5 text-center">
+        <h2 class="mb-4">Evidencia de Evaluación de las Instalaciones</h2>
         <img class="img-fluid" src="{{ asset('img/formatos/instalaciones/' . $data->formatoInstalaciones) }}"
           alt="Formato de instalaciones">
       </div>
@@ -189,9 +189,6 @@
             </x-slot>
     </x-modal>
   </div>
-@endsection
-@section('footer')
-  <x-footer />
 @endsection
 @section('script')
   <script>

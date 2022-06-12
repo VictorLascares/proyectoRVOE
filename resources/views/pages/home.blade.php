@@ -1,11 +1,4 @@
-@extends('layouts.layout')
-@section('header')
-  <x-bar />
-  <x-navbar />
+@extends('layouts.app')
+@section('contenido')
 @endsection
-@section('main-content')
-  <x-login />
-@endsection
-@section('footer')
-  <x-footer />
-@endsection
+

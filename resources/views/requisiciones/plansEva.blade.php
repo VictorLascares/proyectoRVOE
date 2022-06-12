@@ -1,11 +1,9 @@
-@extends('layouts.layout')
-@section('header')
-  <x-bar />
-  <x-navbar />
+@extends('layouts.app')
+@section('titulo')
+  Evaluación de Planes
 @endsection
-@section('main-content')
+@section('contenido')
   <div class="container-sm py-4">
-    <h2 class="text-center mb-4">Evaluación de Planes</h2>
     <form method="POST" class="px-5" action="{{ url('/update/plans') }}">
       @csrf
       <input type="hidden" value="{{ $requisition->id }}" name="requisition_id">
@@ -33,7 +31,4 @@
       </div>
     </form>
   </div>
-@endsection
-@section('footer')
-  <x-footer />
 @endsection

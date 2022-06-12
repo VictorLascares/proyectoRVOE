@@ -1,7 +1,7 @@
-@extends('layouts.layout')
+@extends('layouts.app')
 @section('header')
-  <x-bar />
-  <x-navbar />
+  
+  
 @endsection
 @section('main-content')
   <div class="container-sm py-4 mb-4">
@@ -98,5 +98,5 @@
   </div>
 @endsection
 @section('footer')
-  <x-footer />
+  
 @endsection

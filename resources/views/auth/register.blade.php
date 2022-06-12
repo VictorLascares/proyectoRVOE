@@ -1,11 +1,9 @@
-@extends('layouts.layout')
-@section('header')
-  <x-bar />
-  <x-navbar />
+@extends('layouts.app')
+@section('titulo')
+  Registro de Usuarios
 @endsection
-@section('main-content')
+@section('contenido')
   <div class="container-sm py-4 mb-5">
-    <h1 class="text-center text-uppercase mb-4">Nuevo Usuario</h1>
     <form method="POST" action="{{ route('users.store') }}" enctype="multipart/form-data">
       @csrf
       <div class="row">
@@ -59,7 +57,4 @@
       </div>
     </form>
   </div>
-@endsection
-@section('footer')
-  <x-footer />
 @endsection

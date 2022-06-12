@@ -1,12 +1,10 @@
-@extends('layouts.layout')
-@section('header')
-  <x-bar />
-  <x-navbar />
+@extends('layouts.app')
+@section('titulo')
+  Actualizar Usuario
 @endsection
-@section('main-content')
+@section('contenido')
   <div class="container-sm">
     <div class="p-3">
-      <h1 class="text-center text-uppercase mb-3">Actualizar Usuario</h1>
       <form method="POST" action="{{ route('users.update', $user->id) }}" enctype="multipart/form-data">
         @csrf
         @method('PUT')
@@ -92,9 +90,7 @@
     </div>
   </div>
 @endsection
-@section('footer')
-  <x-footer />
-@endsection
+
 @section('script')
   <script>
     const passwordInput = document.querySelector('#password')

@@ -1,16 +1,12 @@
-@extends('layouts.layout')
-@section('header')
-  <x-bar />
-  <x-navbar />
+@extends('layouts.app')
+@section('titulo')
+  Administrar Usuarios
 @endsection
-@section('main-content')
+@section('contenido')
   @auth
     @if (Auth::user()->tipoUsuario = 'administrador')
       <div class="container py-4">
         <div class="d-md-flex justify-content-between align-items-center mb-4">
-          <h2 class="text-center">
-            Administrar usuarios
-          </h2>
           <div class="d-flex justify-content-between align-items-center gap-2">
             <form action="">
               <button type="submit" class="btn btn-danger">
@@ -86,7 +82,4 @@
       </div>
     @endif
   @endauth
-@endsection
-@section('footer')
-  <x-footer />
 @endsection

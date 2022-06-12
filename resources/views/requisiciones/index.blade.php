@@ -1,9 +1,8 @@
-@extends('layouts.layout')
-@section('header')
-  <x-bar />
-  <x-navbar />
+@extends('layouts.app')
+@section('titulo')
+  Requisiciones
 @endsection
-@section('main-content')
+@section('contenido')
   <div class="container py-4">
     <form class="mb-4 filtros">
       <select id="filtro-anio" class="custom-select">
@@ -99,16 +98,13 @@
               <label for="careers" class="form-label">Carrera</label>
             </div>
             <div class="d-grid mt-4">
-              <button class="btn btn-success text-uppercase" type="submit">Agregar</button>
+              <button class="btn boton-green text-light text-uppercase" type="submit">Agregar</button>
             </div>
           </form>
         </div>
       </div>
     </div>
   </div>
-@endsection
-@section('footer')
-  <x-footer />
 @endsection
 @section('script')
   <script>
