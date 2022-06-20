@@ -2,15 +2,16 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\PlanController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CareerController;
+use App\Http\Controllers\FormatController;
+use App\Http\Controllers\ElementController;
+use App\Http\Controllers\SessionController;
+use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\InstitutionController;
 use App\Http\Controllers\RequisitionController;
-use App\Http\Controllers\ElementController;
-use App\Http\Controllers\RegisterController;
-use App\Http\Controllers\SessionController;
-use App\Http\Controllers\FormatController;
-use App\Http\Controllers\PlanController;
 
 
 
@@ -39,7 +40,8 @@ Route::put('user/update/{id}',[UserController::class,'updatePSW']);
 //LOGOUT USER
 Route::get('logout',[UserController::class,'logout']);
 //LOGIN USER
-Route::post('login',[SessionController::class,'login']);
+Route::get('/login',[LoginController::class,'index'])->name('login');
+Route::post('/login',[LoginController::class,'store']);
 
 //****************CAREER ROUTES*****************
 //CRUD CAREER
@@ -91,10 +93,10 @@ Route::get('salir',['App\Http\Controllers\SessionController','salir']);
 //RUTA PARA VALIDAR LAS CREDENCIALES
 Route::post('validar',['App\Http\Controllers\SessionController','validar']);
 
-//RUTAS PARA REDIRIGIR A LAS VISTAS
-Route::get('login', function(){
-    return view('auth.login');
-});
+// //RUTAS PARA REDIRIGIR A LAS VISTAS
+// Route::get('login', function(){
+//     return view('auth.login');
+// });
 
 Route::post('/verificarcorreo',['App\Http\Controllers\RegisterController','verificarCorreo']);
 

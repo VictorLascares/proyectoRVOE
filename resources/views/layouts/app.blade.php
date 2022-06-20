@@ -17,7 +17,7 @@
   <script src="{{ asset('js/app.js') }}" defer></script>
 </head>
 
-<body class="relative">
+<body>
   <header>
     <div class="bg-[#0C231E] px-3 py-3">
       <div class="container mx-auto flex justify-between items-center">
@@ -25,8 +25,7 @@
           <img src="{{ asset('img/Logo_gob_mx.svg') }}" alt="">
         </a>
         @guest
-          <button type="button" data-bs-target="#loginModal" class="text-gray-400 hover:text-white" data-bs-toggle="modal"
-            style="background-color:transparent">Iniciar Sesion</button>
+          <a href="{{ route('login') }}"  class="text-gray-400 hover:text-white" >Iniciar Sesion</button>
         @endguest
         @auth
           <div class="flex justify-between items-center">
@@ -73,7 +72,7 @@
     </h1>
     @yield('contenido')
   </main>
-  <footer class="fixed bottom-0 left-0 right-0 bg-[#0C231E] mt-10 text-center p-5 text-white font-bold">
+  <footer class="mt-10 text-center p-5 text-gray-500 font-bold">
     Todos los Derechos Reservados &copy; {{ now()->year }}
   </footer>
   @yield('script')
