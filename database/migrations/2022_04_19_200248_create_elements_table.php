@@ -16,7 +16,7 @@ return new class extends Migration
     Schema::create('elements', function (Blueprint $table) {
       $table->id();
       $table->integer('elemento')->nullable(false);
-      $table->boolean('existente')->default(true);
+      $table->boolean('existente')->default(false);
       $table->string('observacion')->nullable();
       $table->foreignId('requisition_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
     });
