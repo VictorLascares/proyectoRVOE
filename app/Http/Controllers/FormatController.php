@@ -12,68 +12,72 @@ use Illuminate\Support\Facades\Auth;
 
 class FormatController extends Controller
 {
-  //Funcion para realizar la evaluación de los formatos
-  public function evaluateFormats($requisition_id)
-  {
-    if (Auth::user() != null) {
-      $requisition = Requisition::find($requisition_id);
-      $career = Career::find($requisition->career_id);
-      $institution = Institution::find($career->institution_id);
-      $formats = Format::searchrequisitionid($requisition->id)->get();
-
-      if (isset($requisition)) {
-        return response()->json([
-          'requisition' => $requisition,
-          'career' => $career,
-          'institution' => $institution,
-          'formats' => $formats
-        ]);
-      } else {
-        return response()->json([
-          'error' => 'Data not found'
-        ]);
-      }
+    public function __construct()
+    {
+        $this->middleware('auth');
     }
-  }
+    //Funcion para realizar la evaluación de los formatos
+    public function evaluateFormats($requisition_id)
+    {
+        if (Auth::user() != null) {
+            $requisition = Requisition::find($requisition_id);
+            $career = Career::find($requisition->career_id);
+            $institution = Institution::find($career->institution_id);
+            $formats = Format::searchrequisitionid($requisition->id)->get();
 
-  //Funcion para realizar la actualización de los formatos
-  public function updateFormats(Request $request)
-  {
-    if (Auth::user() != null) {
-      $requisition = Requisition::find($request->requisition_id);
-      $elements = Element::searchrequisitionid($request->requisition_id)->first();
-      if ($requisition->noEvaluacion < 4 && $requisition->estado == 'pendiente') {
-        for ($formatName = 1; $formatName < 6; $formatName++) {
-          $format = Format::searchformato($formatName)->searchrequisitionid($requisition->id)->first();
-          $formato = 'anexo' . $formatName;
-          $formatoj = $formato . 'j';
-          $format->valido = true;
-          $format->justificacion = '';
-          if ($request->input($formato) == false || $request->input($formato) == 'false') {
-            if($requisition->noEvaluacion == 1) {
-              $format->justificacion = 'No se encuentra el formato';
+            if (isset($requisition)) {
+                return response()->json([
+                    'requisition' => $requisition,
+                    'career' => $career,
+                    'institution' => $institution,
+                    'formats' => $formats
+                ]);
             } else {
-              $format->justificacion = $request->$formatoj;
+                return response()->json([
+                    'error' => 'Data not found'
+                ]);
             }
-            $format->valido = false;
-            $requisition->estado = 'rechazado';
-          }
-          $format->save();
         }
-        if ($requisition->noEvaluacion == '3') {
-          if(is_null($elements)){
-            for ($elementName = 1; $elementName < 53; $elementName++) {
-              $element = new Element();
-              $element->elemento = $elementName;
-              $element->requisition_id = $requisition->id;
-              $element->save();
-            }
-          }
-        }
-        $requisition->noEvaluacion = $requisition->noEvaluacion + 1;
-        $requisition->save();
-      }
-      return redirect(route('requisitions.show', $requisition->id));
     }
-  }
+
+    //Funcion para realizar la actualización de los formatos
+    public function updateFormats(Request $request)
+    {
+        if (Auth::user() != null) {
+            $requisition = Requisition::find($request->requisition_id);
+            $elements = Element::searchrequisitionid($request->requisition_id)->first();
+            if ($requisition->noEvaluacion < 4 && $requisition->estado == 'pendiente') {
+                for ($formatName = 1; $formatName < 6; $formatName++) {
+                    $format = Format::searchformato($formatName)->searchrequisitionid($requisition->id)->first();
+                    $formato = 'anexo' . $formatName;
+                    $formatoj = $formato . 'j';
+                    $format->valido = true;
+                    $format->justificacion = '';
+                    if ($request->input($formato) == false || $request->input($formato) == 'false') {
+                        if ($requisition->noEvaluacion == 1) {
+                            $format->justificacion = 'No se encuentra el formato';
+                        } else {
+                            $format->justificacion = $request->$formatoj;
+                        }
+                        $format->valido = false;
+                        $requisition->estado = 'rechazado';
+                    }
+                    $format->save();
+                }
+                if ($requisition->noEvaluacion == '3') {
+                    if (is_null($elements)) {
+                        for ($elementName = 1; $elementName < 53; $elementName++) {
+                            $element = new Element();
+                            $element->elemento = $elementName;
+                            $element->requisition_id = $requisition->id;
+                            $element->save();
+                        }
+                    }
+                }
+                $requisition->noEvaluacion = $requisition->noEvaluacion + 1;
+                $requisition->save();
+            }
+            return redirect(route('requisitions.show', $requisition->id));
+        }
+    }
 }

@@ -2,14 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Password;
 
 
 class UserController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
   /**
    * Display a listing of the resource.
    *
@@ -19,7 +24,6 @@ class UserController extends Controller
   {
     if (Auth::user() != null) {
       $users = User::all();
-
       $token = csrf_token();
       return view('usuarios.index', compact('users'));
     }
@@ -45,15 +49,26 @@ class UserController extends Controller
   public function store(Request $request)
   {
     if (Auth::user() != null) {
-      $user = new User();
-      $user->tipoUsuario = $request->tipoUsuario;
-      $user->nombres = $request->nombres;
-      $user->apellidos = $request->apellidos;
-      $user->telefono = $request->telefono;
-      $user->contrasenia = Hash::make($request->contrasenia);
-      $user->correo = $request->correo;
-      $user->save();
-      return redirect('users');
+        // Validacion
+        $this->validate($request, [
+            'nombres' => ['required', 'max:35'],
+            'apellidos' => ['required', 'max:35'],
+            'telefono' => ['required', 'max:10', 'min:10'],
+            'tipoUsuario' => ['required'],
+            'correo' => ['required', 'unique:users', 'correo', 'max:60'],
+            'contrasenia' => ['required', 'confirmed', Password::min(8)->letters()->mixedCase()->numbers()->symbols()->uncompromised()]
+        ]);
+
+        User::create([
+            'nombres' => $request->nombres,
+            'apellidos' => $request->apellidos,
+            'correo' => $request->correo,
+            'telefono' => $request->telefono,
+            'tipoUsuario' => $request->tipoUsuario,
+            'correo' => $request->correo,
+            'contrasenia' => Hash::make($request->contrasenia)
+        ]);
+        return redirect()->route('users');
     }
   }
 
