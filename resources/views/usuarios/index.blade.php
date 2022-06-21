@@ -7,77 +7,66 @@
     @if (Auth::user()->tipoUsuario = 'administrador')
       <div class="container py-4">
         <div class="d-md-flex justify-content-between align-items-center mb-4">
-          <div class="d-flex justify-content-between align-items-center gap-2">
-            <form action="">
-              <button type="submit" class="btn btn-danger">
-                <i class="bi bi-x-circle"></i> Eliminar
-              </button>
-            </form>
+          <div class="flex justify-end items-center gap-2">
             <form action="{{ route('users.create') }}" method="GET" enctype="multipart/form-data">
               @csrf
-              <button type="submit" class="btn boton-green text-light"><i class="bi bi-plus-circle"></i> Nuevo
-                Usuario</button>
+              <button type="submit" class="text-white bg-[#13322B] hover:bg-[#0C231E] p-3 rounded-lg"><i
+                  class="bi bi-plus-circle"></i> Nuevo Usuario</button>
             </form>
           </div>
         </div>
-        
-        <div class="table-responsive">
-          <table class="table">
-            <thead>
-              <tr class="text-center">
-                <th scope="col">
-                  <div class="form-group form-check">
-                    <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                  </div>
-                </th>
-                <th scope="col">Nombres</th>
-                <th scope="col">Apellidos</th>
-                <th scope="col">Correo</th>
-                <th scope="col">Telefono</th>
-                <th scope="col">Tipo de Usuario</th>
-                <th scope="col">Acciones</th>
-              </tr>
-            </thead>
-            <tbody class="text-center">
-              @foreach ($users as $user)
-                <tr>
-                  <th scope="row">
-                    <div class="form-group form-check">
-                      <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                    </div>
-                  </th>
-                  <td>{{ $user->nombres }}</td>
-                  <td>{{ $user->apellidos }}</td>
-                  <td>{{ $user->correo }}</td>
-                  <td>{{ $user->telefono }}</td>
-                  <td>{{ $user->tipoUsuario }}</td>
-                  <td class="d-flex justify-content-center gap-1">
-                    <a href="{{ route('users.edit', $user->id) }}" class="btn boton-green text-light">
-                      <i class="bi bi-pencil-square"></i>
-                    </a>
-                    <form method="POST" action="{{ route('users.destroy', $user->id) }}">
-                      @csrf
-                      @method('DELETE')
-                      <button type="submit" class="btn btn-danger">
-                        <i class="bi bi-trash"></i>
-                      </button>
-                    </form>
-                  </td>
-                </tr>
-              @endforeach
-            </tbody>
-          </table>
-        </div>
-        <div class="d-flex justify-content-center">
-          <nav aria-label="Page navigation example">
-            <ul class="pagination m-0">
-              <li class="page-item"><a class="page-link  text-success" href="#">Previous</a></li>
-              <li class="page-item"><a class="page-link  text-success" href="#">1</a></li>
-              <li class="page-item"><a class="page-link  text-success" href="#">2</a></li>
-              <li class="page-item"><a class="page-link  text-success" href="#">3</a></li>
-              <li class="page-item"><a class="page-link  text-success" href="#">Next</a></li>
-            </ul>
-          </nav>
+
+        <div class="flex flex-col">
+          <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
+            <div class="py-2 inline-block min-w-full sm:px-6 lg:px-8">
+              <div class="overflow-hidden">
+                <table class="min-w-full">
+                  <thead class="border-b bg-[#13322B]">
+                    <tr>
+                      <th class="text-sm font-bold text-white px-6 py-4 text-left">#</th>
+                      <th class="text-sm font-bold text-white px-6 py-4 text-left">Nombres</th>
+                      <th class="text-sm font-bold text-white px-6 py-4 text-left">Apellidos</th>
+                      <th class="text-sm font-bold text-white px-6 py-4 text-left">Correo</th>
+                      <th class="text-sm font-bold text-white px-6 py-4 text-left">Telefono</th>
+                      <th class="text-sm font-bold text-white px-6 py-4 text-left">Tipo de Usuario</th>
+                      <th class="text-sm font-bold text-white px-6 py-4 text-center">Acciones</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    @foreach ($users as $user)
+                      <tr class="border-b">
+                        <td class="px-6 py-4 whitespace-nowrap">
+                          {{ $loop->iteration }}
+                        </td>
+                        <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">{{ $user->nombres }}</td>
+                        <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">{{ $user->apellidos }}
+                        </td>
+                        <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">{{ $user->correo }}</td>
+                        <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">{{ $user->telefono }}
+                        </td>
+                        <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">{{ $user->tipoUsuario }}
+                        </td>
+                        <td>
+                          <div class="flex justify-center items-center gap-1">
+                            <a href="{{ route('users.edit', $user->id) }}"
+                              class="text-sky-600 hover:text-sky-900 font-bold">
+                              [Editar]
+                            </a>
+                            <form method="POST" action="{{ route('users.destroy', $user->id) }}">
+                              @csrf
+                              @method('DELETE')
+                              <input type="submit" value="[Eliminar]"
+                                class="cursor-pointer font-bold text-red-600 hover:text-red-900">
+                            </form>
+                          </div>
+                        </td>
+                      </tr>
+                    @endforeach
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     @endif
