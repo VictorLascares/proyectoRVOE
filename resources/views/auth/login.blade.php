@@ -15,18 +15,18 @@
                 @endif
                 <div class="mb-5">
                     <label for="email" class="mb-2 block uppercase text-gray-500">Correo Electrónico</label>
-                    <input type="email" class="border p-3 w-full rounded-lg @error('correo') border-red-600 @enderror" id="correo" name="correo" placeholder="name@example.com">
+                    <input type="email" class="border p-3 w-full rounded-lg @error('email') border-red-600 @enderror" id="email" name="email" placeholder="name@example.com">
 
-                   @error('correo')
+                   @error('email')
                         <p class="text-red-600 text-sm">{{ $message }}</p>
                    @enderror
                 </div>
                 <div class="mb-5">
                     <label for="password" class="mb-2 block uppercase text-gray-500">Contraseña</label>
-                    <input type="password" class="border p-3 w-full rounded-lg @error('contrasenia') border-red-600 @enderror" name="contrasenia" id="password"
+                    <input type="password" class="border p-3 w-full rounded-lg @error('password') border-red-600 @enderror" name="password" id="password"
                     placeholder="Contraseña">
 
-                    @error('contrasenia')
+                    @error('password')
                         <p class="text-red-600 text-sm">{{ $message }}</p>
                     @enderror
                 </div>

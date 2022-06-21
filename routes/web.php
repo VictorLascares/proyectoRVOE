@@ -7,8 +7,6 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\CareerController;
 use App\Http\Controllers\FormatController;
 use App\Http\Controllers\ElementController;
-use App\Http\Controllers\SessionController;
-use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\InstitutionController;
@@ -38,11 +36,6 @@ Route::get('/', function () {
 Route::resource('users', UserController::class);
 //UPDATE PASSWORD
 Route::put('user/update/{id}',[UserController::class,'updatePSW']);
-//LOGOUT USER
-Route::post('logout',[LogoutController::class,'store'])->name('logout');
-//LOGIN USER
-Route::get('/login',[LoginController::class,'index'])->name('login');
-Route::post('/login',[LoginController::class,'store']);
 
 //****************CAREER ROUTES*****************
 //CRUD CAREER
@@ -88,18 +81,24 @@ Route::post('/update/plans', [PlanController::class,'updatePlans']);
 
 
 //*************************AUTH USER**************************
-Route::get('iniciar',['App\Http\Controllers\SessionController','iniciar']);
-Route::get('salir',['App\Http\Controllers\SessionController','salir']);
+// Route::get('iniciar',['App\Http\Controllers\SessionController','iniciar']);
+// Route::get('salir',['App\Http\Controllers\SessionController','salir']);
 
-//RUTA PARA VALIDAR LAS CREDENCIALES
-Route::post('validar',['App\Http\Controllers\SessionController','validar']);
+// //RUTA PARA VALIDAR LAS CREDENCIALES
+// Route::post('validar',['App\Http\Controllers\SessionController','validar']);
 
 // //RUTAS PARA REDIRIGIR A LAS VISTAS
 // Route::get('login', function(){
 //     return view('auth.login');
 // });
 
-Route::post('/verificarcorreo',['App\Http\Controllers\RegisterController','verificarCorreo']);
+// Route::post('/verificarcorreo',['App\Http\Controllers\RegisterController','verificarCorreo']);
+//LOGOUT USER
+Route::post('logout',[LogoutController::class,'store'])->name('logout');
+//LOGIN USER
+Route::get('/login',[LoginController::class,'index'])->name('login');
+Route::post('/login',[LoginController::class,'store']);
+
 
 
 //Descargar archivo OTA

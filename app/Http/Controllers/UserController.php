@@ -6,7 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Password;
+use Illuminate\Validation\Rules\Password;
 
 
 class UserController extends Controller
@@ -48,25 +48,23 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request);
         if (Auth::user() != null) {
             // Validacion
             $this->validate($request, [
-                'nombres' => ['required', 'max:35'],
-                'apellidos' => ['required', 'max:35'],
-                'telefono' => ['required', 'max:10', 'min:10'],
+                'name' => ['required', 'max:35'],
+                'telefono' => ['required', 'numeric'],
                 'tipoUsuario' => ['required'],
-                'correo' => ['required', 'unique:users', 'correo', 'max:60'],
-                'contrasenia' => ['required', 'confirmed', Password::min(8)->letters()->mixedCase()->numbers()->symbols()->uncompromised()]
+                'email' => ['required', 'unique:users', 'email', 'max:60'],
+                'password' => ['required', 'confirmed',Password::min(8)->letters()->mixedCase()->numbers()->symbols()->uncompromised()]
             ]);
 
             User::create([
-                'nombres' => $request->nombres,
-                'apellidos' => $request->apellidos,
-                'correo' => $request->correo,
+                'name' => $request->name,
+                'email' => $request->email,
                 'telefono' => $request->telefono,
                 'tipoUsuario' => $request->tipoUsuario,
-                'correo' => $request->correo,
-                'contrasenia' => Hash::make($request->contrasenia)
+                'password' => Hash::make($request->password)
             ]);
             return redirect()->route('users');
         }

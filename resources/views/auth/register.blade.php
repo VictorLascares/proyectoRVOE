@@ -5,39 +5,62 @@
 @section('contenido')
 <div class="md:flex md:justify-center px-4">
     <div class="md:w-10/12">
-        <form method="POST" action="{{ route('users.store') }}">
+        <form method="POST" action="{{ route('users.store') }}" novalidate>
             @csrf
             <div class="grid md:grid-cols-2 gap-4">
                 <div>
-                    <label for="inputNames" class="mb-2 block uppercase text-gray-500 font-bold">Nombres</label>
-                    <input type="text" class="w-full border p-3 rounded-lg" id="inputNames" name="nombres" placeholder="Nombres" required>
-                </div>
-                <div>
-                    <label for="inputSurnames" class="mb-2 block uppercase text-gray-500 font-bold">Apellidos</label>
-                    <input type="text" class="w-full border p-3 rounded-lg" id="inputSurnames" name="apellidos" placeholder="Apellidos" required>
+                    <label for="name" class="mb-2 block uppercase text-gray-500 font-bold">Nombre</label>
+                    <input type="text" class="w-full border p-3 rounded-lg @error('name') border-red-600 @enderror" id="name" name="name" placeholder="Nombre">
+                    @error('name')
+                        <p class="text-red-600 text-sm">{{ $message }}</p>
+                    @enderror
                 </div>
                 <div>
                     <label for="email" class="mb-2 block uppercase text-gray-500 font-bold">Correo electronico</label>
-                    <input type="email" class="w-full border p-3 rounded-lg" id="email" name="correo" placeholder="Correo Elctronico" required>
+                    <input type="email" class="w-full border p-3 rounded-lg @error('email') border-red-600 @enderror" id="email" name="email" placeholder="Correo Electronico">
+                    @error('email')
+                        <p class="text-red-600 text-sm">{{ $message }}</p>
+                    @enderror
                 </div>
                 <div>
-                    <label for="phone" class="mb-2 block uppercase text-gray-500 font-bold">Numero de Telefono</label>
-                    <input type="text" class="w-full border p-3 rounded-lg" id="phone" name="telefono" placeholder="Numero de Telefono"
-                    required>
+                    <label for="telefono" class="mb-2 block uppercase text-gray-500 font-bold">Numero de Telefono</label>
+                    <input type="text" name="telefono" class="w-full border p-3 rounded-lg @error('telefono') border-red-600 @enderror" id="telefono">
+                    @error('telefono')
+                        <p class="text-red-600 text-sm">{{ $message }}</p>
+                    @enderror
                 </div>
                 <div>
-                    <label for="inputState" class="mb-2 block uppercase text-gray-500 font-bold">Tipo de Usuario</label>
-                    <select id="inputState" class="w-full border p-3 rounded-lg" name="tipoUsuario" required>
+                    <label for="tipoUsuario" class="mb-2 block uppercase text-gray-500 font-bold">Tipo de Usuario</label>
+                    <select id="tipoUsuario" class="w-full border p-3 rounded-lg @error('tipoUsuario') border-red-600 @enderror" name="tipoUsuario">
                         <option selected disabled>-- Seleccione el tipo de usuario --</option>
                         <option value="administrador">Administrador</option>
                         <option value="planeacion">Planeación</option>
                         <option value="direccion">Dirección</option>
                     </select>
+                    @error('tipoUsuario')
+                        <p class="text-red-600 text-sm">{{ $message }}</p>
+                    @enderror
                 </div>
                 <div>
                     <label for="password" class="mb-2 block uppercase text-gray-500 font-bold">Contraseña</label>
-                    <input type="password" class="w-full border p-3 rounded-lg" id="password" name="contrasenia" placeholder="Confirmar Contraseña" required>
+                    <input type="password" class="w-full border p-3 rounded-lg @error('password') border-red-600 @enderror" id="password" name="password" placeholder="Contraseña">
+                    @error('password')
+                        <p class="text-red-600 text-sm">{{ $message }}</p>
+                    @enderror
                 </div>
+
+                <div>
+                    <label for="password_confirmation" class="mb-2 block uppercase text-gray-500 font-bold">
+                      Confirmar Contraseña
+                    </label>
+                    <input 
+                      type="password"
+                      name="password_confirmation"
+                      id="password_confirmation"
+                      placeholder="Confirmar contraseña"
+                      class="border p-3 w-full rounded-lg"
+                    >
+                  </div>
             </div>
     
             <div class="flex justify-end mt-4">

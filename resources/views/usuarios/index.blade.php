@@ -24,9 +24,8 @@
                   <thead class="border-b bg-[#13322B]">
                     <tr>
                       <th class="text-sm font-bold text-white px-6 py-4 text-left">#</th>
-                      <th class="text-sm font-bold text-white px-6 py-4 text-left">Nombres</th>
-                      <th class="text-sm font-bold text-white px-6 py-4 text-left">Apellidos</th>
-                      <th class="text-sm font-bold text-white px-6 py-4 text-left">Correo</th>
+                      <th class="text-sm font-bold text-white px-6 py-4 text-left">Nombre</th>
+                      <th class="text-sm font-bold text-white px-6 py-4 text-left">Correo Electronico</th>
                       <th class="text-sm font-bold text-white px-6 py-4 text-left">Telefono</th>
                       <th class="text-sm font-bold text-white px-6 py-4 text-left">Tipo de Usuario</th>
                       <th class="text-sm font-bold text-white px-6 py-4 text-center">Acciones</th>
@@ -38,10 +37,8 @@
                         <td class="px-6 py-4 whitespace-nowrap">
                           {{ $loop->iteration }}
                         </td>
-                        <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">{{ $user->nombres }}</td>
-                        <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">{{ $user->apellidos }}
-                        </td>
-                        <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">{{ $user->correo }}</td>
+                        <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">{{ $user->name }}</td>
+                        <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">{{ $user->email }}</td>
                         <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">{{ $user->telefono }}
                         </td>
                         <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">{{ $user->tipoUsuario }}
