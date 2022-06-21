@@ -10,6 +10,7 @@ use App\Http\Controllers\ElementController;
 use App\Http\Controllers\SessionController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\InstitutionController;
 use App\Http\Controllers\RequisitionController;
 
@@ -38,7 +39,7 @@ Route::resource('users', UserController::class);
 //UPDATE PASSWORD
 Route::put('user/update/{id}',[UserController::class,'updatePSW']);
 //LOGOUT USER
-Route::get('logout',[UserController::class,'logout']);
+Route::post('logout',[LogoutController::class,'store'])->name('logout');
 //LOGIN USER
 Route::get('/login',[LoginController::class,'index'])->name('login');
 Route::post('/login',[LoginController::class,'store']);

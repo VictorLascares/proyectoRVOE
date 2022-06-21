@@ -28,12 +28,13 @@
           <a href="{{ route('login') }}"  class="text-gray-400 hover:text-white" >Iniciar Sesion</button>
         @endguest
         @auth
-          <div class="flex justify-between items-center">
-            <a href="{{ url('logout') }}" class="text-gray-400 hover:text-white">
-              Cerrar Sesión
-            </a>
+          <div class="flex justify-between items-center gap-4">
+            <form action="{{ route('logout') }}" method="POST">
+                @csrf
+                <input type="submit" value="Cerrar Sesión" class="text-gray-400 hover:text-white cursor-pointer">
+            </form>
             <div title="{{ Auth::user()->tipoUsuario }}" style="height: 2rem; width: 2rem"
-              class="bg-[#13322B] uppercase rounded-lg text-center">
+              class="bg-[#B6DDB5] p-4 uppercase rounded-full border-2 border-[#13322B] flex justify-center items-center">
               {{ substr(Auth::user()->nombres, 0, 1) }}{{ substr(Auth::user()->apellidos, 0, 1) }}
             </div>
           </div>
@@ -73,7 +74,7 @@
     @yield('contenido')
   </main>
   <footer class="mt-10 text-center p-5 text-gray-500 font-bold">
-    Todos los Derechos Reservados &copy; {{ now()->year }}
+    Todos los Derechos Reservados: Alumnos ITTG &copy; {{ now()->year }}
   </footer>
   @yield('script')
 </body>

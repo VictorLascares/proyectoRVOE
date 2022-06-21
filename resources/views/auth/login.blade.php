@@ -8,7 +8,7 @@
             <img src="{{ asset('img/2853458.jpg') }}" alt="Imagen login de usuarios">
         </div>
         <div class="md:w-4/12 p-6 rounded-lg shadow-xl">
-            <form class="mb-2" method="POST" action="{{ route('login') }}">
+            <form class="mb-2" method="POST" action="{{ route('login') }}" novalidate>
                 @csrf
                 @if (session('mensaje'))
                     <p class="bg-red-600 text-white my-2 rounded-lg text-sm p-2 text-center">{{ session('mensaje') }}</p>
@@ -18,7 +18,7 @@
                     <input type="email" class="border p-3 w-full rounded-lg @error('correo') border-red-600 @enderror" id="correo" name="correo" placeholder="name@example.com">
 
                    @error('correo')
-                        <p class="text-red-600">{{ $message }}</p>
+                        <p class="text-red-600 text-sm">{{ $message }}</p>
                    @enderror
                 </div>
                 <div class="mb-5">
@@ -27,7 +27,7 @@
                     placeholder="Contraseña">
 
                     @error('contrasenia')
-                        <p class="text-red-600">{{ $message }}</p>
+                        <p class="text-red-600 text-sm">{{ $message }}</p>
                     @enderror
                 </div>
                 <div class="mb-5">
