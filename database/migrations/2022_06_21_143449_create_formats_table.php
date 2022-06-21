@@ -19,6 +19,7 @@ return new class extends Migration
             $table->boolean('valido')->default(true);
             $table->string('justificacion')->nullable();
             $table->foreignId('requisition_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
+            $table->timestamps();
         });
     }
 
