@@ -65,6 +65,7 @@
             </div>
           </div>
         </div>
+        <div class="my-10">{{ $users->links('pagination::tailwind') }}</div>
       </div>
     @endif
   @endauth

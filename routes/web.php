@@ -35,7 +35,7 @@ Route::get('/', function () {
 //CRUD USER
 Route::resource('users', UserController::class);
 //UPDATE PASSWORD
-Route::put('user/update/{id}',[UserController::class,'updatePSW']);
+Route::put('user/update/{id}',[UserController::class,'updatePSW'])->name('users.updatePSW');
 
 //****************CAREER ROUTES*****************
 //CRUD CAREER
@@ -45,7 +45,6 @@ Route::get('careers', [CareerController::class,'getCareers']);
 //****************INSTITUTION ROUTES*****************
 //CRUD INSTITUTION
 Route::resource('institutions', InstitutionController::class);
-
 
 //****************REQUISITION ROUTES*****************
 //CRUD REQUISITION
@@ -57,15 +56,11 @@ Route::get('/consult', [RequisitionController::class,'searchRequisition']);
 //Ruta para ver las requisiciones en el inicio
 Route::get('/dashboard', [RequisitionController::class,'showRequisition']);
 
-
-
-
 //****************FORMATS ROUTES*****************
 //Ruta para realizar evaluación de los formatos
 Route::get('/evaluate/formats/{requisition_id}', [FormatController::class,'evaluateFormats']);
 //Ruta para actualizar los formatos
 Route::post('/update/formats', [FormatController::class,'updateFormats']);
-
 
 //****************ELEMENTS ROUTES*****************
 //Ruta para realizar evaluación de los elementos
@@ -79,27 +74,12 @@ Route::get('/evaluate/plans/{requisition_id}', [PlanController::class,'evaluateP
 //Ruta para actualizar los elementos
 Route::post('/update/plans', [PlanController::class,'updatePlans']);
 
-
 //*************************AUTH USER**************************
-// Route::get('iniciar',['App\Http\Controllers\SessionController','iniciar']);
-// Route::get('salir',['App\Http\Controllers\SessionController','salir']);
-
-// //RUTA PARA VALIDAR LAS CREDENCIALES
-// Route::post('validar',['App\Http\Controllers\SessionController','validar']);
-
-// //RUTAS PARA REDIRIGIR A LAS VISTAS
-// Route::get('login', function(){
-//     return view('auth.login');
-// });
-
-// Route::post('/verificarcorreo',['App\Http\Controllers\RegisterController','verificarCorreo']);
 //LOGOUT USER
 Route::post('logout',[LogoutController::class,'store'])->name('logout');
 //LOGIN USER
 Route::get('/login',[LoginController::class,'index'])->name('login');
 Route::post('/login',[LoginController::class,'store']);
-
-
 
 //Descargar archivo OTA
 Route::get('/download/{requisition_id}',[RequisitionController::class,'downloadOta']);

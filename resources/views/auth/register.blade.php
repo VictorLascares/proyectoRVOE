@@ -24,7 +24,7 @@
                 </div>
                 <div>
                     <label for="telefono" class="mb-2 block uppercase text-gray-500 font-bold">Numero de Telefono</label>
-                    <input type="text" name="telefono" class="w-full border p-3 rounded-lg @error('telefono') border-red-600 @enderror" id="telefono">
+                    <input type="text" name="telefono" class="w-full border p-3 rounded-lg @error('telefono') border-red-600 @enderror" id="telefono" placeholder="Número de telefono">
                     @error('telefono')
                         <p class="text-red-600 text-sm">{{ $message }}</p>
                     @enderror
@@ -60,7 +60,7 @@
                       placeholder="Confirmar contraseña"
                       class="border p-3 w-full rounded-lg"
                     >
-                  </div>
+                </div>
             </div>
     
             <div class="flex justify-end mt-4">

@@ -23,7 +23,7 @@ class UserController extends Controller
     public function index()
     {
         if (Auth::user() != null) {
-            $users = User::all();
+            $users = User::paginate(5);
             $token = csrf_token();
             return view('usuarios.index', compact('users'));
         }
@@ -66,7 +66,7 @@ class UserController extends Controller
                 'tipoUsuario' => $request->tipoUsuario,
                 'password' => Hash::make($request->password)
             ]);
-            return redirect()->route('users');
+            return redirect('users');
         }
     }
 
@@ -118,15 +118,18 @@ class UserController extends Controller
         if (Auth::user() != null) {
             // Validacion
             $this->validate($request, [
-                'nombres' => ['required', 'max:35'],
-                'apellidos' => ['required', 'max:35'],
-                'telefono' => ['required', 'max:10', 'min:10'],
-                'tipoUsuario' => ['required'],
-                'correo' => ['required', 'unique:users', 'correo', 'max:60']
+                'name' => ['required','max:35'],
+                'telefono' => ['required','numeric'],
+                'email' => ['required','unique:users,email,'.$user, 'email', 'max:60']
             ]);
+
             $data = User::find($user);
-            $data->update($request->all());
-            return redirect()->route('users');
+ 
+            $data->name = $request->name;
+            $data->telefono = $request->telefono;
+            $data->email = $request->email;
+            $data->save();
+            return redirect('users');
         }
     }
     /**
@@ -155,10 +158,13 @@ class UserController extends Controller
     public function updatePSW(Request $request, $user)
     {
         if (Auth::user() != null) {
+            $this->validate($request, [
+                'password' => ['required', 'confirmed',Password::min(8)->letters()->mixedCase()->numbers()->symbols()->uncompromised()]
+            ]);
             $data = User::find($user);
-            $data->contrasenia = Hash::make($request->contrasenia);
+            $data->password = Hash::make($request->password);
             $data->save();
         }
-        return redirect(route('users.edit', $user));
+        return redirect('users');
     }
 }

@@ -21,23 +21,13 @@ class LoginController extends Controller
             'email' => ['required', 'email'],
             'password' => ['required']
         ]);
-        $nombre = $request->input('email');
-        $usuario = User::where('email', $nombre)->first();
-        if (is_null($usuario)) {
-            return back()->with('mensaje', 'Usuario no registrado');
+
+        $credentials = $request->only('email', 'password');
+        if (Auth::attempt($credentials, $request->remember)) {
+            // dd($request->remember);
+            return redirect()->intended('requisitions');
         } else {
-            $password = $request->input('password');
-            $password_bd = $usuario->password;
-            // if (Has::check($password, $password_bd)) {
-                Auth::login($usuario);
-                if ($usuario->tipoUsuario == 'administrador') {
-                    return redirect('users');
-                } else {
-                    return redirect('requisitions');
-                }
-            // } else {
-            //     return back()->with('mensaje', 'Credenciales Incorrectas');
-            // }
+            return back()->with('mensaje', 'Credenciales Incorrectas');
         }
     }
 }
