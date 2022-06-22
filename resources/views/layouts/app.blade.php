@@ -13,7 +13,6 @@
     rel="stylesheet">
   <link rel="stylesheet" href="{{ asset('css/app.css') }}">
   <link rel="shortcut icon" href="#" type="image/x-icon">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js" defer></script>
   <script src="{{ asset('js/app.js') }}" defer></script>
 </head>
 
@@ -68,7 +67,7 @@
     </nav>
   </header>
   <main class="container mx-auto mt-10">
-    <h1 class="font-black text-center text-3xl mb-10">
+    <h1 class="font-black text-gray-600 uppercase text-center text-3xl mb-10">
       @yield('titulo')
     </h1>
     @yield('contenido')
@@ -76,6 +75,8 @@
   <footer class="mt-10 text-center p-5 text-gray-500 font-bold">
     Todos los Derechos Reservados: Alumnos ITTG &copy; {{ now()->year }}
   </footer>
+  <script src="https://unpkg.com/flowbite@1.4.7/dist/flowbite.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   @yield('script')
 </body>
 
