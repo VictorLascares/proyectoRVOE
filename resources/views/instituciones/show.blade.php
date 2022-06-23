@@ -51,7 +51,7 @@
                 </div>
                 <div class="md:col-span-2 mb-5 md:mb-0">
                     <label for="address" class="mb-2 block uppercase text-gray-500 font-bold">Dirección</label>
-                    <textarea name="direccion" class="w-full border p-3" id="address"
+                    <textarea name="direccion" class="w-full border p-3  resize-none" id="address"
                         placeholder="Dirección">{{ $institution->direccion }}</textarea>
                 </div>
                 
