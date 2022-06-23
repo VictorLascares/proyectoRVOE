@@ -3,13 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Area;
-use Illuminate\Http\Request;
-use App\Models\Institution;
 use App\Models\Career;
+use App\Models\Institution;
+use Illuminate\Support\Str;
 use App\Models\Municipality;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Queue\RedisQueue;
 use Illuminate\Support\Facades\Auth;
+use Intervention\Image\Facades\Image;
 
 class InstitutionController extends Controller
 {
@@ -50,14 +51,24 @@ class InstitutionController extends Controller
   public function store(Request $request)
   {
     if (Auth::user() != null) {
+        $this->validate($request, [
+            'nombre' => ['required', 'max:255'],
+            'director' => ['required', 'max:60'],
+            'municipalitie_id' => ['required'],
+            'direccion' => ['required', 'max:255'],
+            'logotipo' => ['required']
+        ]);
       $institution = new Institution();
-      $imagen = $request->logotipo;
-      if (!is_null($imagen)) {
-        $ruta_destino = public_path('img/institutions/');
-        $nombre_de_archivo = time() . '.' . $imagen->getClientOriginalExtension();
-        $imagen->move($ruta_destino, $nombre_de_archivo);
-        $institution->logotipo = $nombre_de_archivo;
+      if ($request->logotipo) {
+        $imagen = $request->file('logotipo');
+        $nombre_imagen = Str::uuid() . "." . $imagen->extension();
+        $imagen_servidor = Image::make($imagen);
+        $imagen_servidor->fit(250,250);
+        
+        $imagen_path = public_path('img/institutions/') . $nombre_imagen;
+        $imagen_servidor->save($imagen_path);
       }
+      $institution->logotipo = $nombre_imagen;
       $institution->nombre = $request->nombre;
       $institution->director = $request->director;
       $institution->direccion = $request->direccion;

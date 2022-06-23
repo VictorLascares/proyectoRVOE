@@ -1,102 +1,95 @@
 @extends('layouts.app')
-@section('header')
-  
-  
+@section('titulo')
+  Instituciones
 @endsection
-@section('main-content')
-  <div class="container-sm py-4 mb-4">
-    <div class="d-flex justify-content-between align-items-center mb-3">
-      <h1 class="text-uppercase">Instituciones</h1>
-      @if (Auth::user()->tipoUsuario != 'direccion')
-        <button type="button" data-bs-target="#institutionsModal" data-bs-toggle="modal"
-          class="boton boton-green py-2 rounded">Nueva
-          Institución</button>
-      @endif
-    </div>
-    @foreach ($institutions as $institution)
-      <a class="text-decoration-none text-dark institution" href="{{ route('institutions.show', $institution) }}">
-        <div class="p-3">
-          <div class="d-flex justify-content-around align-items-center gap-5">
-            <img src="{{ asset('img/institutions/' . $institution->logotipo) }}" class="img-fluid rounded-start"
-              alt="Logo de la Institución">
-            <div class="">
-              <h3 class="text-center card-title">{{ $institution->nombre }}<h3>
-                  <p class="fs-5 text-center">Director(a): {{ $institution->director }}</p>
-            </div>
-          </div>
-        </div>
-        <div class="institution__overlay rounded"></div>
-      </a>
-    @endforeach
-    <nav class="mt-4">
-      <ul class="pagination justify-content-center text-dark m-0">
-        <li class="page-item">
-          <a class="page-link text-dark" href="#">Previous</a>
-        </li>
-        <li class="page-item">
-          <a class="page-link text-dark" href="#">1</a>
-        </li>
-        <li class="page-item">
-          <a class="page-link text-dark" href="#">2</a>
-        </li>
-        <li class="page-item">
-          <a class="page-link text-dark" href="#">3</a>
-        </li>
-        <li class="page-item">
-          <a class="page-link text-dark" href="#">Next</a>
-        </li>
-      </ul>
-    </nav>
+@section('contenido')
+  <div class="flex justify-end items-center mb-3">
+    @if (Auth::user()->tipoUsuario != 'direccion')
+      <button type="button" data-modal-toggle="new-institution" class="bg-[#13322B] hover:bg-[#0C231E] text-white p-3">Nueva
+        Institución
+      </button>
+    @endif
   </div>
-  <div class="modal fade" id="institutionsModal" tabindex="-1" aria-labelledby="institutionsModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header text-center">
-          <h5 class="modal-title text-uppercase w-100" id="institutionsModalLabel">Nueva Institución</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+  <div class="grid grid-cols-4 gap-4">
+  @foreach ($institutions as $institution)
+    <a class="text-decoration-none institution text-dark relative" href="{{ route('institutions.show', $institution) }}">
+      <div class="p-5">
+        <div class="">
+          <img src="{{ asset('img/institutions/' . $institution->logotipo) }}" class="" alt="Logo de la Institución">
+
         </div>
-        <div class="modal-body">
-          <form class="mb-2" method="POST" action="{{ route('institutions.store') }}"
-            enctype="multipart/form-data">
+      </div>
+      <div class="absolute top-0 institution__overlay flex flex-col justify-center items-center p-4 gap-4">
+        <p class="text-lg font-bold uppercase text-center text-gray-400">{{ $institution->nombre }}</p>
+        <p class="text-sm text-center text-gray-400">Director(a): {{ $institution->director }}</p>
+      </div>
+    </a>
+  @endforeach
+  </div>
+
+  <div id="new-institution" tabindex="-1" aria-hidden="true"
+    class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full">
+    <div class="relative p-4 w-full max-w-md h-full md:h-auto">
+      <!-- Modal content -->
+      <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+        <button type="button"
+          class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white"
+          data-modal-toggle="new-institution">
+          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd"
+              d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+              clip-rule="evenodd"></path>
+          </svg>
+        </button>
+        <div class="py-6 px-6 lg:px-8">
+          <h3 class="text-center mb-4 uppercase text-gray-500 font-bold dark:text-white">Nueva Solicitud</h3>
+          <form class="mb-2" method="POST" action="{{ route('institutions.store') }}" enctype="multipart/form-data">
             @csrf
-            <div class="form-floating mb-3">
-              <input type="text" class="form-control" id="institutionName" name="nombre"
+            <div class="mb-5">
+              <input type="text" class="w-full border p-3" id="institutionName" name="nombre"
                 placeholder="Nombre de la Institución">
-              <label for="institutionName">Nombre de la Institución</label>
+              @error('nombre')
+                <p class="text-red-600 text-sm">{{ $message }}</p>
+              @enderror
             </div>
-            <div class="form-floating mb-3">
-              <input type="text" class="form-control" name="director" id="directorName"
+            <div class="mb-5">
+              <input type="text" class="w-full border p-3" name="director" id="directorName"
                 placeholder="Nombre del Director">
-              <label for="directorName">Nombre del Director</label>
+              @error('director')
+                <p class="text-red-600 text-sm">{{ $message }}</p>
+              @enderror
             </div>
-            <div class="form-floating mb-3">
-              <select name="municipalitie_id" class="form-select" id="municipality"
+            <div class="mb-5">
+              <select name="municipalitie_id" class="w-full border p-3" id="municipality"
                 aria-label="Floating label select example">
                 <option selected disabled>Selecciona un municipio</option>
                 @foreach ($municipalities as $municipality)
                   <option value="{{ $municipality->id }}">{{ $municipality->nombre }}</option>
                 @endforeach
               </select>
-              <label for="municipality">Municipio</label>
+              @error('municipalitie_id')
+                <p class="text-red-600 text-sm">{{ $message }}</p>
+              @enderror
             </div>
-            <div class="form-floating mb-3">
-              <textarea name="direccion" class="form-control resize-none" id="address" placeholder="Dirección"></textarea>
-              <label for="address">Dirección</label>
+            <div class="mb-5">
+              <textarea name="direccion" class="w-full border p-3 resize-none" id="address" placeholder="Dirección"></textarea>
+              @error('direccion')
+                <p class="text-red-600 text-sm">{{ $message }}</p>
+              @enderror
             </div>
-            <div class="input-group form-group mb-3">
+            <div class="mb-5">
+              <label for="institutionLogo" class="mb-2 block text-gray-500 font-bold">Logo de la
+                Institución</label>
               <input type="file" class="form-control" id="institutionLogo" name="logotipo">
+              @error('logotipo')
+                <p class="text-red-600 text-sm">{{ $message }}</p>
+              @enderror
             </div>
-            <div class="d-grid mt-4">
-              <button class="boton boton-green py-2 rounded text-uppercase" type="submit">Agregar</button>
-            </div>
+            <button class="bg-[#13322B] hover:bg-[#0C231E] text-white w-full p-3 uppercase"
+              type="submit">Agregar</button>
           </form>
         </div>
       </div>
     </div>
   </div>
-  </div>
-@endsection
-@section('footer')
-  
 @endsection
