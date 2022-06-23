@@ -27,7 +27,7 @@ class InstitutionController extends Controller
   {
     if (Auth::user() != null) {
       $municipalities = Municipality::all();
-      $institutions = Institution::all();
+      $institutions = Institution::paginate(12);
       return view('instituciones.index', compact('institutions', 'municipalities'));
     }
   }
@@ -93,8 +93,7 @@ class InstitutionController extends Controller
       $careers = DB::table('institutions')
         ->join('careers', 'institutions.id', '=', 'careers.institution_id')
         ->select('careers.*')
-        ->where('institutions.id', $institution->id)
-        ->get();
+        ->where('institutions.id', $institution->id)->paginate(5);
       return view('instituciones.show', compact('institution', 'careers', 'municipalities','areas'));
     }
   }

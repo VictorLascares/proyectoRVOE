@@ -3,29 +3,33 @@
   Instituciones
 @endsection
 @section('contenido')
-  <div class="flex justify-end items-center mb-3">
-    @if (Auth::user()->tipoUsuario != 'direccion')
-      <button type="button" data-modal-toggle="new-institution" class="bg-[#13322B] hover:bg-[#0C231E] text-white p-3">Nueva
-        Institución
-      </button>
-    @endif
-  </div>
-  <div class="grid grid-cols-4 gap-4">
-  @foreach ($institutions as $institution)
-    <a class="text-decoration-none institution text-dark relative" href="{{ route('institutions.show', $institution) }}">
-      <div class="p-5">
-        <div class="">
-          <img src="{{ asset('img/institutions/' . $institution->logotipo) }}" class="" alt="Logo de la Institución">
-
+    @if (count($institutions) != 0)
+        <div class="flex justify-end items-center mb-3">
+            @if (Auth::user()->tipoUsuario != 'direccion')
+                <button type="button" data-modal-toggle="new-institution" class="bg-[#13322B] hover:bg-[#0C231E] text-white p-3">Nueva
+                    Institución
+                </button>
+            @endif
         </div>
-      </div>
-      <div class="absolute top-0 institution__overlay flex flex-col justify-center items-center p-4 gap-4">
-        <p class="text-lg font-bold uppercase text-center text-gray-400">{{ $institution->nombre }}</p>
-        <p class="text-sm text-center text-gray-400">Director(a): {{ $institution->director }}</p>
-      </div>
-    </a>
-  @endforeach
-  </div>
+        <div class="grid grid-cols-4 gap-4">
+            @foreach ($institutions as $institution)
+                <a class="text-decoration-none institution text-dark relative" href="{{ route('institutions.show', $institution) }}">
+                <div class="p-5">
+                    <div class="">
+                        <img src="{{ asset('img/institutions/' . $institution->logotipo) }}" class="" alt="Logo de la Institución">
+                    </div>
+                </div>
+                <div class="absolute top-0 institution__overlay flex flex-col justify-center items-center p-4 gap-4">
+                    <p class="text-lg font-bold uppercase text-center text-gray-400">{{ $institution->nombre }}</p>
+                    <p class="text-sm text-center text-gray-400">Director(a): {{ $institution->director }}</p>
+                </div>
+                </a>
+            @endforeach
+        </div>
+        <div class="my-10">{{ $institutions->links('pagination::tailwind') }}</div>
+    @else
+        <p class="text-gray-600 text-xl text-center font-bold mt-10">Todavia no hay instituciones</p>
+    @endif
 
   <div id="new-institution" tabindex="-1" aria-hidden="true"
     class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full">
