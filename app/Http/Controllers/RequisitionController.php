@@ -150,16 +150,10 @@ class RequisitionController extends Controller
         $data = Requisition::find($requisition);
         $formats = Format::where('requisition_id', $data->id)->get();
         $career = Career::find($data->career_id);
+        $area = Area::find($career->area_id);
         $institution = Institution::find($career->institution_id);
         $elements = Element::searchrequisitionid($data->id)->get();
         $plans = Plan::searchrequisitionid($data->id)->get();
-        $formatNames = array(
-          "Plan de Estudios",
-          "Mapa Curricular",
-          "Programa de Estudio",
-          "Estructura e Instalaciones",
-          "Plataforma Tecnológica"
-        );
         $errors = [];
         if ($data->estado == 'rechazado') {
           if($data->noEvaluacion <= 4){
@@ -182,7 +176,7 @@ class RequisitionController extends Controller
             }
           }
         }
-        return view('requisiciones.show', compact('data', 'career', 'institution', 'elements', 'plans', 'formats', 'formatNames', 'errors'));
+        return view('requisiciones.show', compact('data', 'career', 'institution', 'elements', 'plans', 'formats', 'area', 'errors'));
       }
     }
   }

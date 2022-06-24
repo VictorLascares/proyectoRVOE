@@ -27,22 +27,6 @@
   }
 }
 
-.requisicion {
-  margin: 0 auto 0 auto;
-
-  &:hover {
-    -webkit-box-shadow: 0px 0px 15px 5px rgba(0, 0, 0, 0.48);
-    box-shadow: 0px 0px 15px 5px rgba(0, 0, 0, 0.48);
-  }
-
-  width: 100%;
-
-  a {
-    p {
-      font-size: 1.2rem;
-    }
-  }
-}
 .solicitud {
   .solicitud__img {
     margin-bottom: 2rem;

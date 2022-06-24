@@ -6,55 +6,64 @@
   <div class="container-fluid pb-4 mb-4 px-4">
     <form action="{{ url('/update/elements') }}" method="POST" enctype="multipart/form-data">
       @csrf
-      <div class="table-wrapper-scroll-y my-custom-scrollbar">
-        <table id="elementsTable" class="table table-striped table-bordered table-sm">
-          <thead>
-            <tr>
-              <th class="th-sm" scope="col">#</th>
-              <th class="th-sm" scope="col">Elemento</th>
-              <th class="th-sm" scope="col">Existencia</th>
-              <th class="th-sm" scope="col">Observacion</th>
-            </tr>
-          </thead>
-          <input type="hidden" name="requisition_id" value="{{ $requisition->id }}">
-          <tbody>
-            @foreach (range(1, 52) as $i)
-              @foreach ($elements as $element)
-                @if ($element->elemento == $i)
-                  <tr>
-                    <th scope="row">
-                      {{ $i }}
-                    </th>
-                    <td class="w-50">
-                      <p class="h6">{{ $elementName[$i - 1] }}</p>
-                    </td>
-                    <td class="text-center" style="height: 100%">
-                      <div class="h-100 btn-group" role="group">
-                        <input type="radio" class="btn-check" name="elemento{{ $i }}"
-                          value="{{ $element->existente }}" id="btnYes-{{ $element->id }}" autocomplete="off"
-                          @if ($element->existente) checked @endif>
-                        <label class="btn btn-outline-success text-uppercase" for="btnYes-{{ $element->id }}">Si</label>
-
-                        <input type="radio" class="btn-check btn-No" name="elemento{{ $i }}"
-                          id="btnNo-{{ $element->id }}" value="{{ $element->existente }}" autocomplete="off"
-                          @if (!$element->existente) checked @endif>
-                        <label class="btn btn-outline-danger text-uppercase" for="btnNo-{{ $element->id }}">No</label>
-                      </div>
-                    </td>
-                    <td class="p-0">
-                      <div class="form-floating">
-                        <textarea rows="3" name="elemento{{ $i }}o" class="form-control rounded-0 resize-none fs-6 border-0"
-                          placeholder="Observación"
-                          id="inputSighting-{{ $element->id }}">{{ $element->observacion }}</textarea>
-                        <label for="inputSighting-{{ $element->id }}">Observación</label>
-                      </div>
-                    </td>
-                  </tr>
-                @endif
-              @endforeach
-            @endforeach
-          </tbody>
-        </table>
+      <div class="flex flex-col">
+        <div class="overflow-x-auto sm:-mx-6 lg:-mx-8 max-h-screen">
+          <div class="py-2 inline-block min-w-full sm:px-6 lg:px-8">
+            <div class="overflow-hidden">
+                <table id="elementsTable" class="min-w-full">
+                <thead class="border-b bg-[#13322B]">
+                    <tr>
+                    <th class="text-sm font-bold text-white px-6 py-4 text-left">#</th>
+                    <th class="text-sm font-bold text-white px-6 py-4 text-left">Elemento</th>
+                    <th class="text-sm font-bold text-white px-6 py-4 text-left">Existencia</th>
+                    <th class="text-sm font-bold text-white px-6 py-4 text-left">Observacion</th>
+                    </tr>
+                </thead>
+                <input type="hidden" name="requisition_id" value="{{ $requisition->id }}">
+                <tbody>
+                    @foreach (range(1, 52) as $i)
+                    @foreach ($elements as $element)
+                        @if ($element->elemento == $i)
+                        <tr class="border-b">
+                            <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                            {{ $i }}
+                            </td>
+                            <td class="text-sm text-gray-900 font-light px-6 py-4">
+                                <p class="max-w-sm">{{ $elementName[$i - 1] }}</p>
+                            </td>
+                            <td>
+                            <div class="flex justify-start items-center gap-4" role="group">
+                                <div class="flex justify-center items-center gap-2">
+                                    <input type="radio" class="btn-check" name="elemento{{ $i }}"
+                                    value="{{ $element->existente }}" id="btnYes-{{ $element->id }}" autocomplete="off"
+                                    @if ($element->existente) checked @endif>
+                                    <label class="uppercase" for="btnYes-{{ $element->id }}">Si</label>
+                                </div>
+                                <div class="flex justify-center items-center gap-2">
+                                    <input type="radio" class="btn-check btn-No" name="elemento{{ $i }}"
+                                    id="btnNo-{{ $element->id }}" value="{{ $element->existente }}" autocomplete="off"
+                                    @if (!$element->existente) checked @endif>
+                                    <label class="uppercase" for="btnNo-{{ $element->id }}">No</label>
+                                </div>
+                            </div>
+                            </td>
+                            <td class="p-2">
+                            <div class="w-full">
+                                <textarea name="elemento{{ $i }}o" class="resize-none border w-full"
+                                placeholder="Observación"
+                                id="inputSighting-{{ $element->id }}">{{ $element->observacion }}</textarea>
+                            </div>
+                            </td>
+                        </tr>
+                        @endif
+                    @endforeach
+                    @endforeach
+                </tbody>
+                </table>
+            </div>
+          </div>
+        </div>
+      </div>
       </div>
       <div class="my-3">
         <label for="building-format" class="form-label fw-bold">Formato de Instalaciones</label>

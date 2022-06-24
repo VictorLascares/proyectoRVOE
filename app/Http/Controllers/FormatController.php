@@ -16,6 +16,10 @@ class FormatController extends Controller
     {
         $this->middleware('auth');
     }
+    public function index()
+    {
+
+    }
     //Funcion para realizar la evaluación de los formatos
     public function evaluateFormats($requisition_id)
     {
@@ -24,19 +28,14 @@ class FormatController extends Controller
             $career = Career::find($requisition->career_id);
             $institution = Institution::find($career->institution_id);
             $formats = Format::searchrequisitionid($requisition->id)->get();
-
-            if (isset($requisition)) {
-                return response()->json([
-                    'requisition' => $requisition,
-                    'career' => $career,
-                    'institution' => $institution,
-                    'formats' => $formats
-                ]);
-            } else {
-                return response()->json([
-                    'error' => 'Data not found'
-                ]);
-            }
+            $formatNames = array(
+                "Plan de Estudios",
+                "Mapa Curricular",
+                "Programa de Estudio",
+                "Estructura e Instalaciones",
+                "Plataforma Tecnológica"
+            );
+            return view('requisiciones.formEva' , compact('requisition', 'career', 'institution', 'formats', 'formatNames'));
         }
     }
 

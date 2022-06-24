@@ -3,19 +3,18 @@
   Solicitudes
 @endsection
 @section('contenido')
-  <div class="container py-4">
-    <form class="mb-4 flex gap-4">
+    <form class="mb-4 md:flex justify-start gap-4 p-2">
         <button 
             type="reset" 
             id="limpiar-filtro" 
-            class="text-white p-2 bg-[#13322B] hover:bg-[#0C231E]"
+            class="text-white p-2 bg-[#13322B] hover:bg-[#0C231E] w-full sm:w-auto mb-5 sm:mb-0"
         >
             Limpiar Filtros
         </button>
-        <select id="filtro-anio">
+        <select id="filtro-anio" class="w-full sm:w-auto mb-5 sm:mb-0">
             <option selected disabled>Filtrar por Año</option>
         </select>
-        <select id="filtro-estado">
+        <select id="filtro-estado" class="w-full sm:w-auto">
             <option selected disabled>Filtrar por estado</option>
             <option value="activo">Activo</option>
             <option value="latencia">Latencia</option>
@@ -25,45 +24,44 @@
             <option value="rechazado">Rechazado</option>
         </select>
     </form>
+    @if (count($requisitions) != 0)
+        <div class="grid sm:grid-cols-2 lg:grid-cols-5 mt-10 mb-20 gap-2 p-2">
+            @foreach ($requisitions as $requisition)
+                <a data-fecha="{{ $requisition->created_at->format('m-d-y') }}" data-estado="{{ $requisition->estado }}" href="{{ route('requisitions.show', $requisition->id) }}" class="hover:shadow-lg w-full requisicion requisition text-center py-3 @switch($requisition->estado) @case('pendiente')
+                    @case('latencia')
+                    bg-light-yellow
+                    text-dark-yellow
+                    @break
+                    @case('activo')
+                    bg-light-green
+                    text-dark-green
+                    @break
+                    @case('revocado')
+                    @case('inactivo')
+                    @case('rechazado')
+                    bg-light-red 
+                    text-dark-red
+                    @endswitch">
+                    <p class="uppercase font-bold m-0">{{ $requisition->estado }}</p>
+                    <p>Evaluacion: {{$requisition->noEvaluacion}}</p>
+                    <p>{{ $requisition->created_at->format('m-d-Y') }}</p>
+                </a>
+            @endforeach
+        </div>
+    @else
+        <p class="text-gray-600 text-xl text-center font-bold mt-10">Todavia no hay solicitudes</p>
+    @endif
 
-    <div class="requisiciones">
-      @foreach ($requisitions as $requisition)
-          <a 
-            data-fecha="{{ $requisition->created_at->format('m-d-y') }}"
-            data-estado="{{ $requisition->estado }}"
-            href="{{ route('requisitions.show', $requisition->id) }}"
-            class="w-100 rounded requisicion requisition text-center text-decoration-none py-3 @switch($requisition->estado) @case('pendiente')
-            @case('latencia')
-              bg-light-yellow
-              text-dark-yellow
-              @break
-            @case('activo')
-              bg-light-green
-              text-dark-green
-              @break
-            @case('revocado')
-            @case('inactivo')
-            @case('rechazado')
-              bg-light-red 
-              text-dark-red
-            @endswitch"
-            style="width: 13rem">
-            <p class="text-uppercase fw-bold m-0">{{ $requisition->estado }}</p>
-            <p class="m-0">{{ $requisition->created_at->format('m-d-Y') }}</p>
-          </a>
-      @endforeach
-    </div>
-  </div>
-  @if (Auth::user()->tipoUsuario == 'planeacion')
-    <button 
-        data-modal-toggle="new-request" 
-        type="button"
-        class="p-2 fixed bottom-5 right-5 boton bg-[#13322B] hover:bg-[#0C231E]">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
-        </svg>
-    </button>
-  @endif
+    @if (Auth::user()->tipoUsuario == 'planeacion')
+        <button 
+            data-modal-toggle="new-request" 
+            type="button"
+            class="p-2 fixed bottom-5 right-5 boton bg-[#13322B] hover:bg-[#0C231E]">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 stroke-white" viewBox="0 0 24 24" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
+            </svg>
+        </button>
+    @endif
 
   
  
