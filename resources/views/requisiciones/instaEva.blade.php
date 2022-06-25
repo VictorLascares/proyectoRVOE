@@ -66,11 +66,13 @@
       </div>
       </div>
       <div class="my-3">
-        <label for="building-format" class="form-label fw-bold">Formato de Instalaciones</label>
-        <input class="form-control" name="formatoInstalaciones" type="file" id="building-format" required>
+        <label for="building-format" class="block font-bold mb-3 text-lg">Formato de Instalaciones</label>
+        <input class="w-1/2 border" name="formatoInstalaciones" type="file" id="building-format" required>
       </div>
-      <div class="d-flex justify-content-end">
-        <input class="btn boton-green text-light" type="submit" value="Guardar">
+      <div class="flex justify-end">
+        <button class="text-white py-2 px-4 bg-[#13322B] hover:bg-[#0C231E]" type="submit">
+            Guardar
+        </button>
       </div>
     </form>
   </div>

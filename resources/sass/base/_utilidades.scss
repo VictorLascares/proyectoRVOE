@@ -1,4 +1,8 @@
-
+.hide-arrows { 
+    -webkit-appearance: none; 
+    margin: 0; 
+    -moz-appearance:textfield; /* Firefox */
+  }
 .hide {
   display: none;
 }
@@ -6,8 +10,8 @@
 .disabled {
   pointer-events: none;
   cursor: default;
-  color: gray;
-  opacity: 0.6;
+  color: rgb(107, 107, 107);
+  opacity: 0.8;
 }
 
 .boton-green {
