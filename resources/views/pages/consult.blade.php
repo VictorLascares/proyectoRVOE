@@ -4,7 +4,7 @@
 @endsection
 @section('contenido')
   <div class="container mx-auto">
-    <form action="{{ route('consult.index') }}" method="POST" id="consultForm">
+    <form action="" method="POST" id="consultForm">
         @csrf
         <div class="grid md:grid-cols-2 gap-4">
             <div>
