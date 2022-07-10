@@ -9,6 +9,7 @@ use App\Http\Controllers\FormatController;
 use App\Http\Controllers\ElementController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
+use App\Http\Controllers\ConsultController;
 use App\Http\Controllers\InstitutionController;
 use App\Http\Controllers\RequisitionController;
 
@@ -45,14 +46,16 @@ Route::get('careers', [CareerController::class,'getCareers']);
 //****************INSTITUTION ROUTES*****************
 //CRUD INSTITUTION
 Route::resource('institutions', InstitutionController::class);
+Route::get('institutions', [InstitutionController::class, 'getInstitutions']);
 
 //****************REQUISITION ROUTES*****************
 //CRUD REQUISITION
 Route::resource('requisitions',RequisitionController::class);
 Route::post('requisitions/create/{career_id}', [RequisitionController::class,'crearPorCarrera']);
 
-//Ruta para consultar rvoe
-Route::get('/consult', [RequisitionController::class,'searchRequisition']);
+//Rutas para consultar rvoe
+Route::get('/consult', [ConsultController::class,'index']);
+Route::post('/consult', [ConsultController::class,'searchRequisition'])->name('consult');
 //Ruta para ver las requisiciones en el inicio
 Route::get('/dashboard', [RequisitionController::class,'showRequisition']);
 

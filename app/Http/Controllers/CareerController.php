@@ -13,7 +13,7 @@ class CareerController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth')->except('getCareers');
     }
   /**
    * Display a listing of the resource.
@@ -129,7 +129,6 @@ class CareerController extends Controller
   }
 
   public function getCareers(Request $request) {
-    if (Auth::user() != null) {
       if( $request->ajax()){
         $careers = Career::where('institution_id', $request->institutionId)->get();
         $careerArray = array();
@@ -138,6 +137,5 @@ class CareerController extends Controller
         }
         return response()->json($careerArray);
       }
-    }
   }
 }

@@ -871,6 +871,9 @@ input:checked + .toggle-bg {
 .col-span-2 {
     grid-column: span 2 / span 2
 }
+.col-span-1 {
+    grid-column: span 1 / span 1
+}
 .m-0 {
     margin: 0px
 }
@@ -926,17 +929,14 @@ input:checked + .toggle-bg {
 .mb-20 {
     margin-bottom: 5rem
 }
-.mb-1 {
-    margin-bottom: 0.25rem
+.mt-20 {
+    margin-top: 5rem
 }
 .mt-2 {
     margin-top: 0.5rem
 }
-.mt-20 {
-    margin-top: 5rem
-}
-.mb-0 {
-    margin-bottom: 0px
+.mb-1 {
+    margin-bottom: 0.25rem
 }
 .block {
     display: block
@@ -1098,9 +1098,6 @@ input:checked + .toggle-bg {
 .gap-1 {
     gap: 0.25rem
 }
-.gap-10 {
-    gap: 2.5rem
-}
 .space-x-2 > :not([hidden]) ~ :not([hidden]) {
     --tw-space-x-reverse: 0;
     margin-right: calc(0.5rem * var(--tw-space-x-reverse));
@@ -1155,8 +1152,14 @@ input:checked + .toggle-bg {
 .border-0 {
     border-width: 0px
 }
+.border-4 {
+    border-width: 4px
+}
 .border-b {
     border-bottom-width: 1px
+}
+.border-b-4 {
+    border-bottom-width: 4px
 }
 .border-gray-300 {
     --tw-border-opacity: 1;
@@ -1181,6 +1184,14 @@ input:checked + .toggle-bg {
 .border-gray-100 {
     --tw-border-opacity: 1;
     border-color: rgb(243 244 246 / var(--tw-border-opacity))
+}
+.border-\[\#133\] {
+    --tw-border-opacity: 1;
+    border-color: rgb(17 51 51 / var(--tw-border-opacity))
+}
+.border-\[\#133228\] {
+    --tw-border-opacity: 1;
+    border-color: rgb(19 50 40 / var(--tw-border-opacity))
 }
 .bg-white {
     --tw-bg-opacity: 1;
@@ -1297,10 +1308,6 @@ input:checked + .toggle-bg {
 .py-2\.5 {
     padding-top: 0.625rem;
     padding-bottom: 0.625rem
-}
-.px-1 {
-    padding-left: 0.25rem;
-    padding-right: 0.25rem
 }
 .pb-5 {
     padding-bottom: 1.25rem
@@ -1675,9 +1682,6 @@ input:checked + .toggle-bg {
     .sm\:flex {
         display: flex
     }
-    .sm\:grid {
-        display: grid
-    }
     .sm\:hidden {
         display: none
     }
@@ -1695,9 +1699,6 @@ input:checked + .toggle-bg {
     }
     .sm\:justify-between {
         justify-content: space-between
-    }
-    .sm\:gap-10 {
-        gap: 2.5rem
     }
     .sm\:px-6 {
         padding-left: 1.5rem;
@@ -1747,6 +1748,12 @@ input:checked + .toggle-bg {
     .md\:grid-cols-2 {
         grid-template-columns: repeat(2, minmax(0, 1fr))
     }
+    .md\:grid-cols-3 {
+        grid-template-columns: repeat(3, minmax(0, 1fr))
+    }
+    .md\:grid-cols-4 {
+        grid-template-columns: repeat(4, minmax(0, 1fr))
+    }
     .md\:items-center {
         align-items: center
     }
@@ -1780,9 +1787,6 @@ input:checked + .toggle-bg {
     }
     .lg\:flex {
         display: flex
-    }
-    .lg\:w-auto {
-        width: auto
     }
     .lg\:grid-cols-5 {
         grid-template-columns: repeat(5, minmax(0, 1fr))

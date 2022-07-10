@@ -73,8 +73,8 @@
                     @break
                   @endswitch
                 </select>
-                <button class="btn boton-green text-light" type="submit">
-                  Actualizar
+                <button class="bg-[#13322B] hover:bg-[#0C231E] py-2 px-3 text-white" type="submit">
+                    Actualizar
                 </button>
               </div>
             </form>

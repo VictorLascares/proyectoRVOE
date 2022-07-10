@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Municipality extends Model
 {
@@ -20,22 +21,14 @@ class Municipality extends Model
     'clave'
   ];
 
-  /**
-   * The attributes that should be hidden for serialization.
-   *
-   * @var array
-   */
-  protected $hidden = [];
-
-  /**
-   * The attributes that should be cast.
-   *
-   * @var array
-   */
-  protected $casts = [];
 
   public function scopeSearchMunicipality($query, $Municipality_id)
   {
     return $query->where('id', $Municipality_id);
+  }
+
+  public function institutions()
+  {
+    return $this->hasMany(Institution::class, 'municipalitie_id', 'id');
   }
 }

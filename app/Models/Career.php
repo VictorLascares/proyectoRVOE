@@ -21,19 +21,8 @@ class Career extends Model
         'duracion'
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array
-     */
-    protected $hidden = [
-    ];
+    public function institution() {
+        return $this->belongsTo(Institution::class);
+    }
 
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array
-     */
-    protected $casts = [
-    ];
 }

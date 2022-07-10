@@ -16,7 +16,7 @@ class InstitutionController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth')->except('getInstitutions');
     }
   /**
    * Display a listing of the resource.
@@ -161,6 +161,18 @@ class InstitutionController extends Controller
       unlink(public_path('img/institutions/' . $path));
       $data->delete();
       return redirect('institutions');
+    }
+  }
+  
+  public function getInstitutions(Request $request)
+  {
+    if( $request->ajax() ){
+        $institutions = Institution::where('municipalitie_id', $request->municipalityId)->get();
+        $institutionArray = array();
+        foreach ($institutions as $institution) {
+          $institutionArray[$institution->id] = $institution->nombre;
+        }
+        return response()->json($institutionArray);
     }
   }
 }
