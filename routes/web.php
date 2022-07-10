@@ -46,7 +46,7 @@ Route::get('careers', [CareerController::class,'getCareers']);
 //****************INSTITUTION ROUTES*****************
 //CRUD INSTITUTION
 Route::resource('institutions', InstitutionController::class);
-Route::get('institutions', [InstitutionController::class, 'getInstitutions']);
+Route::get('getinstitutions', [InstitutionController::class, 'getInstitutions']);
 
 //****************REQUISITION ROUTES*****************
 //CRUD REQUISITION

@@ -73,7 +73,7 @@
         $(document).ready(function() {
             $('#municipalitySelect').on('change', function() {
                 let municipalityId = $(this).val()
-                $.get('institutions', {
+                $.get('getinstitutions', {
                     municipalityId: municipalityId
                 }, function(institutions) {
                 $('#institutions').empty()
