@@ -61,7 +61,6 @@ class InstitutionController extends Controller
       $institution = new Institution();
       if ($request->logotipo) {
         $uploadedFileUrl = Cloudinary::upload($request->file('logotipo')->getRealPath(), [
-            'folder' => 'uploads/institutions',
             'transformation' => [
                 'width' => 250,
                 'height' => 250
