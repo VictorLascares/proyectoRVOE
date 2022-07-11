@@ -66,7 +66,7 @@ class InstitutionController extends Controller
         $image = Image::make($path, null);
         $image->resize(250, 250)
         ->save();
-        $secureURL = Cloudinary::upload($path)->getSecurePath();
+        $secureURL = Cloudinary()->upload($path)->getSecurePath();
       }
 
       $institution->logotipo = $secureURL;
