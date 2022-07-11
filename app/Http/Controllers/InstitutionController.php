@@ -10,7 +10,6 @@ use App\Models\Municipality;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-use Intervention\Image\Facades\Image;
 use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 
 class InstitutionController extends Controller

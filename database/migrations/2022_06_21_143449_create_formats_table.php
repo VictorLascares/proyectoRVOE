@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('formats', function (Blueprint $table) {
             $table->id();
             $table->integer('formato')->nullable(false);
-            $table->boolean('valido')->default(true);
+            $table->boolean('valido')->default(false);
             $table->text('justificacion')->nullable();
             $table->foreignId('requisition_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();

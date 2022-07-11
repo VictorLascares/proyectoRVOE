@@ -163,7 +163,6 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
-        Intervention\Image\ImageServiceProvider::class,
 
         /*
          * Package Service Providers...
@@ -187,13 +186,12 @@ return [
     |
     | This array of class aliases will be registered when this application
     | is started. However, feel free to register as many as you wish as
-    | the aliases are "lazy" loaded so they don't hinder performance.
+| the aliases are "lazy" loaded so they don't hinder performance.
     |
     */
 
     'aliases' => Facade::defaultAliases()->merge([
         // ...
-        'Image' => Intervention\Image\Facades\Image::class,
         'Cloudinary' => CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary::class,
     ])->toArray(),
 

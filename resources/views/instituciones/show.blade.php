@@ -99,7 +99,6 @@
     <div id="new-career" tabindex="-1" aria-hidden="true"
   class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full">
         <div class="relative p-4 w-full max-w-md h-full md:h-auto">
-            <!-- Modal content -->
             <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
                 <button type="button"
                     class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white"
@@ -139,7 +138,7 @@
                     </div>
                     <div class="mb-5">
                         <label for="careerDuration" class="mb-2 block uppercase text-gray-500 font-bold">Duración de la Carrera</label>
-                        <input type="number" class="w-full border p-3" name="duracion" id="careerDuration"
+                        <input type="text" class="w-full border p-3" name="duracion" id="careerDuration"
                         placeholder="Duración de la Carrera">
                     </div>
                     <input type="hidden" name="institution_id" value="{{ $institution->id }}">
@@ -148,7 +147,4 @@
             </div>
         </div>
     </div>
-@endsection
-@section('footer')
-  
 @endsection

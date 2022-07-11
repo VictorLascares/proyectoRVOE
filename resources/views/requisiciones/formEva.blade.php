@@ -1,6 +1,12 @@
 @extends('layouts.app')
 @section('titulo')
-  Revisión de Formatos
+    @if ($requisition->noEvaluacion == 1)
+        Revisión de existencia de formatos
+    @elseif ($requisition->noEvaluacion == 2)
+        Revisión del contenido de los formatos 1
+    @else
+        Revisión del contenido de los formatos 2
+    @endif
 @endsection
 @section('contenido')
   <form class="mb-2" method="POST" action="{{ url('/update/formats') }}">
