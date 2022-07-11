@@ -11,9 +11,9 @@
                 </button>
             @endif
         </div>
-        <div class="grid grid-cols-4 gap-4">
+        <div class="grid grid-cols-4 gap-4 mt-10">
             @foreach ($institutions as $institution)
-                <a class="text-decoration-none institution text-dark relative" href="{{ route('institutions.show', $institution) }}">
+                <a class="text-decoration-none institution text-dark relative border" href="{{ route('institutions.show', $institution) }}">
                 <div class="p-5">
                     <div class="">
                         <img src="{{ $institution->logotipo }}" alt="Logo de la Institución">

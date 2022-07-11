@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Models\Plan;
 
-use App\Models\Requisition;
+use App\Models\Career;
 use App\Models\Element;
 use App\Models\Institution;
-use App\Models\Career;
-use App\Models\Plan;
+use App\Models\Requisition;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 
 
 class ElementController extends Controller
@@ -110,10 +111,15 @@ class ElementController extends Controller
                     }
                     $requisition->noEvaluacion = $requisition->noEvaluacion + 1;
                     //Guardar imagen
-                    $ruta_destino = public_path('img/formatos/instalaciones');
-                    $nombre_de_archivo = time() . '.' . $imagen->getClientOriginalExtension();
-                    $imagen->move($ruta_destino, $nombre_de_archivo);
-                    $requisition->formatoInstalaciones = $nombre_de_archivo;
+                    $uploadedFileUrl = Cloudinary::upload($request->file('formatoInstalaciones')->getRealPath(), [
+                        'folder' => 'uploads/institutions',
+                        'transformation' => [
+                            'width' => 600,
+                            'height' => 750
+                        ]
+                    ])->getSecurePath();
+                    
+                    $requisition->formatoInstalaciones = $uploadedFileUrl;
                     // Se crean los planes para evaluación
                     if (is_null($plans)) {
                         for ($planName = 1; $planName < 4; $planName++) {

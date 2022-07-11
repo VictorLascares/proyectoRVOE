@@ -61,14 +61,13 @@ class InstitutionController extends Controller
         ]);
       $institution = new Institution();
       if ($request->logotipo) {
-        $imagen = $request->file('logotipo');
-        $imagen_servidor = Image::make($imagen);
-        
-        
-        // $imagen_path = public_path('img/institutions/') . $nombre_imagen;
-        // $imagen_servidor->save( $imagen_path);
-
-        $uploadedFileUrl = Cloudinary::upload($imagen_servidor->fit(250,250)->getRealPath())->getSecurePath();
+        $uploadedFileUrl = Cloudinary::upload($request->file('logotipo')->getRealPath(), [
+            'folder' => 'uploads/institutions',
+            'transformation' => [
+                'width' => 250,
+                'height' => 250
+            ]
+        ])->getSecurePath();
       }
       $institution->logotipo = $uploadedFileUrl;
       $institution->nombre = $request->nombre;

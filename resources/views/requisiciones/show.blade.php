@@ -4,7 +4,7 @@
 @endsection
 @section('contenido')
     <div class="flex justify-center items-center  mb-4 py-4">
-        <img src="{{ asset('img/institutions/' . $institution->logotipo) }}"
+        <img src="{{ $institution->logotipo }}"
     alt="Logotipo Institución">
     </div>
     <div class="md:grid md:grid-cols-2 md:gap-4">
@@ -160,7 +160,7 @@
       <div class="p-5">
         <h2 class="text-center mb-5 uppercase text-2xl">Evidencia de Evaluación de las Instalaciones</h2>
         <div class="w-1/2 mx-auto">
-            <img src="{{ asset('img/formatos/instalaciones/' . $data->formatoInstalaciones) }}" alt="Formato de instalaciones">
+            <img src="{{  $data->formatoInstalaciones }}" alt="Formato de instalaciones">
         </div>
       </div>
     @endif

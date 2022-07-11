@@ -20,7 +20,7 @@
         @csrf
         <div class="md:flex md:justify-between md:gap-4">
             <div class="flex-1 flex justify-center items-center border mb-4 md:mb-0 py-4 md:py-0">
-                <img src="{{ asset('img/institutions/' . $institution->logotipo) }}" alt="Logo de la Institución">
+                <img src="{{  $institution->logotipo }}" alt="Logo de la Institución">
             </div>
             <div class="flex-1 md:grid md:grid-cols-2 md:gap-2 border p-2">
                 <div class="md:col-span-2 mb-5 md:mb-0">
