@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->integer('formato')->nullable(false);
             $table->boolean('valido')->default(true);
-            $table->string('justificacion')->nullable();
+            $table->text('justificacion')->nullable();
             $table->foreignId('requisition_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
         });

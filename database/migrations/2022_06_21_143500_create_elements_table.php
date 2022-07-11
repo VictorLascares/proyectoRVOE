@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->integer('elemento')->nullable(false);
             $table->boolean('existente')->default(true);
-            $table->string('observacion')->nullable();
+            $table->text('observacion')->nullable();
             $table->foreignId('requisition_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
         });

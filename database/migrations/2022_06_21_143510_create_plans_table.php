@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->integer('plan')->nullable(false);
             $table->integer('ponderacion')->nullable();
-            $table->string('comentario')->nullable();
+            $table->text('comentario')->nullable();
             $table->foreignId('requisition_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
         });
