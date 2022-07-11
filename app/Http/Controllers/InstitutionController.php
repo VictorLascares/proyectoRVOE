@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Intervention\Image\Facades\Image;
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 
 class InstitutionController extends Controller
 {
@@ -60,13 +61,16 @@ class InstitutionController extends Controller
         ]);
       $institution = new Institution();
       if ($request->logotipo) {
-        $imagen = $request->file('logotipo');
-        $nombre_imagen = Str::uuid() . "." . $imagen->extension();
-        $imagen_servidor = Image::make($imagen);
-        $imagen_servidor->fit(250,250);
+        // $imagen = $request->file('logotipo');
+        // $nombre_imagen = Str::uuid() . "." . $imagen->extension();
+        // $imagen_servidor = Image::make($imagen);
+        // $imagen_servidor->fit(250,250);
         
-        $imagen_path = public_path('img/institutions/') . $nombre_imagen;
-        $imagen_servidor->save($imagen_path);
+        // $imagen_path = public_path('img/institutions/') . $nombre_imagen;
+        // $imagen_servidor->save($imagen_path);
+
+        $uploadedFileUrl = Cloudinary::upload($request->file('logotipo')->getRealPath())->getSecurePath();
+        dd($uploadedFileUrl);
       }
       $institution->logotipo = $nombre_imagen;
       $institution->nombre = $request->nombre;
