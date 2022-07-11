@@ -28,6 +28,13 @@
         </div>
         <div class="my-10">{{ $institutions->links('pagination::tailwind') }}</div>
     @else
+        <div class="flex justify-end items-center mb-3">
+            @if (Auth::user()->tipoUsuario != 'direccion')
+                <button type="button" data-modal-toggle="new-institution" class="bg-[#13322B] hover:bg-[#0C231E] text-white p-3">Nueva
+                    Institución
+                </button>
+            @endif
+        </div>
         <p class="text-gray-600 text-xl text-center font-bold mt-10">Todavia no hay instituciones</p>
     @endif
 
