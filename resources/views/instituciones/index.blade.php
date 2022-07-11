@@ -14,10 +14,8 @@
         <div class="grid grid-cols-4 gap-4 mt-10">
             @foreach ($institutions as $institution)
                 <a class="text-decoration-none institution text-dark relative border" href="{{ route('institutions.show', $institution) }}">
-                <div class="p-5">
-                    <div class="">
-                        <img src="{{ $institution->logotipo }}" alt="Logo de la Institución">
-                    </div>
+                <div class="p-5 flex justify-center items-center">
+                    <img src="{{ $institution->logotipo }}" alt="Logo de la Institución">
                 </div>
                 <div class="absolute top-0 institution__overlay flex flex-col justify-center items-center p-4 gap-4">
                     <p class="text-lg font-bold uppercase text-center text-gray-400">{{ $institution->nombre }}</p>
