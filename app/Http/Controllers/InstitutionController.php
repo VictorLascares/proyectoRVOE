@@ -7,9 +7,11 @@ use App\Models\Career;
 use App\Models\Institution;
 use Illuminate\Support\Str;
 use App\Models\Municipality;
+use Cloudinary\Transformation\Qualifier\Dimensions\Width;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Intervention\Image\Facades\Image;
 use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 
 class InstitutionController extends Controller
@@ -60,14 +62,14 @@ class InstitutionController extends Controller
         ]);
       $institution = new Institution();
       if ($request->logotipo) {
-        $uploadedFileUrl = Cloudinary::upload($request->file('logotipo')->getRealPath(), [
-            'transformation' => [
-                'width' => 250,
-                'height' => 250
+        $secureURL = Cloudinary::upload($request->file('logotipo')->getRealPath(), [
+            "transformation" => [
+                "width" => 250,
+                "height" => 250
             ]
         ])->getSecurePath();
       }
-      $institution->logotipo = $uploadedFileUrl;
+      $institution->logotipo = $secureURL;
       $institution->nombre = $request->nombre;
       $institution->director = $request->director;
       $institution->direccion = $request->direccion;

@@ -111,12 +111,7 @@ class ElementController extends Controller
                     }
                     $requisition->noEvaluacion = $requisition->noEvaluacion + 1;
                     //Guardar imagen
-                    $uploadedFileUrl = Cloudinary::upload($request->file('formatoInstalaciones')->getRealPath(), [
-                        'transformation' => [
-                            'width' => 600,
-                            'height' => 750
-                        ]
-                    ])->getSecurePath();
+                    $uploadedFileUrl = Cloudinary::upload($request->file('formatoInstalaciones')->getRealPath())->getSecurePath();
                     
                     $requisition->formatoInstalaciones = $uploadedFileUrl;
                     // Se crean los planes para evaluación
