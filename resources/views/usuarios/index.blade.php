@@ -10,8 +10,7 @@
           <div class="flex justify-end items-center gap-2">
             <form action="{{ route('users.create') }}" method="GET" enctype="multipart/form-data">
               @csrf
-              <button type="submit" class="text-white bg-[#13322B] hover:bg-[#0C231E] p-3 rounded-lg"><i
-                  class="bi bi-plus-circle"></i> Nuevo Usuario</button>
+              <button type="submit" class="text-white bg-[#13322B] hover:bg-[#0C231E] p-3">Nuevo Usuario</button>
             </form>
           </div>
         </div>

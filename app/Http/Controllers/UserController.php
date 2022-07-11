@@ -48,7 +48,6 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request);
         if (Auth::user() != null) {
             // Validacion
             $this->validate($request, [
