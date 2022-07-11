@@ -16,7 +16,7 @@
                 <a class="text-decoration-none institution text-dark relative" href="{{ route('institutions.show', $institution) }}">
                 <div class="p-5">
                     <div class="">
-                        <img src="{{ asset('img/institutions/' . $institution->logotipo) }}" class="" alt="Logo de la Institución">
+                        <img src="{{ $institution->logotipo }}" alt="Logo de la Institución">
                     </div>
                 </div>
                 <div class="absolute top-0 institution__overlay flex flex-col justify-center items-center p-4 gap-4">
