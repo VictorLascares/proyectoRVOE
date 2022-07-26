@@ -66,10 +66,13 @@ class InstitutionController extends Controller
         $image = Image::make($path, null);
         $image->resize(250, 250)
         ->save();
-        $secureURL = Cloudinary()->upload($path)->getSecurePath();
+        $response = Cloudinary()->upload($path);
+        $secureURL = $response->getSecurePath();
+        $public_id = $response->getPublicId();
       }
 
       $institution->logotipo = $secureURL;
+      $institution->logo_public_id= $public_id;
       $institution->nombre = $request->nombre;
       $institution->director = $request->director;
       $institution->direccion = $request->direccion;
@@ -158,8 +161,7 @@ class InstitutionController extends Controller
   {
     if (Auth::user() != null) {
       $data = Institution::find($institution);
-      $path = $data->logotipo;
-      unlink(public_path('img/institutions/' . $path));
+      Cloudinary()->destroy($data->logo_public_id);
       $data->delete();
       return redirect('institutions');
     }

@@ -72,7 +72,7 @@
     </h1>
     @yield('contenido')
   </main>
-  <footer class="mt-10 text-center p-5 text-gray-500 font-bold">
+  <footer class="@if (!Request::is('institutions*')) footer @endif mt-10 text-center p-5 text-gray-500 font-bold">
     Todos los Derechos Reservados: Alumnos ITTG &copy; {{ now()->year }}
   </footer>
   <script src="https://unpkg.com/flowbite@1.4.7/dist/flowbite.js"></script>
