@@ -50,7 +50,7 @@ class FormatController extends Controller
                     $format = Format::searchformato($formatName)->searchrequisitionid($requisition->id)->first();
                     $formato = 'anexo' . $formatName;
                     $formatoj = $formato . 'j';
-                    $format->valido = true;
+                    $format->valido = false;
                     $format->justificacion = '';
                     if ($request->input($formato) == false || $request->input($formato) == 'false') {
                         if ($requisition->noEvaluacion == 1) {
@@ -60,6 +60,9 @@ class FormatController extends Controller
                         }
                         $format->valido = false;
                         $requisition->estado = 'rechazado';
+                    } else {
+                        $format->justificacion = '';
+                        $format->valido = true;
                     }
                     $format->save();
                 }

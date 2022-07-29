@@ -39,3 +39,14 @@
     </div>
   </form>
 @endsection
+@section('script')
+    <script>
+        const checkboxes = document.querySelectorAll('.review2Checkbox')
+        checkboxes.forEach(element => {
+            element.addEventListener('change', e => {
+                e.target.value = e.target.checked
+            })
+        });
+
+    </script>
+@endsection

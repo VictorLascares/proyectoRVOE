@@ -135,7 +135,7 @@
       @endif
     </div>
 
-    @if (!empty($errors))
+    {{-- @if (!empty($errors))
     <div class="pb-4">
       @foreach ($errors as $error)
         @if ($error->justificacion)
@@ -152,7 +152,7 @@
         @endif
       @endforeach
     </div>
-  @endif
+  @endif --}}
 
    
 
