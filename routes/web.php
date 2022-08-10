@@ -10,6 +10,7 @@ use App\Http\Controllers\ElementController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\ConsultController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InstitutionController;
 use App\Http\Controllers\RequisitionController;
 
@@ -26,9 +27,7 @@ use App\Http\Controllers\RequisitionController;
 |
 */
 
-Route::get('/', function () {
-    return view('pages.home');
-});
+Route::resource('/', HomeController::class);
 
 
 //All secure URL's
