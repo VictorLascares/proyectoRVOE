@@ -9,15 +9,15 @@
     @endif
 @endsection
 @section('contenido')
-  <form class="mb-2" method="POST" action="{{ url('/update/formats') }}">
+  <form class="mb-2 flex flex-col justify-center items-center" method="POST" action="{{ url('/update/formats') }}">
     @csrf
     <input type="hidden" name="requisition_id" value="{{ $requisition->id }}">
-    <div class="grid grid-cols-2 gap-4">
+    <div class="@if ($requisition->noEvaluacion != 1) grid grid-cols-2 @endif gap-4">
     @foreach (range(1, 5) as $i)
       @foreach ($formats as $format)
         @if ($format->formato == $i)
-        <div>
-            <div class="mb-2 flex justify-start items-center gap-4">
+        <div class="@if ($i == 5) col-span-2 @endif">
+            <div class="mb-4  flex justify-start items-center gap-4">
               <input name="anexo{{ $i }}" value="{{ $format->valido }}"
                 class="review2Checkbox form-check-input" type="checkbox" id="check-review2-{{ $format->id }}"
                 @if ($format->valido) checked @endif>
@@ -25,10 +25,12 @@
                 {{ $formatNames[$i - 1] }}
               </label>
             </div>
-            <div class="form-floating">
-              <textarea name="anexo{{ $i }}j" class="w-full resize-none form-control" id="just-review2-{{ $format->id }}"
-                placeholder="Justificación">{{ $format->justificacion }}</textarea>
-            </div>
+            @if ($requisition->noEvaluacion != 1)
+                <div>
+                <textarea name="anexo{{ $i }}j" class="w-full resize-none" id="just-review2-{{ $format->id }}"
+                    placeholder="Justificación">{{ $format->justificacion }}</textarea>
+                </div>
+            @endif
         </div>
             @endif
             @endforeach
@@ -42,6 +44,11 @@
 @section('script')
     <script>
         const checkboxes = document.querySelectorAll('.review2Checkbox')
+
+        window.onload = function() {
+            $('input[type=checkbox]').prop('checked',false);
+        }
+
         checkboxes.forEach(element => {
             element.addEventListener('change', e => {
                 e.target.value = e.target.checked
