@@ -86,40 +86,40 @@
       <div class="grid sm:grid-cols-2 lg:grid-cols-6 gap-4">
         <a
           href="{{ route('evaluate.formats', $data->id) }}" type="button" id="evaFormatos"
-          class="p-3 text-white formatos bg-[#13322B] hover:bg-[#0C231E] flex flex-col justify-center items-center @if ($data->noEvaluacion != 1)
+          class="p-3 text-white formatos bg-[#13322B] hover:bg-[#0C231E] flex flex-col justify-center items-center @if ($data->noEvaluacion != 1 || $data->estado == 'rechazado')
           disabled
             @endif">
           <p class="uppercase">Formatos</p>
           <p>Evaluación <span class="font-bold">1</span></p>
         </a>
-        <a href="{{ route('evaluate.formats', $data->id) }}" class="p-3 text-white formatos bg-[#13322B] hover:bg-[#0C231E] flex flex-col justify-center items-center @if ($data->noEvaluacion != 2)
+        <a href="{{ route('evaluate.formats', $data->id) }}" class="p-3 text-white formatos bg-[#13322B] hover:bg-[#0C231E] flex flex-col justify-center items-center @if ($data->noEvaluacion != 2 || $data->estado == 'rechazado')
             disabled
         @endif">
             <p class="uppercase">Formatos</p>
             <p>Evaluación <span class="font-bold">2</span></p>
         </a>
-        <a href="{{ route('evaluate.formats' ,$data->id) }}" class="p-3 text-white formatos bg-[#13322B] hover:bg-[#0C231E] flex flex-col justify-center items-center @if ($data->noEvaluacion != 3 || Auth()->user()->tipoUsuario == 'planeacion')
+        <a href="{{ route('evaluate.formats' ,$data->id) }}" class="p-3 text-white formatos bg-[#13322B] hover:bg-[#0C231E] flex flex-col justify-center items-center @if ($data->noEvaluacion != 3 || Auth()->user()->tipoUsuario == 'planeacion' || $data->estado == 'rechazado')
             disabled
         @endif">
             <p class="uppercase">Formatos</p>
             <p>Evaluación <span class="font-bold">3</span></p>
         </a>
         <a href="{{ url('/evaluate/elements', $data->id) }}"
-          class="p-3 text-white bg-[#13322B] hover:bg-[#0C231E] flex flex-col justify-center items-center @if ($data->noEvaluacion != 4 || Auth()->user()->tipoUsuario == 'planeacion')
+          class="p-3 text-white bg-[#13322B] hover:bg-[#0C231E] flex flex-col justify-center items-center @if ($data->noEvaluacion != 4 || Auth()->user()->tipoUsuario == 'planeacion' || $data->estado == 'rechazado')
           disabled
       @endif">
           <p class="uppercase">Instalaciones</p>
           <p>Evaluación <span class="font-bold">4</span></p>
         </a>
         <a href="{{ url('/evaluate/plans', $data->id) }}"
-          class="p-3 text-white bg-[#13322B] hover:bg-[#0C231E] flex flex-col justify-center items-center @if ($data->noEvaluacion != 5 || Auth()->user()->tipoUsuario == 'planeacion')
+          class="p-3 text-white bg-[#13322B] hover:bg-[#0C231E] flex flex-col justify-center items-center @if ($data->noEvaluacion != 5 || Auth()->user()->tipoUsuario == 'planeacion' || $data->estado == 'rechazado')
           disabled
       @endif">
           <p class="uppercase">Planes</p>
           <p>Evaluación <span class="font-bold">5</span></p>
         </a>
         <a download="OTAReq-{{ $data->id }}" href="{{ url('/download', $data->id) }}"
-          class="p-3 text-white bg-[#13322B] hover:bg-[#0C231E] flex flex-col justify-center items-center @if ($data->noEvaluacion != 6 || Auth()->user()->tipoUsuario == 'planeacion')
+          class="p-3 text-white bg-[#13322B] hover:bg-[#0C231E] flex flex-col justify-center items-center @if ($data->noEvaluacion != 6 || Auth()->user()->tipoUsuario == 'planeacion' || $data->estado == 'rechazado')
           disabled
       @endif">
           <p class="uppercase">ota</p>
