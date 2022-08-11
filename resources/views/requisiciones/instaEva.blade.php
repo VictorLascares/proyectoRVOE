@@ -49,7 +49,7 @@
                             </td>
                             <td class="p-2">
                             <div class="w-full">
-                                <textarea name="elemento{{ $i }}o" class="resize-none border w-full"
+                                <textarea required name="elemento{{ $i }}o" class="resize-none border w-full"
                                 placeholder="Observación"
                                 id="inputSighting-{{ $element->id }}">{{ $element->observacion }}</textarea>
                             </div>
@@ -91,18 +91,10 @@
 
     function evaluarEstado(e) {
       const checkBox = e.target
-      const id = checkBox.id.split('-')[1]
-      const inputSighting = document.getElementById(`inputSighting-${id}`)
       if (checkBox.classList.contains('btn-No')) {
         checkBox.value = !this.checked
       } else {
         checkBox.value = this.checked
-      }
-
-      if (checkBox.value == 'true') {
-        inputSighting.required = false
-      } else {
-        inputSighting.required = true
       }
 
       $(document).ready(function() {
