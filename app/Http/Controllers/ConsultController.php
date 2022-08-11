@@ -17,7 +17,35 @@ class ConsultController extends Controller
         ]);
     }
 
-    public function searchRequisition(Request $request)
+    public function searchRequisitionMunicipality(Request $request)
+    {
+        $this->validate($request, [
+            'municipio' => 'required'
+        ]);
+
+        if ($request->rvoe) {
+            $requisition = Requisition::where('rvoe', $request->rvoe)->get();
+        } else {
+            $requisition = Requisition::where('career_id', $request->career_id)->get();
+        }
+        return redirect()->view('consult', compact('requisition'));
+    }
+
+    public function searchRequisitionInstitution(Request $request)
+    {
+        $this->validate($request, [
+            'municipio' => 'required'
+        ]);
+
+        if ($request->rvoe) {
+            $requisition = Requisition::where('rvoe', $request->rvoe)->get();
+        } else {
+            $requisition = Requisition::where('career_id', $request->career_id)->get();
+        }
+        return redirect()->view('consult', compact('requisition'));
+    }
+
+    public function searchRequisitionCareer(Request $request)
     {
         $this->validate($request, [
             'municipio' => 'required'
