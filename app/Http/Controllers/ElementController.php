@@ -94,7 +94,7 @@ class ElementController extends Controller
             $plans = Plan::searchrequisitionid($request->requisition_id)->first();
             if ($requisition->noEvaluacion == 4 && $requisition->estado == 'pendiente') {
                 $imagen = $request->formatoInstalaciones;
-                if (!is_null($imagen)) {
+                // if (!is_null($imagen)) {
                     for ($elementName = 1; $elementName < 53; $elementName++) {
                         $element = Element::searchElemento($elementName)->searchrequisitionid($requisition->id)->first();
                         $elemento = 'elemento' . $elementName;
@@ -118,10 +118,22 @@ class ElementController extends Controller
                         $element->save();
                     }
                     $requisition->noEvaluacion = $requisition->noEvaluacion + 1;
-                    //Guardar imagen
-                    $uploadedFileUrl = Cloudinary::upload($request->file('formatoInstalaciones')->getRealPath())->getSecurePath();
+
+                    if ($requisition->formatoInstalaciones != null) {
+                        Cloudinary()->destroy($requisition->formato_public_id);
+                    }
                     
-                    $requisition->formatoInstalaciones = $uploadedFileUrl;
+                    //Guardar imagen
+
+                    if ($request->formatoInstalaciones) {
+                        $path = $request->file('formatoInstalaciones')->getRealPath();
+                        $response = Cloudinary()->upload($path);
+                        $secureURL = $response->getSecurePath();
+                        $public_id = $response->getPublicId();
+                        
+                        $requisition->formatoInstalaciones = $secureURL;
+                        $requisition->formato_public_id = $public_id;
+                    }
                     // Se crean los planes para evaluación
                     if (is_null($plans)) {
                         for ($planName = 1; $planName < 4; $planName++) {
@@ -132,7 +144,7 @@ class ElementController extends Controller
                         }
                     }
                     $requisition->save();
-                }
+                // }
             }
             return redirect(route('requisitions.show', $requisition->id));
         }

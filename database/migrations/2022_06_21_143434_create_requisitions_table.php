@@ -19,6 +19,7 @@ return new class extends Migration
             $table->integer('numero_solicitud')->nullable();
             $table->string('rvoe')->nullable()->unique();
             $table->string('formatoInstalaciones')->nullable();
+            $table->string('formato_public_id')->nullable();
             $table->enum('estado', ['activo', 'latencia', 'revocado', 'inactivo', 'pendiente', 'rechazado'])->nullable(false)->default('pendiente');
             $table->integer('noEvaluacion')->default('1');
             $table->boolean('cata')->nullable(); 

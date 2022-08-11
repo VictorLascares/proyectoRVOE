@@ -374,12 +374,12 @@ class RequisitionController extends Controller
       $this->revisar_activo($requisition_id);
       $requisition = Requisition::find($requisition_id);
       if($requisition->noEvaluacion != 1 && in_array($requisition->estado, ['activo','rechazado','pendiente'])){
-        if($requisition->noEvaluacion == 5){
-          $formatoInstalaciones = $requisition->formatoInstalaciones;
-          if($formatoInstalaciones != null){
-            unlink(public_path('img/formatos/instalaciones/' . $formatoInstalaciones));
-          }  
-        }
+        // if($requisition->noEvaluacion == 5){
+        //   $formatoInstalaciones = $requisition->formatoInstalaciones;
+        //   if($formatoInstalaciones != null){
+        //     unlink(public_path('img/formatos/instalaciones/' . $formatoInstalaciones));
+        //   }  
+        // }
         $requisition->numero_solicitud = null;
         $requisition->noEvaluacion = $requisition->noEvaluacion - 1;
         $requisition->estado = 'pendiente';

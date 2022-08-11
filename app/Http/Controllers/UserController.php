@@ -36,9 +36,9 @@ class UserController extends Controller
      */
     public function create()
     {
-        // if (Auth::user() != null) {
+        if (Auth::user() != null) {
             return view('auth.register');
-        // }
+        }
     }
     /**
      * Store a newly created resource in storage.
