@@ -36,12 +36,9 @@
                 <input type="text" class="border p-3 w-full" id="rvoe" name="rvoe" placeholder="RVOE o acuerdo">
             </div>
         </div>
-        <div class="grid grid-cols-2 gap-4 mt-4">
-            <button id="resetButton" type="button" class="bg-[#13322B] hover:bg-[#0C231E] uppercase p-3 text-white w-full">
+        <div class="flex justify-end mt-4">
+            <button id="resetButton" type="button" class="bg-[#13322B] hover:bg-[#0C231E] uppercase py-3 px-10 text-white">
                 Limpiar
-            </button>
-            <button type="submit" class="bg-[#13322B] hover:bg-[#0C231E] uppercase p-3 text-white w-full">
-                Buscar
             </button>
         </div>
     </form>
@@ -50,7 +47,28 @@
         <p>{{$requisition->estado}}</p>
     @endif
 
-    <section id="consultas" class="mt-4"></section>
+    <section class="mt-10" id="resultados">
+        <h2 class="text-2xl py-4 uppercase text-center">Resultado de la Consulta</h2>
+    <div class="flex flex-col">
+          <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
+            <div class="py-2 inline-block min-w-full sm:px-6 lg:px-8">
+              <div class="overflow-hidden">
+                <table class="min-w-full">
+                  <thead class="border-b bg-[#13322B]">
+                    <tr>
+                      <th class="text-sm font-bold text-white px-6 py-4 text-left">Estado</th>
+                      <th class="text-sm font-bold text-white px-6 py-4 text-left">Fecha de Vencimiento</th>
+                      <th class="text-sm font-bold text-white px-6 py-4 text-left">Carrera</th>
+                    </tr>
+                  </thead>
+                  <tbody id="consultas">
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+    </section>
   </div>
 @endsection
 @section('script')
@@ -70,14 +88,18 @@
             }
             institutions.innerHTML = '<option selected disabled>-- Seleccione una Institución --</option>'
             form.reset();
+            $('#institutions').empty()
+            document.querySelector("#resultados").style.display = "none";
         })
         $(document).ready(function() {
+            document.querySelector("#resultados").style.display = "none";
             $('#municipalitySelect').on('change', function() {
+                document.querySelector("#resultados").style.display = "block";
                 let municipalityId = $(this).val()
                 $.get('getinstitutions', {
                     municipalityId: municipalityId
                 }, function(institutions) {
-                $('#institutions').empty()
+                    $('#institutions').empty()
                     $('#institutions').append('<option selected disabled>-- Seleccione una Institución --</option>')
                     $.each(institutions, function(index, value) {
                         $('#institutions').append(`<option value='${index}'>${value}</option>`)
@@ -97,7 +119,13 @@
                                 carrera = career.nombre
                             }
                         })
-                        $('#consultas').append(`<p class='flex justify-between items-center'><span>Estado: ${estado}</span><span>Fecha de vencimiento: ${fecha_vencimiento == null ? 'No disponible' : fecha_vencimiento }</span><span>${carrera}</span></p>`)
+                        $('#consultas').append(`
+                            <tr class="border-b">
+                                <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">${estado}</td>
+                                <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">${fecha_vencimiento == null ? 'No disponible' : fecha_vencimiento }</td>
+                                <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">${carrera}</td>
+                            </tr>
+                        `)
                     });
                 })
             })
@@ -127,7 +155,13 @@
                                 carrera = career.nombre
                             }
                         })
-                        $('#consultas').append(`<p class='flex justify-between items-center'><span>Estado: ${estado}</span><span>Fecha de vencimiento: ${fecha_vencimiento == null ? 'No disponible' : fecha_vencimiento }</span><span>${carrera}</span></p>`)
+                        $('#consultas').append(`
+                            <tr class="border-b">
+                                <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">${estado}</td>
+                                <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">${fecha_vencimiento == null ? 'No disponible' : fecha_vencimiento }</td>
+                                <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">${carrera}</td>
+                            </tr>
+                        `)
                     });
                 })
             })
@@ -137,10 +171,26 @@
                 let careerId = $(this).val()
                 $.get('consultByCareer', {
                     careerId: careerId
-                }, function(requisition) {
-                    $('#consultas').empty()
-                    const { estado, fecha_vencimiento } = requisition[0]
-                    $('#consultas').append(`<p>Estado:${estado} | Fecha de vencimiento: ${fecha_vencimiento}</p>`)
+                }, function(data) {
+                    console.log(data);
+                    if (data.requisition.length > 0) {
+                        $('#consultas').empty()
+                        const { estado, fecha_vencimiento } = data.requisition[0]
+                        $('#consultas').append(`
+                            <tr class="border-b">
+                                <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">${estado}</td>
+                                <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">${fecha_vencimiento == null ? 'No disponible' : fecha_vencimiento }</td>
+                                <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">${data.career[0].nombre}</td>
+                            </tr>
+                        `)
+                    } else {
+                        $('#consultas').empty()
+                        $('#consultas').append(`
+                            <tr class="border-b">
+                                No se encontraron resultados
+                            </tr>
+                        `)
+                    }
                 })
             })
 
@@ -149,10 +199,16 @@
                 let rvoe = $(this).val()
                 $.get('consultByRvoe', {
                     rvoe: rvoe
-                }, function(requisition) {
+                }, function(data) {
                     $('#consultas').empty()
-                    const { estado, fecha_vencimiento } = requisition[0]
-                    $('#consultas').append(`<p>Estado:${estado} | Fecha de vencimiento: ${fecha_vencimiento}</p>`)
+                    const { estado, fecha_vencimiento } = data.requisition[0]
+                    $('#consultas').append(`
+                        <tr class="border-b">
+                            <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">${estado}</td>
+                            <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">${fecha_vencimiento == null ? 'No disponible' : fecha_vencimiento }</td>
+                            <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">${data.career[0].nombre}</td>
+                        </tr>
+                    `)
                 })
             })
         })

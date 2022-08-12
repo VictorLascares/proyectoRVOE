@@ -67,7 +67,11 @@ class ConsultController extends Controller
     {
         if ($request->ajax()) {
             $requisition = Requisition::where('career_id', $request->careerId)->get();
-            return response()->json($requisition);
+            $career = Career::where('id', $request->careerId)->get();
+            return response()->json([
+                'requisition' => $requisition,
+                'career' => $career
+            ]);
         }
     }
 
@@ -75,7 +79,11 @@ class ConsultController extends Controller
     {
         if ($request->ajax()) {
             $requisition = Requisition::where('rvoe', $request->rvoe)->get();
-            return response()->json($requisition);
+            $career = Career::where('id', $requisition->career_id)->get();
+            return response()->json([
+                'requisition' => $requisition,
+                'career' => $career
+            ]);
         }
     }
 }
