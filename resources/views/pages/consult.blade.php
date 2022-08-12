@@ -49,13 +49,14 @@
     @if ($requisition)
         <p>{{$requisition->estado}}</p>
     @endif
+
+    <section id="consultas" class="mt-4"></section>
   </div>
 @endsection
 @section('script')
     <script>
         const resetButton = document.querySelector('#resetButton');
         const form = document.querySelector('#consultForm');
-
 
         resetButton.addEventListener('click', () => {
             const carrers = document.querySelector('#careers');
@@ -82,6 +83,23 @@
                         $('#institutions').append(`<option value='${index}'>${value}</option>`)
                     });
                 })
+
+                // Generar resultados por municipio
+                $.get('consultByMunicipality', {
+                    municipalityId: municipalityId
+                }, function(data) {
+                    $('#consultas').empty()
+                    $.each(data.requisitions, function($i,requisition) {
+                        const { estado,career_id, fecha_vencimiento } = requisition
+                        let carrera
+                        $.each(data.careers, function($index, career) {
+                            if (career_id == career.id) {
+                                carrera = career.nombre
+                            }
+                        })
+                        $('#consultas').append(`<p class='flex justify-between items-center'><span>Estado: ${estado}</span><span>Fecha de vencimiento: ${fecha_vencimiento == null ? 'No disponible' : fecha_vencimiento }</span><span>${carrera}</span></p>`)
+                    });
+                })
             })
 
             $('#institutions').on('change', function() {
@@ -94,6 +112,47 @@
                     $.each(careers, function(index, value) {
                         $('#careers').append(`<option value='${index}'>${value}</option>`)
                     });
+                })
+
+                // Generar resultados por institucion
+                $.get('consultByInstitution', {
+                    institutionId: institutionId
+                }, function(data) {
+                    $('#consultas').empty()
+                    $.each(data.requisitions, function($i,requisition) {
+                        const { estado,career_id, fecha_vencimiento } = requisition
+                        let carrera
+                        $.each(data.careers, function($index, career) {
+                            if (career_id == career.id) {
+                                carrera = career.nombre
+                            }
+                        })
+                        $('#consultas').append(`<p class='flex justify-between items-center'><span>Estado: ${estado}</span><span>Fecha de vencimiento: ${fecha_vencimiento == null ? 'No disponible' : fecha_vencimiento }</span><span>${carrera}</span></p>`)
+                    });
+                })
+            })
+
+            $('#careers').on('change', function() {
+                // Generar resultados por carrera
+                let careerId = $(this).val()
+                $.get('consultByCareer', {
+                    careerId: careerId
+                }, function(requisition) {
+                    $('#consultas').empty()
+                    const { estado, fecha_vencimiento } = requisition[0]
+                    $('#consultas').append(`<p>Estado:${estado} | Fecha de vencimiento: ${fecha_vencimiento}</p>`)
+                })
+            })
+
+            $('#rvoe').on('change', function() {
+                // Generar resultados por rvoe
+                let rvoe = $(this).val()
+                $.get('consultByRvoe', {
+                    rvoe: rvoe
+                }, function(requisition) {
+                    $('#consultas').empty()
+                    const { estado, fecha_vencimiento } = requisition[0]
+                    $('#consultas').append(`<p>Estado:${estado} | Fecha de vencimiento: ${fecha_vencimiento}</p>`)
                 })
             })
         })

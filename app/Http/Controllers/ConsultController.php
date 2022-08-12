@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Career;
+use App\Models\Institution;
 use App\Models\Municipality;
 use App\Models\Requisition;
 use Illuminate\Http\Request;
@@ -19,43 +21,61 @@ class ConsultController extends Controller
 
     public function searchRequisitionMunicipality(Request $request)
     {
-        $this->validate($request, [
-            'municipio' => 'required'
-        ]);
-
-        if ($request->rvoe) {
-            $requisition = Requisition::where('rvoe', $request->rvoe)->get();
-        } else {
-            $requisition = Requisition::where('career_id', $request->career_id)->get();
+        if ($request->ajax()) {
+            $institutions = Institution::where('municipalitie_id', $request->municipalityId)->get();
+            $careers = array();
+            foreach ($institutions as $institution) {
+                $result = Career::where('institution_id', $institution->id)->get(); 
+                foreach ($result as $career) {
+                    array_push($careers, $career);
+                }
+            }
+            $requisitions = array();
+            foreach ($careers as $career) {
+                $result = Requisition::where('career_id', $career->id)->get();
+                foreach ($result as $requisition) {
+                    array_push($requisitions, $requisition);
+                }
+            }
+            return response()->json([
+                'requisitions' => $requisitions,
+                'careers' => $careers
+            ]);
         }
-        return redirect()->view('consult', compact('requisition'));
     }
 
     public function searchRequisitionInstitution(Request $request)
     {
-        $this->validate($request, [
-            'municipio' => 'required'
-        ]);
-
-        if ($request->rvoe) {
-            $requisition = Requisition::where('rvoe', $request->rvoe)->get();
-        } else {
-            $requisition = Requisition::where('career_id', $request->career_id)->get();
+        if ($request->ajax()) { 
+            $careers = Career::where('institution_id', $request->institutionId)->get();
+            $requisitions =  array();
+            foreach ($careers as $career) {
+                $result = Requisition::where('career_id', $career->id)->get();
+                foreach ($result as $requisition) {
+                    array_push($requisitions, $requisition);
+                }
+            }
+            return response()->json([
+                'requisitions' => $requisitions,
+                'careers' => $careers
+            ]);
         }
-        return redirect()->view('consult', compact('requisition'));
+
     }
 
     public function searchRequisitionCareer(Request $request)
     {
-        $this->validate($request, [
-            'municipio' => 'required'
-        ]);
-
-        if ($request->rvoe) {
-            $requisition = Requisition::where('rvoe', $request->rvoe)->get();
-        } else {
-            $requisition = Requisition::where('career_id', $request->career_id)->get();
+        if ($request->ajax()) {
+            $requisition = Requisition::where('career_id', $request->careerId)->get();
+            return response()->json($requisition);
         }
-        return redirect()->view('consult', compact('requisition'));
+    }
+
+    public function searchRequisitionRvoe(Request $request)
+    {
+        if ($request->ajax()) {
+            $requisition = Requisition::where('rvoe', $request->rvoe)->get();
+            return response()->json($requisition);
+        }
     }
 }

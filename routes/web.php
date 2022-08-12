@@ -54,7 +54,19 @@ Route::post('requisitions/create/{career_id}', [RequisitionController::class,'cr
 
 //Rutas para consultar rvoe
 Route::get('/consult', [ConsultController::class,'index']);
-Route::post('/consult', [ConsultController::class,'searchRequisition'])->name('consult');
+
+// Consulta de requisicion por municipio
+Route::get('/consultByMunicipality', [ConsultController::class,'searchRequisitionMunicipality']);
+
+// Consulta de requisicion por Institucion
+Route::get('/consultByInstitution', [ConsultController::class,'searchRequisitionInstitution']);
+
+// Consulta de requisicion por Carrera
+Route::get('/consultByCareer', [ConsultController::class,'searchRequisitionCareer']);
+
+// Consulta de requisicion por Carrera
+Route::get('/consultByRvoe', [ConsultController::class,'searchRequisitionRvoe']);
+
 //Ruta para ver las requisiciones en el inicio
 Route::get('/dashboard', [RequisitionController::class,'showRequisition']);
 
