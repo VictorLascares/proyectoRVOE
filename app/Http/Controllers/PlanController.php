@@ -60,18 +60,40 @@ class PlanController extends Controller
 
                     $plan->save();
                 }
+                $year = date('Y');
+                if (is_null($requisition->numero_solicitud)) {
+                    $requisitions = Requisition::searchDate($year)->noSolicitud();
+                    $noRequi = Requisition::searchDate($year)->count() + 1;
+                    $existe = false;
+                    for($count = 1; $count < $noRequi; $count++){
+                        foreach($requisitions as $requi){
+                            if($requi->numero_solicitud == $count){
+                                $existe = true;
+                            }
+                        }
+                        if(!$existe){
+                            $requisition->numero_solicitud = $count;
+                        }
+                        $count++;
+                    }
+                }
                 if ($requisition->cata == true) {
                     $date_vencimiento = date("Y-m-d", strtotime($requisition->created_at . "+ 3 year"));
                     $requisition->fecha_vencimiento = $date_vencimiento;
                     $requisition->estado = 'activo';
-                }
-                $year = date('Y');
-                if (is_null($requisition->numero_solicitud)) {
-                    $no_requisitions = Requisition::searchDate($year)->noSolicitud()->count();
-                    if ($no_requisitions == 0) {
-                        $requisition->numero_solicitud = 1;
-                    } else {
-                        $requisition->numero_solicitud = $no_requisitions + 1;
+                    //Generar numero de rvoe
+                    if(is_null($requisition->rvoe)){
+                        $principio = 'SE/SSPE/DP';
+                        $anioI = date("Y", strtotime($requisition->created_at));
+                        $noRequisicion = $requisition->numero_solicitud;
+                        if ($noRequisicion < 10) {
+                            $no_solicitud = '00' . $noRequisicion;
+                        } else if ($noRequisicion < 100) {
+                            $no_solicitud = '0' . $noRequisicion;
+                        } else {
+                            $no_solicitud = $noRequisicion;
+                        }
+                        $requisition->rvoe = $principio.'/'.$no_solicitud.'/'.$anioI;
                     }
                 }
                 $requisition->noEvaluacion = $requisition->noEvaluacion + 1;

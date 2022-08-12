@@ -307,16 +307,11 @@ class RequisitionController extends Controller
           $institucion = $institution->nombre;
           $municipio = $municipalitie->nombre;
           $direccion = $institution->direccion;
-          $noRequisicion = $requisition->numero_solicitud;
-
-          if ($noRequisicion < 10) {
-            $no_solicitud = '00' . $noRequisicion;
-          } else if ($noRequisicion < 100) {
-            $no_solicitud = '0' . $noRequisicion;
-          } else {
-            $no_solicitud = $noRequisicion;
+          if(is_null($requisition->rvoe)){
+            $no_solicitud = 'No disponible';
+          }else{
+            $no_solicitud = $requisition->rvoe;
           }
-
           if ($requisition->cata == true) {
             $resultado = 'cumple con los requisitos mínimos de esta disposición';
             $resultadoF = 'Favorable';
@@ -383,6 +378,7 @@ class RequisitionController extends Controller
         $requisition->numero_solicitud = null;
         $requisition->noEvaluacion = $requisition->noEvaluacion - 1;
         $requisition->estado = 'pendiente';
+        $requisition->rvoe = null;
         $requisition->save();      
       }
       return redirect(route('requisitions.show',$requisition->id));
