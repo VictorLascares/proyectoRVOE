@@ -11,10 +11,10 @@ use Illuminate\Validation\Rules\Password;
 
 class UserController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
+    // public function __construct()
+    // {
+    //     $this->middleware('auth');
+    // }
     /**
      * Display a listing of the resource.
      *
@@ -22,11 +22,11 @@ class UserController extends Controller
      */
     public function index()
     {
-        if (Auth::user() != null) {
+        // if (Auth::user() != null) {
             $users = User::paginate(5);
             $token = csrf_token();
             return view('usuarios.index', compact('users'));
-        }
+        // }
     }
 
     /**
@@ -36,9 +36,9 @@ class UserController extends Controller
      */
     public function create()
     {
-        if (Auth::user() != null) {
+        // if (Auth::user() != null) {
             return view('auth.register');
-        }
+        // }
     }
     /**
      * Store a newly created resource in storage.
@@ -48,7 +48,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        if (Auth::user() != null) {
+        // if (Auth::user() != null) {
             // Validacion
             $this->validate($request, [
                 'name' => ['required', 'max:35'],
@@ -66,7 +66,7 @@ class UserController extends Controller
                 'password' => Hash::make($request->password)
             ]);
             return redirect('users');
-        }
+        // }
     }
 
     /**
@@ -77,7 +77,7 @@ class UserController extends Controller
      */
     public function show($user)
     {
-        if (Auth::user() != null) {
+        // if (Auth::user() != null) {
             $data = User::find($user);
             if (isset($data)) {
                 return response()->json([
@@ -88,7 +88,7 @@ class UserController extends Controller
                     'error' => 'Data not found'
                 ]);
             }
-        }
+        // }
     }
 
     /**
@@ -99,10 +99,10 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        if (Auth::user() != null) {
+        // if (Auth::user() != null) {
             $user = User::find($id)->first();
             return view('usuarios.edit', compact('user'));
-        }
+        // }
     }
 
     /**

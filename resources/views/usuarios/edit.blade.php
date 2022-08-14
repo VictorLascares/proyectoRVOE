@@ -55,7 +55,7 @@
             <div class="grid md:grid-cols-2 gap-4">
                 <div>
                     <label for="password" class="mb-2 block uppercase text-gray-500 font-bold">Contraseña</label>
-                    <input type="password" class="w-full border p-3 rounded-lg @error('password') border-red-600 @enderror" id="password" name="password" placeholder="Contraseña">
+                    <input type="password" class="w-full border p-3 @error('password') border-red-600 @enderror" id="password" name="password" placeholder="Contraseña">
                     @error('password')
                         <p class="text-red-600 text-sm">{{ $message }}</p>
                     @enderror
@@ -70,7 +70,7 @@
                       name="password_confirmation"
                       id="password_confirmation"
                       placeholder="Confirmar contraseña"
-                      class="border p-3 w-full rounded-lg"
+                      class="border p-3 w-full"
                     >
                 </div>
             </div>
