@@ -38,18 +38,26 @@
       </div>
     </div>
 
-    <div class="flex justify-end items-center gap-4">
-        @if ($data->fecha_vencimiento)
-            <div>
-                <p class="font-bold">Fecha de Vencimiento: <span class="font-normal">{{ $data->fecha_vencimiento }}</span></p>
+    <div class="md:flex md:justify-between md:items-center gap-4 mt-4 mb-4">
+        @if ($data->rvoe) 
+            <div class="md:flex gap-4">
+                <p class="font-bold">Rvoe o Acuerdo: <span class="font-normal">{{$data->rvoe}}</span></p>
+                <p class="font-bold">Estado: <span class="font-normal">{{$data->estado}}</span></p>
             </div>
         @endif
-    
-        @if ($data->fecha_latencia)
-            <div>
-                <p class="font-bold">Fecha de Latencia: <span class="font-normal">{{ $data->fecha_latencia }}</span></p>
-            </div>
-        @endif
+        <div>
+            @if ($data->fecha_vencimiento)
+                <div>
+                    <p class="font-bold">Fecha de Vencimiento: <span class="font-normal">{{ $data->fecha_vencimiento }}</span></p>
+                </div>
+            @endif
+        
+            @if ($data->fecha_latencia)
+                <div>
+                    <p class="font-bold">Fecha de Latencia: <span class="font-normal">{{ $data->fecha_latencia }}</span></p>
+                </div>
+            @endif
+        </div>
     </div>
 
 
@@ -66,7 +74,6 @@
                       <option value="latencia">Latencia</option>
                       <option value="revocado">Revocado</option>
                     @break
-
                     @case('latencia')
                     @case('revocado')
                       <option value="activo">Activo</option>
