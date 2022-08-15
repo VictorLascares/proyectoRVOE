@@ -39,9 +39,9 @@
                         aria-label="Floating label select example">
                         <option selected disabled>Selecciona un municipio</option>
                         @foreach ($municipalities as $municipality)
-                        <option @if ($municipality->id == $institution->municipalitie_id) selected @endif value="{{ $municipality->id }}">
-                            {{ $municipality->nombre }}
-                        </option>
+                            <option @if ($municipality->id == $institution->municipalitie_id) selected @endif value="{{ $municipality->id }}">
+                                {{ $municipality->nombre }}
+                            </option>
                         @endforeach
                     </select>
                 </div>
