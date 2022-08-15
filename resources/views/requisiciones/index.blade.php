@@ -44,6 +44,9 @@
                     @endswitch">
                     <p class="uppercase font-bold m-0">{{ $requisition->estado }}</p>
                     <p>Evaluacion: {{$requisition->noEvaluacion}}</p>
+                    @if ($requisition->rvoe) 
+                        <p>{{$requisition->rvoe}}</p>
+                    @endif
                     <p>{{ $requisition->created_at->format('m-d-Y') }}</p>
                 </a>
             @endforeach
