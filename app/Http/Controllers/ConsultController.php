@@ -79,7 +79,7 @@ class ConsultController extends Controller
     {
         if ($request->ajax()) {
             $requisition = Requisition::where('rvoe', $request->rvoe)->get();
-            $career = Career::where('id', $requisition->career_id)->get();
+            $career = Career::where('id', $requisition[0]->career_id)->get();
             return response()->json([
                 'requisition' => $requisition,
                 'career' => $career

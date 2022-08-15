@@ -43,9 +43,9 @@
     <nav class="bg-[#13322B]">
       <div class="container mx-auto flex justify-center items-center" id="navbarSupportedContent">
         <ul class="flex justify-between gap-2 py-3">
-          <li class="text-gray-400 hover:text-white text-center">
+          <!-- <li class="text-gray-400 hover:text-white text-center">
             <a class="uppercase" href="{{ url('/') }}">Inicio</a>
-          </li>
+          </li> -->
           <li class="text-gray-400 hover:text-white text-center">
             <a class="uppercase" href="{{ url('consult') }}">Consultar rvoe</a>
           </li>
