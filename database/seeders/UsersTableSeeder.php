@@ -17,10 +17,12 @@ class UsersTableSeeder extends Seeder
     public function run()
     {
         DB::table('users')->insert([
-            'name' => 'Axel Giovanni Coello Martínez',
-            'email' => 'admin@gmail.com',
-            'tipoUsuario' => 'administrador',
-            'password' => Hash::make('1234')            
+            ['name'=>'Axel Giovanni Coello Martínez','email'=>'axel.admin@gmail.com','tipoUsuario'=>'administrador','password'=>Hash::make('1234')],
+            ['name'=>'Axel Giovanni Coello Martínez','email'=>'axel.planeacion@gmail.com','tipoUsuario'=>'planeacion','password'=>Hash::make('1234')],
+            ['name'=>'Axel Giovanni Coello Martínez','email'=>'axel.direccion@gmail.com','tipoUsuario'=>'direccion','password'=>Hash::make('1234')],
+            ['name'=>'Victor Manuel Lascares Gallardo','email'=>'victor.admin@gmail.com','tipoUsuario'=>'administrador','password'=>Hash::make('1234')],
+            ['name'=>'Victor Manuel Lascares Gallardo','email'=>'victor.planeacion@gmail.com','tipoUsuario'=>'planeacion','password'=>Hash::make('1234')],
+            ['name'=>'Victor Manuel Lascares Gallardo','email'=>'victor.direccion@gmail.com','tipoUsuario'=>'direccion','password'=>Hash::make('1234')]
         ]);
     }
 }
