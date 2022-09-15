@@ -17,7 +17,8 @@ return new class extends Migration
             $table->id();
             $table->string('nombre')->nullable(false);
             $table->enum('modalidad', ['Presencial', 'Distancia', 'Hibrida'])->nullable(false);
-            $table->string('duracion')->nullable(false);
+            $table->enum('tipoPeriodo',['Semestral','Cuatrimestral'])->nullable(false);
+            $table->integer('numPeriodo')->nullable(false);
             $table->foreignId('institution_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('area_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
