@@ -105,7 +105,7 @@
     </section>
     <div id="new-career" tabindex="-1" aria-hidden="true"
   class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full">
-        <div class="relative p-4 w-full max-w-md h-full md:h-auto">
+        <div class="relative p-4 h-full md:h-auto">
             <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
                 <button type="button"
                     class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white"
@@ -116,49 +116,51 @@
                         clip-rule="evenodd"></path>
                     </svg>
                 </button>
-            <div class="py-6 px-6 lg:px-8">
-                <h3 class="text-center mb-4 uppercase text-gray-500 font-bold dark:text-white">Nueva Solicitud</h3>
+            <div class="p-4">
+                <h3 class="text-center mb-4 uppercase text-gray-500 font-bold dark:text-white">Nueva Carrera</h3>
                 <form class="mb-2" method="POST" action="{{ route('careers.store', $institution->id) }}">
                     @csrf
-                    <div class="mb-5">
-                        <label for="careerName" class="mb-2 block uppercase text-gray-500 font-bold">Nombre de la Carrera</label>
-                        <input type="text" class="w-full border p-3" id="carreerName" name="nombre"
-                        placeholder="Nombre de la Carrera">
-                    </div>
-                    <div class="mb-5">
-                        <label for="careerArea" class="mb-2 block uppercase text-gray-500 font-bold">Área de Estudio</label>
-                        <select id="careerArea" class="w-full border p-3" name="area_id" required>
-                            <option selected disabled>-- Seleccione el área de estudios --</option>
-                            @foreach ($areas as $area)
-                                <option value="{{ $area->id }}">{{ $area->nombre }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="mb-5">
-                        <label for="modalidad" class="mb-2 block uppercase text-gray-500 font-bold">Modalidad de la Carrera</label>
-                        <select id="modalidad" class="w-full border p-3" name="modalidad" required>
-                            <option selected disabled>-- Seleccione la Modalidad --</option>
-                            <option value="Escolarizado">Escolarizado</option>
-                            <option value="Semiescolarizado">Semiescolarizado</option>
-                            <option value="No escolarizado">No escolarizado</option>
-                            <option value="Dual">Dual</option>
-                        </select>
-                    </div>
-                    <div class="mb-5">
-                        <label for="tipoPeriodo" class="mb-2 block uppercase text-gray-500 font-bold">Tipo de Periodo</label>
-                        <select id="tipoPeriodo" class="w-full border p-3" name="tipoPeriodo" required>
-                            <option selected disabled>-- Seleccione el tipo de Periodo --</option>
-                            <option value="Semestral">Semestral</option>
-                            <option value="Cuatrimestral">Cuatrimestral</option>
-                        </select>
-                    </div>
-                    <div class="mb-5">
-                        <label for="careerDuration" class="mb-2 block uppercase text-gray-500 font-bold">Duración de la Carrera</label>
-                        <input type="text" class="w-full border p-3" name="duracion" id="careerDuration"
-                        placeholder="Duración de la Carrera">
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="col-span-2">
+                            <label for="careerName" class="mb-2 block uppercase text-gray-500 font-bold">Nombre de la Carrera</label>
+                            <input type="text" class="w-full border p-3" id="carreerName" name="nombre"
+                            placeholder="Nombre de la Carrera">
+                        </div>
+                        <div>
+                            <label for="careerArea" class="mb-2 block uppercase text-gray-500 font-bold">Área de Estudio</label>
+                            <select id="careerArea" class="w-full border p-3" name="area_id" required>
+                                <option selected disabled>-- Seleccione el área de estudios --</option>
+                                @foreach ($areas as $area)
+                                    <option value="{{ $area->id }}">{{ $area->nombre }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div>
+                            <label for="modalidad" class="mb-2 block uppercase text-gray-500 font-bold">Modalidad de la Carrera</label>
+                            <select id="modalidad" class="w-full border p-3" name="modalidad" required>
+                                <option selected disabled>-- Seleccione la Modalidad --</option>
+                                <option value="Escolarizado">Escolarizado</option>
+                                <option value="Semiescolarizado">Semiescolarizado</option>
+                                <option value="No escolarizado">No escolarizado</option>
+                                <option value="Dual">Dual</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="tipoPeriodo" class="mb-2 block uppercase text-gray-500 font-bold">Tipo de Periodo</label>
+                            <select id="tipoPeriodo" class="w-full border p-3" name="tipoPeriodo" required>
+                                <option selected disabled>-- Seleccione el tipo de Periodo --</option>
+                                <option value="Semestral">Semestral</option>
+                                <option value="Cuatrimestral">Cuatrimestral</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="numPeriodo" class="mb-2 block uppercase text-gray-500 font-bold">Numero de Periodos</label>
+                            <input type="number" class="w-full border p-3" name="numPeriodo" id="numPeriodo"
+                            placeholder="Duración de la Carrera">
+                        </div>
                     </div>
                     <input type="hidden" name="institution_id" value="{{ $institution->id }}">
-                    <button class="bg-[#13322B] hover:bg-[#0C231E] text-white w-full p-3 uppercase" type="submit">Agregar</button>
+                    <button class="bg-[#13322B] hover:bg-[#0C231E] text-white w-full p-3 uppercase mt-4" type="submit">Agregar</button>
                 </form>
             </div>
         </div>

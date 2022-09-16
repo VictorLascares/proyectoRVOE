@@ -18,48 +18,48 @@
     <form method="POST" action="{{ route('careers.update', $career->id) }}">
       @csrf
       @method('PUT')
-        <div class="grid grid-cols-2 gap-4">
-            <div class="col-md-6">
-                <div class="form-floating mb-2">
-                    <label for="careerName" class="mb-2 block uppercase text-gray-500 font-bold">Nombre de la Carrera</label>
-                    <input name="nombre" type="text" class="w-full border p-3" id="careerName" placeholder="Nombre de la Carrera"
-                    value="{{ $career->nombre }}">
-                </div>
+        <div class="grid grid-cols-2 gap-2">
+            <div>
+              <label for="careerName" class="mb-2 block uppercase text-gray-500 font-bold">Nombre de la Carrera</label>
+              <input name="nombre" type="text" class="w-full border p-3" id="careerName" placeholder="Nombre de la Carrera" value="{{ $career->nombre }}">
             </div>
-            <div class="col-md-6">
-                <div class="form-floating">
-                    <label for="careerArea" class="mb-2 block uppercase text-gray-500 font-bold">Area de la Carrera</label>
-                    <select id="careerArea" class="w-full border p-3" name="area_id" required>
-                        <option selected disabled>-- Seleccione el Area --</option>
-                        @foreach ($areas as $area)
-                            <option @if ($area->id == $career->area_id) selected @endif value="{{ $area->id }}">
-                                {{ $area->nombre }}
-                            </option>
-                        @endforeach
-                    </select>
-                </div>
+            <div>
+              <label for="careerArea" class="mb-2 block uppercase text-gray-500 font-bold">Area de la Carrera</label>
+              <select id="careerArea" class="w-full border p-3" name="area_id" required>
+                  <option selected disabled>-- Seleccione el Area --</option>
+                  @foreach ($areas as $area)
+                      <option @if ($area->id == $career->area_id) selected @endif value="{{ $area->id }}">
+                          {{ $area->nombre }}
+                      </option>
+                  @endforeach
+              </select>
             </div>
-            <div class="col-md-6">
-                <div class="form-floating mb-3">
-                    <label for="careerModality" class="mb-2 block uppercase text-gray-500 font-bold">Modalidad de la Carrera</label>
-                    <select id="careerModality" class="w-full border p-3" name="modalidad" required>
-                        <option selected disabled>-- Seleccione la Modalidad --</option>
-                        <option value="Presencial" @if ($career->modalidad == 'Presencial') selected @endif>Presencial</option>
-                        <option value="Distancia" @if ($career->modalidad == 'Distancia') selected @endif>Distancia</option>
-                        <option value="Hibrida" @if ($career->modalidad == 'Hibrida') selected @endif>Hibrida</option>
-                    </select>
-                </div>
+            <div>
+              <label for="careerModality" class="mb-2 block uppercase text-gray-500 font-bold">Modalidad de la Carrera</label>
+              <select id="careerModality" class="w-full border p-3" name="modalidad" required>
+                  <option selected disabled>-- Seleccione la Modalidad --</option>
+                  <option value="Escolarizado" @if ($career->modalidad == 'Escolarizado') selected @endif>Escolarizado</option>
+                  <option value="Semiescolarizado" @if ($career->modalidad == 'Semiescolarizado') selected @endif>Semiescolarizado</option>
+                  <option value="No escolarizado" @if ($career->modalidad == 'No escolarizado') selected @endif>No escolarizado</option>
+                  <option value="Dual" @if($career->modalidad == 'Dual') selected @endif>Dual</option>
+              </select>
             </div>
-            <div class="col-md-6">
-                <div class="form-floating">
-                    <label for="careerDuration" class="mb-2 block uppercase text-gray-500 font-bold">Duración de la Carrera</label>
-                    <input type="number" class="w-full border p-3" name="duracion" value="{{ $career->duracion }}" id="careerDuration" placeholder="Duración de la Carrera">
-                </div>
+            <div>
+              <label for="tipoPeriodo" class="mb-2 block uppercase text-gray-500 font-bold">Tipo de Periodo</label>
+              <select id="tipoPeriodo" class="w-full border p-3" name="tipoPeriodo" required>
+                  <option selected disabled>-- Seleccione el tipo de periodo --</option>
+                  <option value="Semestral" @if ($career->tipoPeriodo == 'Semestral') selected @endif>Semestral</option>
+                  <option value="Cuatrimestral" @if ($career->tipoPeriodo == 'Cuatrimestral') selected @endif>Cuatrimestral</option>
+              </select>
+            </div>
+            <div>
+              <label for="numPeriodo" class="mb-2 block uppercase text-gray-500 font-bold">Numero de Periodos</label>
+              <input type="number" class="w-full border p-3" name="numPeriodo" value="{{ $career->numPeriodo }}" id="numPeriodo" placeholder="Numero de Periodos">
             </div>
         </div>
       
       @if (Auth::user()->tipoUsuario != 'direccion')
-        <div class="flex justify-center items-center">
+        <div class="flex justify-center items-center mt-2">
           <button class="bg-[#13322B] hover:bg-[#0C231E] text-white py-2 px-10" type="submit">
             Actualizar
           </button>
