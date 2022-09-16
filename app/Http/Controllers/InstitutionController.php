@@ -55,7 +55,9 @@ class InstitutionController extends Controller
         if (Auth::user() != null) {
             $this->validate($request, [
                 'nombre' => ['required', 'max:255'],
-                'director' => ['required', 'max:60'],
+                'titular' => ['required', 'max:60'],
+                'repLegal' => ['required','max:60'],
+                'email' => ['required','unique:institutions','email','max:60'],
                 'municipalitie_id' => ['required'],
                 'direccion' => ['required', 'max:255'],
                 'logotipo' => ['required']
@@ -74,7 +76,9 @@ class InstitutionController extends Controller
             $institution->logotipo = $secureURL;
             $institution->logo_public_id = $public_id;
             $institution->nombre = $request->nombre;
-            $institution->director = $request->director;
+            $institution->titular = $request->titular;
+            $institution->repLegal = $request->repLegal;
+            $institution->email = $request->email;
             $institution->direccion = $request->direccion;
             $institution->municipalitie_id = $request->municipalitie_id;
             $institution->save();
@@ -141,11 +145,12 @@ class InstitutionController extends Controller
             }
             $data->municipalitie_id = $request->municipalitie_id;
             $data->nombre = $request->nombre;
-            $data->director = $request->director;
+            $data->titular = $request->titular;
+            $data->repLegal = $request->repLegal;
+            $data->email = $request->email;
             $data->direccion = $request->direccion;
-
             $data->save();
-            return redirect('institutions');
+            return redirect()->route('institutions.show',$institution);
         }
     }
 

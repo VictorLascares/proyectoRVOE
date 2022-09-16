@@ -17,9 +17,10 @@
                 <div class="p-5 flex justify-center items-center">
                     <img src="{{ $institution->logotipo }}" alt="Logo de la Institución">
                 </div>
-                <div class="absolute top-0 institution__overlay flex flex-col justify-center items-center p-4 gap-4">
+                <div class="absolute top-0 institution__overlay flex flex-col justify-center items-center p-2 gap-4">
                     <p class="text-lg font-bold uppercase text-center text-gray-400">{{ $institution->nombre }}</p>
-                    <p class="text-sm text-center text-gray-400">Director(a): {{ $institution->director }}</p>
+                    <p class="text-sm text-center text-gray-400">Titular: {{ $institution->titular }}</p>
+                    <p class="text-sm text-center text-gray-400">Correo: {{ $institution->email }}</p>
                 </div>
                 </a>
             @endforeach
@@ -38,7 +39,7 @@
 
   <div id="new-institution" tabindex="-1" aria-hidden="true"
     class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full">
-    <div class="relative p-4 w-full max-w-md h-full md:h-auto">
+    <div class="relative p-4  h-full md:h-auto">
       <!-- Modal content -->
       <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
         <button type="button"
@@ -50,52 +51,70 @@
               clip-rule="evenodd"></path>
           </svg>
         </button>
-        <div class="py-6 px-6 lg:px-8">
+        <div class="p-4">
           <h3 class="text-center mb-4 uppercase text-gray-500 font-bold dark:text-white">Nueva Solicitud</h3>
           <form class="mb-2" method="POST" action="{{ route('institutions.store') }}" enctype="multipart/form-data">
             @csrf
-            <div class="mb-5">
-              <input type="text" class="w-full border p-3" id="institutionName" name="nombre"
-                placeholder="Nombre de la Institución">
-              @error('nombre')
-                <p class="text-red-600 text-sm">{{ $message }}</p>
-              @enderror
+            <div class="grid grid-cols-2 gap-4">
+              <div class="col-span-2">
+                <input type="text" class="w-full border p-3" id="institutionName" name="nombre"
+                  placeholder="Nombre de la Institución">
+                @error('nombre')
+                  <p class="text-red-600 text-sm">{{ $message }}</p>
+                @enderror
+              </div>
+              <div class="col-span-2">
+                <input type="text" class="w-full border p-3" name="titular" id="titular"
+                  placeholder="Titular">
+                @error('titular')
+                  <p class="text-red-600 text-sm">{{ $message }}</p>
+                @enderror
+              </div>
+              <div class="col-span-2">
+                <input type="text" class="w-full border p-3" name="repLegal" id="repLegal"
+                  placeholder="Representante legal o asociacion civil">
+                @error('repLegal')
+                  <p class="text-red-600 text-sm">{{ $message }}</p>
+                @enderror
+              </div>
+              <div>
+                <select name="municipalitie_id" class="w-full border p-3" id="municipality"
+                  aria-label="Floating label select example">
+                  <option selected disabled>Selecciona un municipio</option>
+                  @foreach ($municipalities as $municipality)
+                    <option value="{{ $municipality->id }}">{{ $municipality->nombre }}</option>
+                  @endforeach
+                </select>
+                @error('municipalitie_id')
+                  <p class="text-red-600 text-sm">{{ $message }}</p>
+                @enderror
+              </div>
+              <div>
+                <input type="email" class="w-full border p-3" name="email" id="email"
+                  placeholder="ejemplo@correo.com">
+                @error('email')
+                  <p class="text-red-600 text-sm">{{ $message }}</p>
+                @enderror
+              </div>
+              <div class="col-span-2">
+                <textarea name="direccion" class="w-full border p-3 resize-none" id="address" placeholder="Dirección"></textarea>
+                @error('direccion')
+                  <p class="text-red-600 text-sm">{{ $message }}</p>
+                @enderror
+              </div>
+              <div class="col-span-2">
+                <div>
+                  <label for="institutionLogo" class="mb-2 block text-gray-500 font-bold">Logo de la
+                    Institución</label> 
+                  <input type="file" class=" block h-full" id="institutionLogo" name="logotipo">
+                  @error('logotipo')
+                    <p class="text-red-600 text-sm">{{ $message }}</p>
+                  @enderror
+                </div>
+              </div>
             </div>
-            <div class="mb-5">
-              <input type="text" class="w-full border p-3" name="director" id="directorName"
-                placeholder="Nombre del Director">
-              @error('director')
-                <p class="text-red-600 text-sm">{{ $message }}</p>
-              @enderror
-            </div>
-            <div class="mb-5">
-              <select name="municipalitie_id" class="w-full border p-3" id="municipality"
-                aria-label="Floating label select example">
-                <option selected disabled>Selecciona un municipio</option>
-                @foreach ($municipalities as $municipality)
-                  <option value="{{ $municipality->id }}">{{ $municipality->nombre }}</option>
-                @endforeach
-              </select>
-              @error('municipalitie_id')
-                <p class="text-red-600 text-sm">{{ $message }}</p>
-              @enderror
-            </div>
-            <div class="mb-5">
-              <textarea name="direccion" class="w-full border p-3 resize-none" id="address" placeholder="Dirección"></textarea>
-              @error('direccion')
-                <p class="text-red-600 text-sm">{{ $message }}</p>
-              @enderror
-            </div>
-            <div class="mb-5">
-              <label for="institutionLogo" class="mb-2 block text-gray-500 font-bold">Logo de la
-                Institución</label>
-              <input type="file" class="form-control" id="institutionLogo" name="logotipo">
-              @error('logotipo')
-                <p class="text-red-600 text-sm">{{ $message }}</p>
-              @enderror
-            </div>
-            <button class="bg-[#13322B] hover:bg-[#0C231E] text-white w-full p-3 uppercase"
-              type="submit">Agregar</button>
+            <button class="bg-[#13322B] hover:bg-[#0C231E] mt-4 w-full p-2 text-white uppercase"
+                type="submit">Agregar</button>
           </form>
         </div>
       </div>

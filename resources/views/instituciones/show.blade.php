@@ -28,10 +28,18 @@
                     <input name="nombre" type="text" class="w-full border p-3" id="institutionName"
                         placeholder="Nombre de la Institución" value="{{ $institution->nombre }}">
                 </div>
+                <div class="md:col-span-2 mb-5 md:mb-0">
+                    <label for="titular" class="mb-2 block uppercase text-gray-500 font-bold">Titular</label>
+                    <input name="titular" type="text" class="w-full border p-3" id="titular" placeholder="Nombre del Titular"
+                        value="{{ $institution->titular }}">
+                </div>
+                <div class="md:col-span-2 mb-5 md:mb-0">
+                    <label for="repLegal" class="mb-2 block uppercase text-gray-500 font-bold">Representante Legal o Sociedad Civil</label>
+                    <input name="repLegal" type="text" class="w-full border p-3" id="titular" value="{{ $institution->repLegal }}">
+                </div>
                 <div class="mb-5 md:mb-0">
-                    <label for="institutionName" class="mb-2 block uppercase text-gray-500 font-bold">Nombre del Director</label>
-                    <input name="director" type="text" class="w-full border p-3" id="institutionName" placeholder="Nombre del Director"
-                        value="{{ $institution->director }}">
+                    <label for="email" class="mb-2 block uppercase text-gray-500 font-bold">Correo Institucional</label>
+                    <input name="email" type="email" class="w-full border p-3" id="email" value="{{ $institution->email }}">
                 </div>
                 <div class="mb-5 md:mb-0">
                     <label for="municipality" class="mb-2 block uppercase text-gray-500 font-bold">Municipio</label>
@@ -45,16 +53,15 @@
                         @endforeach
                     </select>
                 </div>
-                <div class="md:col-span-2">
-                    <label for="institutionLogo" class="mb-2 block uppercase text-gray-500 font-bold">Logo de la Institución</label>
-                    <input type="file" class="w-full border" id="institutionLogo" name="logotipo">
-                </div>
                 <div class="md:col-span-2 mb-5 md:mb-0">
                     <label for="address" class="mb-2 block uppercase text-gray-500 font-bold">Dirección</label>
                     <textarea name="direccion" class="w-full border p-3  resize-none" id="address"
                         placeholder="Dirección">{{ $institution->direccion }}</textarea>
                 </div>
-                
+                <div class="md:col-span-2">
+                    <label for="institutionLogo" class="mb-2 block uppercase text-gray-500 font-bold">Logo de la Institución</label>
+                    <input type="file" class="w-full border" id="institutionLogo" name="logotipo">
+                </div>
             </div>
         </div>
         @if (Auth::user()->tipoUsuario == 'planeacion' || Auth::user()->tipoUsuario == 'administrador')
@@ -128,12 +135,21 @@
                         </select>
                     </div>
                     <div class="mb-5">
-                        <label for="careerModality" class="mb-2 block uppercase text-gray-500 font-bold">Modalidad de la Carrera</label>
-                        <select id="careerModality" class="w-full border p-3" name="modalidad" required>
+                        <label for="modalidad" class="mb-2 block uppercase text-gray-500 font-bold">Modalidad de la Carrera</label>
+                        <select id="modalidad" class="w-full border p-3" name="modalidad" required>
                             <option selected disabled>-- Seleccione la Modalidad --</option>
-                            <option value="Presencial">Presencial</option>
-                            <option value="Distancia">Distancia</option>
-                            <option value="Hibrida">Hibrida</option>
+                            <option value="Escolarizado">Escolarizado</option>
+                            <option value="Semiescolarizado">Semiescolarizado</option>
+                            <option value="No escolarizado">No escolarizado</option>
+                            <option value="Dual">Dual</option>
+                        </select>
+                    </div>
+                    <div class="mb-5">
+                        <label for="tipoPeriodo" class="mb-2 block uppercase text-gray-500 font-bold">Tipo de Periodo</label>
+                        <select id="tipoPeriodo" class="w-full border p-3" name="tipoPeriodo" required>
+                            <option selected disabled>-- Seleccione el tipo de Periodo --</option>
+                            <option value="Semestral">Semestral</option>
+                            <option value="Cuatrimestral">Cuatrimestral</option>
                         </select>
                     </div>
                     <div class="mb-5">
