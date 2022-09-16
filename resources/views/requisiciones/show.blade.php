@@ -12,29 +12,20 @@
         <div class="border-b">
             <h2 class="text-gray-600 md:col-span-2 text-center p-3 text-xl font-bold uppercase">Información de la Institución</h2>
         </div>
-        <div>
-            <p class="p-3 text-lg font-bold">Nombre: <span class="font-normal">{{ $institution->nombre }}</span></p>
-        </div>
-        <div>
-            <p class="p-3 text-lg font-bold">Director(a): <span class="font-normal">{{ $institution->director }}</span></p>
-        </div>
-        <div>
-            <p class="p-3 text-lg font-bold">Dirección: <span class="font-normal">{{ $institution->direccion }}</span></p>
-        </div>
+        <p class="p-2 text-lg font-bold">Nombre: <span class="font-normal">{{ $institution->nombre }}</span></p>
+        <p class="p-2 text-lg font-bold">Titular: <span class="font-normal">{{ $institution->titular }}</span></p>
+        <p class="p-2 text-lg font-bold">Representante legal o Asociacion Civil: <span class="font-normal">{{ $institution->repLegal }}</span></p> 
+        <p class="p-2 text-lg font-bold">Correo Institucional: <span class="font-normal">{{ $institution->email }}</span></p> 
+        <p class="p-2 text-lg font-bold">Dirección: <span class="font-normal">{{ $institution->direccion }}</span></p>
       </div>
       <div class="border mt-4 md:mt-0">
         <div class="border-b">
             <h2 class="text-gray-600 text-center p-3 text-xl font-bold uppercase">Información de la Carrera</h2>
         </div>
-        <div>
-            <p class="p-3 text-lg font-bold">Nombre: <span class="font-normal">{{ $career->nombre }}</span></p>
-        </div>
-        <div>
-            <p class="p-3 text-lg font-bold">Modalidad: <span class="font-normal">{{ $career->modalidad }}</span></p>
-        </div>
-        <div>
-            <p class="p-3 text-lg font-bold">Area: <span class="font-normal">{{ $area->nombre }}</span></p>
-        </div>
+        <p class="p-2 text-lg font-bold">Nombre: <span class="font-normal">{{ $career->nombre }}</span></p>
+        <p class="p-2 text-lg font-bold">Modalidad: <span class="font-normal">{{ $career->modalidad }}</span></p>
+        <p class="p-2 text-lg font-bold">Duracion: <span class="font-normal">{{ $career->numPeriodo }} @if($career->tipoPeriodo == 'Semestral') Semestres @elseif($career->tipoPeriodo == 'Cuatrimestral') Cuatrimestres @endif</span></p>
+        <p class="p-2 text-lg font-bold">Area: <span class="font-normal">{{ $area->nombre }}</span></p>
       </div>
     </div>
 
