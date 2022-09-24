@@ -103,17 +103,13 @@ class ElementController extends Controller
                         }else{
                             $element->existente = $request->input($elemento);
                         }
-                        $noRequired = [7, 12, 14, 15, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 31, 32, 33, 34, 35, 36, 37, 38, 39, 41, 48, 49, 50];
-                        if ( ($request->input($elemento) == 'false' || is_null($request->input($elemento))) && !in_array($elementName, $noRequired)) {
-                            $requisition->estado = 'rechazado';
-                        }
                         $elementoj = $elemento . 'o';
                         if (!is_null($request->input($elementoj))) {
                             $element->observacion = $request->input($elementoj);
                         }else{
                             return response()->json([
                                 'error' => 'Algunas observaciones no se encuentran especificadas.'
-                              ]);
+                            ]);
                         }
                         $element->save();
                     }

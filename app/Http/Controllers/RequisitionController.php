@@ -99,7 +99,7 @@ class RequisitionController extends Controller
             $meta = "cambio de domicilio";
           }
           foreach($users as $user){
-            Mail::to($user->correo)->send(new NotifyMail($meta,$career,$institution));
+            Mail::to($user->email)->send(new NotifyMail($meta,$career,$institution));
           }
           return redirect('requisitions');
         }else{
@@ -288,11 +288,9 @@ class RequisitionController extends Controller
   {
     if (Auth::user() != null) {
       $requisition = Requisition::find($requisition_id);
-
-      if ($requisition->noEvaluacion == 6) {
+      if ($requisition->noEvaluacion == 6 and $requisition->ota == true) {
         try {
           //code...
-
           $career = Career::find($requisition->career_id);
           $institution = Institution::find($career->institution_id);
           $municipalitie = Municipality::find($institution->municipalitie_id);
@@ -302,8 +300,8 @@ class RequisitionController extends Controller
           $diaI = date("d", strtotime($requisition->created_at));
           //$mesA = $mes[ltrim(date("m", strtotime($requisition->created_at . "+ 3 month")), "0") - 1];
           //$diaA = date("d", strtotime($requisition->created_at . "+ 3 month"));
-          $mesA = $mes[ltrim(date("m", strtotime($requisition->fecha_vencimiento)), "0") - 1];
-          $diaA = date("d", strtotime($requisition->fecha_vencimiento));
+          //$mesA = $mes[ltrim(date("m", strtotime($requisition->fecha_vencimiento)), "0") - 1];
+          //$diaA = date("d", strtotime($requisition->fecha_vencimiento));
           $institucion = $institution->nombre;
           $municipio = $municipalitie->nombre;
           $direccion = $institution->direccion;
@@ -339,12 +337,12 @@ class RequisitionController extends Controller
           $template->setValue('anioI', $anioI);
           $template->setValue('mesI', $mesI);
           $template->setValue('diaI', $diaI);
-          $template->setValue('mesA', $mesA);
+          //$template->setValue('mesA', $mesA);
           $template->setValue('resultadoF', $resultadoF);
           $template->setValue('institucion', $institucion);
           $template->setValue('municipio', $municipio);
           $template->setValue('direccion', $direccion);
-          $template->setValue('diaA', $diaA);
+          //$template->setValue('diaA', $diaA);
           $template->setValue('noSolicitud', $no_solicitud);
 
 
@@ -361,7 +359,11 @@ class RequisitionController extends Controller
           return back($e->getCode());
         }
       }
-    }
+    }    
+    return response()->json([
+      'status' => 400,
+      'error' => "You can't download OTA"
+    ]);
   }
 
   public function revertirEvaluacion($requisition_id){

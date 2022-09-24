@@ -58,10 +58,12 @@ class FormatController extends Controller
                         } else {
                             $format->justificacion = $request->$formatoj;
                         }
-                        $format->valido = false;
-                        $requisition->estado = 'rechazado';
                     } else {
-                        $format->justificacion = '';
+                        if($request->$formatoj != null){
+                            $format->justificacion = $request->$formatoj;
+                        }else{
+                            $format->justificacion = "";
+                        }
                         $format->valido = true;
                     }
                     $format->save();
