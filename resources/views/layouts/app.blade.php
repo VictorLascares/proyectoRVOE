@@ -66,13 +66,13 @@
       </div>
     </nav>
   </header>
-  <main class="container mx-auto mt-10 p-2">
-    <h1 class="font-black text-gray-600 uppercase text-center text-3xl mb-10">
+  <main class="container mx-auto mt-5 p-2">
+    <h1 class="font-black text-gray-600 uppercase text-center text-3xl">
       @yield('titulo')
     </h1>
     @yield('contenido')
   </main>
-  <footer class="mt-10 text-center p-5 text-gray-500 font-bold">
+  <footer class="text-center p-5 text-gray-500 font-bold">
     Todos los Derechos Reservados: Alumnos ITTG &copy; {{ now()->year }}
   </footer>
   <script src="https://unpkg.com/flowbite@1.4.7/dist/flowbite.js"></script>
