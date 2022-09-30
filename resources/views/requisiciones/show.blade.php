@@ -90,7 +90,8 @@
   <div class="my-10">
     <h2 class="text-center mb-5 uppercase text-2xl">Evaluación de la Solicitud</h2>
     <div class="grid sm:grid-cols-2 lg:grid-cols-6 gap-4">
-      <a href="{{ route('evaluate.formats', $data->id) }}" type="button" id="evaFormatos" class="p-3 text-white formatos bg-[#13322B] hover:bg-[#0C231E] @if ($data->noEvaluacion == 1) bg-blue-500 hover:bg-blue-800 @endif flex flex-col justify-center items-center @if (Auth()->user()->tipoUsuario == 'direccion') disabled @endif">
+      <a href="{{ route('evaluate.formats', $data->id) }}" type="button" id="evaFormatos"
+        class="p-3 text-white formatos bg-[#13322B] hover:bg-[#0C231E] @if ($data->noEvaluacion == 1) bg-blue-500 hover:bg-blue-800 @endif flex flex-col justify-center items-center @if (Auth()->user()->tipoUsuario == 'direccion') disabled @endif">
         <p class="uppercase">Formatos</p>
         <p>Evaluación <span class="font-bold">1</span></p>
       </a>
@@ -130,24 +131,22 @@
     @endif
   </div>
 
-  {{-- @if (!empty($errors))
+  @if (!empty($errors))
     <div class="pb-4">
       @foreach ($errors as $error)
         @if ($error->justificacion)
-          <p class="alert alert-danger">Revision {{ $data->noEvaluacion - 1 }}.- Evaluación de Formatos -
+          <p class="bg-red-400 p-4 text-red-900">Revision {{ $data->noEvaluacion - 1 }}.- Evaluación de Formatos -
             {{ $error->justificacion }} ({{ $formatNames[$error->formato - 1] }})</p>
-        @else
-          @if ($error->observacion)
-            <p class="alert alert-danger">Evaluación de las Instalaciones.- {{ $error->observacion }} (Elemento
-              {{ $error->elemento }})</p>
-          @else
-            <p class="alert alert-danger">Evaluación de los Planes.-{{ $error->comentario }} (Plan
-              {{ $error->plan }})</p>
-          @endif
+        @elseif ($error->observacion)
+          <p class="bg-red-400 p-4 text-red-900">Evaluación de las Instalaciones.- {{ $error->observacion }} (Elemento
+            {{ $error->elemento }})</p>
+        @elseif ($error->comentario)
+          <p class="bg-red-400 p-4 text-red-900">Evaluación de los Planes.-{{ $error->comentario }} (Plan
+            {{ $error->plan }})</p>
         @endif
       @endforeach
     </div>
-  @endif --}}
+  @endif
 
 
 

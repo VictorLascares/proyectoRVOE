@@ -42,6 +42,7 @@ class FormatController extends Controller
     //Funcion para realizar la actualización de los formatos
     public function updateFormats(Request $request)
     {
+        $errors = [];
         if (Auth::user() != null) {
             $requisition = Requisition::find($request->requisition_id);
             $elements = Element::searchrequisitionid($request->requisition_id)->first();
@@ -58,6 +59,7 @@ class FormatController extends Controller
                         } else {
                             $format->justificacion = $request->$formatoj;
                         }
+                        // array_push($errors, $format);
                     } else {
                         if($request->$formatoj != null){
                             $format->justificacion = $request->$formatoj;
@@ -81,7 +83,7 @@ class FormatController extends Controller
                 $requisition->noEvaluacion = $requisition->noEvaluacion + 1;
                 $requisition->save();
             }
-            return redirect(route('requisitions.show', $requisition->id));
+            return redirect(route('requisitions.show', $requisition->id))->with( ['errors' => $errors]);
         }
     }
 }
