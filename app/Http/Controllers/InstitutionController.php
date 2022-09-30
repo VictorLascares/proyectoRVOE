@@ -3,11 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Area;
-use App\Models\Career;
 use App\Models\Institution;
-use Illuminate\Support\Str;
 use App\Models\Municipality;
-use Cloudinary\Transformation\Qualifier\Dimensions\Width;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
