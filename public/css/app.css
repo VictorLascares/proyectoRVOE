@@ -874,17 +874,17 @@ input:checked + .toggle-bg {
 .m-0 {
     margin: 0px
 }
-.my-2 {
-    margin-top: 0.5rem;
-    margin-bottom: 0.5rem
+.mx-auto {
+    margin-left: auto;
+    margin-right: auto
 }
 .my-10 {
     margin-top: 2.5rem;
     margin-bottom: 2.5rem
 }
-.mx-auto {
-    margin-left: auto;
-    margin-right: auto
+.my-2 {
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem
 }
 .my-3 {
     margin-top: 0.75rem;
@@ -896,11 +896,11 @@ input:checked + .toggle-bg {
 .-ml-px {
     margin-left: -1px
 }
-.mb-2 {
-    margin-bottom: 0.5rem
-}
 .mb-5 {
     margin-bottom: 1.25rem
+}
+.mb-2 {
+    margin-bottom: 0.5rem
 }
 .mt-4 {
     margin-top: 1rem
@@ -908,8 +908,8 @@ input:checked + .toggle-bg {
 .mb-4 {
     margin-bottom: 1rem
 }
-.mb-3 {
-    margin-bottom: 0.75rem
+.mt-2 {
+    margin-top: 0.5rem
 }
 .mt-10 {
     margin-top: 2.5rem
@@ -917,20 +917,20 @@ input:checked + .toggle-bg {
 .ml-auto {
     margin-left: auto
 }
+.mb-3 {
+    margin-bottom: 0.75rem
+}
 .mt-3 {
     margin-top: 0.75rem
 }
-.mb-10 {
-    margin-bottom: 2.5rem
+.mt-5 {
+    margin-top: 1.25rem
 }
 .mb-20 {
     margin-bottom: 5rem
 }
 .mt-20 {
     margin-top: 5rem
-}
-.mt-2 {
-    margin-top: 0.5rem
 }
 .mb-1 {
     margin-bottom: 0.25rem
@@ -1202,6 +1202,14 @@ input:checked + .toggle-bg {
     --tw-bg-opacity: 1;
     background-color: rgb(182 221 181 / var(--tw-bg-opacity))
 }
+.bg-blue-500 {
+    --tw-bg-opacity: 1;
+    background-color: rgb(63 131 248 / var(--tw-bg-opacity))
+}
+.bg-red-200 {
+    --tw-bg-opacity: 1;
+    background-color: rgb(251 213 213 / var(--tw-bg-opacity))
+}
 .bg-gray-200 {
     --tw-bg-opacity: 1;
     background-color: rgb(229 231 235 / var(--tw-bg-opacity))
@@ -1227,12 +1235,6 @@ input:checked + .toggle-bg {
 .stroke-white {
     stroke: #ffffff
 }
-.p-5 {
-    padding: 1.25rem
-}
-.p-6 {
-    padding: 1.5rem
-}
 .p-2 {
     padding: 0.5rem
 }
@@ -1247,6 +1249,9 @@ input:checked + .toggle-bg {
 }
 .p-1 {
     padding: 0.25rem
+}
+.p-5 {
+    padding: 1.25rem
 }
 .p-2\.5 {
     padding: 0.625rem
@@ -1405,11 +1410,6 @@ input:checked + .toggle-bg {
 .shadow-sm {
     --tw-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
     --tw-shadow-colored: 0 1px 2px 0 var(--tw-shadow-color);
-    box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)
-}
-.shadow-xl {
-    --tw-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
-    --tw-shadow-colored: 0 20px 25px -5px var(--tw-shadow-color), 0 8px 10px -6px var(--tw-shadow-color);
     box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)
 }
 .shadow {
@@ -1719,12 +1719,6 @@ input:checked + .toggle-bg {
     .md\:h-auto {
         height: auto
     }
-    .md\:w-6\/12 {
-        width: 50%
-    }
-    .md\:w-4\/12 {
-        width: 33.333333%
-    }
     .md\:w-10\/12 {
         width: 83.333333%
     }
@@ -1743,14 +1737,14 @@ input:checked + .toggle-bg {
     .md\:justify-between {
         justify-content: space-between
     }
-    .md\:gap-10 {
-        gap: 2.5rem
-    }
     .md\:gap-4 {
         gap: 1rem
     }
     .md\:gap-2 {
         gap: 0.5rem
+    }
+    .md\:gap-10 {
+        gap: 2.5rem
     }
     .md\:py-0 {
         padding-top: 0px;
