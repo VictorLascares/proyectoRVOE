@@ -3,13 +3,13 @@
     {{ $career->nombre }}
 @endsection
 @section('contenido')
-  <div class="container mb-5 mt-4 pb-5">
+  <div class="container mb-5 my-10 pb-5">
     <div class="flex justify-end items-center mb-4">
       @if (Auth::user()->tipoUsuario != 'direccion')
           <form method="POST" action="{{ route('careers.destroy', $career->id) }}" class="flex justify-content-end">
             @csrf
             @method('DELETE')
-            <button class="bg-red-600 hover:bg-red-800 p-2 text-white" type="submit">
+            <button class="bg-red-600 hover:bg-red-800 rounded-lg p-2 text-white" type="submit">
               Eliminar
             </button>
           </form>
@@ -21,11 +21,11 @@
         <div class="grid grid-cols-2 gap-2">
             <div>
               <label for="careerName" class="mb-2 block uppercase text-gray-500 font-bold">Nombre de la Carrera</label>
-              <input name="nombre" type="text" class="w-full border p-3" id="careerName" placeholder="Nombre de la Carrera" value="{{ $career->nombre }}">
+              <input name="nombre" type="text" class="w-full rounded-lg border p-3" id="careerName" placeholder="Nombre de la Carrera" value="{{ $career->nombre }}">
             </div>
             <div>
               <label for="careerArea" class="mb-2 block uppercase text-gray-500 font-bold">Area de la Carrera</label>
-              <select id="careerArea" class="w-full border p-3" name="area_id" required>
+              <select id="careerArea" class="w-full rounded-lg border p-3" name="area_id" required>
                   <option selected disabled>-- Seleccione el Area --</option>
                   @foreach ($areas as $area)
                       <option @if ($area->id == $career->area_id) selected @endif value="{{ $area->id }}">
@@ -36,7 +36,7 @@
             </div>
             <div>
               <label for="careerModality" class="mb-2 block uppercase text-gray-500 font-bold">Modalidad de la Carrera</label>
-              <select id="careerModality" class="w-full border p-3" name="modalidad" required>
+              <select id="careerModality" class="w-full rounded-lg border p-3" name="modalidad" required>
                   <option selected disabled>-- Seleccione la Modalidad --</option>
                   <option value="Escolarizado" @if ($career->modalidad == 'Escolarizado') selected @endif>Escolarizado</option>
                   <option value="Semiescolarizado" @if ($career->modalidad == 'Semiescolarizado') selected @endif>Semiescolarizado</option>
@@ -46,7 +46,7 @@
             </div>
             <div>
               <label for="tipoPeriodo" class="mb-2 block uppercase text-gray-500 font-bold">Tipo de Periodo</label>
-              <select id="tipoPeriodo" class="w-full border p-3" name="tipoPeriodo" required>
+              <select id="tipoPeriodo" class="w-full rounded-lg border p-3" name="tipoPeriodo" required>
                   <option selected disabled>-- Seleccione el tipo de periodo --</option>
                   <option value="Semestral" @if ($career->tipoPeriodo == 'Semestral') selected @endif>Semestral</option>
                   <option value="Cuatrimestral" @if ($career->tipoPeriodo == 'Cuatrimestral') selected @endif>Cuatrimestral</option>
@@ -54,25 +54,25 @@
             </div>
             <div>
               <label for="numPeriodo" class="mb-2 block uppercase text-gray-500 font-bold">Numero de Periodos</label>
-              <input type="number" class="w-full border p-3" name="numPeriodo" value="{{ $career->numPeriodo }}" id="numPeriodo" placeholder="Numero de Periodos">
+              <input type="number" class="w-full rounded-lg border p-3" name="numPeriodo" value="{{ $career->numPeriodo }}" id="numPeriodo" placeholder="Numero de Periodos">
             </div>
         </div>
       
       @if (Auth::user()->tipoUsuario != 'direccion')
-        <div class="flex justify-center items-center mt-2">
-          <button class="bg-[#13322B] hover:bg-[#0C231E] text-white py-2 px-10" type="submit">
+        <div class="flex justify-center items-center mt-4">
+          <button class="bg-[#13322B] hover:bg-[#0C231E] rounded-lg text-white py-2 px-10" type="submit">
             Actualizar
           </button>
         </div>
       @endif
     </form>
 
-    <section class="mt-4">
+    <section class="mt-10">
       <div class="flex justify-between items-center mb-4">
         <h2 class="text-2xl">Solicitudes</h2>
         @if (Auth::user()->tipoUsuario !== 'direccion')
           <button type="button" data-modal-toggle="new-request" type="submit"
-            class="bg-[#13322B] hover:bg-[#0C231E] text-white py-2 px-4">
+            class="bg-[#13322B] hover:bg-[#0C231E] rounded-lg text-white py-2 px-4">
             Nueva Solicitud
           </button>
         @endif
@@ -83,11 +83,12 @@
             <div class="flex flex-col">
                 <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
                     <div class="py-2 inline-block min-w-full sm:px-6 lg:px-8">
-                        <div class="overflow-hidden">
+                        <div class="overflow-hidden rounded-lg">
                             <table class="min-w-full">
                                 <thead class="border-b bg-[#13322B]">
                                 <tr>
                                     <th class="text-sm font-bold text-white px-6 py-4 text-left">Meta</th>
+                                    <th class="text-sm font-bold text-white px-6 py-4 text-left">Estado</th>
                                     <th class="text-sm font-bold text-white px-6 py-4 text-left">Creación</th>
                                     <th class="text-sm font-bold text-white px-6 py-4 text-left">Ultima Actualización</th>
                                 </tr>
@@ -96,6 +97,7 @@
                                     @foreach ($requisitions as $requisition)
                                     <tr class="border-b" data-href="{{ route('requisitions.show', $requisition->id) }}">
                                         <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">{{ $requisition->meta }}</td>
+                                        <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">{{ $requisition->estado }}</td>
                                         <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">{{ $requisition->created_at }}</td>
                                         <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">{{ $requisition->updated_at }}</td>
                                     </tr>

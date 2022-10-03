@@ -4,14 +4,14 @@
 @endsection
 @section('contenido')
     @if (count($institutions) != 0)
-        <div class="flex justify-end items-center mb-3">
+        <div class="flex justify-end items-center mt-4">
             @if (Auth::user()->tipoUsuario != 'direccion')
-                <button type="button" data-modal-toggle="new-institution" class="bg-[#13322B] hover:bg-[#0C231E] text-white p-3">Nueva
+                <button type="button" data-modal-toggle="new-institution" class="bg-[#13322B] hover:bg-[#0C231E] rounded-lg text-white p-3">Nueva
                     Institución
                 </button>
             @endif
         </div>
-        <div class="grid grid-cols-4 gap-4 mt-10">
+        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4 mt-10">
             @foreach ($institutions as $institution)
                 <a class="text-decoration-none institution text-dark relative border" href="{{ route('institutions.show', $institution) }}">
                 <div class="p-5 flex justify-center items-center">

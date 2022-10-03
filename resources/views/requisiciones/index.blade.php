@@ -7,14 +7,14 @@
         <button 
             type="reset" 
             id="limpiar-filtro" 
-            class="text-white p-2 bg-[#13322B] hover:bg-[#0C231E] w-full sm:w-auto mb-5 sm:mb-0"
+            class="text-white p-2 bg-[#13322B] hover:bg-[#0C231E] w-full sm:w-auto mb-5 sm:mb-0 rounded-lg"
         >
             Limpiar Filtros
         </button>
-        <select id="filtro-anio" class="w-full sm:w-auto mb-5 sm:mb-0">
+        <select id="filtro-anio" class="w-full sm:w-auto mb-5 sm:mb-0 rounded-lg">
             <option selected disabled>Filtrar por Año</option>
         </select>
-        <select id="filtro-estado" class="w-full sm:w-auto">
+        <select id="filtro-estado" class="w-full sm:w-auto rounded-lg">
             <option selected disabled>Filtrar por estado</option>
             <option value="activo">Activo</option>
             <option value="latencia">Latencia</option>
@@ -27,7 +27,7 @@
     @if (count($requisitions) != 0)
         <div class="grid sm:grid-cols-2 lg:grid-cols-5 mt-10 mb-20 gap-2 p-2">
             @foreach ($requisitions as $requisition)
-                <a data-fecha="{{ $requisition->created_at->format('m-d-y') }}" data-estado="{{ $requisition->estado }}" href="{{ route('requisitions.show', $requisition->id) }}" class="hover:shadow-lg w-full requisicion requisition text-center py-3 @switch($requisition->estado) @case('pendiente')
+                <a data-fecha="{{ $requisition->created_at->format('m-d-y') }}" data-estado="{{ $requisition->estado }}" href="{{ route('requisitions.show', $requisition->id) }}" class="rounded-lg w-full requisicion requisition text-center py-3 @switch($requisition->estado) @case('pendiente')
                     @case('latencia')
                     bg-light-yellow
                     text-dark-yellow

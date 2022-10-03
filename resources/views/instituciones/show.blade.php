@@ -9,7 +9,7 @@
           class="d-flex justify-content-end">
           @csrf
           @method('DELETE')
-          <button class="bg-red-600 hover:bg-red-800 p-2 text-white" type="submit">
+          <button class="bg-red-600 hover:bg-red-800 rounded-lg p-2 text-white" type="submit">
             Eliminar
           </button>
         </form>
@@ -19,31 +19,31 @@
         @method('PUT')
         @csrf
         <div class="md:flex md:justify-between md:gap-4">
-            <div class="flex-1 flex justify-center items-center border mb-4 md:mb-0 py-4 md:py-0">
+            <div class="flex-1 flex justify-center items-center rounded-lg border mb-4 md:mb-0 py-4 md:py-0">
                 <img src="{{  $institution->logotipo }}" alt="Logo de la Institución">
             </div>
-            <div class="flex-1 md:grid md:grid-cols-2 md:gap-2 border p-2">
+            <div class="flex-1 md:grid md:grid-cols-2 md:gap-2 rounded-lg border p-2">
                 <div class="md:col-span-2 mb-5 md:mb-0">
                     <label for="institutionName" class="mb-2 block uppercase text-gray-500 font-bold">Nombre de la Institución</label>
-                    <input name="nombre" type="text" class="w-full border p-3" id="institutionName"
+                    <input name="nombre" type="text" class="w-full rounded-lg border p-3" id="institutionName"
                         placeholder="Nombre de la Institución" value="{{ $institution->nombre }}">
                 </div>
                 <div class="md:col-span-2 mb-5 md:mb-0">
                     <label for="titular" class="mb-2 block uppercase text-gray-500 font-bold">Titular</label>
-                    <input name="titular" type="text" class="w-full border p-3" id="titular" placeholder="Nombre del Titular"
+                    <input name="titular" type="text" class="w-full rounded-lg border p-3" id="titular" placeholder="Nombre del Titular"
                         value="{{ $institution->titular }}">
                 </div>
                 <div class="md:col-span-2 mb-5 md:mb-0">
                     <label for="repLegal" class="mb-2 block uppercase text-gray-500 font-bold">Representante Legal o Sociedad Civil</label>
-                    <input name="repLegal" type="text" class="w-full border p-3" id="titular" value="{{ $institution->repLegal }}">
+                    <input name="repLegal" type="text" class="w-full rounded-lg border p-3" id="titular" value="{{ $institution->repLegal }}">
                 </div>
                 <div class="mb-5 md:mb-0">
                     <label for="email" class="mb-2 block uppercase text-gray-500 font-bold">Correo Institucional</label>
-                    <input name="email" type="email" class="w-full border p-3" id="email" value="{{ $institution->email }}">
+                    <input name="email" type="email" class="w-full rounded-lg border p-3" id="email" value="{{ $institution->email }}">
                 </div>
                 <div class="mb-5 md:mb-0">
                     <label for="municipality" class="mb-2 block uppercase text-gray-500 font-bold">Municipio</label>
-                    <select name="municipalitie_id" class="w-full border p-3" id="municipality"
+                    <select name="municipalitie_id" class="w-full rounded-lg border p-3" id="municipality"
                         aria-label="Floating label select example">
                         <option selected disabled>Selecciona un municipio</option>
                         @foreach ($municipalities as $municipality)
@@ -55,18 +55,18 @@
                 </div>
                 <div class="md:col-span-2 mb-5 md:mb-0">
                     <label for="address" class="mb-2 block uppercase text-gray-500 font-bold">Dirección</label>
-                    <textarea name="direccion" class="w-full border p-3  resize-none" id="address"
+                    <textarea name="direccion" class="w-full rounded-lg border p-3  resize-none" id="address"
                         placeholder="Dirección">{{ $institution->direccion }}</textarea>
                 </div>
                 <div class="md:col-span-2">
                     <label for="institutionLogo" class="mb-2 block uppercase text-gray-500 font-bold">Logo de la Institución</label>
-                    <input type="file" class="w-full border" id="institutionLogo" name="logotipo">
+                    <input type="file" class="w-full rounded-lg border" id="institutionLogo" name="logotipo">
                 </div>
             </div>
         </div>
         @if (Auth::user()->tipoUsuario == 'planeacion' || Auth::user()->tipoUsuario == 'administrador')
             <div class="flex justify-center mt-4">
-                <button class="bg-[#13322B] hover:bg-[#0C231E] text-white py-2 px-4" type="submit">
+                <button class="bg-[#13322B] hover:bg-[#0C231E] rounded-lg text-white py-2 px-4" type="submit">
                     Actualizar
                 </button>
             </div>
@@ -78,7 +78,7 @@
         <h2 class="text-3xl">Carreras</h2>
         @if (Auth::user()->tipoUsuario == 'planeacion' || Auth::user()->tipoUsuario == 'administrador')
           <button type="button" data-modal-toggle="new-career" type="submit"
-            class="bg-[#13322B] hover:bg-[#0C231E] text-white py-2 px-4">
+            class="bg-[#13322B] hover:bg-[#0C231E] rounded-lg text-white py-2 px-4">
             Nueva Carrera
           </button>
         @endif
@@ -88,7 +88,7 @@
         <div class="mt-3">
             @foreach ($careers as $career)
                 <a href="{{ route('careers.show', $career->id) }}"
-                    class="flex justify-between items-center hover:bg-gray-300 p-3 border">
+                    class="flex justify-between items-center hover:bg-gray-300 p-3 border-b">
                     {{ $career->nombre }}
                     @foreach ($areas as $area)
                         @if ($area->id == $career->area_id)

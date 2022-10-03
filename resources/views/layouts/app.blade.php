@@ -32,7 +32,7 @@
                 @csrf
                 <input type="submit" value="Cerrar Sesión" class="text-gray-400 hover:text-white cursor-pointer">
             </form>
-            <div title="{{ Auth::user()->tipoUsuario }}" style="height: 2rem; width: 2rem"
+            <div title="{{ ucfirst(Auth::user()->tipoUsuario) }}" style="height: 2rem; width: 2rem"
               class="bg-[#B6DDB5] p-4 uppercase rounded-full border-2 border-[#13322B] flex justify-center items-center">
               {{ substr(explode(' ', Auth::user()->name)[0],0,1) }}{{ substr(explode(' ', Auth::user()->name)[1],0,1) }}
             </div>
