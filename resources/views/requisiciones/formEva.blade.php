@@ -1,8 +1,8 @@
 @extends('layouts.app')
 @section('titulo')
-  @if ($requisition->noEvaluacion == 1)
+  @if ($noEvaluation == 1)
     Revisión de existencia de formatos
-  @elseif ($requisition->noEvaluacion == 2)
+  @elseif ($noEvaluation == 2)
     Revisión del contenido de los formatos 1
   @else
     Revisión del contenido de los formatos 2
@@ -12,7 +12,8 @@
   <form class="mb-2 flex flex-col justify-center items-center" method="POST" action="{{ url('/update/formats') }}">
     @csrf
     <input type="hidden" name="requisition_id" value="{{ $requisition->id }}">
-    <div class="@if ($requisition->noEvaluacion != 1) grid grid-cols-2 @endif gap-4">
+    <input type="hidden" name="noEvaluation" value="{{ $noEvaluation }}">
+    <div class="@if ($noEvaluation != 1) grid grid-cols-2 @endif gap-4">
       @foreach (range(1, 5) as $i)
         @foreach ($formats as $format)
           @if ($format->formato == $i)
@@ -25,7 +26,7 @@
                   {{ $formatNames[$i - 1] }}
                 </label>
               </div>
-              @if ($requisition->noEvaluacion != 1)
+              @if ($noEvaluation != 1)
                 <div>
                   <textarea name="anexo{{ $i }}j" class="w-full resize-none" id="just-review-{{ $format->id }}"
                     placeholder="Justificación">{{ $format->justificacion }}</textarea>

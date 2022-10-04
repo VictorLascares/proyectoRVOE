@@ -9,6 +9,8 @@ use App\Models\Institution;
 use App\Models\Career;
 use App\Models\Element;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
+
 
 class FormatController extends Controller
 {
@@ -21,7 +23,7 @@ class FormatController extends Controller
 
     }
     //Funcion para realizar la evaluación de los formatos
-    public function evaluateFormats($requisition_id)
+    public function evaluateFormats($requisition_id,$no_evaluation)
     {
         if (Auth::user() != null) {
             $requisition = Requisition::find($requisition_id);
@@ -35,7 +37,8 @@ class FormatController extends Controller
                 "Estructura e Instalaciones",
                 "Plataforma Tecnológica"
             );
-            return view('requisiciones.formEva' , compact('requisition', 'career', 'institution', 'formats', 'formatNames'));
+            $noEvaluation = $no_evaluation;
+            return view('requisiciones.formEva' , compact('requisition', 'career', 'institution', 'formats', 'formatNames', 'noEvaluation'));
         }
     }
 
@@ -46,42 +49,65 @@ class FormatController extends Controller
         if (Auth::user() != null) {
             $requisition = Requisition::find($request->requisition_id);
             $elements = Element::searchrequisitionid($request->requisition_id)->first();
-            if ($requisition->noEvaluacion < 4 && $requisition->estado == 'pendiente') {
-                for ($formatName = 1; $formatName < 6; $formatName++) {
-                    $format = Format::searchformato($formatName)->searchrequisitionid($requisition->id)->first();
-                    $formato = 'anexo' . $formatName;
-                    $formatoj = $formato . 'j';
-                    $format->valido = false;
-                    $format->justificacion = '';
-                    if ($request->input($formato) == false || $request->input($formato) == 'false') {
-                        if ($requisition->noEvaluacion == 1) {
-                            $format->justificacion = 'No se encuentra el formato';
+            $formatsActualy = Format::searchrequisitionid($requisition->id)->get();
+            $validationEstatus = true;
+            if(!($request->noEvaluation < $requisition->noEvaluacion && $requisition->noEvaluacion == 3)){
+                if ($request->noEvaluation < 4 && $requisition->estado == 'pendiente') {
+                    for ($formatName = 1; $formatName < 6; $formatName++) {
+                        $format = Format::searchformato($formatName)->searchrequisitionid($requisition->id)->first();
+                        $formato = 'anexo' . $formatName;
+                        $formatoj = $formato . 'j';
+                        if ($request->input($formato) == false || $request->input($formato) == 'false') {
+                            if ($request->noEvaluation == 1) {
+                                $format->justificacion = 'No se encuentra el formato';
+                            } else if($request->noEvaluation == 2){
+                                if($format->valido != false){
+                                    $format->justificacion = $request->$formatoj;
+                                }
+                                $validationEstatus = false;
+                            }else {
+                                $format->justificacion = $request->$formatoj;
+                            }
+                            $format->valido = false;
+                            // array_push($errors, $format);
                         } else {
-                            $format->justificacion = $request->$formatoj;
+                            if($request->noEvaluation == 2){
+                                if($format->valido == false){
+                                    $validationEstatus = false;
+                                }else{
+                                    $format->justificacion = $request->$formatoj;
+                                    $format->valido = true;
+                                }
+                            }else{
+                                if($request->$formatoj != null){
+                                    $format->justificacion = $request->$formatoj;
+                                }else{
+                                    if($request->noEvaluation == 1 && $format->valido == false && $requisition->noEvaluation == 1){
+                                        $format->justificacion = "";
+                                    }
+                                }
+                                $format->valido = true;
+                            }
                         }
-                        // array_push($errors, $format);
-                    } else {
-                        if($request->$formatoj != null){
-                            $format->justificacion = $request->$formatoj;
-                        }else{
-                            $format->justificacion = "";
-                        }
-                        $format->valido = true;
+                        $format->save();
                     }
-                    $format->save();
-                }
-                if ($requisition->noEvaluacion == '3') {
-                    if (is_null($elements)) {
-                        for ($elementName = 1; $elementName < 53; $elementName++) {
-                            $element = new Element();
-                            $element->elemento = $elementName;
-                            $element->requisition_id = $requisition->id;
-                            $element->save();
+                    if($request->noEvaluation == $requisition->noEvaluacion){
+                        if ($request->noEvaluation == '3') {
+                            if (is_null($elements)) {
+                                for ($elementName = 1; $elementName < 53; $elementName++) {
+                                    $element = new Element();
+                                    $element->elemento = $elementName;
+                                    $element->requisition_id = $requisition->id;
+                                    $element->save();
+                                }
+                            }
                         }
-                    }
+                        if($validationEstatus){
+                            $requisition->noEvaluacion = $requisition->noEvaluacion + 1;
+                        }
+                    } 
+                    $requisition->save();
                 }
-                $requisition->noEvaluacion = $requisition->noEvaluacion + 1;
-                $requisition->save();
             }
             return redirect(route('requisitions.show', $requisition->id))->with( ['errors' => $errors]);
         }

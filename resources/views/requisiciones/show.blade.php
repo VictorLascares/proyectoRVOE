@@ -89,17 +89,17 @@
   <div class="my-10">
     <h2 class="text-center mb-5 uppercase text-2xl">Evaluación de la Solicitud</h2>
     <div class="grid sm:grid-cols-2 lg:grid-cols-6 gap-4">
-      <a href="{{ route('evaluate.formats', $data->id) }}" type="button" id="evaFormatos"
+      <a href="{{ route('evaluate.formats', ['requisition_id' => $data->id, 'no_evaluation' => 1]) }}" type="button" id="evaFormatos"
         class="rounded-md p-3 text-white formatos bg-[#13322B] hover:bg-[#0C231E] @if ($data->noEvaluacion == 1) bg-blue-500 hover:bg-blue-800 @endif flex flex-col justify-center items-center @if (Auth()->user()->tipoUsuario == 'direccion') disabled @endif">
         <p class="uppercase">Formatos</p>
         <p>Revisión <span class="font-bold">1</span></p>
       </a>
-      <a href="{{ route('evaluate.formats', $data->id) }}"
+      <a href="{{ route('evaluate.formats', ['requisition_id' => $data->id, 'no_evaluation' => 2]) }}"
         class="rounded-md p-3 text-white formatos bg-[#13322B] hover:bg-[#0C231E] @if ($data->noEvaluacion == 2) bg-blue-500 hover:bg-blue-800 @endif flex flex-col justify-center items-center @if ($data->noEvaluacion < 2 || Auth()->user()->tipoUsuario == 'direccion') disabled @endif">
         <p class="uppercase">Formatos</p>
         <p>Revisión <span class="font-bold">2</span></p>
       </a>
-      <a href="{{ route('evaluate.formats', $data->id) }}"
+      <a href="{{ route('evaluate.formats', ['requisition_id' => $data->id, 'no_evaluation' => 3]) }}"
         class="rounded-md p-3 text-white formatos bg-[#13322B] hover:bg-[#0C231E] @if ($data->noEvaluacion == 3) bg-blue-500 hover:bg-blue-800 @endif flex flex-col justify-center items-center @if (Auth()->user()->tipoUsuario == 'planeacion' || $data->estado == 'rechazado') disabled @endif">
         <p class="uppercase">Formatos</p>
         <p>Revisión <span class="font-bold">3</span></p>
