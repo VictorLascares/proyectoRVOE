@@ -92,7 +92,7 @@ class ElementController extends Controller
         if (Auth::user() != null) {
             $requisition = Requisition::find($request->requisition_id);
             $plans = Plan::searchrequisitionid($request->requisition_id)->first();
-            if ($requisition->noEvaluacion == 4 && $requisition->estado == 'pendiente') {
+            if ($requisition->noEvaluacion >= 4 && $requisition->estado == 'pendiente') {
                 $imagen = $request->formatoInstalaciones;
                 // if (!is_null($imagen)) {
                     for ($elementName = 1; $elementName < 53; $elementName++) {
@@ -113,8 +113,9 @@ class ElementController extends Controller
                         }
                         $element->save();
                     }
-                    $requisition->noEvaluacion = $requisition->noEvaluacion + 1;
-
+                    if(!$requisition->noEvaluacion == 4){
+                        $requisition->noEvaluacion = $requisition->noEvaluacion + 1;
+                    }
                     if ($requisition->formatoInstalaciones != null) {
                         Cloudinary()->destroy($requisition->formato_public_id);
                     }

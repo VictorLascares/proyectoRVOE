@@ -26,6 +26,7 @@ return new class extends Migration
             $table->boolean('ota')->default(false); 
             $table->date('fecha_vencimiento')->nullable();
             $table->date('fecha_latencia')->nullable();
+            $table->date('fecha_direccion')->nullable();
             $table->foreignId('career_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
         });

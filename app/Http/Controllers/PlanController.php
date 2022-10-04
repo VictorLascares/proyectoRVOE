@@ -43,7 +43,7 @@ class PlanController extends Controller
     {
         if (Auth::user() != null) {
             $requisition = Requisition::find($request->requisition_id);
-            if ($requisition->noEvaluacion == 5 && $requisition->estado == 'pendiente') {
+            if ($requisition->noEvaluacion >= 5 && $requisition->estado == 'pendiente') {
                 for ($planName = 1; $planName < 4; $planName++) { //
                     $plan = Plan::searchPlan($planName)->searchrequisitionid($requisition->id)->first();
                     $planNumber = 'plan' . $planName;
@@ -52,7 +52,9 @@ class PlanController extends Controller
                     $plan->comentario = $request->input($planNumberc);
                     $plan->save();
                 }
-                $requisition->noEvaluacion = $requisition->noEvaluacion + 1;
+                if(!$requisition->noEvaluacion == 5){
+                    $requisition->noEvaluacion = $requisition->noEvaluacion + 1;
+                }
                 $requisition->save();
             }
             return redirect(route('requisitions.show', $requisition->id));

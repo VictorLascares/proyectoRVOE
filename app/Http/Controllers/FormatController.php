@@ -104,6 +104,11 @@ class FormatController extends Controller
                         }
                         if($validationEstatus){
                             $requisition->noEvaluacion = $requisition->noEvaluacion + 1;
+                            if($requisition->noEvaluacion == 2){
+                                //Asignar fecha de 3 meses
+                                $requisition->fecha_direccion = date('Y-m-d');
+                                //Informar a dirección
+                            }
                         }
                     } 
                     $requisition->save();

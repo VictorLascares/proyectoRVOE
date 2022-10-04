@@ -98,4 +98,9 @@ Route::post('/login',[LoginController::class,'store']);
 
 //Descargar archivo OTA
 Route::get('/download/{requisition_id}',[RequisitionController::class,'downloadOta']);
-Route::get('/evaluacion-anterior/{requisition_id}',[RequisitionController::class,'revertirEvaluacion']);
+//Habilita descargar OTA y añade favorable o no favorable
+Route::post('/solicitud/{requisition_id}',[RequisitionController::class,'evaluarSolicitud'])->name('solicitud');
+//Descarga archivo STATUS de las evaluaciones
+Route::get('/download/status/{requisition_id}',[RequisitionController::class,'downloadStatus']);
+
+//Route::get('/evaluacion-anterior/{requisition_id}',[RequisitionController::class,'revertirEvaluacion']);
