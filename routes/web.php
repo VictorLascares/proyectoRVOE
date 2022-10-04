@@ -72,7 +72,8 @@ Route::get('/dashboard', [RequisitionController::class,'showRequisition']);
 
 //****************FORMATS ROUTES*****************
 //Ruta para realizar evaluación de los formatos
-Route::get('/evaluate/formats/{requisition_id}', [FormatController::class,'evaluateFormats'])->name('evaluate.formats');
+Route::get('/formats/{requisition_id}/evaluate/{no_evaluation}', [FormatController::class,'evaluateFormats'])->name('evaluate.formats');
+//'as' => 'makeEvaluation', 'uses' => 'FormatController@evaluateFormats']);
 //Ruta para actualizar los formatos
 Route::post('/update/formats', [FormatController::class,'updateFormats']);
 
