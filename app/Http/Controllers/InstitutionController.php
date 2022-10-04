@@ -25,9 +25,8 @@ class InstitutionController extends Controller
     public function index()
     {
         if (Auth::user() != null) {
-            $municipalities = Municipality::all();
             $institutions = Institution::paginate(12);
-            return view('instituciones.index', compact('institutions', 'municipalities'));
+            return view('instituciones.index', compact('institutions'));
         }
     }
 
@@ -38,7 +37,8 @@ class InstitutionController extends Controller
      */
     public function create()
     {
-        return view('instituciones.create');
+        $municipalities = Municipality::all();
+        return view('instituciones.create', compact('municipalities'));
     }
 
     /**
