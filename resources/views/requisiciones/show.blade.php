@@ -114,11 +114,19 @@
         <p class="uppercase">Planes</p>
         <p>Evaluación <span class="font-bold">3</span></p>
       </a>
-      <a download="OTAReq-{{ $data->id }}" href="{{ url('/download', $data->id) }}"
-        class="rounded-md p-3 text-white bg-[#13322B] hover:bg-[#0C231E] @if ($data->noEvaluacion == 6) bg-blue-500 hover:bg-blue-800 @endif flex flex-col justify-center items-center @if ($data->noEvaluacion < 6 || Auth()->user()->tipoUsuario == 'planeacion') disabled @endif">
-        <p>Descargar</p>
-        <p class="uppercase">ota</p>
-      </a>
+      @if ($data->estado == 'rechazado' && $data->noEvaluacion == 6)
+        <a download="OTAReq-{{ $data->id }}" href="{{ url('/download/status', $data->id) }}" class="rounded-md p-3 text-white bg-[#13322B] hover:bg-[#0C231E] @if ($data->noEvaluacion == 6) bg-blue-500 hover:bg-blue-800 @endif flex flex-col justify-center items-center @if ($data->noEvaluacion < 6 || Auth()->user()->tipoUsuario == 'planeacion') disabled @endif">
+            <p>Descargar</p>
+            <p class="uppercase">ESTADO</p>
+        </a>  
+      @else
+        <a download="OTAReq-{{ $data->id }}" href="{{ url('/download', $data->id) }}"
+            class="rounded-md p-3 text-white bg-[#13322B] hover:bg-[#0C231E] @if ($data->noEvaluacion == 6) bg-blue-500 hover:bg-blue-800 @endif flex flex-col justify-center items-center @if ($data->noEvaluacion < 6 || Auth()->user()->tipoUsuario == 'planeacion') disabled @endif">
+            <p>Descargar</p>
+            <p class="uppercase">ota</p>
+        </a>  
+      @endif
+      
     </div>
     <form action="{{ route('solicitud', $data->id) }}" method="POST" enctype="multipart/form-data">
       @csrf
@@ -130,11 +138,7 @@
         <button class="text-white bg-[#13322B] hover:bg-[#0C231E] px-10 py-3" type="submit">Pasar al administrador</button>
       </div>
     </form>
-    <a download="OTAReq-{{ $data->id }}" href="{{ url('/download/status', $data->id) }}"
-      class="rounded-md p-3 text-white bg-[#13322B] hover:bg-[#0C231E] @if ($data->noEvaluacion == 6) bg-blue-500 hover:bg-blue-800 @endif flex flex-col justify-center items-center @if ($data->noEvaluacion < 6 || Auth()->user()->tipoUsuario == 'planeacion') disabled @endif">
-      <p>Descargar</p>
-      <p class="uppercase">ESTADO</p>
-    </a>
+    
     @if (Auth::user()->tipoUsuario == 'administrador')
       <div class="flex justify-end mt-4">
         <a href="{{ url('/evaluacion-anterior', $data->id) }}"
