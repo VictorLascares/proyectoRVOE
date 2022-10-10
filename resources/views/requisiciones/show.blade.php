@@ -148,22 +148,27 @@
     @endif
   </div>
 
-  @if (!empty($errors))
     <div class="pb-4 w-4/6 mx-auto text-center">
-      @foreach ($errors as $error)
-        @if ($error->justificacion)
+      @foreach ($formats as $format)
+        @if ($format->justificacion)
           <p class="bg-red-400 p-4 text-red-900 mb-4">Revision {{ $data->noEvaluacion - 1 }}.- Evaluación de Formatos -
-            {{ $error->justificacion }} ({{ $formatNames[$error->formato - 1] }})</p>
-        @elseif ($error->observacion)
-          <p class="bg-red-400 p-4 text-red-900">Evaluación de las Instalaciones.- {{ $error->observacion }} (Elemento
-            {{ $error->elemento }})</p>
-        @elseif ($error->comentario)
-          <p class="bg-red-400 p-4 text-red-900">Evaluación de los Planes.-{{ $error->comentario }} (Plan
-            {{ $error->plan }})</p>
+            {{ $format->justificacion }} ({{ $formatNames[$format->formato-1] }})</p>
         @endif
       @endforeach
+
+      @foreach ($elements as $element)
+        @if ($element->existente == false && (($element->elemento > 0 && $element->elemento < 7) || ($element->elemento > 7 && $element->elemento < 12) || ($element->elemento == 13) || ($element->elemento == 16) || ($element->elemento > 28 && $element->elemento < 31) || ($element->elemento == 40) || ($element->elemento > 41 && $element->elemento < 48) || ($element->elemento > 50)))
+           <p class="bg-red-400 p-4 text-red-900 mb-4">Evaluación de las Instalaciones.- {{ $element->observacion }} (Elemento
+            {{ $element->elemento }})</p> 
+        @endif
+      @endforeach
+          
+      @foreach ($plans as $plan)
+        @if ($plan->comentario)
+          <p class="bg-red-400 p-4 text-red-900 mb-4">Evaluación de los Planes.-{{ $plan->comentario }} (Plan {{ $plan->plan }})</p>
+        @endif 
+      @endforeach
     </div>
-  @endif
 
 
 
