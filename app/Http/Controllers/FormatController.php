@@ -82,7 +82,7 @@ class FormatController extends Controller
                                 if($request->$formatoj != null){
                                     $format->justificacion = $request->$formatoj;
                                 }else{
-                                    if($request->noEvaluation == 1 && $format->valido == false && $requisition->noEvaluation == 1){
+                                    if($request->noEvaluation == 1 && $format->valido == false){
                                         $format->justificacion = "";
                                     }
                                 }
