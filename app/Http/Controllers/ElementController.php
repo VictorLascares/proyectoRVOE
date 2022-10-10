@@ -113,7 +113,7 @@ class ElementController extends Controller
                         }
                         $element->save();
                     }
-                    if(!$requisition->noEvaluacion == 4){
+                    if($requisition->noEvaluacion == 4){
                         $requisition->noEvaluacion = $requisition->noEvaluacion + 1;
                     }
                     if ($requisition->formatoInstalaciones != null) {

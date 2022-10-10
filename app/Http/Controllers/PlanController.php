@@ -52,7 +52,7 @@ class PlanController extends Controller
                     $plan->comentario = $request->input($planNumberc);
                     $plan->save();
                 }
-                if(!$requisition->noEvaluacion == 5){
+                if($requisition->noEvaluacion == 5){
                     $requisition->noEvaluacion = $requisition->noEvaluacion + 1;
                 }
                 $requisition->save();
