@@ -127,24 +127,28 @@
       @endif
       
     </div>
-    <form action="{{ route('solicitud', $data->id) }}" method="POST" enctype="multipart/form-data">
-      @csrf
-      <div>
-        <textarea name="evaluacion" class="w-full resize-none"
-        placeholder="Si o No"></textarea>
-      </div>
-      <div class="flex justify-center items-center mt-4">
-        <button class="text-white bg-[#13322B] hover:bg-[#0C231E] px-10 py-3" type="submit">Pasar al administrador</button>
-      </div>
-    </form>
+
+    @if (Auth::user()->tipoUsuario != 'planeacion')
+        <form action="{{ route('solicitud', $data->id) }}" method="POST" enctype="multipart/form-data">
+        @csrf
+        <div>
+            <textarea name="evaluacion" class="w-full resize-none"
+            placeholder="Si o No"></textarea>
+        </div>
+        <div class="flex justify-center items-center mt-4">
+            <button class="text-white bg-[#13322B] hover:bg-[#0C231E] px-10 py-3" type="submit">Pasar al administrador</button>
+        </div>
+        </form>
+    @endif
+
     
-    @if (Auth::user()->tipoUsuario == 'administrador')
+    {{-- @if (Auth::user()->tipoUsuario == 'administrador')
       <div class="flex justify-end mt-4">
         <a href="{{ url('/evaluacion-anterior', $data->id) }}"
           class="rounded-md py-2 px-4 bg text-white bg-[#13322B] hover:bg-[#0C231E]">Modificar
           Evaluación</a>
       </div>
-    @endif
+    @endif --}}
   </div>
 
     <div class="pb-4 w-4/6 mx-auto text-center">
@@ -154,22 +158,23 @@
             {{ $format->justificacion }} ({{ $formatNames[$format->formato-1] }})</p>
         @endif
       @endforeach
-
-      @foreach ($elements as $element)
       @if ($data->noEvaluacion > 4) 
-        @if ($element->existente == false && (($element->elemento > 0 && $element->elemento < 7) || ($element->elemento > 7 && $element->elemento < 12) || ($element->elemento == 13) || ($element->elemento == 16) || ($element->elemento > 28 && $element->elemento < 31) || ($element->elemento == 40) || ($element->elemento > 41 && $element->elemento < 48) || ($element->elemento > 50)))
-           <p class="bg-red-400 p-4 text-red-900 mb-4">Evaluación de las Instalaciones.- {{ $element->observacion }} (Elemento {{ $element->elemento }})</p> 
-        @elseif ($element->existente == false)
-           <p class="bg-orange-400 p-4 text-orange-900 mb-4">Evaluación de las Instalaciones.- {{ $element->observacion }} (Elemento {{ $element->elemento }})</p> 
-        @endif
-      @endif
-      @endforeach
+        @foreach ($elements as $element)
+            @if ($element->existente == false && (($element->elemento > 0 && $element->elemento < 7) || ($element->elemento > 7 && $element->elemento < 12) || ($element->elemento == 13) || ($element->elemento == 16) || ($element->elemento > 28 && $element->elemento < 31) || ($element->elemento == 40) || ($element->elemento > 41 && $element->elemento < 48) || ($element->elemento > 50)))
+            <p class="bg-red-400 p-4 text-red-900 mb-4">Evaluación de las Instalaciones.- {{ $element->observacion }} (Elemento {{ $element->elemento }})</p> 
+            @elseif ($element->existente == false)
+            <p class="bg-orange-400 p-4 text-orange-900 mb-4">Evaluación de las Instalaciones.- {{ $element->observacion }} (Elemento {{ $element->elemento }})</p> 
+            @endif
+        @endforeach
+    @endif
           
+    @if ($data->noEvaluacion > 5)
       @foreach ($plans as $plan)
         @if ($plan->ponderacion < 60)
           <p class="bg-red-400 p-4 text-red-900 mb-4">Evaluación de los Planes.-{{ $plan->comentario }} (Plan {{ $plan->plan }})</p>
         @endif 
       @endforeach
+    @endif
     </div>
 
 
