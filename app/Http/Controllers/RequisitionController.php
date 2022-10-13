@@ -375,9 +375,9 @@ class RequisitionController extends Controller
         if (Auth::user() != null) {
             $requisition = Requisition::find($requisition_id);
             if($requisition->noEvaluacion == 6){
-                if($request->evaluacion == "Si"){
+                if($request->evaluacion == "1"){
                     $requisition->cata = true;
-                }else if($request->evaluacion == "No"){
+                }else if($request->evaluacion == "0"){
                     $requisition->cata = false;
                 }else{
                     return response()->json([
