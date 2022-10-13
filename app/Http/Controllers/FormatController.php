@@ -60,22 +60,21 @@ class FormatController extends Controller
                         if ($request->input($formato) == false || $request->input($formato) == 'false') {
                             if ($request->noEvaluation == 1) {
                                 $format->justificacion = 'No se encuentra el formato';
+                                $validationEstatus = false;
                             } else if($request->noEvaluation == 2){
                                 if($format->valido != false){
                                     $format->justificacion = $request->$formatoj;
                                 }
-                                $validationEstatus = false;
+                                // $validationEstatus = false;
                             }else {
                                 $format->justificacion = $request->$formatoj;
                             }
                             $format->valido = false;
-                            // array_push($errors, $format);
                         } else {
                             if($request->noEvaluation == 2){
                                 if($format->valido == false){
-                                    $validationEstatus = false;
-                                }else{
-                                    $format->justificacion = $request->$formatoj;
+                                    // $validationEstatus = false;
+                                    $format->justificacion = "";
                                     $format->valido = true;
                                 }
                             }else{
