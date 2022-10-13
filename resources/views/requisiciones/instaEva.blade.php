@@ -97,13 +97,13 @@
         checkBox.value = this.checked
       }
 
-      $(document).ready(function() {
-        $('#elementsTable').DataTable({
-          "scrollY": "50vh",
-          "scrollCollapse": true,
-        });
-        $('.dataTables_length').addClass('bs-select');
-      });
+    //   $(document).ready(function() {
+    //     $('#elementsTable').DataTable({
+    //       "scrollY": "50vh",
+    //       "scrollCollapse": true,
+    //     });
+    //     $('.dataTables_length').addClass('bs-select');
+    //   });
     }
   </script>
 @endsection

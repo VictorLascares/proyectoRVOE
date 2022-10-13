@@ -128,23 +128,32 @@
       
     </div>
 
-    @if (Auth::user()->tipoUsuario != 'planeacion')
-        <form class="mt-5" action="{{ route('solicitud', $data->id) }}" method="POST" enctype="multipart/form-data">
-        @csrf
-            <div class="flex gap-4 justify-end items-center">
-                <div class="flex gap-2 items-center">
-                    <label for="opcion1">Si</label>
-                    <input type="radio" name="evaluacion" id="opcion1" value="1">
-                </div>
 
-                <div class="flex items-center gap-2">
-                    <label for="opcion2">No</label>
-                    <input type="radio" name="evaluacion" id="opcion2" value="0">
+    <div class="@if ($data->formatoInstalaciones)flex justify-between items-center gap-4 @endif mt-5"> 
+
+        @if ($data->formatoInstalaciones)
+            <button id="open-img" class="bg-[#13322B] hover:bg-[#0C231E] text-white rounded-lg p-2">Evidencia Evaluación de Instalaciones</button>
+        @endif
+
+
+        @if (Auth::user()->tipoUsuario != 'planeacion')
+            <form action="{{ route('solicitud', $data->id) }}" method="POST" enctype="multipart/form-data">
+            @csrf
+                <div class="flex gap-4 justify-end items-center">
+                    <div class="flex gap-2 items-center">
+                        <label for="opcion1">Si</label>
+                        <input type="radio" name="evaluacion" id="opcion1" value="1">
+                    </div>
+
+                    <div class="flex items-center gap-2">
+                        <label for="opcion2">No</label>
+                        <input type="radio" name="evaluacion" id="opcion2" value="0">
+                    </div>
+                    <button class="text-white bg-[#13322B] hover:bg-[#0C231E] p-2 rounded-lg" type="submit">Pasar al administrador</button>
                 </div>
-                <button class="text-white bg-[#13322B] hover:bg-[#0C231E] p-2 rounded-lg" type="submit">Pasar al administrador</button>
-            </div>
-        </form>
-    @endif
+            </form>
+        @endif
+    </div>
 
     
     {{-- @if (Auth::user()->tipoUsuario == 'administrador')
@@ -185,11 +194,11 @@
 
 
   @if ($data->formatoInstalaciones)
-    <div class="p-5">
-      <h2 class="text-center mb-5 uppercase text-2xl">Evidencia de Evaluación de las Instalaciones</h2>
-      <div class="w-1/2 mx-auto">
-        <img src="{{ $data->formatoInstalaciones }}" alt="Formato de instalaciones">
-      </div>
+    <div id="buildings-img" class="hidden p-5 fixed top-0 bottom-0 left-0 right-0 bg-black/80 h-screen">
+        <button id="close-img" class="absolute rounded-lg bg-gray-200 hover:bg-gray-400 px-4 py-2 text-gray-400 hover:text-gray-800 transition-all text-5xl font-bold top-10 right-10">X</button>
+        <div class="flex flex-col justify-center items-center h-screen">
+            <img src="{{ $data->formatoInstalaciones }}" alt="Formato de instalaciones">
+        </div>
     </div>
   @endif
 @endsection
@@ -198,6 +207,9 @@
   <script>
     const checkBtnRadios = document.querySelectorAll('.btn-check')
     const checkBoxes1 = document.querySelectorAll('.review2Checkbox')
+    const imgContainer = document.querySelector("#buildings-img");
+    const closeImg = document.querySelector("#close-img");
+    const openImg = document.querySelector("#open-img");
 
     cargarEventListener()
 
@@ -209,7 +221,15 @@
       checkBoxes1.forEach(checkBox => {
         checkBox.addEventListener('click', review2)
       })
+      
 
+      if (openImg) {
+        openImg.addEventListener('click', () => imgContainer.classList.remove("hidden"));
+      }
+      
+      if (closeImg) {
+        closeImg.addEventListener('click', () => imgContainer.classList.add("hidden"));
+      }
     }
 
     function review1(e) {
