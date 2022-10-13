@@ -100,7 +100,7 @@
         <p>Revisión <span class="font-bold">2</span></p>
       </a>
       <a href="{{ route('evaluate.formats', ['requisition_id' => $data->id, 'no_evaluation' => 3]) }}"
-        class="rounded-md p-3 text-white formatos bg-[#13322B] hover:bg-[#0C231E] @if ($data->noEvaluacion == 3) bg-blue-500 hover:bg-blue-800 @endif flex flex-col justify-center items-center @if (Auth()->user()->tipoUsuario == 'planeacion' || $data->estado == 'rechazado') disabled @endif">
+        class="rounded-md p-3 text-white formatos bg-[#13322B] hover:bg-[#0C231E] @if ($data->noEvaluacion == 3) bg-blue-500 hover:bg-blue-800 @endif flex flex-col justify-center items-center @if (Auth()->user()->tipoUsuario == 'planeacion' || $data->noEvaluacion < 3) disabled @endif">
         <p class="uppercase">Formatos</p>
         <p>Revisión <span class="font-bold">3</span></p>
       </a>
@@ -129,15 +129,20 @@
     </div>
 
     @if (Auth::user()->tipoUsuario != 'planeacion')
-        <form action="{{ route('solicitud', $data->id) }}" method="POST" enctype="multipart/form-data">
+        <form class="mt-5" action="{{ route('solicitud', $data->id) }}" method="POST" enctype="multipart/form-data">
         @csrf
-        <div>
-            <textarea name="evaluacion" class="w-full resize-none"
-            placeholder="Si o No"></textarea>
-        </div>
-        <div class="flex justify-center items-center mt-4">
-            <button class="text-white bg-[#13322B] hover:bg-[#0C231E] px-10 py-3" type="submit">Pasar al administrador</button>
-        </div>
+            <div class="flex gap-4 justify-end items-center">
+                <div class="flex gap-2 items-center">
+                    <label for="opcion1">Si</label>
+                    <input type="radio" name="evaluacion" id="opcion1" value="1">
+                </div>
+
+                <div class="flex items-center gap-2">
+                    <label for="opcion2">No</label>
+                    <input type="radio" name="evaluacion" id="opcion2" value="0">
+                </div>
+                <button class="text-white bg-[#13322B] hover:bg-[#0C231E] p-2 rounded-lg" type="submit">Pasar al administrador</button>
+            </div>
         </form>
     @endif
 
