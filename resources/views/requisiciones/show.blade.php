@@ -3,6 +3,16 @@
   Información de la Solicitud
 @endsection
 @section('contenido')
+<form class="flex justify-end gap-2">
+  <select name="" class="">
+    <option selected disabled>-- seleccione una opción --</option>
+    <option value="activar">Activar</option>
+    <option value="rechazar">Rechazar</option>
+    <option value="eliminar">Eliminar</option>
+  </select>
+
+  <input class="bg-[#13322B] text-white p-2 hover:bg-[#0C231E] hover:cursor-pointer" type="submit" value="Confirmar">
+</form>
   <div class="flex justify-center items-center  mb-4 py-4">
     <img src="{{ $institution->logotipo }}" alt="Logotipo Institución">
   </div>

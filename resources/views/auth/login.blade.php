@@ -1,34 +1,41 @@
 @extends('layouts.app')
-@section('titulo')
-    Iniciar Sesión
-@endsection
 @section('contenido')
-    <form class="max-w-md mx-auto my-10" method="POST" action="{{ route('login') }}" novalidate>
-        @csrf
-        @if (session('mensaje'))
-            <p class="bg-red-600 text-white my-2 text-sm p-2 text-center">{{ session('mensaje') }}</p>
-        @endif
-        <div class="mb-5">
-            <label for="email" class="mb-2 block uppercase text-gray-500">Correo Electrónico</label>
-            <input type="email" class="border p-3 w-full @error('email') border-red-600 @enderror" id="email" name="email" placeholder="name@example.com">
-
-           @error('email')
-                <p class="text-red-600 text-sm">{{ $message }}</p>
-           @enderror
+    <div class="container mx-auto md:grid md:grid-cols-2 gap-10 mt-12 p-5 items-center">
+        <div>
+            <h1 class="text-green-800 font-black text-6xl">
+                Iniciar Sesión y Administra las{{" "}}
+                <span class="text-black">Solicitudes</span>
+            </h1>
         </div>
-        <div class="mb-5">
-            <label for="password" class="mb-2 block uppercase text-gray-500">Contraseña</label>
-            <input type="password" class="border p-3 w-full @error('password') border-red-600 @enderror" name="password" id="password"
-            placeholder="Contraseña">
-
-            @error('password')
-                <p class="text-red-600 text-sm">{{ $message }}</p>
-            @enderror
+        <div class="mt-20 md:mt-5 shadow-lg px-5 py-10 rounded-xl bg-white">
+            <form method="POST" action="{{ route('login') }}" novalidate>
+                <div class="my-5">
+                    @csrf
+                    @if (session('mensaje'))
+                        <p class="bg-red-600 text-white my-2 text-sm p-2 text-center">{{ session('mensaje') }}</p>
+                    @endif
+                    <div class="my-5">
+                        <label for="email" class="block uppercase text-gray-600">Correo Electrónico</label>
+                        <input type="email" class="border p-3 mt-3 w-full bg-gray-50 rounded-xl focus:outline-none @error('email') border-red-600 @enderror" id="email" name="email" placeholder="correo@ejemplo.com">
+                       @error('email')
+                            <p class="text-red-600 text-sm">{{ $message }}</p>
+                       @enderror
+                    </div>
+                    <div class="my-5">
+                        <label for="password" class="block uppercase text-gray-500">Contraseña</label>
+                        <input type="password" class="border p-3 mt-3 w-full bg-gray-50 rounded-xl focus:outline-none @error('password') border-red-600 @enderror" name="password" id="password"
+                        placeholder="Contraseña">
+                        @error('password')
+                            <p class="text-red-600 text-sm">{{ $message }}</p>
+                        @enderror
+                    </div>
+                    <div class="my-5">
+                        <input type="checkbox" name="remember" id="remember">
+                        <label for="remember" class="text-gray-500 text-sm">Mantener mi sesión abierta</label>
+                    </div>
+                    <input class="rounded-xl bg-green-800 hover:bg-green-600 transition-colors cursor-pointer uppercase font-bold w-full py-3 text-white" type="submit" value="Iniciar Sesión">
+                </div>
+            </form>
         </div>
-        <div class="mb-5">
-            <input type="checkbox" name="remember" id="remember">
-            <label for="remember" class="text-gray-500 text-sm">Mantener mi sesión abierta</label>
-        </div>
-        <input class="bg-[#13322B] hover:bg-[#0C231E] transition-colors cursor-pointer uppercase font-bold w-full p-3 text-white" type="submit" value="Iniciar Sesión">
-    </form>
+    </div>
 @endsection
