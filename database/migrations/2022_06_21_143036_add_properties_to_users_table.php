@@ -14,9 +14,9 @@ return new class extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->enum('tipoUsuario',['planeacion','direccion','administrador'])->default('direccion');
-            $table->tinyInteger('activo')->default('0');
-            $table->string('telefono',10)->nullable();
+            $table->enum('typeOfUser',['planeacion','direccion','administrador'])->default('direccion');
+            $table->tinyInteger('active')->default('0');
+            $table->string('phone',10)->nullable();
         });
     }
 
@@ -28,9 +28,9 @@ return new class extends Migration
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('tipoUsuario');
-            $table->dropColumn('activo');
-            $table->dropColumn('telefono');
+            $table->dropColumn('typeOfUser');
+            $table->dropColumn('active');
+            $table->dropColumn('phone');
         });
     }
 };

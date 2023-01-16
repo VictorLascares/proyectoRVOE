@@ -15,18 +15,18 @@ return new class extends Migration
     {
         Schema::create('requisitions', function (Blueprint $table) {
             $table->id();
-            $table->enum('meta', ['solicitud', 'domicilio', 'planEstudios'])->nullable(false);
-            $table->integer('numero_solicitud')->nullable();
+            $table->enum('procedure', ['solicitud', 'domicilio', 'planEstudios'])->nullable(false);
+            $table->integer('requestNumber')->nullable();
             $table->string('rvoe')->nullable()->unique();
-            $table->string('formatoInstalaciones')->nullable();
-            $table->string('formato_public_id')->nullable();
-            $table->enum('estado', ['activo', 'latencia', 'revocado', 'inactivo', 'pendiente', 'rechazado'])->nullable(false)->default('pendiente');
-            $table->integer('noEvaluacion')->default('1');
+            $table->string('facilitiesFormat')->nullable();
+            $table->string('format_public_id')->nullable();
+            $table->enum('status', ['activo', 'latencia', 'revocado', 'inactivo', 'pendiente', 'rechazado'])->nullable(false)->default('pendiente');
+            $table->integer('evaNum')->default('1');
             $table->boolean('cata')->nullable(); 
             $table->boolean('ota')->default(false); 
-            $table->date('fecha_vencimiento')->nullable();
-            $table->date('fecha_latencia')->nullable();
-            $table->date('fecha_direccion')->nullable();
+            $table->date('dueDate')->nullable();
+            $table->date('latencyDate')->nullable();
+            $table->date('fecha_managment')->nullable();
             $table->foreignId('career_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
         });

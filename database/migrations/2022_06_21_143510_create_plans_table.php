@@ -16,8 +16,8 @@ return new class extends Migration
         Schema::create('plans', function (Blueprint $table) {
             $table->id();
             $table->integer('plan')->nullable(false);
-            $table->integer('ponderacion')->nullable();
-            $table->text('comentario')->nullable();
+            $table->integer('score')->nullable();
+            $table->text('commentary')->nullable();
             $table->foreignId('requisition_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
         });

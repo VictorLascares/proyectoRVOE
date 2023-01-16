@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('municipalities', function (Blueprint $table) {
             $table->id();
-            $table->string('nombre')->nullable(false);
-            $table->string('clave')->nullable(false);
+            $table->string('name')->nullable(false);
+            $table->string('key')->nullable(false);
             $table->timestamps();
         });
     }

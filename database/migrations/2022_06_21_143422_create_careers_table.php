@@ -15,10 +15,10 @@ return new class extends Migration
     {
         Schema::create('careers', function (Blueprint $table) {
             $table->id();
-            $table->string('nombre')->nullable(false);
-            $table->enum('modalidad', ['Escolarizado','Semiescolarizado','No escolarizado','Dual'])->nullable(false);
-            $table->enum('tipoPeriodo',['Semestral','Cuatrimestral'])->nullable(false);
-            $table->integer('numPeriodo')->nullable(false);
+            $table->string('name')->nullable(false);
+            $table->enum('modality', ['Escolarizado','Semiescolarizado','No escolarizado','Dual'])->nullable(false);
+            $table->enum('typeOfPeriod',['Semestral','Cuatrimestral'])->nullable(false);
+            $table->integer('numOfPeriods')->nullable(false);
             $table->foreignId('institution_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('area_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
