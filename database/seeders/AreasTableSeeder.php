@@ -16,16 +16,16 @@ class AreasTableSeeder extends Seeder
     public function run()
     {
         DB::table('areas')->insert([
-            ['nombre'=>'Arquitectura, Urbanismo y Diseño'],
-            ['nombre'=>'Artes'],
-            ['nombre'=>'Agronomia Veterinaria'],
-            ['nombre'=>'Ciencias Biologias'],
-            ['nombre'=>'Ciencias Fisico Matematicas'],
-            ['nombre'=>'Ciencias Sociales'],
-            ['nombre'=>'Economico Administrativas'],
-            ['nombre'=>'Educacion'],
-            ['nombre'=>'Humanidades'],
-            ['nombre'=>'Ingenierias']    
+            ['name'=>'Educación'],
+            ['name'=>'Artes y humanidades'],
+            ['name'=>'Ciencias sociales y derecho'],
+            ['name'=>'Administración y negocios'],
+            ['name'=>'Ciencias naturales, matemáticas y estadística'],
+            ['name'=>'Tecnologías de información y la comunicación'],
+            ['name'=>'Ingeniería, manufactura y construcción'],
+            ['name'=>'Agronomía y veterinaria'],
+            ['name'=>'Ciencias de la salud'],
+            ['name'=>'Servicios']    
         ]);
     }
 }
