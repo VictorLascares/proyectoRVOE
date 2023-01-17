@@ -2,9 +2,9 @@
 @section('contenido')
     <div class="container mx-auto md:grid md:grid-cols-2 gap-10 mt-12 p-5 items-center">
         <div>
-            <h1 class="text-green-800 font-black text-6xl">
+            <h1 class="text-green-700 font-black text-6xl">
                 Iniciar Sesión y Administra las{{ ' ' }}
-                <span class="text-black">Solicitudes</span>
+                <span class="text-gray-500">Solicitudes</span>
             </h1>
         </div>
         <div class="mt-20 md:mt-5 shadow-lg px-5 py-10 rounded-xl bg-white">

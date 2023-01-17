@@ -1227,10 +1227,6 @@ input:checked + .toggle-bg {
     --tw-bg-opacity: 1;
     background-color: rgb(249 250 251 / var(--tw-bg-opacity))
 }
-.bg-green-800 {
-    --tw-bg-opacity: 1;
-    background-color: rgb(3 84 63 / var(--tw-bg-opacity))
-}
 .bg-green-900 {
     --tw-bg-opacity: 1;
     background-color: rgb(1 71 55 / var(--tw-bg-opacity))
@@ -1241,6 +1237,10 @@ input:checked + .toggle-bg {
 .bg-green-200 {
     --tw-bg-opacity: 1;
     background-color: rgb(188 240 218 / var(--tw-bg-opacity))
+}
+.bg-green-800 {
+    --tw-bg-opacity: 1;
+    background-color: rgb(3 84 63 / var(--tw-bg-opacity))
 }
 .bg-blue-500 {
     --tw-bg-opacity: 1;
@@ -1390,6 +1390,10 @@ input:checked + .toggle-bg {
     font-size: 1.875rem;
     line-height: 2.25rem
 }
+.text-4xl {
+    font-size: 2.25rem;
+    line-height: 2.5rem
+}
 .text-5xl {
     font-size: 3rem;
     line-height: 1
@@ -1432,13 +1436,9 @@ input:checked + .toggle-bg {
     --tw-text-opacity: 1;
     color: rgb(55 65 81 / var(--tw-text-opacity))
 }
-.text-green-800 {
+.text-green-700 {
     --tw-text-opacity: 1;
-    color: rgb(3 84 63 / var(--tw-text-opacity))
-}
-.text-black {
-    --tw-text-opacity: 1;
-    color: rgb(0 0 0 / var(--tw-text-opacity))
+    color: rgb(4 108 78 / var(--tw-text-opacity))
 }
 .text-white {
     --tw-text-opacity: 1;
@@ -1559,9 +1559,9 @@ input:checked + .toggle-bg {
     --tw-border-opacity: 1;
     border-color: rgb(209 213 219 / var(--tw-border-opacity))
 }
-.hover\:bg-green-600:hover {
+.hover\:bg-green-700:hover {
     --tw-bg-opacity: 1;
-    background-color: rgb(5 122 85 / var(--tw-bg-opacity))
+    background-color: rgb(4 108 78 / var(--tw-bg-opacity))
 }
 .hover\:bg-red-800:hover {
     --tw-bg-opacity: 1;
@@ -1590,10 +1590,6 @@ input:checked + .toggle-bg {
 .hover\:bg-white:hover {
     --tw-bg-opacity: 1;
     background-color: rgb(255 255 255 / var(--tw-bg-opacity))
-}
-.hover\:bg-green-700:hover {
-    --tw-bg-opacity: 1;
-    background-color: rgb(4 108 78 / var(--tw-bg-opacity))
 }
 .hover\:text-gray-500:hover {
     --tw-text-opacity: 1;

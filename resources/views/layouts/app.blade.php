@@ -65,7 +65,7 @@
         </nav>
     </header>
     <main class="container mx-auto mt-5 p-2">
-        <h1 class="font-black text-gray-600 uppercase text-center text-3xl">
+        <h1 class="font-black text-green-700 uppercase text-center text-4xl">
             @yield('titulo')
         </h1>
         @yield('contenido')
