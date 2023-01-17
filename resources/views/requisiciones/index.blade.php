@@ -7,14 +7,14 @@
         <button 
             type="reset" 
             id="limpiar-filtro" 
-            class="text-white p-2 bg-[#13322B] hover:bg-[#0C231E] w-full sm:w-auto mb-5 sm:mb-0 rounded-lg"
+            class="text-white p-2 bg-green-900 hover:bg-green-700 w-full sm:w-auto mb-5 sm:mb-0 rounded-lg"
         >
             Limpiar Filtros
         </button>
-        <select id="filtro-anio" class="w-full sm:w-auto mb-5 sm:mb-0 rounded-lg">
+        <select id="filtro-anio" class="w-full border-gray-200 sm:w-auto mb-5 sm:mb-0 rounded-lg">
             <option selected disabled>Filtrar por Año</option>
         </select>
-        <select id="filtro-estado" class="w-full sm:w-auto rounded-lg">
+        <select id="filtro-estado" class="w-full border-gray-200 sm:w-auto rounded-lg">
             <option selected disabled>Filtrar por estado</option>
             <option value="activo">Activo</option>
             <option value="latencia">Latencia</option>
@@ -59,7 +59,7 @@
         <button 
             data-modal-toggle="new-request" 
             type="button"
-            class="p-2 fixed bottom-5 right-5 boton bg-[#13322B] hover:bg-[#0C231E]">
+            class="p-2 fixed bottom-5 right-5 boton bg-green-900 hover:bg-green-700">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 stroke-white" viewBox="0 0 24 24" stroke-width="2">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
             </svg>
@@ -100,7 +100,7 @@
                         <option selected disabled>-- Seleccione la Carrera --</option>
                       </select>
                     </div>
-                    <button class="bg-[#13322B] hover:bg-[#0C231E] text-white uppercase w-full p-3" type="submit">Agregar</button>
+                    <button class="bg-green-900 hover:bg-green-700 text-white uppercase w-full p-3" type="submit">Agregar</button>
                   </form>
             </div>
         </div>

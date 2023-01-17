@@ -45,7 +45,7 @@
             </div>
             
             <div class="flex justify-end mt-4">
-                <button type="submit" class="bg-[#13322B] hover:bg-[#0C231E] rounded-lg p-3 text-white transition-colors w-full md:w-auto">Actualizar</button>
+                <button type="submit" class="bg-green-900 hover:bg-green-700 rounded-lg p-3 text-white transition-colors w-full md:w-auto">Actualizar</button>
             </div>
         </form>
         
@@ -75,7 +75,7 @@
                 </div>
             </div>
             <div class="flex justify-end mt-4">
-                <button type="submit" class="bg-[#13322B] hover:bg-[#0C231E] rounded-lg p-3 text-white transition-colors w-full md:w-auto">Actualizar Contraseña</button>
+                <button type="submit" class="bg-green-900 hover:bg-green-700 rounded-lg p-3 text-white transition-colors w-full md:w-auto">Actualizar Contraseña</button>
             </div>
         </form>
     </div>

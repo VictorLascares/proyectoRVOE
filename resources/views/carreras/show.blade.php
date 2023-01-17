@@ -60,7 +60,7 @@
       
       @if (Auth::user()->tipoUsuario != 'direccion')
         <div class="flex justify-center items-center mt-4">
-          <button class="bg-[#13322B] hover:bg-[#0C231E] rounded-lg text-white py-2 px-10" type="submit">
+          <button class="bg-green-900 hover:bg-green-700 rounded-lg text-white py-2 px-10" type="submit">
             Actualizar
           </button>
         </div>
@@ -72,7 +72,7 @@
         <h2 class="text-2xl">Solicitudes</h2>
         @if (Auth::user()->tipoUsuario !== 'direccion')
           <button type="button" data-modal-toggle="new-request" type="submit"
-            class="bg-[#13322B] hover:bg-[#0C231E] rounded-lg text-white py-2 px-4">
+            class="bg-green-900 hover:bg-green-700 rounded-lg text-white py-2 px-4">
             Nueva Solicitud
           </button>
         @endif
@@ -85,7 +85,7 @@
                     <div class="py-2 inline-block min-w-full sm:px-6 lg:px-8">
                         <div class="overflow-hidden rounded-lg">
                             <table class="min-w-full">
-                                <thead class="border-b bg-[#13322B]">
+                                <thead class="border-b bg-green-900">
                                 <tr>
                                     <th class="text-sm font-bold text-white px-6 py-4 text-left">Meta</th>
                                     <th class="text-sm font-bold text-white px-6 py-4 text-left">Estado</th>
@@ -137,7 +137,7 @@
                         </div>
                         <input type="hidden" name="career_id" value="{{ $career->id }}">
                         <div class="d-grid mt-4">
-                          <button class="bg-[#13322B] hover:bg-[#0C231E] text-white uppercase w-full p-2" type="submit">Agregar</button>
+                          <button class="bg-green-900 hover:bg-green-700 text-white uppercase w-full p-2" type="submit">Agregar</button>
                         </div>
                       </form>
                 </div>

@@ -65,7 +65,7 @@
             </div>
         </div>
         <div class="flex justify-end">
-            <button class="bg-[#13322B] hover:bg-[#0C231E] rounded-lg mt-4 px-10 py-2 text-white uppercase"
+            <button class="bg-green-900 hover:bg-green-700 rounded-lg mt-4 px-10 py-2 text-white uppercase"
             type="submit">Agregar</button>   
         </div>
         </form>

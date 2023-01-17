@@ -11,7 +11,7 @@
     <option value="eliminar">Eliminar</option>
   </select>
 
-  <input class="bg-[#13322B] text-white p-2 hover:bg-[#0C231E] hover:cursor-pointer" type="submit" value="Confirmar">
+  <input class="bg-green-900 text-white p-2 hover:bg-green-700 hover:cursor-pointer" type="submit" value="Confirmar">
 </form>
   <div class="flex justify-center items-center  mb-4 py-4">
     <img src="{{ $institution->logotipo }}" alt="Logotipo Institución">
@@ -88,7 +88,7 @@
               @break
             @endswitch
           </select>
-          <button class="bg-[#13322B] hover:bg-[#0C231E] py-2 px-3 text-white" type="submit">
+          <button class="bg-green-900 hover:bg-green-700 py-2 px-3 text-white" type="submit">
             Actualizar
           </button>
         </div>
@@ -100,37 +100,37 @@
     <h2 class="text-center mb-5 uppercase text-2xl">Evaluación de la Solicitud</h2>
     <div class="grid sm:grid-cols-2 lg:grid-cols-6 gap-4">
       <a href="{{ route('evaluate.formats', ['requisition_id' => $data->id, 'no_evaluation' => 1]) }}" type="button" id="evaFormatos"
-        class="rounded-md p-3 text-white formatos bg-[#13322B] hover:bg-[#0C231E] @if ($data->noEvaluacion == 1) bg-blue-500 hover:bg-blue-800 @endif flex flex-col justify-center items-center @if (Auth()->user()->tipoUsuario == 'direccion') disabled @endif">
+        class="rounded-md p-3 text-white formatos bg-green-900 hover:bg-green-700 @if ($data->noEvaluacion == 1) bg-blue-500 hover:bg-blue-800 @endif flex flex-col justify-center items-center @if (Auth()->user()->tipoUsuario == 'direccion') disabled @endif">
         <p class="uppercase">Formatos</p>
         <p>Revisión <span class="font-bold">1</span></p>
       </a>
       <a href="{{ route('evaluate.formats', ['requisition_id' => $data->id, 'no_evaluation' => 2]) }}"
-        class="rounded-md p-3 text-white formatos bg-[#13322B] hover:bg-[#0C231E] @if ($data->noEvaluacion == 2) bg-blue-500 hover:bg-blue-800 @endif flex flex-col justify-center items-center @if ($data->noEvaluacion < 2 || Auth()->user()->tipoUsuario == 'direccion') disabled @endif">
+        class="rounded-md p-3 text-white formatos bg-green-900 hover:bg-green-700 @if ($data->noEvaluacion == 2) bg-blue-500 hover:bg-blue-800 @endif flex flex-col justify-center items-center @if ($data->noEvaluacion < 2 || Auth()->user()->tipoUsuario == 'direccion') disabled @endif">
         <p class="uppercase">Formatos</p>
         <p>Revisión <span class="font-bold">2</span></p>
       </a>
       <a href="{{ route('evaluate.formats', ['requisition_id' => $data->id, 'no_evaluation' => 3]) }}"
-        class="rounded-md p-3 text-white formatos bg-[#13322B] hover:bg-[#0C231E] @if ($data->noEvaluacion == 3) bg-blue-500 hover:bg-blue-800 @endif flex flex-col justify-center items-center @if (Auth()->user()->tipoUsuario == 'planeacion' || $data->noEvaluacion < 3) disabled @endif">
+        class="rounded-md p-3 text-white formatos bg-green-900 hover:bg-green-700 @if ($data->noEvaluacion == 3) bg-blue-500 hover:bg-blue-800 @endif flex flex-col justify-center items-center @if (Auth()->user()->tipoUsuario == 'planeacion' || $data->noEvaluacion < 3) disabled @endif">
         <p class="uppercase">Formatos</p>
         <p>Revisión <span class="font-bold">3</span></p>
       </a>
       <a href="{{ url('/evaluate/elements', $data->id) }}"
-        class="rounded-md p-3 text-white bg-[#13322B] hover:bg-[#0C231E] @if ($data->noEvaluacion == 4) bg-blue-500 hover:bg-blue-800 @endif flex flex-col justify-center items-center @if ($data->noEvaluacion < 4 || Auth()->user()->tipoUsuario == 'planeacion') disabled @endif">
+        class="rounded-md p-3 text-white bg-green-900 hover:bg-green-700 @if ($data->noEvaluacion == 4) bg-blue-500 hover:bg-blue-800 @endif flex flex-col justify-center items-center @if ($data->noEvaluacion < 4 || Auth()->user()->tipoUsuario == 'planeacion') disabled @endif">
         <p class="uppercase">Instalaciones</p>
         <p>Evaluación <span class="font-bold">2</span></p>
       </a>
       <a href="{{ url('/evaluate/plans', $data->id) }}"
-        class="rounded-md p-3 text-white bg-[#13322B] hover:bg-[#0C231E] @if ($data->noEvaluacion == 5) bg-blue-500 hover:bg-blue-800 @endif flex flex-col justify-center items-center @if ($data->noEvaluacion < 5 || Auth()->user()->tipoUsuario == 'planeacion') disabled @endif">
+        class="rounded-md p-3 text-white bg-green-900 hover:bg-green-700 @if ($data->noEvaluacion == 5) bg-blue-500 hover:bg-blue-800 @endif flex flex-col justify-center items-center @if ($data->noEvaluacion < 5 || Auth()->user()->tipoUsuario == 'planeacion') disabled @endif">
         <p class="uppercase">Planes</p>
         <p>Evaluación <span class="font-bold">3</span></p>
       </a>
-      <a download="OTAReq-{{ $data->id }}" href="{{ url('/download/status', $data->id) }}" class="rounded-md p-3 text-white bg-[#13322B] hover:bg-[#0C231E] @if ($data->noEvaluacion == 6) bg-blue-500 hover:bg-blue-800 @endif flex flex-col justify-center items-center @if ($data->noEvaluacion < 6 || Auth()->user()->tipoUsuario == 'planeacion') disabled @endif">
+      <a download="OTAReq-{{ $data->id }}" href="{{ url('/download/status', $data->id) }}" class="rounded-md p-3 text-white bg-green-900 hover:bg-green-700 @if ($data->noEvaluacion == 6) bg-blue-500 hover:bg-blue-800 @endif flex flex-col justify-center items-center @if ($data->noEvaluacion < 6 || Auth()->user()->tipoUsuario == 'planeacion') disabled @endif">
         <p>Descargar</p>
         <p class="uppercase">ESTADO</p>
       </a>  
       @if ($data->ota == 'true')
         <a download="OTAReq-{{ $data->id }}" href="{{ url('/download', $data->id) }}"
-            class="rounded-md p-3 text-white bg-[#13322B] hover:bg-[#0C231E] @if ($data->noEvaluacion == 6) bg-blue-500 hover:bg-blue-800 @endif flex flex-col justify-center items-center @if ($data->noEvaluacion < 6 || Auth()->user()->tipoUsuario == 'planeacion') disabled @endif">
+            class="rounded-md p-3 text-white bg-green-900 hover:bg-green-700 @if ($data->noEvaluacion == 6) bg-blue-500 hover:bg-blue-800 @endif flex flex-col justify-center items-center @if ($data->noEvaluacion < 6 || Auth()->user()->tipoUsuario == 'planeacion') disabled @endif">
             <p>Descargar</p>
             <p class="uppercase">ota</p>
         </a>  
@@ -142,7 +142,7 @@
     <div class="@if ($data->formatoInstalaciones)flex justify-between items-center gap-4 @endif mt-5"> 
 
         @if ($data->formatoInstalaciones)
-            <button id="open-img" class="bg-[#13322B] hover:bg-[#0C231E] text-white rounded-lg p-2">Evidencia Evaluación de Instalaciones</button>
+            <button id="open-img" class="bg-green-900 hover:bg-green-700 text-white rounded-lg p-2">Evidencia Evaluación de Instalaciones</button>
         @endif
 
 
@@ -159,7 +159,7 @@
                         <label for="opcion2">No</label>
                         <input type="radio" name="evaluacion" id="opcion2" value="0">
                     </div>
-                    <button class="text-white bg-[#13322B] hover:bg-[#0C231E] p-2 rounded-lg" type="submit">Pasar al administrador</button>
+                    <button class="text-white bg-green-900 hover:bg-green-700 p-2 rounded-lg" type="submit">Pasar al administrador</button>
                 </div>
             </form>
         @endif
@@ -169,7 +169,7 @@
     {{-- @if (Auth::user()->tipoUsuario == 'administrador')
       <div class="flex justify-end mt-4">
         <a href="{{ url('/evaluacion-anterior', $data->id) }}"
-          class="rounded-md py-2 px-4 bg text-white bg-[#13322B] hover:bg-[#0C231E]">Modificar
+          class="rounded-md py-2 px-4 bg text-white bg-green-900 hover:bg-green-700">Modificar
           Evaluación</a>
       </div>
     @endif --}}

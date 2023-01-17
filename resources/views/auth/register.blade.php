@@ -64,7 +64,7 @@
             </div>
     
             <div class="flex justify-end mt-4">
-                <button type="submit" class="rounded-lg bg-[#13322B] hover:bg-[#0C231E] p-3 text-white  transition-colors w-full md:w-auto">Crear Usuario</button>
+                <button type="submit" class="rounded-lg bg-green-900 hover:bg-green-700 p-3 text-white  transition-colors w-full md:w-auto">Crear Usuario</button>
             </div>
         </form>
     </div>

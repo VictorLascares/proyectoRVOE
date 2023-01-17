@@ -3,7 +3,7 @@
     <div class="container mx-auto md:grid md:grid-cols-2 gap-10 mt-12 p-5 items-center">
         <div>
             <h1 class="text-green-800 font-black text-6xl">
-                Iniciar Sesión y Administra las{{" "}}
+                Iniciar Sesión y Administra las{{ ' ' }}
                 <span class="text-black">Solicitudes</span>
             </h1>
         </div>
@@ -16,24 +16,32 @@
                     @endif
                     <div class="my-5">
                         <label for="email" class="block uppercase text-gray-600">Correo Electrónico</label>
-                        <input type="email" class="border p-3 mt-3 w-full bg-gray-50 rounded-xl focus:outline-none @error('email') border-red-600 @enderror" id="email" name="email" placeholder="correo@ejemplo.com">
-                       @error('email')
-                            <p class="text-red-600 text-sm">{{ $message }}</p>
-                       @enderror
-                    </div>
-                    <div class="my-5">
-                        <label for="password" class="block uppercase text-gray-500">Contraseña</label>
-                        <input type="password" class="border p-3 mt-3 w-full bg-gray-50 rounded-xl focus:outline-none @error('password') border-red-600 @enderror" name="password" id="password"
-                        placeholder="Contraseña">
-                        @error('password')
+                        <input type="email"
+                            class="border-gray-200 p-3 mt-3 w-full bg-gray-50 rounded-xl focus:outline-none"
+                            id="email" name="email" placeholder="correo@ejemplo.com">
+                        @error('email')
                             <p class="text-red-600 text-sm">{{ $message }}</p>
                         @enderror
                     </div>
                     <div class="my-5">
-                        <input type="checkbox" name="remember" id="remember">
-                        <label for="remember" class="text-gray-500 text-sm">Mantener mi sesión abierta</label>
+                        <label for="password" class="block uppercase text-gray-500">Contraseña</label>
+                        <input type="password"
+                            class="border-gray-200 p-3 mt-3 w-full bg-gray-50 rounded-xl focus:outline-none"
+                            name="password" id="password" placeholder="Contraseña">
+                        @error('password')
+                            <p class="text-red-600 text-sm">{{ $message }}</p>
+                        @enderror
                     </div>
-                    <input class="rounded-xl bg-green-800 hover:bg-green-600 transition-colors cursor-pointer uppercase font-bold w-full py-3 text-white" type="submit" value="Iniciar Sesión">
+                    <div class="my-5 flex justify-between items-center">
+                        <div>
+                            <input type="checkbox" name="remember" id="remember">
+                            <label for="remember" class="text-gray-500 text-sm">Mantener mi sesión abierta</label>
+                        </div>
+                        <a href="#" class="text-gray-500 text-sm underline hover:text-green-600">Olvidé mi contraseña</a>
+                    </div>
+                    <input
+                        class="rounded-xl bg-green-900 hover:bg-green-700 transition-colors cursor-pointer uppercase font-bold w-full py-3 text-white"
+                        type="submit" value="Iniciar Sesión">
                 </div>
             </form>
         </div>

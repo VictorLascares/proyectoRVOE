@@ -66,7 +66,7 @@
         </div>
         @if (Auth::user()->tipoUsuario == 'planeacion' || Auth::user()->tipoUsuario == 'administrador')
             <div class="flex justify-center mt-4">
-                <button class="bg-[#13322B] hover:bg-[#0C231E] rounded-lg text-white py-2 px-4" type="submit">
+                <button class="bg-green-900 hover:bg-green-700 rounded-lg text-white py-2 px-4" type="submit">
                     Actualizar
                 </button>
             </div>
@@ -78,7 +78,7 @@
         <h2 class="text-3xl">Carreras</h2>
         @if (Auth::user()->tipoUsuario == 'planeacion' || Auth::user()->tipoUsuario == 'administrador')
           <button type="button" data-modal-toggle="new-career" type="submit"
-            class="bg-[#13322B] hover:bg-[#0C231E] rounded-lg text-white py-2 px-4">
+            class="bg-green-900 hover:bg-green-700 rounded-lg text-white py-2 px-4">
             Nueva Carrera
           </button>
         @endif
@@ -160,7 +160,7 @@
                         </div>
                     </div>
                     <input type="hidden" name="institution_id" value="{{ $institution->id }}">
-                    <button class="bg-[#13322B] hover:bg-[#0C231E] text-white w-full p-3 uppercase mt-4" type="submit">Agregar</button>
+                    <button class="bg-green-900 hover:bg-green-700 text-white w-full p-3 uppercase mt-4" type="submit">Agregar</button>
                 </form>
             </div>
         </div>

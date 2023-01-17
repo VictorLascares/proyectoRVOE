@@ -44,7 +44,7 @@
         @endforeach
         </div>
         <div class="flex justify-center items-center mt-4">
-        <button class="text-white bg-[#13322B] hover:bg-[#0C231E] px-10 py-3" type="submit">Guardar</button>
+        <button class="text-white bg-green-900 hover:bg-green-700 px-10 py-3" type="submit">Guardar</button>
         </div>
     </div>
   </form>

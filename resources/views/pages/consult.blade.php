@@ -35,10 +35,10 @@ Consultar RVOE
         </div>
     </div>
     <div class="flex justify-end gap-4 mt-4">
-        <button id="search-rvoe" type="button" class="bg-[#13322B] hover:bg-[#0C231E] uppercase py-3 px-10 text-white">
+        <button id="search-rvoe" type="button" class="bg-green-900 hover:bg-green-700 uppercase py-3 px-10 text-white">
             Buscar por RVOE o Acuerdo
         </button>
-        <button id="resetButton" type="button" class="bg-[#13322B] hover:bg-[#0C231E] uppercase py-3 px-10 text-white">
+        <button id="resetButton" type="button" class="bg-green-900 hover:bg-green-700 uppercase py-3 px-10 text-white">
             Limpiar
         </button>
     </div>
@@ -54,7 +54,7 @@ Consultar RVOE
                 <div class="py-2 inline-block min-w-full sm:px-6 lg:px-8">
                     <div class="overflow-hidden">
                         <table class="min-w-full">
-                            <thead class="border-b bg-[#13322B]">
+                            <thead class="border-b bg-green-900">
                                 <tr>
                                     <th class="text-sm font-bold text-white px-6 py-4 text-left">Estado</th>
                                     <th class="text-sm font-bold text-white px-6 py-4 text-left">Fecha de Vencimiento</th>

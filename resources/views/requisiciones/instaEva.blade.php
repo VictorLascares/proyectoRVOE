@@ -11,7 +11,7 @@
           <div class="py-2 inline-block min-w-full sm:px-6 lg:px-8">
             <div class="overflow-hidden">
                 <table id="elementsTable" class="min-w-full">
-                <thead class="border-b bg-[#13322B]">
+                <thead class="border-b bg-green-900">
                     <tr>
                     <th class="text-sm font-bold text-white px-6 py-4 text-left">#</th>
                     <th class="text-sm font-bold text-white px-6 py-4 text-left">Elemento</th>
@@ -70,7 +70,7 @@
         <input class="w-1/2 border" name="formatoInstalaciones" type="file" id="building-format"  @if($requisition->formatoInstalaciones == null)required @endif>
       </div>
       <div class="flex justify-end">
-        <button class="text-white py-2 px-4 bg-[#13322B] hover:bg-[#0C231E]" type="submit">
+        <button class="text-white py-2 px-4 bg-green-900 hover:bg-green-700" type="submit">
             Guardar
         </button>
       </div>

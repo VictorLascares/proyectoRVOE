@@ -5,7 +5,7 @@
 @section('contenido')
     <div class="flex justify-end items-center mt-4">
         @if (Auth::user()->tipoUsuario != 'direccion')
-            <a href="{{route('institutions.create')}}" class="bg-[#13322B] hover:bg-[#0C231E] rounded-lg text-white p-3">Nueva Institución</a>
+            <a href="{{route('institutions.create')}}" class="bg-green-900 hover:bg-green-700 rounded-lg text-white p-3">Nueva Institución</a>
         @endif
     </div>
     @if (count($institutions) != 0)
