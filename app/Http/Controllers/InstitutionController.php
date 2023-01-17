@@ -51,17 +51,17 @@ class InstitutionController extends Controller
     {
         if (Auth::user() != null) {
             $this->validate($request, [
-                'nombre' => ['required', 'max:255'],
-                'titular' => ['required', 'max:60'],
-                'repLegal' => ['required','max:60'],
+                'name' => ['required', 'max:255'],
+                'owner' => ['required', 'max:60'],
+                'legalRep' => ['required','max:60'],
                 'email' => ['required','unique:institutions','email','max:60'],
                 'municipalitie_id' => ['required'],
-                'direccion' => ['required', 'max:255'],
-                'logotipo' => ['required']
+                'address' => ['required', 'max:255'],
+                'logo' => ['required']
             ]);
             $institution = new Institution();
-            if ($request->logotipo) {
-                $path = $request->file('logotipo')->getRealPath();
+            if ($request->logo) {
+                $path = $request->file('logo')->getRealPath();
                 $image = Image::make($path, null);
                 $image->resize(250, 250)
                     ->save();
@@ -70,13 +70,13 @@ class InstitutionController extends Controller
                 $public_id = $response->getPublicId();
             }
 
-            $institution->logotipo = $secureURL;
+            $institution->logo = $secureURL;
             $institution->logo_public_id = $public_id;
-            $institution->nombre = $request->nombre;
-            $institution->titular = $request->titular;
-            $institution->repLegal = $request->repLegal;
+            $institution->name = $request->name;
+            $institution->owner = $request->owner;
+            $institution->legalRep = $request->legalRep;
             $institution->email = $request->email;
-            $institution->direccion = $request->direccion;
+            $institution->address = $request->address;
             $institution->municipalitie_id = $request->municipalitie_id;
             $institution->save();
             return redirect('institutions');
@@ -125,11 +125,11 @@ class InstitutionController extends Controller
     {
         if (Auth::user() != null) {
             $data = Institution::find($institution);
-            $logotipo = $request->file('logotipo');
-            if ($logotipo != null) {
+            $logo = $request->file('logo');
+            if ($logo != null) {
                 Cloudinary()->destroy($data->logo_public_id);
 
-                $path = $request->file('logotipo')->getRealPath();
+                $path = $request->file('logo')->getRealPath();
                 $image = Image::make($path, null);
                 $image->resize(250, 250)
                     ->save();
@@ -137,15 +137,15 @@ class InstitutionController extends Controller
                 $secureURL = $response->getSecurePath();
                 $public_id = $response->getPublicId();
 
-                $institution->logotipo = $secureURL;
+                $institution->logo = $secureURL;
                 $institution->logo_public_id = $public_id;
             }
             $data->municipalitie_id = $request->municipalitie_id;
-            $data->nombre = $request->nombre;
-            $data->titular = $request->titular;
-            $data->repLegal = $request->repLegal;
+            $data->name = $request->name;
+            $data->owner = $request->owner;
+            $data->legalRep = $request->legalRep;
             $data->email = $request->email;
-            $data->direccion = $request->direccion;
+            $data->address = $request->address;
             $data->save();
             return redirect()->route('institutions.show',$institution);
         }

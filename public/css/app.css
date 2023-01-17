@@ -955,6 +955,9 @@ input:checked + .toggle-bg {
 .mb-1 {
     margin-bottom: 0.25rem
 }
+.mb-10 {
+    margin-bottom: 2.5rem
+}
 .block {
     display: block
 }
@@ -1480,6 +1483,10 @@ input:checked + .toggle-bg {
     --tw-text-opacity: 1;
     color: rgb(28 100 242 / var(--tw-text-opacity))
 }
+.text-green-500 {
+    --tw-text-opacity: 1;
+    color: rgb(14 159 110 / var(--tw-text-opacity))
+}
 .underline {
     -webkit-text-decoration-line: underline;
             text-decoration-line: underline
@@ -1841,6 +1848,9 @@ input:checked + .toggle-bg {
     }
     .md\:gap-10 {
         gap: 2.5rem
+    }
+    .md\:gap-5 {
+        gap: 1.25rem
     }
     .md\:py-0 {
         padding-top: 0px;
