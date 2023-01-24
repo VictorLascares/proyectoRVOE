@@ -7,6 +7,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\CareerController;
 use App\Http\Controllers\FormatController;
 use App\Http\Controllers\ElementController;
+use App\Http\Controllers\OpinionController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\ConsultController;
@@ -82,6 +83,12 @@ Route::post('/update/formats', [FormatController::class,'updateFormats']);
 Route::get('/evaluate/elements/{requisition_id}', [ElementController::class,'evaluateElements']);
 //Ruta para actualizar los elementos
 Route::post('/update/elements', [ElementController::class,'updateElements']);
+
+//****************ELEMENTS ROUTES*****************
+//Ruta para realizar evaluación de los elementos
+Route::get('/evaluate/opinions/{requisition_id}', [OpinionController::class,'evaluateOpinions']);
+//Ruta para actualizar los elementos
+Route::post('/update/opinions', [OpinionController::class,'updateOpinions']);
 
 //****************PLANS ROUTES*****************
 //Ruta para realizar evaluación de los elementos

@@ -17,8 +17,8 @@ class Municipality extends Model
    * @var string[]
    */
   protected $fillable = [
-    'nombre',
-    'clave'
+    'name',
+    'key'
   ];
 
 

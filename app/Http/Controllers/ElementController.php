@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Plan;
+use App\Models\Opinion;
 
 use App\Models\Career;
 use App\Models\Element;
@@ -91,8 +91,8 @@ class ElementController extends Controller
     {
         if (Auth::user() != null) {
             $requisition = Requisition::find($request->requisition_id);
-            $plans = Plan::searchrequisitionid($request->requisition_id)->first();
-            if ($requisition->noEvaluacion >= 4 && $requisition->estado == 'pendiente') {
+            $opinions = Opinion::searchrequisitionid($request->requisition_id)->first();
+            if ($requisition->evaNum >= 4 && $requisition->estado == 'pendiente') {
                 $imagen = $request->formatoInstalaciones;
                 // if (!is_null($imagen)) {
                     for ($elementName = 1; $elementName < 53; $elementName++) {
@@ -113,8 +113,8 @@ class ElementController extends Controller
                         }
                         $element->save();
                     }
-                    if($requisition->noEvaluacion == 4){
-                        $requisition->noEvaluacion = $requisition->noEvaluacion + 1;
+                    if($requisition->evaNum == 4){
+                        $requisition->evaNum = $requisition->evaNum + 1;
                     }
                     if ($requisition->formatoInstalaciones != null) {
                         Cloudinary()->destroy($requisition->formato_public_id);
@@ -131,13 +131,15 @@ class ElementController extends Controller
                         $requisition->formatoInstalaciones = $secureURL;
                         $requisition->formato_public_id = $public_id;
                     }
-                    // Se crean los planes para evaluación
-                    if (is_null($plans)) {
-                        for ($planName = 1; $planName < 4; $planName++) {
-                            $plan = new Plan();
-                            $plan->plan = $planName;
-                            $plan->requisition_id = $requisition->id;
-                            $plan->save();
+                    //Se crean las opiniones
+                    $opinionTop= array(1,1,1,1,1,.83,.83,.83,.83,.83,.83,1.67,1.67,1.67,3,3,3,3,3,3.75,3.75,3.75,3.75,12.5,12.5,10,6.67,6.67,6.67);
+                    if (is_null($opinions)) {
+                        for ($opinionName = 1; $opinionName < 29; $opinionName++) {
+                            $opinion = new Plan();
+                            $opinion->plan = $opinionName;
+                            $opinion->top = $opinionTop[$opinionName - 1];
+                            $opinion->requisition_id = $requisition->id;
+                            $opinion->save();
                         }
                     }
                     $requisition->save();

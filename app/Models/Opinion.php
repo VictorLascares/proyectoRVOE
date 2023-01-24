@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Element extends Model
+class Opinion extends Model
 {
     use HasFactory;
     public $timestamps = false;
@@ -17,11 +17,11 @@ class Element extends Model
      * @var string[]
      */
     protected $fillable = [
-        'element',
-        'existing',
-        'observation',
+        'opinion',
+        'top',
+        'status',
     ];
-
+    
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -42,7 +42,7 @@ class Element extends Model
         return $query->where('requisition_id',$requisition_id);
     }
 
-    public function scopeSearchElemento($query,$element){
-        return $query->where('elemento',$element);
+    public function scopeSearchOpinion($query,$opinion){
+        return $query->where('opinion',$opinion);
     }
 }

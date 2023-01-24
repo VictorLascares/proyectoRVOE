@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Requisition;
 use App\Models\Format;
 use App\Models\Element;
+use App\Models\Opinion;
 use App\Models\Plan;
 use App\Models\Institution;
 use App\Models\User;
@@ -73,16 +74,17 @@ class RequisitionController extends Controller
       $requisition = new Requisition();
       $career = Career::find($request->career_id);
       $institution = Institution::find($career->institution_id);
-      $requisition_max = Requisition::searchcareeridMax($request->career_id)->first();
+      $requisition_max = Requisition::searchcareeridMax($request->career_id)->first(); //Mayor
       if (!is_null($requisition_max)) {
         $dateNow = date('Y-m-d');
         $dateBack = $requisition_max->fecha_vencimiento;
         $dateNow_time = strtotime($dateNow);
         $dateBack_time = strtotime($dateBack);
-        if ($requisition_max->estado == 'revocado' || ($dateBack_time < $dateNow_time && $requisition_max->fecha_vencimiento != null)) {
+        if ($requisition_max->estado == 'latencia' || ($dateBack_time < $dateNow_time && $requisition_max->fecha_vencimiento != null)) {
           $requisition->meta = $request->meta;
           $requisition->career_id = $request->career_id;
           $data = $requisition->save();
+          //Se crean los formatos del 1 al 6
           for ($formatName = 1; $formatName < 6; $formatName++) {
             $format = new Format();
             $format->formato = $formatName;
@@ -153,6 +155,7 @@ class RequisitionController extends Controller
         $area = Area::find($career->area_id);
         $institution = Institution::find($career->institution_id);
         $elements = Element::searchrequisitionid($data->id)->get();
+        $opinions = Opinon::searchrequisitionid($data->id)->get();
         $plans = Plan::searchrequisitionid($data->id)->get();
         $formatNames = array(
           "Plan de Estudios",
@@ -162,15 +165,21 @@ class RequisitionController extends Controller
           "Plataforma Tecnológica"
         );
         $errors = [];
-        if ($data->noEvaluacion <= 4) {
+        if ($data->evaNum <= 4) {
           foreach ($formats as $format) {
-            if (!$format->valido) {
+            if (!$format->valid) {
               array_push($errors, $format);
             }
           }
-        } elseif ($data->noEvaluacion <= 5) {
+        } elseif ($data->evaNum <= 5) {
           foreach ($elements as $element) {
-            if (!$element->existente) {
+            if (!$element->existing) {
+              array_push($errors, $element);
+            }
+          }
+        } elseif ($data->evaNum <= 6) {
+          foreach ($opinions as $opinion) {
+            if (!$opinion->existente) {
               array_push($errors, $element);
             }
           }
@@ -293,7 +302,7 @@ class RequisitionController extends Controller
   {
     if (Auth::user() != null) {
       $requisition = Requisition::find($requisition_id);
-      if ($requisition->noEvaluacion == 6 and $requisition->ota == true) {
+      if ($requisition->evaNum == 6 and $requisition->ota == true) {
         try {
           //code...
           $career = Career::find($requisition->career_id);
@@ -375,7 +384,7 @@ class RequisitionController extends Controller
   {
     if (Auth::user() != null) {
       $requisition = Requisition::find($requisition_id);
-      if ($requisition->noEvaluacion == 6) {
+      if ($requisition->evaNum == 6) {
         if ($request->evaluacion == "1") {
           $requisition->cata = true;
         } else if ($request->evaluacion == "0") {
@@ -590,15 +599,15 @@ class RequisitionController extends Controller
     if (Auth::user() != null) {
       $this->revisar_activo($requisition_id);
       $requisition = Requisition::find($requisition_id);
-      if ($requisition->noEvaluacion != 1 && in_array($requisition->estado, ['activo', 'rechazado', 'pendiente'])) {
-        // if($requisition->noEvaluacion == 5){
+      if ($requisition->evaNum != 1 && in_array($requisition->estado, ['activo', 'rechazado', 'pendiente'])) {
+        // if($requisition->evaNum == 5){
         //   $formatoInstalaciones = $requisition->formatoInstalaciones;
         //   if($formatoInstalaciones != null){
         //     unlink(public_path('img/formatos/instalaciones/' . $formatoInstalaciones));
         //   }  
         // }
         $requisition->numero_solicitud = null;
-        $requisition->noEvaluacion = $requisition->noEvaluacion - 1;
+        $requisition->evaNum = $requisition->evaNum - 1;
         $requisition->estado = 'pendiente';
         $requisition->rvoe = null;
         $requisition->save();

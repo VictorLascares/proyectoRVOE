@@ -51,7 +51,7 @@ class FormatController extends Controller
             $elements = Element::searchrequisitionid($request->requisition_id)->first();
             $formatsActualy = Format::searchrequisitionid($requisition->id)->get();
             $validationEstatus = true;
-            if(!($request->noEvaluation < $requisition->noEvaluacion && $requisition->noEvaluacion == 3)){
+            if(!($request->noEvaluation < $requisition->evaNum && $requisition->evaNum == 3)){
                 if ($request->noEvaluation < 4 && $requisition->estado == 'pendiente') {
                     for ($formatName = 1; $formatName < 6; $formatName++) {
                         $format = Format::searchformato($formatName)->searchrequisitionid($requisition->id)->first();
@@ -90,7 +90,8 @@ class FormatController extends Controller
                         }
                         $format->save();
                     }
-                    if($request->noEvaluation == $requisition->noEvaluacion){
+                    if($request->noEvaluation == $requisition->evaNum){
+                        //Acá se crean los elementos de evaluación de las intalaciones
                         if ($request->noEvaluation == '3') {
                             if (is_null($elements)) {
                                 for ($elementName = 1; $elementName < 53; $elementName++) {
@@ -102,8 +103,8 @@ class FormatController extends Controller
                             }
                         }
                         if($validationEstatus){
-                            $requisition->noEvaluacion = $requisition->noEvaluacion + 1;
-                            if($requisition->noEvaluacion == 2){
+                            $requisition->evaNum = $requisition->evaNum + 1;
+                            if($requisition->evaNum == 2){
                                 //Asignar fecha de 3 meses
                                 $requisition->fecha_direccion = date('Y-m-d');
                                 //Informar a dirección

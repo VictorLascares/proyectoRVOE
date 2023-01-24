@@ -15,14 +15,14 @@ class Institution extends Model
    * @var string[]
    */
   protected $fillable = [
-    'nombre',
-    'director',
-    'logotipo',
-    'direccion',
-    'municipalitie_id'
+    'name',
+    'owner',
+    'legalRep',
+    'email',
+    'address',
+    'logo',
+    'logo_public_id',
   ];
-
-
 
   /**
    * The attributes that should be hidden for serialization.

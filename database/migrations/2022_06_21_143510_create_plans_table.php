@@ -14,10 +14,11 @@ return new class extends Migration
     public function up()
     {
         Schema::create('plans', function (Blueprint $table) {
-            $table->id();
-            $table->integer('plan')->nullable(false);
-            $table->integer('score')->nullable();
-            $table->text('commentary')->nullable();
+            $table->id(); //identificador
+            $table->integer('plan')->nullable(false); //Plan del 1 - 29 :: 1-12 46 _ 13 - 29  142
+            $table->integer('score')->nullable();  //Puntaje
+            $table->integer('top')->nullable(false);  //Maximo
+            $table->text('commentary')->nullable(); //Comentario
             $table->foreignId('requisition_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
         });
