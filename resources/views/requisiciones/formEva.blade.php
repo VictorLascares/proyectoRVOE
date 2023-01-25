@@ -1,11 +1,11 @@
 @extends('layouts.app')
 @section('titulo')
   @if ($noEvaluation == 1)
-    Revisión de existencia de formatos
+    Revisión de existencia de formatos 1
   @elseif ($noEvaluation == 2)
-    Revisión del contenido de los formatos 1
-  @else
     Revisión del contenido de los formatos 2
+  @else
+    Revisión del contenido de los formatos 3
   @endif
 @endsection
 @section('contenido')
@@ -18,16 +18,16 @@
         <div class="@if ($noEvaluation != 1) grid grid-cols-2 @endif gap-4">
         @foreach (range(1, 5) as $i)
             @foreach ($formats as $format)
-                @if ($format->formato == $i)
+                @if ($format->format == $i)
                     <div class="@if ($i == 5) col-span-2 @endif">
                     <div class="mb-4  flex justify-start items-center gap-4">
-                        <input name="anexo{{ $i }}" value="{{$format->valido}}"
+                        <input name="anexo{{ $i }}" value="{{$format->valid}}"
                         class="reviewCheckbox form-check-input" type="checkbox" id="check-review-{{ $format->id }}">
                         <label class="form-check-label" for="check-review2-{{ $format->id }}">
                         {{ $formatNames[$i - 1] }} 
-                        @if ($format->valido == false && $format->justificacion) 
+                        @if ($format->valid == false && $format->justificacion) 
                         <span class="text-red-600">({{ $format->justificacion }})</span>
-                        @elseif ($format->valido == true)
+                        @elseif ($format->valid == true)
                             <span class="text-green-400">&#10003;</span>
                         @endif
                         </label>
