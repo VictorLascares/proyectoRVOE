@@ -47,11 +47,11 @@ class User extends Authenticatable
 
     public function scopeSearchDireccion($query)
     {
-        return $query->where('tipoUsuario', 'direccion');
+        return $query->where('typeOfUser', 'direccion');
     }
 
     public function scopeSearchPlaneacion($query)
     {
-        return $query->where('tipoUsuario', 'planeacion');
+        return $query->where('typeOfUser', 'planeacion');
     }
 }
