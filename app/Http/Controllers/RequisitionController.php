@@ -76,30 +76,30 @@ class RequisitionController extends Controller
       $requisition_max = Requisition::searchcareeridMax($request->career_id)->first();
       if (!is_null($requisition_max)) {
         $dateNow = date('Y-m-d');
-        $dateBack = $requisition_max->fecha_vencimiento;
+        $dateBack = $requisition_max->dueDate;
         $dateNow_time = strtotime($dateNow);
         $dateBack_time = strtotime($dateBack);
-        if ($requisition_max->estado == 'revocado' || ($dateBack_time < $dateNow_time && $requisition_max->fecha_vencimiento != null)) {
-          $requisition->meta = $request->meta;
+        if ($requisition_max->status == 'revocado' || ($dateBack_time < $dateNow_time && $requisition_max->fecha_vencimiento != null)) {
+          $requisition->procedure = $request->procedure;
           $requisition->career_id = $request->career_id;
           $data = $requisition->save();
           for ($formatName = 1; $formatName < 6; $formatName++) {
             $format = new Format();
-            $format->formato = $formatName;
+            $format->format = $formatName;
             $format->requisition_id = $requisition->id;
             $format->save();
           }
 
           $users = User::searchDireccion()->get();
-          $meta = $request->meta;
-          if ($request->meta == "planEstudios") {
-            $meta = "plan de estudios";
+          $procedure = $request->procedure;
+          if ($request->procedure == "planEstudios") {
+            $procedure = "plan de estudios";
           }
-          if ($request->meta == "domicilio") {
-            $meta = "cambio de domicilio";
+          if ($request->procedure == "domicilio") {
+            $procedure = "cambio de domicilio";
           }
           foreach ($users as $user) {
-            Mail::to($user->email)->send(new NotifyMail($meta, $career, $institution));
+            Mail::to($user->email)->send(new NotifyMail($procedure, $career, $institution));
           }
           return redirect('requisitions');
         } else {
@@ -109,26 +109,26 @@ class RequisitionController extends Controller
           ]);
         }
       } else {
-        $requisition->meta = $request->meta;
+        $requisition->procedure = $request->procedure;
         $requisition->career_id = $request->career_id;
         $data = $requisition->save();
         for ($formatName = 1; $formatName < 6; $formatName++) {
           $format = new Format();
-          $format->formato = $formatName;
+          $format->format = $formatName;
           $format->requisition_id = $requisition->id;
           $format->save();
         }
 
         $users = User::searchDireccion()->get();
-        $meta = $request->meta;
-        if ($request->meta == "planEstudios") {
-          $meta = "plan de estudios";
+        $procedure = $request->procedure;
+        if ($request->procedure == "planEstudios") {
+          $procedure = "plan de estudios";
         }
-        if ($request->meta == "domicilio") {
-          $meta = "cambio de domicilio";
+        if ($request->procedure == "domicilio") {
+          $procedure = "cambio de domicilio";
         }
         foreach ($users as $user) {
-          Mail::to($user->correo)->send(new NotifyMail($meta, $career, $institution));
+          Mail::to($user->email)->send(new NotifyMail($procedure, $career, $institution));
         }
         return redirect('requisitions');
       }
