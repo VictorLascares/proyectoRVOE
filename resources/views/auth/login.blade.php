@@ -3,7 +3,7 @@
     <div class="md:grid md:grid-cols-2 gap-10 mt-12 p-5 items-center">
         <div>
             <h1 class="text-green-700 font-black text-6xl">
-                Iniciar Sesión y Administra las{{ ' ' }}
+                Inicia Sesión y Administra las
                 <span class="text-gray-500">Solicitudes</span>
             </h1>
         </div>

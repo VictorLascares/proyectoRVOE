@@ -35,29 +35,20 @@ class PlanController extends Controller
                 "Duración minima en semanas",
                 "Carga hararia semanal",
                 "Tipo de diseño",
-                "Número de ciclos",
+                "Número de ciclos escolares que integran el plan de estudios",
                 "Fines del aprendizaje",
-                "Perfil del aprendizaje",
                 "Perfil de ingreso",
                 "Antecedente académico",
-                "Requiere curso propedeutico y requerir cursos propedeutico (opcional)",
                 "Perfil de egreso",
                 "Requisitos de ingreso",
                 "Requisitos de permanencia (se evaluará conforme al reglamento escolar)",
-                "Estrategias y leineamientos para asegurar el ingreso, permanencia, egreso y titulación",
+                "Estrategias y lineamientos para asegurar el ingreso, permanencia, egreso y titulación",
                 "Proyección de la matrícula escolar",
                 "Modelo educativo (modelo teorico - pedagógico del plan curricular)",
                 "Modalidad de evaluación del plan de estudios (justificación teorica)",
                 "Periodicidad de evaluación del plan de estudios",
                 "Justificación de la modalidad elegida (incluir viabilidad del programa con base en la modalidad propuesta)",
-                "Esquema",
-                "Ciclo escolar",
-                "Tipo de asignatturas o unidades de aprendizaje",
-                "Denominación de asignaturas o unidades de aprendizaje",
-                "Seriación",
-                "Carga horaria",
-                "Horas bajo conducción docente",
-                "Horas independientes"
+                "Mapa curricular"
             );
 
             return view('requisiciones.plansEva', compact('requisition', 'career', 'institution', 'plans', 'planNames'));
@@ -70,20 +61,7 @@ class PlanController extends Controller
         if (Auth::user() != null) {
             $requisition = Requisition::find($request->requisition_id);
             if ($requisition->evaNum >= 6 && $requisition->estado == 'pendiente') {
-                $summary = 0;
-                for ($planName = 19; $planName < 29; $planName++) { //
-                    $planNumber = 'plan' . $planName;
-                    if(!is_null($request->input($planNumber)) ){
-                        $summary += abs($request->input($planNumber));
-                    }
-                }
-                if($summary > 40){
-                    return response()->json([
-                        'status' => 400,
-                        'error' => "La suma de los aspectos del programa de investigación suman más de 40."
-                    ]);
-                }
-                for ($planName = 1; $planName < 29; $planName++) { //
+                for ($planName = 1; $planName < 20; $planName++) { //
                     $plan = Plan::searchPlan($planName)->searchrequisitionid($requisition->id)->first();
                     $planNumber = 'plan' . $planName;
                     $planNumberc = $planNumber . 'c';

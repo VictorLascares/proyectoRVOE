@@ -24,9 +24,9 @@
     @if (count($requisitions) != 0)
         <div class="grid sm:grid-cols-2 lg:grid-cols-5 mt-10 mb-20 gap-2 p-2">
             @foreach ($requisitions as $requisition)
-                <a data-fecha="{{ $requisition->created_at->format('m-d-y') }}" data-estado="{{ $requisition->estado }}"
+                <a data-fecha="{{ $requisition->created_at->format('m-d-y') }}" data-estado="{{ $requisition->status }}"
                     href="{{ route('requisitions.show', $requisition->id) }}"
-                    class="rounded-lg w-full requisicion requisition text-center py-3 @switch($requisition->estado) @case('pendiente')
+                    class="rounded-lg w-full requisicion requisition text-center py-3 @switch($requisition->status) @case('pendiente')
                     @case('latencia')
                     bg-light-yellow
                     text-dark-yellow
@@ -54,7 +54,7 @@
         <p class="text-gray-600 text-xl text-center font-bold mt-10">Todavia no hay solicitudes</p>
     @endif
 
-    @if (Auth::user()->tipoUsuario == 'planeacion')
+    @if (Auth::user()->typeOfUser == 'planeacion')
         <button data-modal-toggle="new-request" type="button"
             class="p-2 fixed bottom-5 right-5 boton bg-green-900 hover:bg-green-700">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 stroke-white" viewBox="0 0 24 24" stroke-width="2">
@@ -95,7 +95,7 @@
                             <select id="institutions" class="w-full border p-3">
                                 <option selected disabled>-- Seleccione la Institución --</option>
                                 @foreach ($institutions as $institution)
-                                    <option value="{{ $institution->id }}">{{ $institution->nombre }}</option>
+                                    <option value="{{ $institution->id }}">{{ $institution->name }}</option>
                                 @endforeach
                             </select>
                         </div>

@@ -11,6 +11,7 @@ use App\Http\Controllers\OpinionController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\ConsultController;
+use App\Http\Controllers\FactibilidadYPertinenciaController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InstitutionController;
 use App\Http\Controllers\RequisitionController;
@@ -95,6 +96,9 @@ Route::post('/update/opinions', [OpinionController::class,'updateOpinions']);
 Route::get('/evaluate/plans/{requisition_id}', [PlanController::class,'evaluatePlans']);
 //Ruta para actualizar los elementos
 Route::post('/update/plans', [PlanController::class,'updatePlans']);
+
+//****************FACTIBILIDAD Y PERTINENCIA ROUTES*****************
+Route::get('/evaluate/factibilidadYPertinencia/{requisition_id}',[ FactibilidadYPertinenciaController::class, 'evaluarFactibilidadYPertinencia']);
 
 //*************************AUTH USER**************************
 //LOGOUT USER

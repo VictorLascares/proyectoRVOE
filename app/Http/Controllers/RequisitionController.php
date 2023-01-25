@@ -77,31 +77,31 @@ class RequisitionController extends Controller
       $requisition_max = Requisition::searchcareeridMax($request->career_id)->first(); //Mayor
       if (!is_null($requisition_max)) {
         $dateNow = date('Y-m-d');
-        $dateBack = $requisition_max->fecha_vencimiento;
+        $dateBack = $requisition_max->dueDate;
         $dateNow_time = strtotime($dateNow);
         $dateBack_time = strtotime($dateBack);
-        if ($requisition_max->estado == 'latencia' || ($dateBack_time < $dateNow_time && $requisition_max->fecha_vencimiento != null)) {
-          $requisition->meta = $request->meta;
+        if ($requisition_max->status == 'latencia' || ($dateBack_time < $dateNow_time && $requisition_max->dueDate != null)) {
+          $requisition->procedure = $request->procedure;
           $requisition->career_id = $request->career_id;
           $data = $requisition->save();
           //Se crean los formatos del 1 al 6
           for ($formatName = 1; $formatName < 6; $formatName++) {
             $format = new Format();
-            $format->formato = $formatName;
+            $format->format = $formatName;
             $format->requisition_id = $requisition->id;
             $format->save();
           }
 
           $users = User::searchDireccion()->get();
-          $meta = $request->meta;
-          if ($request->meta == "planEstudios") {
-            $meta = "plan de estudios";
+          $procedure = $request->procedure;
+          if ($request->procedure == "planEstudios") {
+            $procedure = "plan de estudios";
           }
-          if ($request->meta == "domicilio") {
-            $meta = "cambio de domicilio";
+          if ($request->procedure == "domicilio") {
+            $procedure = "cambio de domicilio";
           }
           foreach ($users as $user) {
-            Mail::to($user->email)->send(new NotifyMail($meta, $career, $institution));
+            Mail::to($user->email)->send(new NotifyMail($procedure, $career, $institution));
           }
           return redirect('requisitions');
         } else {
@@ -111,26 +111,26 @@ class RequisitionController extends Controller
           ]);
         }
       } else {
-        $requisition->meta = $request->meta;
+        $requisition->procedure = $request->procedure;
         $requisition->career_id = $request->career_id;
         $data = $requisition->save();
         for ($formatName = 1; $formatName < 6; $formatName++) {
           $format = new Format();
-          $format->formato = $formatName;
+          $format->format = $formatName;
           $format->requisition_id = $requisition->id;
           $format->save();
         }
 
         $users = User::searchDireccion()->get();
-        $meta = $request->meta;
-        if ($request->meta == "planEstudios") {
-          $meta = "plan de estudios";
+        $procedure = $request->procedure;
+        if ($request->procedure == "planEstudios") {
+          $procedure = "plan de estudios";
         }
-        if ($request->meta == "domicilio") {
-          $meta = "cambio de domicilio";
+        if ($request->procedure == "domicilio") {
+          $procedure = "cambio de domicilio";
         }
         foreach ($users as $user) {
-          Mail::to($user->correo)->send(new NotifyMail($meta, $career, $institution));
+          Mail::to($user->email)->send(new NotifyMail($procedure, $career, $institution));
         }
         return redirect('requisitions');
       }
@@ -332,22 +332,22 @@ class RequisitionController extends Controller
             $resultadoF = 'No Favorable';
           }
 
-          switch ($requisition->meta) {
+          switch ($requisition->procedure) {
             case 'solicitud':
-              $meta = 'el tramite de solicitud';
+              $procedure = 'el tramite de solicitud';
               break;
             case 'domicilio':
-              $meta = 'el cambio de domicilio';
+              $procedure = 'el cambio de domicilio';
               break;
             case 'planEstudios':
-              $meta = 'el cambio de plan de estudios';
+              $procedure = 'el cambio de plan de estudios';
               break;
           }
 
           $template = new \PhpOffice\PhpWord\TemplateProcessor('DOCUMENTO_OTA.docx');
 
           $template->setValue('resultado', $resultado);
-          $template->setValue('meta', $meta);
+          $template->setValue('procedure', $procedure);
           $template->setValue('anioI', $anioI);
           $template->setValue('mesI', $mesI);
           $template->setValue('diaI', $diaI);
@@ -515,15 +515,15 @@ class RequisitionController extends Controller
           $resultadoF = '"No Favorable"';
         }
 
-        switch ($requisition->meta) {
+        switch ($requisition->procedure) {
           case 'solicitud':
-            $meta = 'Solicitud';
+            $procedure = 'Solicitud';
             break;
           case 'domicilio':
-            $meta = 'Cambio de domicilio';
+            $procedure = 'Cambio de domicilio';
             break;
           case 'planEstudios':
-            $meta = 'Cambio de plan de estudios';
+            $procedure = 'Cambio de plan de estudios';
             break;
         }
 
@@ -557,7 +557,7 @@ class RequisitionController extends Controller
         $template->setValue('mesI', $mesI);
         $template->setValue('diaI', $diaI);
         //Solicitud
-        $template->setValue('tipoS', $meta);
+        $template->setValue('tipoS', $procedure);
         $template->setValue('noSolicitud', $no_solicitud);
         $template->setValue('estadoS', $estado);
         //Institucion

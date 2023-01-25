@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id(); //identificador
             $table->integer('opinion')->nullable(false); //Opinion 1 - 29
             $table->float('top')->nullable();  // Maximo
-            $table->enum('status', ['suficiente', 'insuficiente', 'NA'])->nullable(false)->default('NA'); //Indicadores
+            $table->enum('status', ['suficiente', 'insuficiente', 'na'])->nullable(false)->default('NA'); //Indicadores
             $table->foreignId('requisition_id')->constrained()->onUpdate('cascade')->onDelete('cascade'); 
             $table->timestamps();
         });

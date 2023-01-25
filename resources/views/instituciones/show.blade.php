@@ -82,7 +82,7 @@
     <section>
         <div class="flex justify-between items-center">
             <h2 class="text-3xl">Carreras</h2>
-            @if (Auth::user()->typerOfUser == 'planeacion' || Auth::user()->typeOfUser == 'administrador')
+            @if (Auth::user()->typeOfUser == 'planeacion' || Auth::user()->typeOfUser == 'administrador')
                 <button type="button" data-modal-toggle="new-career" type="submit"
                     class="bg-green-900 hover:bg-green-700 rounded-lg text-white py-2 px-4">
                     Nueva Carrera

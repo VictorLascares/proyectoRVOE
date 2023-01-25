@@ -21,8 +21,8 @@ class Format extends Model
         return $query->where('requisition_id',$requisition_id);
     }
 
-    public function scopeSearchformato($query,$formato){
-        return $query->where('formato',$formato);
+    public function scopeSearchformat($query,$formato){
+        return $query->where('format',$formato);
     }
 
 }

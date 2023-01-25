@@ -1,44 +1,63 @@
 @extends('layouts.app')
 @section('titulo')
-  Evaluación de Planes
+    Evaluación de Planes y programas de estudio
 @endsection
 @section('contenido')
-  <div class="container-sm py-4">
-    <form method="POST" class="px-5" action="{{ url('/update/plans') }}">
-      @csrf
-      <input type="hidden" value="{{ $requisition->id }}" name="requisition_id">
-      <div class="md:grid md:grid-cols-2 md:gap-10">
-        @foreach ($plans as $plan)
-            <div class="@if (($loop->iteration - 1) == 2) col-span-2 @endif">
-                <div class="lg:flex lg:justify-between lg:items-center mb-4">
-                    <p class="text-2xl mb-4 lg:mb-0">{{ $planNames[$loop->iteration - 1] }}</p>
-                    <input type="number" class="hide-arrows w-full sm:w-auto" id="weighingInput" value="{{ $plan->ponderacion }}" placeholder="Calificación" name="plan{{ $loop->iteration }}" required>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-floating">
-                        <textarea class="ckeditor resize-none" id="commentaryInput" name="plan{{ $loop->iteration }}c" required>{{ $plan->comentario }}</textarea>
+    <div class="container-fluid pb-4 mb-4 px-4">
+        <form action="{{ url('/update/elements') }}" method="POST" enctype="multipart/form-data">
+            @csrf
+            <div class="flex flex-col">
+                <div class="overflow-x-auto sm:-mx-6 lg:-mx-8 max-h-screen">
+                    <div class="py-2 inline-block min-w-full sm:px-6 lg:px-8">
+                        <div class="overflow-hidden">
+                            <table id="elementsTable" class="min-w-full">
+                                <thead class="border-b bg-green-900">
+                                    <tr>
+                                        <th class="text-sm font-bold text-white px-6 py-4 text-left">#</th>
+                                        <th class="text-sm font-bold text-white px-6 py-4 text-left">Aspectos</th>
+                                        <th class="text-sm font-bold text-white px-6 py-4 text-center">Puntaje Máximo</th>
+                                        <th class="text-sm font-bold text-white px-6 py-4 text-center">Puntaje</th>
+                                    </tr>
+                                </thead>
+                                <input type="hidden" name="requisition_id" value="{{ $requisition->id }}">
+                                <tbody class="bg-white">
+                                    @foreach (range(1, 20) as $i)
+                                        {{-- @foreach ($plans as $plan) --}}
+                                        {{-- @if ($plan->plan == $i) --}}
+                                        <tr class="border-b">
+                                            <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                                                {{ $i }}
+                                            </td>
+                                            <td class="text-sm text-gray-900 font-light px-6 py-4">
+                                                <p class="max-w-sm">{{ $planNames[$i - 1]["aspecto"] }}</p>
+                                            </td>
+                                            <td class="text-sm text-center text-gray-900 font-light px-6 py-4">
+                                                <p class="max-w-sm">{{ $planNames[$i - 1]["totalPts"]}}</p>
+                                            </td>
+                                            <td class="text-center">
+                                                <input type="number" class="bg-gray-50 border-gray-200 rounded-xl"
+                                                    name="" id="">
+                                            </td>
+                                        </tr>
+                                        {{-- @endif --}}
+                                        {{-- @endforeach --}}
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
-        @endforeach
-      </div>
-      <div class="flex justify-end items-center mt-3">
-        <button class="bg-green-900 hover:bg-green-700 py-2 px-10 text-white w-full sm:w-auto" type="submit">Guardar</button>
-      </div>
+    </div>
+    <div class="w-full">
+        <textarea required class="resize-none border w-full" placeholder="Observaciones"></textarea>
+    </div>
+
+    <div class="flex justify-end">
+        <button class="text-white py-2 px-4 bg-green-900 hover:bg-green-700" type="submit">
+            Guardar
+        </button>
+    </div>
     </form>
-  </div>
-@endsection
-@section('script')
-<script type="text/javascript">
-    window.onload = function() {
-        CKEDITOR.config.toolbar = [
-            ['Styles','Format','Font','FontSize'],
-            '/',
-            ['Bold','Italic','Underline','StrikeThrough','-','Undo','Redo','-','Cut','Copy','Paste','Find','Replace','-','Outdent','Indent','-','Print'],
-            '/',
-            ['NumberedList','BulletedList','-','JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock']
-        ] ;
-        CKEDITOR.config.removePlugins = 'resize';
-    }
-</script>
+    </div>
 @endsection
