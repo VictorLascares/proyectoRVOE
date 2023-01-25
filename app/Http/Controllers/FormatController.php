@@ -51,61 +51,61 @@ class FormatController extends Controller
             $elements = Element::searchrequisitionid($request->requisition_id)->first();
             $formatsActualy = Format::searchrequisitionid($requisition->id)->get();
             $validationEstatus = true;
-            if(!($request->noEvaluation < $requisition->noEvaluacion && $requisition->noEvaluacion == 3)){
-                if ($request->noEvaluation < 4 && $requisition->estado == 'pendiente') {
+            if(!($request->noEvaluation < $requisition->evaNum && $requisition->evaNum == 3)){
+                if ($request->noEvaluation < 4 && $requisition->status == 'pendiente') {
                     for ($formatName = 1; $formatName < 6; $formatName++) {
-                        $format = Format::searchformato($formatName)->searchrequisitionid($requisition->id)->first();
+                        $format = Format::searchformat($formatName)->searchrequisitionid($requisition->id)->first();
                         $formato = 'anexo' . $formatName;
                         $formatoj = $formato . 'j';
                         if ($request->input($formato) == false || $request->input($formato) == 'false') {
                             if ($request->noEvaluation == 1) {
-                                $format->justificacion = 'No se encuentra el formato';
+                                $format->justification = 'No se encuentra el formato';
                                 $validationEstatus = false;
                             } else if($request->noEvaluation == 2){
-                                if($format->valido != false){
-                                    $format->justificacion = $request->$formatoj;
+                                if($format->valid != false){
+                                    $format->justification = $request->$formatoj;
                                 }
                                 // $validationEstatus = false;
                             }else {
-                                $format->justificacion = $request->$formatoj;
+                                $format->justification = $request->$formatoj;
                             }
-                            $format->valido = false;
+                            $format->valid = false;
                         } else {
                             if($request->noEvaluation == 2){
-                                if($format->valido == false){
+                                if($format->valid == false){
                                     // $validationEstatus = false;
-                                    $format->justificacion = "";
-                                    $format->valido = true;
+                                    $format->justification = "";
+                                    $format->valid = true;
                                 }
                             }else{
                                 if($request->$formatoj != null){
-                                    $format->justificacion = $request->$formatoj;
+                                    $format->justification = $request->$formatoj;
                                 }else{
-                                    if($request->noEvaluation == 1 && $format->valido == false){
-                                        $format->justificacion = "";
+                                    if($request->noEvaluation == 1 && $format->valid == false){
+                                        $format->justification = "";
                                     }
                                 }
-                                $format->valido = true;
+                                $format->valid = true;
                             }
                         }
                         $format->save();
                     }
-                    if($request->noEvaluation == $requisition->noEvaluacion){
+                    if($request->noEvaluation == $requisition->evaNum){
                         if ($request->noEvaluation == '3') {
                             if (is_null($elements)) {
                                 for ($elementName = 1; $elementName < 53; $elementName++) {
                                     $element = new Element();
-                                    $element->elemento = $elementName;
+                                    $element->element = $elementName;
                                     $element->requisition_id = $requisition->id;
                                     $element->save();
                                 }
                             }
                         }
                         if($validationEstatus){
-                            $requisition->noEvaluacion = $requisition->noEvaluacion + 1;
-                            if($requisition->noEvaluacion == 2){
+                            $requisition->evaNum = $requisition->evaNum + 1;
+                            if($requisition->evaNum == 2){
                                 //Asignar fecha de 3 meses
-                                $requisition->fecha_direccion = date('Y-m-d');
+                                $requisition->fecha_managment = date('Y-m-d');
                                 //Informar a dirección
                             }
                         }
