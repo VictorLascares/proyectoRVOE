@@ -1018,11 +1018,11 @@ input:checked + .toggle-bg {
 .w-full {
     width: 100%
 }
-.w-8 {
-    width: 2rem
-}
 .w-1\/2 {
     width: 50%
+}
+.w-8 {
+    width: 2rem
 }
 .w-4\/6 {
     width: 66.666667%
