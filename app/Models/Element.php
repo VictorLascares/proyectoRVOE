@@ -17,9 +17,9 @@ class Element extends Model
      * @var string[]
      */
     protected $fillable = [
-        'elemento',
-        'existente',
-        'observacion'
+        'element',
+        'existing',
+        'observation',
     ];
 
     /**

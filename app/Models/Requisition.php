@@ -15,14 +15,18 @@ class Requisition extends Model
      * @var string[]
      */
     protected $fillable = [
-        'meta',
+        'procedure',
+        'requestNumber',
         'rvoe',
-        'numero_solicitud',
-        'estado',
+        'facilitiesFormat',
+        'format_public_id',
+        'status',
+        'evaNum',
         'cata',
-        'noEvaluacion',
-        'career_id',
-        'formatoInstalaciones'
+        'ota',
+        'dueDate',
+        'latencyDate',
+        'fecha_m',
     ];
 
     /**

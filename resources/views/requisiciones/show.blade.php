@@ -123,32 +123,32 @@
                 <p>Revisión <span class="font-bold">3</span></p>
                 <p>Dirección</p>
             </a>
-            <a href="{{ url('/evaluate/factibilidadYPertinencia', $data->id) }}"
-                class="rounded-md p-3 text-white bg-green-900 hover:bg-green-700 flex flex-col justify-center items-center">
+            <a href="{{ url('/evaluate/opinions', $data->id) }}"
+                class="rounded-md p-3 text-white bg-green-900 hover:bg-green-700 flex flex-col justify-center items-center @if ($data->evaNum == 4) bg-blue-500 hover:bg-blue-800 @endif flex flex-col justify-center items-center @if ($data->evaNum < 4 || Auth()->user()->typeOfUser == 'direccion') disabled @endif">
                 <p class="uppercase text-center">Factibilidad y Pertinencia</p>
                 <p>Evaluación <span class="font-bold">4</span></p>
                 <p>Dirección</p>
             </a>
             <a href="{{ url('/evaluate/elements', $data->id) }}"
-                class="rounded-md p-3 text-white bg-green-900 hover:bg-green-700 @if ($data->evaNum == 4) bg-blue-500 hover:bg-blue-800 @endif flex flex-col justify-center items-center @if ($data->evaNum < 4 || Auth()->user()->typeOfUser == 'planeacion') disabled @endif">
+                class="rounded-md p-3 text-white bg-green-900 hover:bg-green-700 @if ($data->evaNum == 5) bg-blue-500 hover:bg-blue-800 @endif flex flex-col justify-center items-center @if ($data->evaNum < 5 || Auth()->user()->typeOfUser == 'planeacion') disabled @endif">
                 <p class="uppercase">Instalaciones</p>
                 <p>Evaluación <span class="font-bold">2</span></p>
                 <p>Dirección</p>
             </a>
             <a href="{{ url('/evaluate/plans', $data->id) }}"
-                class="rounded-md p-3 text-white bg-green-900 hover:bg-green-700 @if ($data->evaNum == 5) bg-blue-500 hover:bg-blue-800 @endif flex flex-col justify-center items-center">
+                class="rounded-md p-3 text-white bg-green-900 hover:bg-green-700 @if ($data->evaNum == 6) bg-blue-500 hover:bg-blue-800 @endif flex flex-col justify-center items-center @if ($data->evaNum < 6 || Auth()->user()->typeOfUser == 'planeacion') disabled @endif">
                 <p class="uppercase">Planes</p>
                 <p>Evaluación <span class="font-bold">3</span></p>
                 <p>Dirección</p>
             </a>
             <a download="OTAReq-{{ $data->id }}" href="{{ url('/download/status', $data->id) }}"
-                class="rounded-md p-3 text-white bg-green-900 hover:bg-green-700 @if ($data->evaNum == 6) bg-blue-500 hover:bg-blue-800 @endif flex flex-col justify-center items-center @if ($data->evaNum < 6 || Auth()->user()->typeOfUser == 'planeacion') disabled @endif">
+                class="rounded-md p-3 text-white bg-green-900 hover:bg-green-700 @if ($data->evaNum == 7) bg-blue-500 hover:bg-blue-800 @endif flex flex-col justify-center items-center @if ($data->evaNum < 7 || Auth()->user()->typeOfUser == 'planeacion') disabled @endif">
                 <p>Descargar</p>
                 <p class="uppercase">ESTADO</p>
             </a>
             @if ($data->ota == 'true')
                 <a download="OTAReq-{{ $data->id }}" href="{{ url('/download', $data->id) }}"
-                    class="rounded-md p-3 text-white bg-green-900 hover:bg-green-700 @if ($data->evaNum == 6) bg-blue-500 hover:bg-blue-800 @endif flex flex-col justify-center items-center @if ($data->evaNum < 6 || Auth()->user()->typeOfUser == 'planeacion') disabled @endif">
+                    class="rounded-md p-3 text-white bg-green-900 hover:bg-green-700 @if ($data->evaNum == 7) bg-blue-500 hover:bg-blue-800 @endif flex flex-col justify-center items-center @if ($data->evaNum < 7 || Auth()->user()->typeOfUser == 'planeacion') disabled @endif">
                     <p>Descargar</p>
                     <p class="uppercase">ota</p>
                 </a>

@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Auth;
 use Mail;
 
 use App\Mail\NotifyMail;
-
+use Exception;
 
 class RequisitionController extends Controller
 {
@@ -90,17 +90,21 @@ class RequisitionController extends Controller
             $format->save();
           }
 
-          $users = User::searchDireccion()->get();
-          $procedure = $request->procedure;
-          if ($request->procedure == "planEstudios") {
-            $procedure = "plan de estudios";
-          }
-          if ($request->procedure == "domicilio") {
-            $procedure = "cambio de domicilio";
-          }
-          foreach ($users as $user) {
-            Mail::to($user->email)->send(new NotifyMail($procedure, $career, $institution));
-          }
+          try{
+            $users = User::searchDireccion()->get();
+            $procedure = $request->procedure;
+            if ($request->procedure == "planEstudios") {
+              $procedure = "plan de estudios";
+            }
+            if ($request->procedure == "domicilio") {
+              $procedure = "cambio de domicilio";
+            }
+            foreach ($users as $user) {
+              Mail::to($user->email)->send(new NotifyMail($procedure, $career, $institution));
+            }
+          }catch(Exception $e){
+            error_log("EL usuario no se encuentra registrado: ".e);
+          };
           return redirect('requisitions');
         } else {
           return response()->json([

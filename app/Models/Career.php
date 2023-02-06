@@ -16,9 +16,10 @@ class Career extends Model
      * @var string[]
      */
     protected $fillable = [
-        'nombre',
-        'modalidad',
-        'duracion'
+        'name',
+        'modality',
+        'typeOfPeriod',
+        'numOfPeriods'
     ];
 
     public function institution() {

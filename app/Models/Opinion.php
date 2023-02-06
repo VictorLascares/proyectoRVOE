@@ -3,17 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
 
-class User extends Authenticatable
-{    
-    use HasApiTokens, HasFactory, Notifiable;
+class Opinion extends Model
+{
+    use HasFactory;
     public $timestamps = false;
 
-    protected $table="users";
 
     /**
      * The attributes that are mass assignable.
@@ -21,12 +17,11 @@ class User extends Authenticatable
      * @var string[]
      */
     protected $fillable = [
-        'name',
-        'email',
-        'email_verified_at',
-        'password',
+        'opinion',
+        'top',
+        'status',
     ];
-
+    
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -43,13 +38,11 @@ class User extends Authenticatable
     protected $casts = [
     ];
 
-    public function scopeSearchDireccion($query)
-    {
-        return $query->where('typeOfUser', 'direccion');
+    public function scopeSearchrequisitionid($query,$requisition_id){
+        return $query->where('requisition_id',$requisition_id);
     }
 
-    public function scopeSearchPlaneacion($query)
-    {
-        return $query->where('typeOfUser', 'planeacion');
+    public function scopeSearchOpinion($query,$opinion){
+        return $query->where('opinion',$opinion);
     }
 }

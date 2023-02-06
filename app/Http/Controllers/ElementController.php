@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Plan;
 
 use App\Models\Career;
+use App\Models\Comment;
 use App\Models\Element;
 use App\Models\Institution;
+use App\Models\Opinion;
 use App\Models\Requisition;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -66,10 +68,11 @@ class ElementController extends Controller
         if (Auth::user() != null) {
             $requisition = Requisition::find($request->requisition_id);
             $plans = Plan::searchrequisitionid($request->requisition_id)->first();
-            if ($requisition->noEvaluacion >= 4 && $requisition->estado == 'pendiente') {
+            $opinions = Opinion::searchrequisitionid($request->requisition_id)->first();
+            if ($requisition->evaNum >= 5 && $requisition->estado == 'pendiente') {
                 $imagen = $request->formatoInstalaciones;
                 // if (!is_null($imagen)) {
-                    for ($elementName = 1; $elementName < 53; $elementName++) {
+                    for ($elementName = 1; $elementName < 27; $elementName++) {
                         $element = Element::searchElemento($elementName)->searchrequisitionid($requisition->id)->first();
                         $elemento = 'elemento' . $elementName;
                         if(is_null($request->input($elemento))){
@@ -77,7 +80,6 @@ class ElementController extends Controller
                         }else{
                             $element->existente = $request->input($elemento);
                         }
-                        $elementoj = $elemento . 'o';
                         if (!is_null($request->input($elementoj))) {
                             $element->observacion = $request->input($elementoj);
                         }else{
@@ -87,8 +89,13 @@ class ElementController extends Controller
                         }
                         $element->save();
                     }
-                    if($requisition->noEvaluacion == 4){
-                        $requisition->noEvaluacion = $requisition->noEvaluacion + 1;
+                    $elementComment = Comment::searchName("elementComment")->searchRequisitionid($requisition->id)->first();
+                    if (!is_null($request->input("elementoC"))) {
+                        $elementComment = $request->input($request->input("elementoC"));
+                        $elementComment->save();
+                    }
+                    if($requisition->evaNum == 5){
+                        $requisition->evaNum = $requisition->evaNum + 1;
                     }
                     if ($requisition->formatoInstalaciones != null) {
                         Cloudinary()->destroy($requisition->formato_public_id);
@@ -107,7 +114,7 @@ class ElementController extends Controller
                     }
                     // Se crean los planes para evaluación
                     if (is_null($plans)) {
-                        for ($planName = 1; $planName < 4; $planName++) {
+                        for ($planName = 1; $planName < 33; $planName++) {
                             $plan = new Plan();
                             $plan->plan = $planName;
                             $plan->requisition_id = $requisition->id;

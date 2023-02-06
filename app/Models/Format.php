@@ -12,9 +12,9 @@ class Format extends Model
 
 
     protected $fillable = [
-        'formato',
-        'valido',
-        'justificacion',
+        'format',
+        'valid',
+        'justification',
     ];
 
     public function scopeSearchrequisitionid($query,$requisition_id){

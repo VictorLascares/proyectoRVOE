@@ -3,17 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
 
-class User extends Authenticatable
-{    
-    use HasApiTokens, HasFactory, Notifiable;
+class Comment extends Model
+{
+    use HasFactory;
     public $timestamps = false;
 
-    protected $table="users";
 
     /**
      * The attributes that are mass assignable.
@@ -22,9 +18,7 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
-        'email',
-        'email_verified_at',
-        'password',
+        'observation',
     ];
 
     /**
@@ -43,13 +37,11 @@ class User extends Authenticatable
     protected $casts = [
     ];
 
-    public function scopeSearchDireccion($query)
-    {
-        return $query->where('typeOfUser', 'direccion');
+    public function scopeSearchRequisitionid($query,$requisition_id){
+        return $query->where('requisition_id',$requisition_id);
     }
 
-    public function scopeSearchPlaneacion($query)
-    {
-        return $query->where('typeOfUser', 'planeacion');
+    public function scopeSearchName($query,$name){
+        return $query->where('name',$name);
     }
 }

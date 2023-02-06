@@ -11,7 +11,7 @@ class Area extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'nombre',
+        'name',
     ];
 
     public function scopeFindbyname($query,$nombre){

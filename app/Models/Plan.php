@@ -12,8 +12,8 @@ class Plan extends Model
 
     protected $fillable = [
         'plan',
-        'ponderacion',
-        'comentario',
+        'status',
+        'commentary',
     ];
 
     public function scopeSearchrequisitionid($query,$requisition_id){

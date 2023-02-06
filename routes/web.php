@@ -7,6 +7,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\CareerController;
 use App\Http\Controllers\FormatController;
 use App\Http\Controllers\ElementController;
+use App\Http\Controllers\OpinionController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\ConsultController;
@@ -84,14 +85,17 @@ Route::get('/evaluate/elements/{requisition_id}', [ElementController::class,'eva
 //Ruta para actualizar los elementos
 Route::post('/update/elements', [ElementController::class,'updateElements']);
 
+//****************FACTIBILIDAD Y PERTINENCIA ROUTES*****************
+//Ruta para realizar evaluación de los elementos
+Route::get('/evaluate/opinions/{requisition_id}', [OpinionController::class,'evaluateOpinions']);
+//Ruta para actualizar los elementos
+Route::post('/update/opinions', [OpinionController::class,'updateOpinions']);
+
 //****************PLANS ROUTES*****************
 //Ruta para realizar evaluación de los elementos
 Route::get('/evaluate/plans/{requisition_id}', [PlanController::class,'evaluatePlans']);
 //Ruta para actualizar los elementos
 Route::post('/update/plans', [PlanController::class,'updatePlans']);
-
-//****************FACTIBILIDAD Y PERTINENCIA ROUTES*****************
-Route::get('/evaluate/factibilidadYPertinencia/{requisition_id}',[ FactibilidadYPertinenciaController::class, 'evaluarFactibilidadYPertinencia']);
 
 //*************************AUTH USER**************************
 //LOGOUT USER

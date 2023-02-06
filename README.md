@@ -9,7 +9,7 @@
 
 ```
 
-  INSERT INTO municipalities (nombre, clave)
+  INSERT INTO municipalities (name, key)
   VALUES 
   ('Acacoyagua', '001'),
   ('Acala', '002'),
@@ -139,7 +139,7 @@
 ```
 
 ```
-  INSERT INTO areas (nombre)
+  INSERT INTO areas (name)
   VALUES
   ('Arquitectura, Urbanismo y Diseño'),
   ('Artes'),
