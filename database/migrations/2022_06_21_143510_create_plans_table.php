@@ -17,7 +17,6 @@ return new class extends Migration
             $table->id(); //identificador
             $table->integer('plan')->nullable(false); //Plan del 1 - 29 :: 1-12 46 _ 13 - 29  142
             $table->enum('status', ['cumple', 'parcialmente', 'na'])->nullable(false)->default('NA'); //Indicadores
-            $table->integer('top')->nullable(false);  //Maximo
             $table->text('commentary')->nullable(); //Comentario
             $table->foreignId('requisition_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();

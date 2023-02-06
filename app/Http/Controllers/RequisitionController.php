@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use App\Models\Requisition;
 use App\Models\Format;
 use App\Models\Element;
-use App\Models\Opinion;
 use App\Models\Plan;
 use App\Models\Institution;
 use App\Models\User;
@@ -74,17 +73,16 @@ class RequisitionController extends Controller
       $requisition = new Requisition();
       $career = Career::find($request->career_id);
       $institution = Institution::find($career->institution_id);
-      $requisition_max = Requisition::searchcareeridMax($request->career_id)->first(); //Mayor
+      $requisition_max = Requisition::searchcareeridMax($request->career_id)->first();
       if (!is_null($requisition_max)) {
         $dateNow = date('Y-m-d');
         $dateBack = $requisition_max->dueDate;
         $dateNow_time = strtotime($dateNow);
         $dateBack_time = strtotime($dateBack);
-        if ($requisition_max->status == 'latencia' || ($dateBack_time < $dateNow_time && $requisition_max->dueDate != null)) {
+        if ($requisition_max->status == 'revocado' || ($dateBack_time < $dateNow_time && $requisition_max->fecha_vencimiento != null)) {
           $requisition->procedure = $request->procedure;
           $requisition->career_id = $request->career_id;
           $data = $requisition->save();
-          //Se crean los formatos del 1 al 6
           for ($formatName = 1; $formatName < 6; $formatName++) {
             $format = new Format();
             $format->format = $formatName;
@@ -92,17 +90,21 @@ class RequisitionController extends Controller
             $format->save();
           }
 
-          $users = User::searchDireccion()->get();
-          $procedure = $request->procedure;
-          if ($request->procedure == "planEstudios") {
-            $procedure = "plan de estudios";
-          }
-          if ($request->procedure == "domicilio") {
-            $procedure = "cambio de domicilio";
-          }
-          foreach ($users as $user) {
-            Mail::to($user->email)->send(new NotifyMail($procedure, $career, $institution));
-          }
+          try{
+            $users = User::searchDireccion()->get();
+            $procedure = $request->procedure;
+            if ($request->procedure == "planEstudios") {
+              $procedure = "plan de estudios";
+            }
+            if ($request->procedure == "domicilio") {
+              $procedure = "cambio de domicilio";
+            }
+            foreach ($users as $user) {
+              Mail::to($user->email)->send(new NotifyMail($procedure, $career, $institution));
+            }
+          }catch(Exception $e){
+            error_log("EL usuario no se encuentra registrado: ".e);
+          };
           return redirect('requisitions');
         } else {
           return response()->json([
@@ -155,7 +157,6 @@ class RequisitionController extends Controller
         $area = Area::find($career->area_id);
         $institution = Institution::find($career->institution_id);
         $elements = Element::searchrequisitionid($data->id)->get();
-        $opinions = Opinon::searchrequisitionid($data->id)->get();
         $plans = Plan::searchrequisitionid($data->id)->get();
         $formatNames = array(
           "Plan de Estudios",
@@ -165,21 +166,15 @@ class RequisitionController extends Controller
           "Plataforma Tecnológica"
         );
         $errors = [];
-        if ($data->evaNum <= 4) {
+        if ($data->noEvaluacion <= 4) {
           foreach ($formats as $format) {
-            if (!$format->valid) {
+            if (!$format->valido) {
               array_push($errors, $format);
             }
           }
-        } elseif ($data->evaNum <= 5) {
+        } elseif ($data->noEvaluacion <= 5) {
           foreach ($elements as $element) {
-            if (!$element->existing) {
-              array_push($errors, $element);
-            }
-          }
-        } elseif ($data->evaNum <= 6) {
-          foreach ($opinions as $opinion) {
-            if (!$opinion->existente) {
+            if (!$element->existente) {
               array_push($errors, $element);
             }
           }
@@ -302,7 +297,7 @@ class RequisitionController extends Controller
   {
     if (Auth::user() != null) {
       $requisition = Requisition::find($requisition_id);
-      if ($requisition->evaNum == 6 and $requisition->ota == true) {
+      if ($requisition->noEvaluacion == 6 and $requisition->ota == true) {
         try {
           //code...
           $career = Career::find($requisition->career_id);
@@ -332,22 +327,22 @@ class RequisitionController extends Controller
             $resultadoF = 'No Favorable';
           }
 
-          switch ($requisition->procedure) {
+          switch ($requisition->meta) {
             case 'solicitud':
-              $procedure = 'el tramite de solicitud';
+              $meta = 'el tramite de solicitud';
               break;
             case 'domicilio':
-              $procedure = 'el cambio de domicilio';
+              $meta = 'el cambio de domicilio';
               break;
             case 'planEstudios':
-              $procedure = 'el cambio de plan de estudios';
+              $meta = 'el cambio de plan de estudios';
               break;
           }
 
           $template = new \PhpOffice\PhpWord\TemplateProcessor('DOCUMENTO_OTA.docx');
 
           $template->setValue('resultado', $resultado);
-          $template->setValue('procedure', $procedure);
+          $template->setValue('meta', $meta);
           $template->setValue('anioI', $anioI);
           $template->setValue('mesI', $mesI);
           $template->setValue('diaI', $diaI);
@@ -384,7 +379,7 @@ class RequisitionController extends Controller
   {
     if (Auth::user() != null) {
       $requisition = Requisition::find($requisition_id);
-      if ($requisition->evaNum == 6) {
+      if ($requisition->noEvaluacion == 6) {
         if ($request->evaluacion == "1") {
           $requisition->cata = true;
         } else if ($request->evaluacion == "0") {
@@ -515,15 +510,15 @@ class RequisitionController extends Controller
           $resultadoF = '"No Favorable"';
         }
 
-        switch ($requisition->procedure) {
+        switch ($requisition->meta) {
           case 'solicitud':
-            $procedure = 'Solicitud';
+            $meta = 'Solicitud';
             break;
           case 'domicilio':
-            $procedure = 'Cambio de domicilio';
+            $meta = 'Cambio de domicilio';
             break;
           case 'planEstudios':
-            $procedure = 'Cambio de plan de estudios';
+            $meta = 'Cambio de plan de estudios';
             break;
         }
 
@@ -557,7 +552,7 @@ class RequisitionController extends Controller
         $template->setValue('mesI', $mesI);
         $template->setValue('diaI', $diaI);
         //Solicitud
-        $template->setValue('tipoS', $procedure);
+        $template->setValue('tipoS', $meta);
         $template->setValue('noSolicitud', $no_solicitud);
         $template->setValue('estadoS', $estado);
         //Institucion
@@ -599,15 +594,15 @@ class RequisitionController extends Controller
     if (Auth::user() != null) {
       $this->revisar_activo($requisition_id);
       $requisition = Requisition::find($requisition_id);
-      if ($requisition->evaNum != 1 && in_array($requisition->estado, ['activo', 'rechazado', 'pendiente'])) {
-        // if($requisition->evaNum == 5){
+      if ($requisition->noEvaluacion != 1 && in_array($requisition->estado, ['activo', 'rechazado', 'pendiente'])) {
+        // if($requisition->noEvaluacion == 5){
         //   $formatoInstalaciones = $requisition->formatoInstalaciones;
         //   if($formatoInstalaciones != null){
         //     unlink(public_path('img/formatos/instalaciones/' . $formatoInstalaciones));
         //   }  
         // }
         $requisition->numero_solicitud = null;
-        $requisition->evaNum = $requisition->evaNum - 1;
+        $requisition->noEvaluacion = $requisition->noEvaluacion - 1;
         $requisition->estado = 'pendiente';
         $requisition->rvoe = null;
         $requisition->save();

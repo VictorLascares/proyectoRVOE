@@ -13,11 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('opinios', function (Blueprint $table) {
+        Schema::create('opinions', function (Blueprint $table) {
             $table->id(); //identificador
             $table->integer('opinion')->nullable(false); //Opinion 1 - 29
             $table->float('top')->nullable();  // Maximo
-            $table->enum('status', ['suficiente', 'insuficiente', 'na'])->nullable(false)->default('NA'); //Indicadores
+            $table->enum('status', ['suficiente', 'insuficiente', 'na'])->nullable()->default('na'); //Indicadores
             $table->foreignId('requisition_id')->constrained()->onUpdate('cascade')->onDelete('cascade'); 
             $table->timestamps();
         });
@@ -30,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('opinios');
+        Schema::dropIfExists('opinions');
     }
 };

@@ -104,7 +104,7 @@
                             <tbody>
                                 @foreach ($requisitions as $requisition)
                                 <tr class="border-b" data-href="{{ route('requisitions.show', $requisition->id) }}">
-                                    <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">{{ $requisition->meta }}</td>
+                                    <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">{{ $requisition->procedure }}</td>
                                     <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">{{ $requisition->created_at }}</td>
                                     <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">{{ $requisition->updated_at }}</td>
                                 </tr>
@@ -135,7 +135,7 @@
                             <input type="hidden" value="{{ $career->id }}" name="career_id">
                             <div class="form-floating mb-3">
                                 <label for="careerModality" class="mb-2 block uppercase text-gray-500 font-bold">Meta de la Requisición</label>
-                                <select id="requisitionGoal" class="w-full border p-3 " name="meta" required>
+                                <select id="requisitionGoal" class="w-full border p-3 " name="procedure" required>
                                     <option selected disabled>-- Seleccione la Meta --</option>
                                     <option value="solicitud">Solicitud</option>
                                     <option value="domicilio">Domicilio</option>

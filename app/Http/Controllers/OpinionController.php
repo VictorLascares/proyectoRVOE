@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Opinion;
+use App\Models\Element;
 use App\Models\Plan;
 use Illuminate\Http\Request;
 
@@ -21,7 +21,7 @@ class OpinionController extends Controller
             $career = Career::find($requisition->career_id);
             $institution = Institution::find($career->institution_id);
             $opinions = Opinion::searchrequisitionid($requisition->id)->get();
-            $opinionName = array(
+            $opinionNames = array(
                 "Presenta datos económicos de la zona donde se impartirá el plan",
                 "Analiza los datos económicos de la zona en donde se establecerá el plan",
                 "Presenta datos económicos del estado",
@@ -53,7 +53,7 @@ class OpinionController extends Controller
                 "veintinueve"
             );
 
-            return view('requisiciones.instaEva', compact('requisition', 'career', 'institution', 'opinion', 'opinionName'));
+            return view('requisiciones.instaEva', compact('requisition', 'career', 'institution', 'opinions', 'opinionNames'));
         }
     }
 
@@ -62,34 +62,35 @@ class OpinionController extends Controller
     {
         if (Auth::user() != null) {
             $requisition = Requisition::find($request->requisition_id);
+            $elements = Element::searchrequisitionid($request->requisition_id)->first();
             $plans = Plan::searchrequisitionid($request->requisition_id)->first();
-            if ($requisition->evaNum >= 5 && $requisition->estado == 'pendiente') {
-                    for ($opinionName = 1; $opinionName < 29; $opinionName++) {
-                        $opinion = Opinion::searchOpinion($opinionName)->searchrequisitionid($requisition->id)->first();
-                        $opinionRequest = 'opinion' . $opinionName;
-                        if(!is_null($request->input($opinionRequest))){
-                            $opinion->status = $request->input($opinionRequest);
-                        }
-                        $opinion->save();
+            if ($requisition->evaNum >= 4 && $requisition->estado == 'pendiente') {
+                for ($opinionName = 1; $opinionName < 30; $opinionName++) {
+                    $opinion = Opinion::searchOpinion($opinionName)->searchrequisitionid($requisition->id)->first();
+                    $opinionRequest = 'opinion' . $opinionName;
+                    if(!is_null($request->input($opinionRequest))){
+                        $opinion->status = $request->input($opinionRequest);
                     }
-                    if($requisition->evaNum == 5){
-                        $requisition->evaNum = $requisition->evaNum + 1;
+                    $opinion->save();
+                }
+                if($requisition->evaNum == 4){
+                    $requisition->evaNum = $requisition->evaNum + 1;
+                }
+                if (is_null($elements)) {
+                    for ($elementName = 1; $elementName < 27; $elementName++) {
+                        $element = new Element();
+                        $element->element = $elementName;
+                        $element->requisition_id = $requisition->id;
+                        $element->save();
                     }
-                    // Se crean los planes para evaluación
-                    $planTop= array(1,1,1,1,5,1,1,12,10,1,12,2,20,5,30,20,5,20,40,40,40,40,40,40,40,40,40,40,40);
-                    if (is_null($plans)) {
-                        for ($planName = 1; $planName < 29; $planName++) {
-                            $plan = new Plan();
-                            $plan->plan = $planName;
-                            $plan->top = $planTop[$planName - 1];
-                            $plan->requisition_id = $requisition->id;
-                            $plan->save();
-                        }
-                    }
-                    $requisition->save();
-                // }
+                    $elementComment = new Comment();
+                    $elementComment->name = "elementComment";
+                    $elementComment->save();
+                }
+                $requisition->save();
+            // }
             }
             return redirect(route('requisitions.show', $requisition->id));
         }
-    }
+    }    
 }

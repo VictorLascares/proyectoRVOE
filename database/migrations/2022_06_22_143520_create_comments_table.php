@@ -13,11 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('elements', function (Blueprint $table) {
-            $table->id();
-            $table->integer('element')->nullable(false);
-            $table->boolean('existing')->default(false);
-            $table->foreignId('requisition_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
+        Schema::create('comments', function (Blueprint $table) {
+            $table->id(); //identificador
+            $table->text('name')->nullable();
+            $table->text('observation')->nullable();
+            $table->foreignId('requisition_id')->constrained()->onUpdate('cascade')->onDelete('cascade'); 
             $table->timestamps();
         });
     }
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('elements');
+        Schema::dropIfExists('comments');
     }
 };

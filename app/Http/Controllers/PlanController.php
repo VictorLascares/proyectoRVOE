@@ -61,20 +61,14 @@ class PlanController extends Controller
         if (Auth::user() != null) {
             $requisition = Requisition::find($request->requisition_id);
             if ($requisition->evaNum >= 6 && $requisition->estado == 'pendiente') {
-                for ($planName = 1; $planName < 20; $planName++) { //
+                for ($planName = 1; $planName < 33; $planName++) { //
                     $plan = Plan::searchPlan($planName)->searchrequisitionid($requisition->id)->first();
                     $planNumber = 'plan' . $planName;
                     $planNumberc = $planNumber . 'c';
                     if(!is_null($request->input($planNumber)) ){
-                        $plan->score = $request->input($planNumber);
-                        if(abs($request->input($planNumber)) > $plan->top){
-                            return response()->json([
-                                'status' => 400,
-                                'error' => "El valor del puntaje supera el grado maximo del plan."
-                            ]);
-                        }
+                        $plan->status = $request->input($planNumber);
                     }
-                    if(!is_null($request->input($planNumber))){
+                    if(!is_null($request->input($planNumberc))){
                         $plan->commentary = $request->input($planNumberc);
                     }
                     $plan->save();
