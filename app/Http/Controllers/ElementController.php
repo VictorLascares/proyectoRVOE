@@ -111,6 +111,10 @@ class ElementController extends Controller
                             $plan->requisition_id = $requisition->id;
                             $plan->save();
                         }
+                        $planComment = new Comment();
+                        $planComment->name = "planComment";
+                        $planComment->requisition_id = $requisition->id;
+                        $planComment->save();
                     }
                     $requisition->save();
                 // }
