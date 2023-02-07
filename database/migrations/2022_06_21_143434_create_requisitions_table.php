@@ -20,6 +20,10 @@ return new class extends Migration
             $table->string('rvoe')->nullable()->unique();
             $table->string('facilitiesFormat')->nullable();
             $table->string('format_public_id')->nullable();
+            $table->string('opinionFormat')->nullable();
+            $table->string('opinion_public_id')->nullable();
+            $table->string('planFormat')->nullable();
+            $table->string('plan_public_id')->nullable();
             $table->enum('status', ['activo', 'latencia', 'revocado', 'inactivo', 'pendiente', 'rechazado'])->nullable(false)->default('pendiente');
             $table->integer('evaNum')->default('1');
             $table->boolean('cata')->nullable(); 
