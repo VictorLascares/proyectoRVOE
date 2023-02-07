@@ -84,24 +84,24 @@ class ElementController extends Controller
                     }
                     $elementComment = Comment::searchName("elementComment")->searchRequisitionid($requisition->id)->first();
                     if (!is_null($request->input("elementoC"))) {
-                        $elementComment = $request->input($request->input("elementoC"));
+                        $elementComment->observation = $request->input("elementoC");
                         $elementComment->save();
                     }
                     if($requisition->evaNum == 5){
                         $requisition->evaNum = $requisition->evaNum + 1;
                     }
                     if ($requisition->facilitiesFormat != null) {
-                        Cloudinary()->destroy($requisition->formato_public_id);
+                        Cloudinary()->destroy($requisition->format_public_id);
                     }                    
                     //Guardar imagen
                     if ($request->facilitiesFormat) {
-                        $path = $request->file('formatoInstalaciones')->getRealPath();
+                        $path = $request->file('facilitiesFormat')->getRealPath();
                         $response = Cloudinary()->upload($path);
                         $secureURL = $response->getSecurePath();
                         $public_id = $response->getPublicId();
                         
                         $requisition->facilitiesFormat = $secureURL;
-                        $requisition->formato_public_id = $public_id;
+                        $requisition->format_public_id = $public_id;
                     }
                     // Se crean los planes para evaluación
                     if (is_null($plans)) {

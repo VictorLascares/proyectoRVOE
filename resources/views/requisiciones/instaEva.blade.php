@@ -65,12 +65,11 @@
             </div>
     </div>
     <div class="w-full">
-        <textarea required name="elemento{{ $i }}o" class="resize-none border w-full" placeholder="Observaciones"
-            id="inputSighting-{{ $element->id }}">{{ $element->observacion }}</textarea>
+        <textarea name="elementoC" class="resize-none border w-full" placeholder="Observaciones"></textarea>
     </div>
     <div class="my-3">
         <label for="building-format" class="block font-bold mb-3 text-lg">Formato de Instalaciones</label>
-        <input class="w-1/2 border" name="formatoInstalaciones" type="file" id="building-format"
+        <input class="w-1/2 border" name="facilitiesFormat" type="file" id="building-format"
             @if ($requisition->formatoInstalaciones == null) required @endif>
     </div>
     <div class="flex justify-end">
