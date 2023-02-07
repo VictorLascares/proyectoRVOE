@@ -56,7 +56,7 @@
 
     <div class="my-3">
         <label for="planFormat" class="block font-bold mb-3 text-lg">Formato de programa de estudios</label>
-        <input class="w-1/2 border border-gray-200" name="planFormat" type="file" id="planFormat">
+        <input class="w-1/2 border border-gray-200" name="planFormat" type="file" accept="application/pdf" id="planFormat">
     </div>
 
     <div class="flex justify-end mt-10">

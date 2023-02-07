@@ -69,7 +69,7 @@
     </div>
     <div class="my-3">
         <label for="building-format" class="block font-bold mb-3 text-lg">Formato de Instalaciones</label>
-        <input class="w-1/2 border" name="facilitiesFormat" type="file" id="building-format"
+        <input class="w-1/2 border" name="facilitiesFormat" type="file" accept="application/pdf" id="building-format"
             @if ($requisition->formatoInstalaciones == null) required @endif>
     </div>
     <div class="flex justify-end">

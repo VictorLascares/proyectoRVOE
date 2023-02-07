@@ -50,7 +50,7 @@
 
     <div class="my-3">
         <label for="opinionFormat" class="block font-bold mb-3 text-lg">Formato de Factibilidad y Pertinencia</label>
-        <input class="w-1/2 border" name="opinionFormat" type="file" id="opinionFormat">
+        <input class="w-1/2 border" name="opinionFormat" type="file" accept="application/pdf" id="opinionFormat">
     </div>
 
     <div class="flex justify-end">
