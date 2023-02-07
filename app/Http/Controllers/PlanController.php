@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Auth;
 use Mail;
 
 use App\Mail\NotifyMail;
+use App\Models\Comment;
 
 class PlanController extends Controller
 {
@@ -60,22 +61,42 @@ class PlanController extends Controller
     {
         if (Auth::user() != null) {
             $requisition = Requisition::find($request->requisition_id);
+            $plans = Plan::searchrequisitionid($request->requisition_id)->first();
             if ($requisition->evaNum >= 6 && $requisition->status == 'pendiente') {
                 for ($planName = 1; $planName < 33; $planName++) { //
                     $plan = Plan::searchPlan($planName)->searchrequisitionid($requisition->id)->first();
                     $planNumber = 'plan' . $planName;
-                    $planNumberc = $planNumber . 'c';
-                    if(!is_null($request->input($planNumber)) ){
+                    // $planNumberc = $planNumber . 'c';
+                    if (!is_null($request->input($planNumber))) {
                         $plan->status = $request->input($planNumber);
                     }
-                    if(!is_null($request->input($planNumberc))){
-                        $plan->commentary = $request->input($planNumberc);
-                    }
+                    // if(!is_null($request->input($planNumberc))){
+                    //     $plan->commentary = $request->input($planNumberc);
+                    // }
                     $plan->save();
                 }
-                if($requisition->evaNum == 6){
+                $planComment = Comment::searchName("planComment")->searchRequisitionid($requisition->id)->first();
+                if (!is_null($request->input("planC"))) {
+                    $planComment->observation = $request->input("planC");
+                    $planComment->save();
+                }
+
+                if ($requisition->planFormat != null) {
+                    Cloudinary()->destroy($requisition->plan_public_id);
+                }
+                if ($request->planFormat) {
+                    $path = $request->file('planFormat')->getRealPath();
+                    $response = Cloudinary()->upload($path);
+                    $secureURL = $response->getSecurePath();
+                    $public_id = $response->getPublicId();
+
+                    $requisition->planFormat = $secureURL;
+                    $requisition->plan_public_id = $public_id;
+                }
+                if ($requisition->evaNum == 6) {
                     $requisition->evaNum = $requisition->evaNum + 1;
                 }
+
                 $requisition->save();
             }
             return redirect(route('requisitions.show', $requisition->id));
