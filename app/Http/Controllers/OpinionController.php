@@ -69,17 +69,20 @@ class OpinionController extends Controller
         if (Auth::user() != null) {
             $requisition = Requisition::find($request->requisition_id);
             $elements = Element::searchrequisitionid($request->requisition_id)->first();
-            dd($request->requisition_id);
             $plans = Plan::searchrequisitionid($request->requisition_id)->first();
-            if ($requisition->evaNum >= 4 && $requisition->state == 'pendiente') {
+            if ($requisition->evaNum >= 4 && $requisition->status == 'pendiente') {
                 for ($opinionName = 1; $opinionName < 30; $opinionName++) {
                     $opinion = Opinion::searchOpinion($opinionName)->searchrequisitionid($requisition->id)->first();
-                    dd($opinion);
                     $opinionRequest = 'opinion' . $opinionName;
                     if(!is_null($request->input($opinionRequest))){
                         $opinion->status = $request->input($opinionRequest);
                     }
                     $opinion->save();
+                }
+                $opinionComment = Comment::searchName("opinionComment")->searchRequisitionid($requisition->id)->first();
+                if(!is_null($request->input("opinionC"))){
+                    $opinonComment->observation = $request->input("opinionC");
+                    $opinionComment->save();
                 }
                 if($requisition->evaNum == 4){
                     $requisition->evaNum = $requisition->evaNum + 1;
@@ -93,6 +96,7 @@ class OpinionController extends Controller
                     }
                     $elementComment = new Comment();
                     $elementComment->name = "elementComment";
+                    $elementComment->requisition_id = $requisition->id;
                     $elementComment->save();
                 }
                 $requisition->save();

@@ -29,10 +29,10 @@
                                                 {{ $i }}
                                             </td>
                                             <td class="text-sm text-gray-900 font-light px-6 py-4">
-                                                <p class="max-w-sm">{{ $planNames[$i - 1]["aspecto"] }}</p>
+                                                <p class="max-w-sm">{{ $planNames[$i - 1] }}</p>
                                             </td>
                                             <td class="text-sm text-center text-gray-900 font-light px-6 py-4">
-                                                <p class="max-w-sm">{{ $planNames[$i - 1]["totalPts"]}}</p>
+                                                <p class="max-w-sm">{{ $planNames[$i - 1] }}</p>
                                             </td>
                                             <td class="text-center">
                                                 <input type="number" class="bg-gray-50 border-gray-200 rounded-xl"

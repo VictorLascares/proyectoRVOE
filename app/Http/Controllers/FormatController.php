@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Requisition;
 use App\Models\Format;
 use App\Models\Institution;
+use App\Models\Comment;
 use App\Models\Career;
 use App\Models\Opinion;
 use Illuminate\Support\Facades\Auth;
@@ -49,6 +50,7 @@ class FormatController extends Controller
         if (Auth::user() != null) {
             $requisition = Requisition::find($request->requisition_id);
             $formatsActualy = Format::searchrequisitionid($requisition->id)->get();
+            $opinions = Opinion::searchrequisitionid($request->requisition_id)->first();
             $validationEstatus = true;
             if(!($request->noEvaluation < $requisition->evaNum && $requisition->evaNum == 3)){
                 if ($request->noEvaluation < 4 && $requisition->status == 'pendiente') {
@@ -92,14 +94,20 @@ class FormatController extends Controller
                     if($request->noEvaluation == $requisition->evaNum){
                         //Acá se crean los elementos de evaluación de las intalaciones
                         if ($request->noEvaluation == '3') {                            
-                            //Se crean las opiniones
-                            $opinionTop= array(1,1,1,1,1,.83,.83,.83,.83,.83,.83,1.67,1.67,1.67,3,3,3,3,3,3.75,3.75,3.75,3.75,12.5,12.5,10,6.67,6.67,6.67);
-                            for ($opinionName = 1; $opinionName < 30; $opinionName++) {
-                                $opinion = new Opinion();
-                                $opinion->opinion = $opinionName;
-                                $opinion->top = $opinionTop[$opinionName - 1];
-                                $opinion->requisition_id = $requisition->id;
-                                $opinion->save();
+                            if(is_null($opinions)){
+                                //Se crean las opiniones
+                                $opinionTop= array(1,1,1,1,1,.83,.83,.83,.83,.83,.83,1.67,1.67,1.67,3,3,3,3,3,3.75,3.75,3.75,3.75,12.5,12.5,10,6.67,6.67,6.67);
+                                for ($opinionName = 1; $opinionName < 30; $opinionName++) {
+                                    $opinion = new Opinion();
+                                    $opinion->opinion = $opinionName;
+                                    $opinion->top = $opinionTop[$opinionName - 1];
+                                    $opinion->requisition_id = $requisition->id;
+                                    $opinion->save();
+                                }
+                                $opinionComment = new Comment();
+                                $opinionComment->name = "opinionComment";
+                                $opinionComment->requisition_id = $requisition->id;
+                                $opinionComment->save();
                             }
                         }
                         if($validationEstatus){

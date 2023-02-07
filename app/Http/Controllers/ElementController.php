@@ -69,23 +69,16 @@ class ElementController extends Controller
             $requisition = Requisition::find($request->requisition_id);
             $plans = Plan::searchrequisitionid($request->requisition_id)->first();
             $opinions = Opinion::searchrequisitionid($request->requisition_id)->first();
-            if ($requisition->evaNum >= 5 && $requisition->estado == 'pendiente') {
+            if ($requisition->evaNum >= 5 && $requisition->status == 'pendiente') {
                 $imagen = $request->formatoInstalaciones;
                 // if (!is_null($imagen)) {
                     for ($elementName = 1; $elementName < 27; $elementName++) {
                         $element = Element::searchElemento($elementName)->searchrequisitionid($requisition->id)->first();
                         $elemento = 'elemento' . $elementName;
                         if(is_null($request->input($elemento))){
-                            $element->existente = false;
+                            $element->existing = false;
                         }else{
-                            $element->existente = $request->input($elemento);
-                        }
-                        if (!is_null($request->input($elementoj))) {
-                            $element->observacion = $request->input($elementoj);
-                        }else{
-                            return response()->json([
-                                'error' => 'Algunas observaciones no se encuentran especificadas.'
-                            ]);
+                            $element->existing = $request->input($elemento);
                         }
                         $element->save();
                     }
@@ -97,19 +90,17 @@ class ElementController extends Controller
                     if($requisition->evaNum == 5){
                         $requisition->evaNum = $requisition->evaNum + 1;
                     }
-                    if ($requisition->formatoInstalaciones != null) {
+                    if ($requisition->facilitiesFormat != null) {
                         Cloudinary()->destroy($requisition->formato_public_id);
-                    }
-                    
+                    }                    
                     //Guardar imagen
-
-                    if ($request->formatoInstalaciones) {
+                    if ($request->facilitiesFormat) {
                         $path = $request->file('formatoInstalaciones')->getRealPath();
                         $response = Cloudinary()->upload($path);
                         $secureURL = $response->getSecurePath();
                         $public_id = $response->getPublicId();
                         
-                        $requisition->formatoInstalaciones = $secureURL;
+                        $requisition->facilitiesFormat = $secureURL;
                         $requisition->formato_public_id = $public_id;
                     }
                     // Se crean los planes para evaluación
