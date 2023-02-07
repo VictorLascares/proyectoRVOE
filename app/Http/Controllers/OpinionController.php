@@ -34,7 +34,7 @@ class OpinionController extends Controller
                 "Presenta datos económicos del sureste",
                 "Define el sector de población a atender",
                 "Define y analiza el sector productivo que se verá beneficiado",
-                "siete",
+                "sto a la solucion de problemas locales, regionales, est",
                 "ocho",
                 "nueve",
                 "diez",
@@ -74,17 +74,26 @@ class OpinionController extends Controller
                 for ($opinionName = 1; $opinionName < 30; $opinionName++) {
                     $opinion = Opinion::searchOpinion($opinionName)->searchrequisitionid($requisition->id)->first();
                     $opinionRequest = 'opinion' . $opinionName;
-                    if(!is_null($request->input($opinionRequest))){
+                    if (!is_null($request->input($opinionRequest))) {
                         $opinion->status = $request->input($opinionRequest);
                     }
                     $opinion->save();
                 }
                 $opinionComment = Comment::searchName("opinionComment")->searchRequisitionid($requisition->id)->first();
-                if(!is_null($request->input("opinionC"))){
-                    $opinonComment->observation = $request->input("opinionC");
+                if (!is_null($request->input("opinionC"))) {
+                    $opinionComment->observation = $request->input("opinionC");
                     $opinionComment->save();
                 }
-                if($requisition->evaNum == 4){
+                if ($request->opinionFormat) {
+                    $path = $request->file('formatoFactibilidadYPertinencia')->getRealPath();
+                    $response = Cloudinary()->upload($path);
+                    $secureURL = $response->getSecurePath();
+                    $public_id = $response->getPublicId();
+
+                    $requisition->opinionFormat = $secureURL;
+                    $requisition->opinion_public_id = $public_id;
+                }
+                if ($requisition->evaNum == 4) {
                     $requisition->evaNum = $requisition->evaNum + 1;
                 }
                 if (is_null($elements)) {
@@ -100,9 +109,9 @@ class OpinionController extends Controller
                     $elementComment->save();
                 }
                 $requisition->save();
-            // }
+                // }
             }
             return redirect(route('requisitions.show', $requisition->id));
         }
-    }    
+    }
 }

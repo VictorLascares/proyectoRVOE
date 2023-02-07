@@ -20,18 +20,22 @@
                                 <input type="hidden" name="requisition_id" value="{{ $requisition->id }}">
                                 <tbody class="bg-white">
                                     @foreach (range(1, 29) as $i)
-                                        <tr class="border-b">
-                                            <td class="text-sm text-start text-gray-900 font-light px-6 py-4">
-                                                <p class="max-w-sm">{{ $opinionNames[$i - 1] }}</p>
-                                            </td>
-                                            <td class="text-sm text-center text-gray-900 font-light">
-                                                <select name="opinion{{$i-1}}" id="">
-                                                    <option value="suficiente">Suficiente</option>
-                                                    <option value="insuficiente">Insuficiente</option>
-                                                    <option value="na">No</option>
-                                                </select>
-                                            </td>
-                                        </tr>
+                                        @foreach ($opinions as $opinion)
+                                            @if ($opinion->opinion == $i)
+                                                <tr class="border-b">
+                                                    <td class="text-sm text-start text-gray-900 font-light px-6 py-4">
+                                                        <p class="max-w-sm">{{ $opinionNames[$i - 1] }}</p>
+                                                    </td>
+                                                    <td class="text-sm text-center text-gray-900 font-light">
+                                                        <select name="opinion{{$i}}" id="">
+                                                            <option value="suficiente">Suficiente</option>
+                                                            <option value="insuficiente">Insuficiente</option>
+                                                            <option value="na">No</option>
+                                                        </select>
+                                                    </td>
+                                                </tr>
+                                            @endif
+                                        @endforeach
                                     @endforeach
                                 </tbody>
                             </table>
@@ -41,12 +45,12 @@
             </div>
     </div>
     <div class="w-full">
-        <textarea class="resize-none border w-full" placeholder="Observaciones"></textarea>
+        <textarea name="opinionC" class="resize-none border w-full" placeholder="Observaciones"></textarea>
     </div>
 
     <div class="my-3">
-        <label for="" class="block font-bold mb-3 text-lg">Formato de Factibilidad y Pertinencia</label>
-        <input class="w-1/2 border" name="" type="file" id="">
+        <label for="opinionFormat" class="block font-bold mb-3 text-lg">Formato de Factibilidad y Pertinencia</label>
+        <input class="w-1/2 border" name="formatoFactibilidadYPertinencia" type="file" id="opinionFormat">
     </div>
 
     <div class="flex justify-end">
