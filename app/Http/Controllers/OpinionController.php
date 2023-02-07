@@ -84,8 +84,11 @@ class OpinionController extends Controller
                     $opinionComment->observation = $request->input("opinionC");
                     $opinionComment->save();
                 }
+                if ($requisition->opinionFormat != null) {
+                    Cloudinary()->destroy($requisition->opinion_public_id);
+                }
                 if ($request->opinionFormat) {
-                    $path = $request->file('formatoFactibilidadYPertinencia')->getRealPath();
+                    $path = $request->file('opinionFormat')->getRealPath();
                     $response = Cloudinary()->upload($path);
                     $secureURL = $response->getSecurePath();
                     $public_id = $response->getPublicId();
