@@ -34,7 +34,8 @@
                                                     <td>
                                                         <div class="flex justify-start items-center gap-4" role="group">
                                                             <div class="flex justify-center items-center gap-2">
-                                                                <input type="radio" class="btn-check"
+                                                                <input type="radio"
+                                                                    class="btn-check checked:bg-green-600 transition duration-200 focus:ring-green-900 cursor-pointer"
                                                                     name="elemento{{ $i }}"
                                                                     value="{{ $element->existente }}"
                                                                     id="btnYes-{{ $element->id }}" autocomplete="off"
@@ -43,7 +44,8 @@
                                                                     for="btnYes-{{ $element->id }}">Si</label>
                                                             </div>
                                                             <div class="flex justify-center items-center gap-2">
-                                                                <input type="radio" class="btn-check btn-No"
+                                                                <input type="radio"
+                                                                    class="btn-check btn-No checked:bg-green-600 transition duration-200 focus:ring-green-900 cursor-pointer"
                                                                     name="elemento{{ $i }}"
                                                                     id="btnNo-{{ $element->id }}"
                                                                     value="{{ $element->existente }}" autocomplete="off"
@@ -65,12 +67,13 @@
             </div>
     </div>
     <div class="w-full">
-        <textarea name="elementoC" class="resize-none border w-full" placeholder="Observaciones"></textarea>
+        <textarea name="elementoC" rows="5" class="resize-none border-gray-200 rounded-xl w-full"
+            placeholder="Observaciones"></textarea>
     </div>
     <div class="my-3">
         <label for="building-format" class="block font-bold mb-3 text-lg">Formato de Instalaciones</label>
-        <input class="w-1/2 border" name="facilitiesFormat" type="file" accept="application/pdf" id="building-format"
-            @if ($requisition->formatoInstalaciones == null) required @endif>
+        <input class="w-1/2 border-gray-200 border bg-white rounded-xl" name="facilitiesFormat" type="file"
+            accept="application/pdf" id="building-format" @if ($requisition->facilitiesFormat == null) required @endif>
     </div>
     <div class="flex justify-end">
         <button class="text-white py-2 px-4 bg-green-900 hover:bg-green-700" type="submit">
