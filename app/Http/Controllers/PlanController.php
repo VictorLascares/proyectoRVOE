@@ -29,6 +29,7 @@ class PlanController extends Controller
             $career = Career::find($requisition->career_id);
             $institution = Institution::find($career->institution_id);
             $plans = Plan::searchrequisitionid($requisition->id)->get();
+            $planComment = Comment::searchname('planComment')->get()[0];
             $planNames = array(
                 "Grado académico",
                 "Modalidad educativa",
@@ -52,7 +53,7 @@ class PlanController extends Controller
                 "Mapa curricular"
             );
 
-            return view('requisiciones.plansEva', compact('requisition', 'career', 'institution', 'plans', 'planNames'));
+            return view('requisiciones.plansEva', compact('requisition', 'planComment', 'career', 'institution', 'plans', 'planNames'));
         }
     }
 

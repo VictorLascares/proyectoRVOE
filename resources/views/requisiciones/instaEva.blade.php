@@ -37,9 +37,9 @@
                                                                 <input type="radio"
                                                                     class="btn-check checked:bg-green-600 transition duration-200 focus:ring-green-900 cursor-pointer"
                                                                     name="elemento{{ $i }}"
-                                                                    value="{{ $element->existente }}"
+                                                                    value="{{ $element->existing }}"
                                                                     id="btnYes-{{ $element->id }}" autocomplete="off"
-                                                                    @if ($element->existente) checked @endif>
+                                                                    @if ($element->existing) checked @endif>
                                                                 <label class="uppercase"
                                                                     for="btnYes-{{ $element->id }}">Si</label>
                                                             </div>
@@ -48,8 +48,8 @@
                                                                     class="btn-check btn-No checked:bg-green-600 transition duration-200 focus:ring-green-900 cursor-pointer"
                                                                     name="elemento{{ $i }}"
                                                                     id="btnNo-{{ $element->id }}"
-                                                                    value="{{ $element->existente }}" autocomplete="off"
-                                                                    @if (!$element->existente) checked @endif>
+                                                                    value="{{ $element->existing }}" autocomplete="off"
+                                                                    @if (!$element->existing) checked @endif>
                                                                 <label class="uppercase"
                                                                     for="btnNo-{{ $element->id }}">No</label>
                                                             </div>
@@ -68,7 +68,7 @@
     </div>
     <div class="w-full">
         <textarea name="elementoC" rows="5" class="resize-none border-gray-200 rounded-xl w-full"
-            placeholder="Observaciones"></textarea>
+            placeholder="Observaciones">{{ $elementComment->observation }}</textarea>
     </div>
     <div class="my-3">
         <label for="building-format" class="block font-bold mb-3 text-lg">Formato de Instalaciones</label>

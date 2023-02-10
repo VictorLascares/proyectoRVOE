@@ -34,9 +34,12 @@
                                                     <td class="text-center">
                                                         <select class="border-gray-200 bg-gray-50"
                                                             name="plan{{ $i }}">
-                                                            <option value="cumple">Cumple</option>
-                                                            <option value="parcialmente">Parcialmente</option>
-                                                            <option value="na">No cumple</option>
+                                                            <option @if ($plan->status == 'cumple') selected @endif
+                                                                value="cumple">Cumple</option>
+                                                            <option @if ($plan->status == 'parcialmente') selected @endif
+                                                                value="parcialmente">Parcialmente</option>
+                                                            <option @if ($plan->status == 'na') selected @endif
+                                                                value="na">No cumple</option>
                                                         </select>
                                                     </td>
                                                 </tr>
@@ -51,12 +54,13 @@
             </div>
     </div>
     <div class="w-full">
-        <textarea name="planC" class="resize-none border-gray-200 w-full" placeholder="Observaciones"></textarea>
+        <textarea name="planC" class="resize-none border-gray-200 w-full" placeholder="Observaciones">{{ $planComment->observation }}</textarea>
     </div>
 
     <div class="my-3">
         <label for="planFormat" class="block font-bold mb-3 text-lg">Formato de programa de estudios</label>
-        <input class="w-1/2 border border-gray-200" name="planFormat" type="file" accept="application/pdf" id="planFormat">
+        <input class="w-1/2 border border-gray-200" name="planFormat" type="file" accept="application/pdf"
+            id="planFormat">
     </div>
 
     <div class="flex justify-end mt-10">
