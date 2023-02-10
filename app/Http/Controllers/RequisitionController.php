@@ -6,7 +6,9 @@ use App\Models\Area;
 use Illuminate\Http\Request;
 use App\Models\Requisition;
 use App\Models\Format;
+use App\Models\Opinion;
 use App\Models\Element;
+use App\Models\Comment;
 use App\Models\Plan;
 use App\Models\Institution;
 use App\Models\User;
@@ -297,7 +299,7 @@ class RequisitionController extends Controller
   {
     if (Auth::user() != null) {
       $requisition = Requisition::find($requisition_id);
-      if ($requisition->noEvaluacion == 6 and $requisition->ota == true) {
+      if ($requisition->evaNum == 7 and $requisition->ota == true) {
         try {
           //code...
           $career = Career::find($requisition->career_id);
@@ -311,9 +313,9 @@ class RequisitionController extends Controller
           //$diaA = date("d", strtotime($requisition->created_at . "+ 3 month"));
           //$mesA = $mes[ltrim(date("m", strtotime($requisition->fecha_vencimiento)), "0") - 1];
           //$diaA = date("d", strtotime($requisition->fecha_vencimiento));
-          $institucion = $institution->nombre;
-          $municipio = $municipalitie->nombre;
-          $direccion = $institution->direccion;
+          $institucion = $institution->name;
+          $municipio = $municipalitie->name;
+          $direccion = $institution->address;
           if (is_null($requisition->rvoe)) {
             $no_solicitud = 'No disponible';
           } else {
@@ -327,7 +329,7 @@ class RequisitionController extends Controller
             $resultadoF = 'No Favorable';
           }
 
-          switch ($requisition->meta) {
+          switch ($requisition->procedure) {
             case 'solicitud':
               $meta = 'el tramite de solicitud';
               break;
@@ -379,7 +381,7 @@ class RequisitionController extends Controller
   {
     if (Auth::user() != null) {
       $requisition = Requisition::find($requisition_id);
-      if ($requisition->noEvaluacion == 6) {
+      if ($requisition->evaNum == 7) {
         if ($request->evaluacion == "1") {
           $requisition->cata = true;
         } else if ($request->evaluacion == "0") {
@@ -408,6 +410,8 @@ class RequisitionController extends Controller
       $requisition = Requisition::find($requisition_id);
       $formats = Format::where('requisition_id', $requisition_id)->get();
       $elements = Element::searchrequisitionid($requisition_id)->get();
+      $opinions = Opinion::searchrequisitionid($requisition_id)->get();
+      $comments = Comment::searchrequisitionid($requisition_id)->get();
       $plans = Plan::searchrequisitionid($requisition_id)->get();
       try {
         //code...
@@ -418,75 +422,49 @@ class RequisitionController extends Controller
         $anioI = date("Y", strtotime(date('Y-m-d')));
         $mesI = $mes[ltrim(date("m", strtotime(date('Y-m-d'))), "0") - 1];
         $diaI = date("d", strtotime(date('Y-m-d')));
-        $institucion = $institution->nombre;
-        $municipio = $municipalitie->nombre;
-        $direccion = $institution->direccion;
-        $estado = $requisition->estado;
+        $institucion = $institution->name;
+        $municipio = $municipalitie->name;
+        $direccion = $institution->address;
+        $estado = $requisition->status;
         $correo = $institution->email;
-        $carrera = $career->nombre;
-        $formatos = '';
+        $carrera = $career->name;
+        $formatos = array();
         $elementos = '';
         $planes = '';
         $formatNames = array(
-          "Plan de Estudios",
-          "Mapa Curricular",
-          "Programa de Estudio",
-          "Estructura e Instalaciones",
-          "Plataforma Tecnológica"
+          'Plan de Estudios',
+          'Mapa Curricular',
+          'Programa de Estudio',
+          'Estructura e Instalaciones',
+          'Plataforma Tecnológica'
         );
-        $elementName = array(
-          "Documento de posesión legal del inmueble",
-          "El inmueble en el que se impartirá el RVOE",
-          "Dimensiones del predio (m2)",
-          "Dimensiones de construcción (m2)",
-          "Dimensiones útiles para la impartición del Plan y Programas de estudio",
-          "¿En el inmueble se realizan actividades que están directa o indirectamente relacionadas con otros servicios educativos?",
-          "Detallar las actividades que se realizan en el inmueble",
-          "Tipo de estudios que se imparten en el inmueble actualmente",
-          "Descripción del área fisíca destinada para el resguardo de la documentación de control escolar",
-          "Número total de aulas en el inmueble",
-          "Estado de las Aulas destinadas que serán destinadas a la impartición del Plan y Programa de estudio objeto de RVOE",
-          "Número de aulas que serán destinadas a la impartición del Plan y Programas de estudio objeto de RVOE",
-          "Capacidad promedio de cada aula (cupo de alumnos)",
-          "Tipo de ilumminación de las aulas",
-          "Tipo de ventilación de las aulas",
-          "Número total de cubiculos en el inmueble",
-          "Número de cubiculos que serán destinados a la impartición del Plan y Programas de estudio objeto de RVOE",
-          "Estado de los cubilos destinados a la impartición del Plan y Programas de estudio objeto de RVOE",
-          "Tipo de iluminación de los cubiculos",
-          "Tipo de ventilación de los cubiculos",
-          "¿Cuenta con instalaciones especiales?",
-          "Denominación del tipo de instalación",
-          "Cantidad",
-          "Equipo con que cuenta",
-          "Tipo de iluminación",
-          "¿Cuenta con ventilación?",
-          "Tipo de Ventilación",
-          "Asignatura o unidad de aprendizaje que se imparte en la instalación especial",
-          "¿Cuenta con equipo tecnológico?",
-          "Condiciones en las que se encuentra el equipo",
-          "Tipo del equipo tecnológico al servicio del alumno",
-          "Cantidad de equipo tecnológico por alumno",
-          "Ubicación del equipo tecnológico del alumno dentro del inmueble",
-          "Tipo de equipo tecnológico al servicio del administrativo",
-          "Cantidad de equipos por administrativo",
-          "Ubicación del equipo tecnológico del administrativo dentro de l inmueble",
-          "Tipo de equipo tecnológico al servicio del docente",
-          "Cantidad de equipos por docente",
-          "Ubicación del equipo tecnológico del docente dentro del inmueble",
-          "Cuenta con servicio de telefonia",
-          "Total de equipos telefónicos",
-          "¿Cuenta con el servicio de internet?",
-          "Velocidad en MB",
-          "Razonamiento técnico que justifica la idoneidad de las instalaciones para el servicio educativo que se brindará",
-          "Población estudiantil máxima que podrá ser atendida en el inmueble",
-          "¿Existe un plan interno de protección civil?",
-          "Nivel de accesibilidad",
-          "Forma en la que se abastece de agua",
-          "Tipo de drenaje sanitario existente en el inmueble",
-          "Número total de sanitarios en el inmueble",
-          "¿El diseño de la infraestructura educativa incorporó un modelo de sostenibilidad?",
-          "¿El diseño de la infraestructura educativa incorporó el uso de energía sostenible?"
+        $elementNames = array(
+          "Cuenta con escritura pública",
+          "Cuenta con contrato de arrendamiento",
+          "En el contrato de arrendamiento especifica que el uso del inmueble sera impartir educación",
+          "Cuenta con contrato de comodato",
+          "En el contrato de comodato especifica que el uso del inmueble sera impartir educación",
+          "Cuenta con acreditación de seguridad estructural del inmueble",
+          "Cuenta con acreditación de permiso de uso de suelo ó equivalente",
+          "Cuenta con dictamen de la secretaria de protección civil estatal o municipal",
+          "Cuenta con cédula de funcionamiento vigente",
+          "La cédula de funcionamiento se encuentra debidamente exhibida",
+          "El terreno se encuentra debidamente delimitado de exterior y colindancias",
+          "Cuenta con áreas de recreación y/o esparcimiento",
+          "Cuenta con áreas verdes",
+          "Cuenta con servicio de cafetería",
+          "Cuenta con estacionamiento propio",
+          "El inmueble presenta condiciones de accesibilidad para personas discapacitadas",
+          "Cuenta con sanitarios exclusivos y adaptados para personas discapacitadas",
+          "Cuenta con botiquín de primeros auxilios",
+          "Se cuenta con dispensadores de agua para el consumo humano",
+          "Cuenta con extintores vigentes",
+          "Cuenta con señalamientos",
+          "Cuenta con rutas de evacuación",
+          "Cuenta con alerta sísmica",
+          "Cuenta con puntos de reunión",
+          "Cuenta con cubículos",
+          "Cuenta con sala de maestros"
         );
         $planNames = array(
           "Planes y programas de estudios",
@@ -510,7 +488,7 @@ class RequisitionController extends Controller
           $resultadoF = '"No Favorable"';
         }
 
-        switch ($requisition->meta) {
+        switch ($requisition->procedure) {
           case 'solicitud':
             $meta = 'Solicitud';
             break;
@@ -521,30 +499,124 @@ class RequisitionController extends Controller
             $meta = 'Cambio de plan de estudios';
             break;
         }
-
-        //Retorno de evaluaciones
-        //Formatos
-        foreach ($formats as $format) {
-          if ($format->valido == false) {
-            $formatos = $formatos . '*' . $formatNames[$format->formato - 1] . ', anexo ' . $format->formato . ', mantiene un estado INVALIDO con el comentario: ' . $format->justificacion . ".";
-          }
-        }
-        //Elementos
-        foreach ($elements as $element) {
-          if ($element->existente == false) {
-            $noRequired = [7, 12, 14, 15, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 31, 32, 33, 34, 35, 36, 37, 38, 39, 41, 48, 49, 50];
-            if (!in_array($element->elemento, $noRequired)) {
-              $elementos = $elementos . '*' . $elementName[$element->elemento - 1] . ', mantiene un estado INVALIDO con el comentario: ' . $element->observacion . ".";
+        $secciones = array('Pertinencia social','Pertinencia económica','Estudio de campo laboral','Proyección de matricula','Financiamiento');
+        $pertinenciaSocial = 0;
+        $pertinenciaAcademica = 0;
+        $pertinenciaLaboral = 0;
+        $proyeccionMatricula = 0;
+        $financiamiento = 0;
+        for($f = 1; $f<30;$f++){
+          for($j = 0;$j<29;$j++){
+            if($f <15){
+              if($opinions[$j]->opinion == $f){
+                switch($opinions[$j]->status){
+                  case 'suficiente':
+                    $pertinenciaSocial += $opinions[$j]->top;
+                    break;
+                  case 'insuficiente':
+                    $pertinenciaSocial += $opinions[$j]->top/2;
+                    break;
+                  case 'na':
+                  default:
+                    break;
+                }
+              }
+            }elseif($f < 20){
+              if($opinions[$j]->opinion == $f){
+                switch($opinions[$j]->status){
+                  case 'suficiente':
+                    $pertinenciaAcademica += $opinions[$j]->top;
+                    break;
+                  case 'insuficiente':
+                    $pertinenciaAcademica += $opinions[$j]->top/2;
+                    break;
+                  case 'na':
+                  default:
+                    break;
+                }
+              }
+            }elseif ( $f < 26){
+              if($opinions[$j]->opinion == $f){
+                switch($opinions[$j]->status){
+                  case 'suficiente':
+                    $pertinenciaLaboral += $opinions[$j]->top;
+                    break;
+                  case 'insuficiente':
+                    $pertinenciaLaboral += $opinions[$j]->top/2;
+                    break;
+                  case 'na':
+                  default:
+                    break;
+                }
+              }
+            }elseif($f == 26){
+              if($opinions[$j]->opinion == $f){
+                switch($opinions[$j]->status){
+                  case 'suficiente':
+                    $proyeccionMatricula += $opinions[$j]->top;
+                    break;
+                  case 'insuficiente':
+                    $proyeccionMatricula += $opinions[$j]->top/2;
+                    break;
+                  case 'na':
+                  default:
+                    break;
+                }
+              }
+            }else{
+              if($opinions[$j]->opinion == $f){
+                switch($opinions[$j]->status){
+                  case 'suficiente':
+                    $financiamiento += $opinions[$j]->top;
+                    break;
+                  case 'insuficiente':
+                    $financiamiento += $opinions[$j]->top/2;
+                    break;
+                  case 'na':
+                  default:
+                    break;
+                }
+              }
             }
           }
         }
-        //Planes
-        foreach ($plans as $plan) {
-          if ($plan->ponderacion < 60) {
-            $planes = $planes . '*' . $planNames[$plan->plan - 1] . ', tiene una calificación del ' . $plan->ponderacion . '% con el comentario: ' . $plan->comentario . ".";
+        $puntajes = array($pertinenciaSocial,$pertinenciaAcademica,$pertinenciaLaboral,$proyeccionMatricula,$financiamiento);
+        $seccionesPlanesYProgramas = array('Datos generales del plan','Datos detallados del plan');
+        $puntajeGeneral = 0;
+        $puntajeDetallado = 0;
+        for($f = 1; $f<21;$f++){
+          for($j = 0;$j<20;$j++){
+            if($f < 12){
+              if($plans[$j]->plan == $f){
+                switch($plans[$j]->status){
+                  case 'cumple':
+                    $puntajeGeneral += $plans[$j]->top;
+                    break;
+                  case 'parcialmente':
+                    $puntajeGeneral += $plans[$j]->top/2;
+                    break;
+                  case 'na':
+                  default:
+                    break;
+                }
+              }
+            }else{
+              if($plans[$j]->plan == $f){
+                switch($plans[$j]->status){
+                  case 'cumple':
+                    $puntajeDetallado += $plans[$j]->top;
+                    break;
+                  case 'parcialmente':
+                    $puntajeDetallado += $plans[$j]->top/2;
+                    break;
+                  case 'na':
+                  default:
+                    break;
+                }
+              }
+            }
           }
         }
-
         $template = new \PhpOffice\PhpWord\TemplateProcessor('DOCUMENTO_ESTADO.docx');
 
         //Documento
@@ -562,10 +634,63 @@ class RequisitionController extends Controller
         $template->setValue('carreraI', $carrera);
         $template->setValue('emailI', $correo);
         //formatos
-        $template->setValue('formatos', $formatos);
-        $template->setValue('elementos', $elementos);
-        $template->setValue('planes', $planes);
+        $rechazados = 0;
+        for($i=1;$i<6;$i++){
+          for($j = 0;$j<5;$j++){
+            if($formats[$j]->format == $i){
+              if($formats[$j]->valid){
+                $estado = 'Aceptado';
+              }
+              else{
+                $estado = 'Rechazado';
+                $rechazados += 1;
+              }
+              $template->setValue(array('number'.$i-1,'format'.$i-1,'valid'.$i-1,'justification'.$i-1), array($formats[$j]->format,$formatNames[$i-1],$estado,ucfirst($formats[$j]->justification)));
+            }
+          }    
+        }
+        $template->setValue('rechazados',$rechazados);
+        //Factibilidad y pertinencia
+        for($i = 0;$i<5;$i++){
+          $template->setValue(array('seccion'.$i,'puntaje'.$i), array($secciones[$i],$puntajes[$i]));
+        }
+        for($i = 0;$i<3;$i++){
+          switch($comments[$i]->name){
+            case 'opinionComment':
+              $template->setValue('observacionOpinion',$comments[$i]->observation);
+              break;
+            case 'elementComment':
+              $template->setValue('observacionElement',$comments[$i]->observation);
+              break;
+            case 'planComment':
+              $template->setValue('observacionPlan',$comments[$i]->observation);
+              break;
+          }
+        }    
+        $template->setValue('totalPuntaje',$puntajes[0]+$puntajes[1]+$puntajes[2]+$puntajes[3]+$puntajes[4]);    
+        //Elementos
+        $ausentes = 0;
+        for($i=1;$i<27;$i++){
+          for($j = 0;$j<26;$j++){
+            if($elements[$j]->element == $i){
+              if($elements[$j]->existing){
+                $estado = 'Presente';
+              }
+              else{
+                $estado = 'Ausente';
+                $ausentes += 1;
+              }
+              $template->setValue(array('numero'.$i-1,'element'.$i-1,'existing'.$i-1), array($elements[$j]->element,$elementNames[$i-1],$estado));
+            }
+          }    
+        }
+        $template->setValue('ausentes',$ausentes);
 
+        //Planes
+        $template->setValue(array('seccionGeneral','puntajeGeneral'), array($seccionesPlanesYProgramas[0],$puntajeGeneral));
+        $template->setValue(array('seccionDetallada','puntajeDetallado'), array($seccionesPlanesYProgramas[1],$puntajeDetallado));
+        $template->setValue('puntajeTotal',$puntajeGeneral + $puntajeDetallado);    
+        
         //Conclusión                
         $template->setValue('evaluacionF', $resultadoF);
         $template->setValue('evaluacion', $resultado);

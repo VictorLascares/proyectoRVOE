@@ -41,20 +41,20 @@ class ElementController extends Controller
                 "Cuenta con cédula de funcionamiento vigente",
                 "La cédula de funcionamiento se encuentra debidamente exhibida",
                 "El terreno se encuentra debidamente delimitado de exterior y colindancias",
-                "Cuenta con areas de recreación y/o esparcimiento",
-                "Cuenta con areas verdes",
-                "Cuenta con servicio de cafeteria",
+                "Cuenta con áreas de recreación y/o esparcimiento",
+                "Cuenta con áreas verdes",
+                "Cuenta con servicio de cafetería",
                 "Cuenta con estacionamiento propio",
                 "El inmueble presenta condiciones de accesibilidad para personas discapacitadas",
                 "Cuenta con sanitarios exclusivos y adaptados para personas discapacitadas",
-                "Cuenta con botiquin de primeros auxilios",
+                "Cuenta con botiquín de primeros auxilios",
                 "Se cuenta con dispensadores de agua para el consumo humano",
                 "Cuenta con extintores vigentes",
                 "Cuenta con señalamientos",
                 "Cuenta con rutas de evacuación",
-                "Cuenta con alerta sismica",
+                "Cuenta con alerta sísmica",
                 "Cuenta con puntos de reunión",
-                "Cuenta con cubiculos",
+                "Cuenta con cubículos",
                 "Cuenta con sala de maestros"
             );
 
@@ -104,10 +104,12 @@ class ElementController extends Controller
                         $requisition->format_public_id = $public_id;
                     }
                     // Se crean los planes para evaluación
+                    $opinionTop= array(1,1,1,1,5,1,1,12,10,1,12,2,10,10,5,30,20,5,20,40);
                     if (is_null($plans)) {
-                        for ($planName = 1; $planName < 33; $planName++) {
+                        for ($planName = 1; $planName < 21; $planName++) {
                             $plan = new Plan();
                             $plan->plan = $planName;
+                            $plan->top = $opinionTop[$planName - 1];
                             $plan->requisition_id = $requisition->id;
                             $plan->save();
                         }

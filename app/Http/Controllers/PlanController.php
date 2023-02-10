@@ -63,7 +63,7 @@ class PlanController extends Controller
             $requisition = Requisition::find($request->requisition_id);
             $plans = Plan::searchrequisitionid($request->requisition_id)->first();
             if ($requisition->evaNum >= 6 && $requisition->status == 'pendiente') {
-                for ($planName = 1; $planName < 33; $planName++) { //
+                for ($planName = 1; $planName < 21; $planName++) { //
                     $plan = Plan::searchPlan($planName)->searchrequisitionid($requisition->id)->first();
                     $planNumber = 'plan' . $planName;
                     // $planNumberc = $planNumber . 'c';
