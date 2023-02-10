@@ -27,6 +27,8 @@ class OpinionController extends Controller
             $career = Career::find($requisition->career_id);
             $institution = Institution::find($career->institution_id);
             $opinions = Opinion::searchrequisitionid($requisition->id)->get();
+            $opinionComment = Comment::searchname('opinionComment')->get()[0];
+            // dd($opinionComment);
             $opinionNames = array(
                 "Presenta datos económicos de la zona donde se impartirá el plan",
                 "Analiza los datos económicos de la zona en donde se establecerá el plan",
@@ -59,7 +61,7 @@ class OpinionController extends Controller
                 "veintinueve"
             );
 
-            return view('requisiciones.factYPertEva', compact('requisition', 'career', 'institution', 'opinions', 'opinionNames'));
+            return view('requisiciones.factYPertEva', compact('requisition', 'opinionComment','career', 'institution', 'opinions', 'opinionNames'));
         }
     }
 

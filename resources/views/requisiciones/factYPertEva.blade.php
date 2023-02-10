@@ -27,10 +27,14 @@
                                                         <p class="max-w-sm">{{ $opinionNames[$i - 1] }}</p>
                                                     </td>
                                                     <td class="text-sm text-center text-gray-900 font-light">
-                                                        <select name="opinion{{$i}}" class="border-gray-200 bg-gray-50 rounded-xl">
-                                                            <option value="suficiente">Suficiente</option>
-                                                            <option value="insuficiente">Insuficiente</option>
-                                                            <option value="na">No</option>
+                                                        <select name="opinion{{ $i }}"
+                                                            class="border-gray-200 bg-gray-50 rounded-xl">
+                                                            <option @if ($opinion->status == 'suficiente') selected @endif
+                                                                value="suficiente">Suficiente</option>
+                                                            <option @if ($opinion->status == 'insuficiente') selected @endif
+                                                                value="insuficiente">Insuficiente</option>
+                                                            <option @if ($opinion->status == 'na') selected @endif
+                                                                value="na">No</option>
                                                         </select>
                                                     </td>
                                                 </tr>
@@ -45,12 +49,14 @@
             </div>
     </div>
     <div class="w-full">
-        <textarea name="opinionC" rows="5" class="rounded-xl resize-none border-gray-200 w-full" placeholder="Observaciones"></textarea>
+        <textarea name="opinionC" rows="5" class="rounded-xl resize-none border-gray-200 w-full"
+            placeholder="Observaciones">{{ $opinionComment->observation }}</textarea>
     </div>
 
     <div class="my-3">
         <label for="opinionFormat" class="block font-bold mb-3 text-lg">Formato de Factibilidad y Pertinencia</label>
-        <input class="w-1/2 border border-gray-200 bg-white rounded-xl" name="opinionFormat" type="file" accept="application/pdf" id="opinionFormat">
+        <input class="w-1/2 border border-gray-200 bg-white rounded-xl" name="opinionFormat" type="file"
+            accept="application/pdf" id="opinionFormat">
     </div>
 
     <div class="flex justify-end">

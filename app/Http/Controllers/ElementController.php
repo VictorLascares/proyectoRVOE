@@ -29,6 +29,7 @@ class ElementController extends Controller
             $career = Career::find($requisition->career_id);
             $institution = Institution::find($career->institution_id);
             $elements = Element::searchrequisitionid($requisition->id)->get();
+            $elementComment = Comment::searchname('elementComment')->get()[0];
             $elementName = array(
                 "Cuenta con escritura pública",
                 "Cuenta con contrato de arrendamiento",
@@ -58,7 +59,7 @@ class ElementController extends Controller
                 "Cuenta con sala de maestros"
             );
 
-            return view('requisiciones.instaEva', compact('requisition', 'career', 'institution', 'elements', 'elementName'));
+            return view('requisiciones.instaEva', compact('requisition', 'career', 'elementComment', 'institution', 'elements', 'elementName'));
         }
     }
 
