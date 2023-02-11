@@ -159,9 +159,23 @@
 
         <div class="@if ($data->formatoInstalaciones) flex justify-between items-center gap-4 @endif mt-5">
 
-            @if ($data->formatoInstalaciones)
-                <button id="open-img" class="bg-green-900 hover:bg-green-700 text-white rounded-lg p-2">Evidencia
-                    Evaluación de Instalaciones</button>
+            @if ($data->opinionFormat)
+                <a id="open-img" class="bg-green-900 hover:bg-green-700 text-white rounded-lg py-4 px-2"
+                    href="{{ $data->opinionFormat }}" target="_blank">Evidencia
+                    Evaluación de Factibilidad y Pertinencia</a>
+            @endif
+
+            @if ($data->facilitiesFormat)
+                <a id="open-img" class="bg-green-900 hover:bg-green-700 text-white rounded-lg py-4 px-2"
+                    href="{{ $data->facilitiesFormat }}" target="_blank">Evidencia
+                    Evaluación de Instalaciones</a>
+            @endif
+
+
+            @if ($data->planFormat)
+                <a id="open-img" class="bg-green-900 hover:bg-green-700 text-white rounded-lg py-4 px-2"
+                    href="{{ $data->planFormat }}" target="_blank">Evidencia
+                    Evaluación de Planes y Programas de Estudio</a>
             @endif
 
 
@@ -223,27 +237,12 @@
             @endforeach
         @endif
     </div>
-
-
-
-    @if ($data->formatoInstalaciones)
-        <div id="buildings-img" class="hidden p-5 fixed top-0 bottom-0 left-0 right-0 bg-black/80 h-screen">
-            <button id="close-img"
-                class="absolute rounded-lg bg-gray-200 hover:bg-gray-400 px-4 py-2 text-gray-400 hover:text-gray-800 transition-all text-5xl font-bold top-10 right-10">X</button>
-            <div class="flex flex-col justify-center items-center h-screen">
-                <img src="{{ $data->formatoInstalaciones }}" alt="Formato de instalaciones">
-            </div>
-        </div>
-    @endif
 @endsection
 
 @section('script')
     <script>
         const checkBtnRadios = document.querySelectorAll('.btn-check')
         const checkBoxes1 = document.querySelectorAll('.review2Checkbox')
-        const imgContainer = document.querySelector("#buildings-img");
-        const closeImg = document.querySelector("#close-img");
-        const openImg = document.querySelector("#open-img");
 
         cargarEventListener()
 
@@ -255,15 +254,6 @@
             checkBoxes1.forEach(checkBox => {
                 checkBox.addEventListener('click', review2)
             })
-
-
-            if (openImg) {
-                openImg.addEventListener('click', () => imgContainer.classList.remove("hidden"));
-            }
-
-            if (closeImg) {
-                closeImg.addEventListener('click', () => imgContainer.classList.add("hidden"));
-            }
         }
 
         function review1(e) {
