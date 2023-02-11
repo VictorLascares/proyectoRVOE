@@ -52,41 +52,74 @@ class FormatController extends Controller
             $formatsActualy = Format::searchrequisitionid($requisition->id)->get();
             $opinions = Opinion::searchrequisitionid($request->requisition_id)->first();
             $validationEstatus = true;
-            if(!($request->noEvaluation < $requisition->evaNum && $requisition->evaNum == 3)){
-                if ($request->noEvaluation < 4 && $requisition->status == 'pendiente') {
+            if(($request->noEvaluation < 3 && $requisition->evaNum < 3 ) ||  ($requisition->evaNum >= 3 && $request->noEvaluation == 3)){
+                if ($requisition->status == 'pendiente') {
                     for ($formatName = 1; $formatName < 6; $formatName++) {
                         $format = Format::searchformat($formatName)->searchrequisitionid($requisition->id)->first();
                         $formato = 'anexo' . $formatName;
                         $formatoj = $formato . 'j';
                         if ($request->input($formato) == false || $request->input($formato) == 'false') {
                             if ($request->noEvaluation == 1) {
-                                $format->justification = 'No se encuentra el formato';
-                                $validationEstatus = false;
-                            } else if($request->noEvaluation == 2){
-                                if($format->valid != false){
-                                    $format->justification = $request->$formatoj;
+                                if($requisition->evaNum < 3 && $format->justification == ''){
+                                    $format->justification = 'No se encuentra el formato';
+                                    $format->valid = false;
                                 }
-                                // $validationEstatus = false;
+                            } else if($request->noEvaluation == 2){
+                                if($requisition->evaNum == 2){
+                                    if($format->valid != false){
+                                        $format->justification = $request->$formatoj;
+                                    }
+                                }
+                                $validationEstatus = false;
+                                $format->valid = false;
                             }else {
                                 $format->justification = $request->$formatoj;
+                                $format->valid = false;
                             }
-                            $format->valid = false;
                         } else {
-                            if($request->noEvaluation == 2){
-                                if($format->valid == false){
-                                    // $validationEstatus = false;
+                            if($request->noEvaluation == 1){
+                                if($requisition->evaNum == 1){
                                     $format->justification = "";
                                     $format->valid = true;
                                 }
-                            }else{
-                                if($request->$formatoj != null){
-                                    $format->justification = $request->$formatoj;
-                                }else{
-                                    if($request->noEvaluation == 1 && $format->valid == false){
-                                        $format->justification = "";
+                                if($requisition->evaNum == 2 && $format->valid == false && $format->justification == 'No se encuentra el formato'){
+                                    $format->justification = "";
+                                    $format->valid = true;
+                                }
+                            }
+                            if($request->noEvaluation == 2){
+                                if($format->valid == false ){
+                                    if( $format->justification != 'No se encuentra el formato'){
+                                        if($request->$formatoj != null){
+                                            $format->justification = $request->$formatoj;
+                                        }else{
+                                            $format->justification = "";
+                                        }   
+                                        $format->valid = true;     
+                                    }else{
+                                        $validationEstatus = false;
+                                    }                        
+                                }
+                                if($format->valid == true){
+                                    if($request->$formatoj != null){
+                                        $format->justification = $request->$formatoj;
                                     }
                                 }
-                                $format->valid = true;
+                            }
+                            if($request->noEvaluation == 3){
+                                if($format->valid == false){
+                                    if($request->$formatoj != null){
+                                        $format->justification = $request->$formatoj;
+                                    }else{
+                                        $format->justification = "";
+                                    }   
+                                    $format->valid = true; 
+                                }
+                                if($format->valid == true){
+                                    if($request->$formatoj != null){
+                                        $format->justification = $request->$formatoj;
+                                    }
+                                }
                             }
                         }
                         $format->save();
@@ -112,7 +145,7 @@ class FormatController extends Controller
                         }
                         if($validationEstatus){
                             $requisition->evaNum = $requisition->evaNum + 1;
-                            if($requisition->evaNum == 2){
+                            if($requisition->evaNum == 3){
                                 //Asignar fecha de 3 meses
                                 $requisition->fecha_managment = date('Y-m-d');
                                 //Informar a dirección

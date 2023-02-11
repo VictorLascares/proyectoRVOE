@@ -12,7 +12,6 @@ class Plan extends Model
 
     protected $fillable = [
         'plan',
-        'top',
         'status',
     ];
 

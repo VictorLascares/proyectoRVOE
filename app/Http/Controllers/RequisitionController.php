@@ -467,10 +467,26 @@ class RequisitionController extends Controller
           "Cuenta con sala de maestros"
         );
         $planNames = array(
-          "Planes y programas de estudios",
-          "Reglamentos",
-          "Plan de mejora continua"
-        );
+          "Grado académico",
+          "Modalidad educativa",
+          "Área de formación",
+          "Duración mínima en semanas",
+          "Carga horaria semanal",
+          "Tipo de diseño",
+          "Número de ciclos escolares que integran el plan de estudios",
+          "Fines del aprendizaje",
+          "Perfil de ingreso",
+          "Antecedente académico",
+          "Perfil de egreso",
+          "Requisitos de ingreso",
+          "Requisitos de permanencia; Estrategias y lineamientos para asegurar el ingreso, permanencia, egreso y titulación",
+          "Proyección de la matrícula escolar",
+          "Modelo educativo (modelo teórico - pedagógico del plan curricular)",
+          "Modalidad de evaluación del plan de estudios (justificación teórica)",
+          "Periodicidad de evaluación del plan de estudios",
+          "Justificación de la modalidad elegida (incluir viabilidad del programa con base en la modalidad propuesta)",
+          "Mapa curricular"
+      );
         if (is_null($requisition->rvoe)) {
           $no_solicitud = 'No disponible';
         } else {
@@ -580,22 +596,26 @@ class RequisitionController extends Controller
             }
           }
         }
+        $template = new \PhpOffice\PhpWord\TemplateProcessor('DOCUMENTO_ESTADO.docx');
+
         $puntajes = array($pertinenciaSocial,$pertinenciaAcademica,$pertinenciaLaboral,$proyeccionMatricula,$financiamiento);
-        $seccionesPlanesYProgramas = array('Datos generales del plan','Datos detallados del plan');
         $puntajeGeneral = 0;
         $puntajeDetallado = 0;
-        for($f = 1; $f<21;$f++){
-          for($j = 0;$j<20;$j++){
+        for($f = 1; $f<20;$f++){
+          for($j = 0;$j<19;$j++){
             if($f < 12){
               if($plans[$j]->plan == $f){
                 switch($plans[$j]->status){
                   case 'cumple':
-                    $puntajeGeneral += $plans[$j]->top;
+                    $template->setValue(array('plan'.$f-1,'seccionGeneral'.$f-1,'porcentajeGeneral'.$f-1), array($plans[$j]->plan,$planNames[$f-1],'100'));
+                    $puntajeGeneral += 100;
                     break;
                   case 'parcialmente':
-                    $puntajeGeneral += $plans[$j]->top/2;
+                    $template->setValue(array('plan'.$f-1,'seccionGeneral'.$f-1,'porcentajeGeneral'.$f-1), array($plans[$j]->plan,$planNames[$f-1],'50'));
+                    $puntajeGeneral += 50;
                     break;
                   case 'na':
+                    $template->setValue(array('plan'.$f-1,'seccionGeneral'.$f-1,'porcentajeGeneral'.$f-1), array($plans[$j]->plan,$planNames[$f-1],'0'));
                   default:
                     break;
                 }
@@ -604,12 +624,15 @@ class RequisitionController extends Controller
               if($plans[$j]->plan == $f){
                 switch($plans[$j]->status){
                   case 'cumple':
-                    $puntajeDetallado += $plans[$j]->top;
+                    $template->setValue(array('plan'.$f-1,'seccionDetallada'.$f-1,'porcentajeDetallado'.$f-1), array($plans[$j]->plan,$planNames[$f-1],'100'));
+                    $puntajeDetallado += 100;
                     break;
                   case 'parcialmente':
-                    $puntajeDetallado += $plans[$j]->top/2;
+                    $template->setValue(array('plan'.$f-1,'seccionDetallada'.$f-1,'porcentajeDetallado'.$f-1), array($plans[$j]->plan,$planNames[$f-1],'50'));
+                    $puntajeDetallado += 50;
                     break;
                   case 'na':
+                    $template->setValue(array('plan'.$f-1,'seccionDetallada'.$f-1,'porcentajeDetallado'.$f-1), array($plans[$j]->plan,$planNames[$f-1],'0'));
                   default:
                     break;
                 }
@@ -617,8 +640,6 @@ class RequisitionController extends Controller
             }
           }
         }
-        $template = new \PhpOffice\PhpWord\TemplateProcessor('DOCUMENTO_ESTADO.docx');
-
         //Documento
         $template->setValue('anioI', $anioI);
         $template->setValue('mesI', $mesI);
@@ -687,8 +708,8 @@ class RequisitionController extends Controller
         $template->setValue('ausentes',$ausentes);
 
         //Planes
-        $template->setValue(array('seccionGeneral','puntajeGeneral'), array($seccionesPlanesYProgramas[0],$puntajeGeneral));
-        $template->setValue(array('seccionDetallada','puntajeDetallado'), array($seccionesPlanesYProgramas[1],$puntajeDetallado));
+        $template->setValue('puntajeGeneral', $puntajeGeneral);
+        $template->setValue('puntajeDetallado', $puntajeDetallado);
         $template->setValue('puntajeTotal',$puntajeGeneral + $puntajeDetallado);    
         
         //Conclusión                

@@ -29,7 +29,7 @@ class ElementController extends Controller
             $career = Career::find($requisition->career_id);
             $institution = Institution::find($career->institution_id);
             $elements = Element::searchrequisitionid($requisition->id)->get();
-            $elementComment = Comment::searchname('elementComment')->get()[0];
+            $elementComment = Comment::searchname('elementComment')->searchrequisitionid($requisition->id)->get()[0];
             $elementName = array(
                 "Cuenta con escritura pública",
                 "Cuenta con contrato de arrendamiento",
@@ -105,12 +105,10 @@ class ElementController extends Controller
                         $requisition->format_public_id = $public_id;
                     }
                     // Se crean los planes para evaluación
-                    $opinionTop= array(1,1,1,1,5,1,1,12,10,1,12,2,10,10,5,30,20,5,20,40);
                     if (is_null($plans)) {
-                        for ($planName = 1; $planName < 21; $planName++) {
+                        for ($planName = 1; $planName < 20; $planName++) {
                             $plan = new Plan();
                             $plan->plan = $planName;
-                            $plan->top = $opinionTop[$planName - 1];
                             $plan->requisition_id = $requisition->id;
                             $plan->save();
                         }

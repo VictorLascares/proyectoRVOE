@@ -27,7 +27,7 @@ class OpinionController extends Controller
             $career = Career::find($requisition->career_id);
             $institution = Institution::find($career->institution_id);
             $opinions = Opinion::searchrequisitionid($requisition->id)->get();
-            $opinionComment = Comment::searchname('opinionComment')->get()[0];
+            $opinionComment = Comment::searchname('opinionComment')->searchrequisitionid($requisition_id)->get()[0];
             // dd($opinionComment);
             $opinionNames = array(
                 "Presenta datos económicos de la zona donde se impartirá el plan",

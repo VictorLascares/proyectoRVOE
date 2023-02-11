@@ -29,7 +29,7 @@ class PlanController extends Controller
             $career = Career::find($requisition->career_id);
             $institution = Institution::find($career->institution_id);
             $plans = Plan::searchrequisitionid($requisition->id)->get();
-            $planComment = Comment::searchname('planComment')->get()[0];
+            $planComment = Comment::searchname('planComment')->searchrequisitionid($requisition->id)->get()[0];
             $planNames = array(
                 "Grado académico",
                 "Modalidad educativa",
@@ -43,8 +43,7 @@ class PlanController extends Controller
                 "Antecedente académico",
                 "Perfil de egreso",
                 "Requisitos de ingreso",
-                "Requisitos de permanencia (se evaluará conforme al reglamento escolar)",
-                "Estrategias y lineamientos para asegurar el ingreso, permanencia, egreso y titulación",
+                "Requisitos de permanencia; Estrategias y lineamientos para asegurar el ingreso, permanencia, egreso y titulación",
                 "Proyección de la matrícula escolar",
                 "Modelo educativo (modelo teorico - pedagógico del plan curricular)",
                 "Modalidad de evaluación del plan de estudios (justificación teorica)",
@@ -64,7 +63,7 @@ class PlanController extends Controller
             $requisition = Requisition::find($request->requisition_id);
             $plans = Plan::searchrequisitionid($request->requisition_id)->first();
             if ($requisition->evaNum >= 6 && $requisition->status == 'pendiente') {
-                for ($planName = 1; $planName < 21; $planName++) { //
+                for ($planName = 1; $planName < 20; $planName++) { //
                     $plan = Plan::searchPlan($planName)->searchrequisitionid($requisition->id)->first();
                     $planNumber = 'plan' . $planName;
                     // $planNumberc = $planNumber . 'c';
