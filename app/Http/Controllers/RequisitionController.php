@@ -215,25 +215,58 @@ class RequisitionController extends Controller
     if (Auth::user() != null) {
       $this->revisar_activo($requisition);
       $data = Requisition::find($requisition);
-      if ($request->estado == 'latencia' && $data->estado == 'activo') {
+      if ($request->estado == 'latencia' && $data->status == 'activo') {
         $date = date('Y-m-d');
         $date = date('Y-m-d', strtotime($date));
-        $dateMax = date("Y-m-d", strtotime($data->created_at . "+ 2 year"));
+        $dateMax = date("Y-m-d", strtotime($data->requisitionDate . "+ 2 year"));
         if ($dateMax >= $date) {
-          $data->fecha_latencia = $date;
-          $data->estado = $request->estado;
+          $data->latencyDate = $date;
+          $data->status = $request->estado;
         }
-      } else if ($request->estado == 'activo' && $data->estado == 'latencia') {
-        $dateLatencia = date_create(date('Y-m-d', strtotime($data->fecha_latencia)));
-        $dateVencimiento = date_create(date('Y-m-d', strtotime($data->fecha_vencimiento)));
+      } else if ($request->estado == 'activo' && $data->status == 'latencia') {
+        $dateLatencia = date_create(date('Y-m-d', strtotime($data->latencyDate)));
+        $dateVencimiento = date_create(date('Y-m-d', strtotime($data->dueDate)));
         $diasRestantes = date_diff($dateVencimiento, $dateLatencia);
         $differenceFormat = '%a';
         $date = date('Y-m-d');
         $date = date("Y-m-d", strtotime($date . "+ " . $diasRestantes->format($differenceFormat) . " day"));
-        $data->fecha_vencimiento = $date;
-        $data->estado = $request->estado;
-      } else if ($request->estado == 'activo' && $data->estado == 'revocado') {
-        $data->estado = $request->estado;
+        $data->dueDate = $date;
+        $data->status = $request->estado;
+      } else if ($request->estado == 'revocado' && $data->status == 'activo') {
+        $data->revokedDate = date('Y-m-d', strtotime($date));
+        $data->status = $request->estado;
+      }elseif($request->estado == 'activo' && $data->status == 'pendiente' && $data->evaNum >= 7 ){
+        if(is_null($request->fechaActivo)){
+          $data->requisitionDate = date('Y-m-d', strtotime($date));
+        }else{
+          $data->requisitionDate = strtotime($request->fechaActivo);
+        }
+        $data->dueDate = date("Y-m-d", strtotime($data->requisitionDate . "+ 3 year"));
+        $data->status = $request->estado;
+      }elseif($request->estado == 'rechazar' && $data->status == 'pendiente'){
+        $data->status = 'rechazado';
+      }elseif($request->estado == 'eliminar' && $data->status == 'pendiente'){
+        $data->delete();
+        if ($requisition->facilitiesFormat != null) {
+          Cloudinary()->destroy($requisition->format_public_id);
+        }  
+        if ($requisition->opinionFormat != null) {
+          Cloudinary()->destroy($requisition->opinion_public_id);
+        }
+        if ($requisition->planFormat != null) {
+          Cloudinary()->destroy($requisition->plan_public_id);
+        }
+        if (!$data) {
+          return response()->json([
+            'status' => 400,
+            'error' => "something went wrong"
+          ]);
+        } else {
+          return response()->json([
+            'status' => 200,
+            'message' => 'Data successfully destroyed'
+          ]);
+        }
       }
       $data->update($request->all());
       return redirect(route('requisitions.show', $data->id));
@@ -761,13 +794,13 @@ class RequisitionController extends Controller
   {
     if (Auth::user() != null) {
       $data = Requisition::find($requisition);
-      if ($data->estado == 'activo') {
+      if ($data->status == 'activo') {
         $dateNow = date('Y-m-d');
-        $dateVencimiento = $data->fecha_vencimiento;
+        $dateVencimiento = $data->dueDate;
         $dateNow_time = strtotime($dateNow);
         $dateVencimiento_time = strtotime($dateVencimiento);
         if ($dateVencimiento_time < $dateNow_time) {
-          $data->estado = 'inactivo';
+          $data->status = 'inactivo';
           $data->update();
         }
       }

@@ -30,6 +30,8 @@ return new class extends Migration
             $table->boolean('ota')->default(false); 
             $table->date('dueDate')->nullable();
             $table->date('latencyDate')->nullable();
+            $table->date('requisitionDate')->nullable();
+            $table->date('revokedDate')->nullable();
             $table->date('fecha_managment')->nullable();
             $table->foreignId('career_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();

@@ -25,6 +25,8 @@ class Requisition extends Model
         'cata',
         'ota',
         'dueDate',
+        'revokedDate',
+        'requisitionDate',
         'latencyDate',
         'fecha_m',
     ];
