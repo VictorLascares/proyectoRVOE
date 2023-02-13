@@ -84,7 +84,7 @@
                     <form class="mb-2" method="POST" action="{{ route('requisitions.store') }}">
                         @csrf
                         <div class="mb-5">
-                            <select id="requisitionGoal" class="w-full border p-3" name="meta" required>
+                            <select id="requisitionGoal" class="w-full border p-3" name="procedure" required>
                                 <option selected disabled>-- Seleccione la Meta --</option>
                                 <option value="solicitud">Solicitud</option>
                                 <option value="domicilio">Domicilio</option>
