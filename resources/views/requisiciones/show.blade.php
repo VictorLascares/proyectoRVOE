@@ -124,7 +124,7 @@
                 <p>Dirección</p>
             </a>
             <a href="{{ url('/evaluate/opinions', $data->id) }}"
-                class="rounded-md p-3 text-white bg-green-900 hover:bg-green-700 flex flex-col justify-center items-center @if ($data->evaNum == 4) bg-blue-500 hover:bg-blue-800 @endif flex flex-col justify-center items-center @if ($data->evaNum < 4 || Auth()->user()->typeOfUser == 'direccion') disabled @endif">
+                class="rounded-md p-3 text-white bg-green-900 hover:bg-green-700 flex flex-col justify-center items-center @if ($data->evaNum == 4) bg-blue-500 hover:bg-blue-800 @endif flex flex-col justify-center items-center @if ($data->evaNum < 4 || Auth()->user()->typeOfUser == 'planeacion') disabled @endif">
                 <p class="uppercase text-center">Factibilidad y Pertinencia</p>
                 <p>Evaluación <span class="font-bold">4</span></p>
                 <p>Dirección</p>
@@ -202,40 +202,11 @@
 
     <div class="pb-4 w-4/6 mx-auto text-center">
         @foreach ($formats as $format)
-            @if ($format->valido == false && $format->justificacion)
+            @if ($format->valid == false && $format->justification)
                 <p class="bg-red-400 p-4 text-red-900 mb-4">Evaluación de Formatos -
-                    {{ $format->justificacion }} ({{ $formatNames[$format->formato - 1] }})</p>
+                    {{ $format->justification }} ({{ $formatNames[$format->format - 1] }})</p>
             @endif
         @endforeach
-        @if ($data->noEvaluacion > 4)
-            @foreach ($elements as $element)
-                @if (
-                    $element->existente == false &&
-                        (($element->elemento > 0 && $element->elemento < 7) ||
-                            ($element->elemento > 7 && $element->elemento < 12) ||
-                            $element->elemento == 13 ||
-                            $element->elemento == 16 ||
-                            ($element->elemento > 28 && $element->elemento < 31) ||
-                            $element->elemento == 40 ||
-                            ($element->elemento > 41 && $element->elemento < 48) ||
-                            $element->elemento > 50))
-                    <p class="bg-red-400 p-4 text-red-900 mb-4">Evaluación de las Instalaciones.-
-                        {{ $element->observacion }} (Elemento {{ $element->elemento }})</p>
-                @elseif ($element->existente == false)
-                    <p class="bg-orange-400 p-4 text-orange-900 mb-4">Evaluación de las Instalaciones.-
-                        {{ $element->observacion }} (Elemento {{ $element->elemento }})</p>
-                @endif
-            @endforeach
-        @endif
-
-        @if ($data->noEvaluacion > 5)
-            @foreach ($plans as $plan)
-                @if ($plan->ponderacion < 60)
-                    <p class="bg-red-400 p-4 text-red-900 mb-4">Evaluación de los Planes.-{{ $plan->comentario }} (Plan
-                        {{ $plan->plan }})</p>
-                @endif
-            @endforeach
-        @endif
     </div>
 @endsection
 
