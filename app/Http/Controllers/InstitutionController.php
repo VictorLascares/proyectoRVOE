@@ -173,7 +173,7 @@ class InstitutionController extends Controller
             $institutions = Institution::where('municipalitie_id', $request->municipalityId)->get();
             $institutionArray = array();
             foreach ($institutions as $institution) {
-                $institutionArray[$institution->id] = $institution->nombre;
+                $institutionArray[$institution->id] = $institution->name;
             }
             return response()->json($institutionArray);
         }

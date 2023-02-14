@@ -122,20 +122,20 @@
                     $('#consultas').empty()
                     $.each(data.requisitions, function($i, requisition) {
                         const {
-                            estado,
+                            status,
                             career_id,
-                            fecha_vencimiento
+                            dueDate
                         } = requisition
                         let carrera
                         $.each(data.careers, function($index, career) {
                             if (career_id == career.id) {
-                                carrera = career.nombre
+                                carrera = career.name
                             }
                         })
                         $('#consultas').append(`
                             <tr class="border-b">
-                                <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">${estado}</td>
-                                <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">${fecha_vencimiento == null ? 'No disponible' : fecha_vencimiento }</td>
+                                <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">${status}</td>
+                                <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">${dueDate == null ? 'No disponible' : dueDate }</td>
                                 <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">${carrera}</td>
                             </tr>
                         `)
@@ -163,20 +163,20 @@
                     $('#consultas').empty()
                     $.each(data.requisitions, function($i, requisition) {
                         const {
-                            estado,
+                            status,
                             career_id,
-                            fecha_vencimiento
+                            dueDate
                         } = requisition
                         let carrera
                         $.each(data.careers, function($index, career) {
                             if (career_id == career.id) {
-                                carrera = career.nombre
+                                carrera = career.name
                             }
                         })
                         $('#consultas').append(`
                             <tr class="border-b">
-                                <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">${estado}</td>
-                                <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">${fecha_vencimiento == null ? 'No disponible' : fecha_vencimiento }</td>
+                                <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">${status}</td>
+                                <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">${dueDate == null ? 'No disponible' : dueDate }</td>
                                 <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">${carrera}</td>
                             </tr>
                         `)
@@ -194,14 +194,14 @@
                     if (data.requisition.length > 0) {
                         $('#consultas').empty()
                         const {
-                            estado,
-                            fecha_vencimiento
+                            status,
+                            dueDate
                         } = data.requisition[0]
                         $('#consultas').append(`
                             <tr class="border-b">
-                                <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">${estado}</td>
-                                <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">${fecha_vencimiento == null ? 'No disponible' : fecha_vencimiento }</td>
-                                <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">${data.career[0].nombre}</td>
+                                <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">${status}</td>
+                                <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">${dueDate == null ? 'No disponible' : dueDate }</td>
+                                <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">${data.career[0].name}</td>
                             </tr>
                         `)
                     } else {
@@ -226,13 +226,13 @@
                     }, function(data) {
                         $('#consultas').empty()
                         const {
-                            estado,
-                            fecha_vencimiento
+                            status,
+                            dueDate
                         } = data.requisition[0]
                         $('#consultas').append(`
                             <tr class="border-b">
-                                <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">${estado}</td>
-                                <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">${fecha_vencimiento == null ? 'No disponible' : fecha_vencimiento }</td>
+                                <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">${status}</td>
+                                <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">${dueDate == null ? 'No disponible' : dueDate }</td>
                                 <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">${data.career[0].nombre}</td>
                             </tr>
                         `)
