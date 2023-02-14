@@ -504,8 +504,6 @@ class RequisitionController extends Controller
         $estado = $requisition->status;
         $correo = $institution->email;
         $carrera = $career->name;
-        $formatos = array();
-        $planes = '';
         $formatNames = array(
           'Plan de Estudios',
           'Mapa Curricular',
@@ -672,7 +670,6 @@ class RequisitionController extends Controller
           }
         }
         $template = new \PhpOffice\PhpWord\TemplateProcessor('DOCUMENTO_ESTADO.docx');
-
         $puntajes = array($pertinenciaSocial,$pertinenciaAcademica,$pertinenciaLaboral,$proyeccionMatricula,$financiamiento);
         $puntajeGeneral = 0;
         $puntajeDetallado = 0;
@@ -775,13 +772,13 @@ class RequisitionController extends Controller
               }
               else{
                 $estado = 'Ausente';
-                array_push($elementos,($ausentes+1).'.- '.$elementNames[$i-1].' ');
+                array_push($elementos,array('numero' => ($ausentes+1),'elemento' => $elementNames[$i-1]));
                 $ausentes += 1;
               }
             }
           }    
         }
-        $template->setValue('elementos', implode("\n", $elementos));
+        $template->cloneBlock('block_elemento', 0, true, false, $elementos);        
         $template->setValue('ausentes',$ausentes);
 
         //Planes
