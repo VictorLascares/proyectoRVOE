@@ -241,8 +241,9 @@ class RequisitionController extends Controller
         $data->status = $request->estado;
         $data->update($request->all());
         return redirect(route('requisitions.show', $data->id));
-      }elseif(($request->estado == 'activo' || $request->estado == 'rechazar') && $data->status == 'pendiente' && $data->evaNum >= 7 ){
+      }elseif(($request->estado == 'activo' || $request->estado == 'rechazado') && $data->status == 'pendiente' && $data->evaNum >= 7 ){
         if(is_null($request->fechaActivo)){
+          $date = date('Y-m-d');
           $data->requisitionDate = date('Y-m-d', strtotime($date));
         }else{
           // dd($request->fechaActivo);
@@ -263,7 +264,7 @@ class RequisitionController extends Controller
               if(!$existe){
                   $data->requestNumber = $count;
               }
-              $count++;
+              $existe = false;
           }
         }
         if(is_null($data->rvoe)){
@@ -282,20 +283,18 @@ class RequisitionController extends Controller
           $data->status = $request->estado;
           $data->dueDate = date("Y-m-d", strtotime($data->requisitionDate . "+ 3 year"));
         }
-        if($request->estado == 'rechazar'){
-          $data->status = 'rechazado'; 
-        }
+        $data->status = $request->estado;
         $data->update($request->all());
         return redirect(route('requisitions.show', $data->id));
-      }elseif($request->estado == 'eliminar' && $data->status == 'pendiente'){
-        if ($requisition->facilitiesFormat != null) {
-          Cloudinary()->destroy($requisition->format_public_id);
+      }elseif($request->estado == 'eliminado' && $data->status == 'pendiente'){
+        if ($data->facilitiesFormat != null) {
+          Cloudinary()->destroy($data->format_public_id);
         }  
-        if ($requisition->opinionFormat != null) {
-          Cloudinary()->destroy($requisition->opinion_public_id);
+        if ($data->opinionFormat != null) {
+          Cloudinary()->destroy($data->opinion_public_id);
         }
-        if ($requisition->planFormat != null) {
-          Cloudinary()->destroy($requisition->plan_public_id);
+        if ($data->planFormat != null) {
+          Cloudinary()->destroy($data->plan_public_id);
         }
         $data->delete();
         if (!$data) {
