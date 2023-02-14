@@ -223,6 +223,8 @@ class RequisitionController extends Controller
           $data->latencyDate = $date;
           $data->status = $request->estado;
         }
+        $data->update($request->all());
+        return redirect(route('requisitions.show', $data->id));
       } else if ($request->estado == 'activo' && $data->status == 'latencia') {
         $dateLatencia = date_create(date('Y-m-d', strtotime($data->latencyDate)));
         $dateVencimiento = date_create(date('Y-m-d', strtotime($data->dueDate)));
@@ -232,22 +234,60 @@ class RequisitionController extends Controller
         $date = date("Y-m-d", strtotime($date . "+ " . $diasRestantes->format($differenceFormat) . " day"));
         $data->dueDate = $date;
         $data->status = $request->estado;
+        $data->update($request->all());
+        return redirect(route('requisitions.show', $data->id));
       } else if ($request->estado == 'revocado' && $data->status == 'activo') {
         $data->revokedDate = date('Y-m-d', strtotime($date));
         $data->status = $request->estado;
-      }elseif($request->estado == 'activo' && $data->status == 'pendiente' && $data->evaNum >= 7 ){
+        $data->update($request->all());
+        return redirect(route('requisitions.show', $data->id));
+      }elseif(($request->estado == 'activo' || $request->estado == 'rechazar') && $data->status == 'pendiente' && $data->evaNum >= 7 ){
         if(is_null($request->fechaActivo)){
           $data->requisitionDate = date('Y-m-d', strtotime($date));
         }else{
           // dd($request->fechaActivo);
           $data->requisitionDate = $request->fechaActivo;
         }
-        $data->dueDate = date("Y-m-d", strtotime($data->requisitionDate . "+ 3 year"));
-        $data->status = $request->estado;
-      }elseif($request->estado == 'rechazar' && $data->status == 'pendiente'){
-        $data->status = 'rechazado';
+        $data->ota = true;
+        //Generar numero de rvoe
+        if (is_null($data->requestNumber)) {
+          $requisitions = Requisition::searchDate(date("Y", strtotime($data->requisitionDate)))->noSolicitud();
+          $noRequi = Requisition::searchDate(date("Y", strtotime($data->requisitionDate)))->count() + 1;
+          $existe = false;
+          for($count = 1; $count < $noRequi; $count++){
+              foreach($requisitions as $requi){
+                  if($requi->requestNumber == $count){
+                      $existe = true;
+                  }
+              }
+              if(!$existe){
+                  $data->requestNumber = $count;
+              }
+              $count++;
+          }
+        }
+        if(is_null($data->rvoe)){
+          $principio = 'SE/SSPE/DP';
+          $anioI = date("Y", strtotime($data->requisitionDate));
+          if ($data->requestNumber < 10) {
+              $no_solicitud = '00' . $data->requestNumber;
+          } else if ($data->requestNumber < 100) {
+              $no_solicitud = '0' . $data->requestNumber;
+          } else {
+              $no_solicitud = $data->requestNumber;
+          }
+          $data->rvoe = $principio.'/'.$no_solicitud.'/'.$anioI;
+        }
+        if($request->estado == 'activo'){
+          $data->status = $request->estado;
+          $data->dueDate = date("Y-m-d", strtotime($data->requisitionDate . "+ 3 year"));
+        }
+        if($request->estado == 'rechazar'){
+          $data->status = 'rechazado'; 
+        }
+        $data->update($request->all());
+        return redirect(route('requisitions.show', $data->id));
       }elseif($request->estado == 'eliminar' && $data->status == 'pendiente'){
-        $data->delete();
         if ($requisition->facilitiesFormat != null) {
           Cloudinary()->destroy($requisition->format_public_id);
         }  
@@ -257,6 +297,7 @@ class RequisitionController extends Controller
         if ($requisition->planFormat != null) {
           Cloudinary()->destroy($requisition->plan_public_id);
         }
+        $data->delete();
         if (!$data) {
           return response()->json([
             'status' => 400,
@@ -269,8 +310,10 @@ class RequisitionController extends Controller
           ]);
         }
       }
-      $data->update($request->all());
-      return redirect(route('requisitions.show', $data->id));
+      return response()->json([
+        'status' => 400,
+        'error' => "something went wrong"
+      ]);
     }
   }
 
@@ -344,8 +387,8 @@ class RequisitionController extends Controller
           $mesI = $mes[ltrim(date("m", strtotime($requisition->created_at)), "0") - 1];
           $diaI = date("d", strtotime($requisition->created_at));
           //$mesA = $mes[ltrim(date("m", strtotime($requisition->created_at . "+ 3 month")), "0") - 1];
-          //$diaA = date("d", strtotime($requisition->created_at . "+ 3 month"));
-          //$mesA = $mes[ltrim(date("m", strtotime($requisition->fecha_vencimiento)), "0") - 1];
+          $diaA = date("d", strtotime($requisition->requisitionDate));
+          $mesA = $mes[ltrim(date("m", strtotime($requisition->requisitionDate)), "0") - 1];
           //$diaA = date("d", strtotime($requisition->fecha_vencimiento));
           $institucion = $institution->name;
           $municipio = $municipalitie->name;
@@ -382,12 +425,12 @@ class RequisitionController extends Controller
           $template->setValue('anioI', $anioI);
           $template->setValue('mesI', $mesI);
           $template->setValue('diaI', $diaI);
-          //$template->setValue('mesA', $mesA);
+          $template->setValue('mesA', $mesA);
           $template->setValue('resultadoF', $resultadoF);
           $template->setValue('institucion', $institucion);
           $template->setValue('municipio', $municipio);
           $template->setValue('direccion', $direccion);
-          //$template->setValue('diaA', $diaA);
+          $template->setValue('diaA', $diaA);
           $template->setValue('noSolicitud', $no_solicitud);
 
 
@@ -427,7 +470,6 @@ class RequisitionController extends Controller
           ]);
         }
         //Notificar a los administradores
-        $requisition->ota = true;
         $requisition->save();
         return redirect(route('requisitions.show', $requisition->id));
       }
@@ -463,7 +505,6 @@ class RequisitionController extends Controller
         $correo = $institution->email;
         $carrera = $career->name;
         $formatos = array();
-        $elementos = '';
         $planes = '';
         $formatNames = array(
           'Plan de Estudios',
@@ -725,6 +766,7 @@ class RequisitionController extends Controller
         $template->setValue('totalPuntaje',$puntajes[0]+$puntajes[1]+$puntajes[2]+$puntajes[3]+$puntajes[4]);    
         //Elementos
         $ausentes = 0;
+        $elementos = array();
         for($i=1;$i<27;$i++){
           for($j = 0;$j<26;$j++){
             if($elements[$j]->element == $i){
@@ -733,12 +775,13 @@ class RequisitionController extends Controller
               }
               else{
                 $estado = 'Ausente';
+                array_push($elementos,($ausentes+1).'.- '.$elementNames[$i-1].' ');
                 $ausentes += 1;
               }
-              $template->setValue(array('numero'.$i-1,'element'.$i-1,'existing'.$i-1), array($elements[$j]->element,$elementNames[$i-1],$estado));
             }
           }    
         }
+        $template->setValue('elementos', implode("\n", $elementos));
         $template->setValue('ausentes',$ausentes);
 
         //Planes
