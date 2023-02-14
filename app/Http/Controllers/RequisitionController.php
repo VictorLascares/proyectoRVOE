@@ -239,7 +239,8 @@ class RequisitionController extends Controller
         if(is_null($request->fechaActivo)){
           $data->requisitionDate = date('Y-m-d', strtotime($date));
         }else{
-          $data->requisitionDate = strtotime($request->fechaActivo);
+          // dd($request->fechaActivo);
+          $data->requisitionDate = $request->fechaActivo;
         }
         $data->dueDate = date("Y-m-d", strtotime($data->requisitionDate . "+ 3 year"));
         $data->status = $request->estado;
