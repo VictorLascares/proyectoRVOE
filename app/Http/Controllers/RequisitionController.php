@@ -92,7 +92,7 @@ class RequisitionController extends Controller
             $format->save();
           }
 
-          try{
+          try {
             $users = User::searchDireccion()->get();
             $procedure = $request->procedure;
             if ($request->procedure == "planEstudios") {
@@ -104,8 +104,8 @@ class RequisitionController extends Controller
             foreach ($users as $user) {
               Mail::to($user->email)->send(new NotifyMail($procedure, $career, $institution));
             }
-          }catch(Exception $e){
-            error_log("EL usuario no se encuentra registrado: ".e);
+          } catch (Exception $e) {
+            error_log("EL usuario no se encuentra registrado: " . e);
           };
           return redirect('requisitions');
         } else {
@@ -237,15 +237,20 @@ class RequisitionController extends Controller
         $data->update($request->all());
         return redirect(route('requisitions.show', $data->id));
       } else if ($request->estado == 'revocado' && $data->status == 'activo') {
-        $data->revokedDate = date('Y-m-d', strtotime($date));
+        if (is_null($request->fechaActivo)) {
+          $date = date('Y-m-d');
+          $data->revokedDate = date('Y-m-d', strtotime($date));
+        } else {
+          $data->revokedDate = $request->fechaActivo;
+        }
         $data->status = $request->estado;
         $data->update($request->all());
         return redirect(route('requisitions.show', $data->id));
-      }elseif(($request->estado == 'activo' || $request->estado == 'rechazado') && $data->status == 'pendiente' && $data->evaNum >= 7 ){
-        if(is_null($request->fechaActivo)){
+      } elseif (($request->estado == 'activo' || $request->estado == 'rechazado') && $data->status == 'pendiente' && $data->evaNum >= 7) {
+        if (is_null($request->fechaActivo)) {
           $date = date('Y-m-d');
           $data->requisitionDate = date('Y-m-d', strtotime($date));
-        }else{
+        } else {
           // dd($request->fechaActivo);
           $data->requisitionDate = $request->fechaActivo;
         }
@@ -255,41 +260,41 @@ class RequisitionController extends Controller
           $requisitions = Requisition::searchDate(date("Y", strtotime($data->requisitionDate)))->noSolicitud();
           $noRequi = Requisition::searchDate(date("Y", strtotime($data->requisitionDate)))->count() + 1;
           $existe = false;
-          for($count = 1; $count < $noRequi; $count++){
-              foreach($requisitions as $requi){
-                  if($requi->requestNumber == $count){
-                      $existe = true;
-                  }
+          for ($count = 1; $count < $noRequi; $count++) {
+            foreach ($requisitions as $requi) {
+              if ($requi->requestNumber == $count) {
+                $existe = true;
               }
-              if(!$existe){
-                  $data->requestNumber = $count;
-              }
-              $existe = false;
+            }
+            if (!$existe) {
+              $data->requestNumber = $count;
+            }
+            $existe = false;
           }
         }
-        if(is_null($data->rvoe)){
+        if (is_null($data->rvoe)) {
           $principio = 'SE/SSPE/DP';
           $anioI = date("Y", strtotime($data->requisitionDate));
           if ($data->requestNumber < 10) {
-              $no_solicitud = '00' . $data->requestNumber;
+            $no_solicitud = '00' . $data->requestNumber;
           } else if ($data->requestNumber < 100) {
-              $no_solicitud = '0' . $data->requestNumber;
+            $no_solicitud = '0' . $data->requestNumber;
           } else {
-              $no_solicitud = $data->requestNumber;
+            $no_solicitud = $data->requestNumber;
           }
-          $data->rvoe = $principio.'/'.$no_solicitud.'/'.$anioI;
+          $data->rvoe = $principio . '/' . $no_solicitud . '/' . $anioI;
         }
-        if($request->estado == 'activo'){
+        if ($request->estado == 'activo') {
           $data->status = $request->estado;
           $data->dueDate = date("Y-m-d", strtotime($data->requisitionDate . "+ 3 year"));
         }
         $data->status = $request->estado;
         $data->update($request->all());
         return redirect(route('requisitions.show', $data->id));
-      }elseif($request->estado == 'eliminado' && $data->status == 'pendiente'){
+      } elseif ($request->estado == 'eliminado' && $data->status == 'pendiente') {
         if ($data->facilitiesFormat != null) {
           Cloudinary()->destroy($data->format_public_id);
-        }  
+        }
         if ($data->opinionFormat != null) {
           Cloudinary()->destroy($data->opinion_public_id);
         }
@@ -558,7 +563,7 @@ class RequisitionController extends Controller
           "Periodicidad de evaluación del plan de estudios",
           "Justificación de la modalidad elegida (incluir viabilidad del programa con base en la modalidad propuesta)",
           "Mapa curricular"
-      );
+        );
         if (is_null($requisition->rvoe)) {
           $no_solicitud = 'No disponible';
         } else {
@@ -587,78 +592,78 @@ class RequisitionController extends Controller
             $meta = 'Cambio de plan de estudios';
             break;
         }
-        $secciones = array('Pertinencia social','Pertinencia económica','Estudio de campo laboral','Proyección de matricula','Financiamiento');
+        $secciones = array('Pertinencia social', 'Pertinencia económica', 'Estudio de campo laboral', 'Proyección de matricula', 'Financiamiento');
         $pertinenciaSocial = 0;
         $pertinenciaAcademica = 0;
         $pertinenciaLaboral = 0;
         $proyeccionMatricula = 0;
         $financiamiento = 0;
-        for($f = 1; $f<30;$f++){
-          for($j = 0;$j<29;$j++){
-            if($f <15){
-              if($opinions[$j]->opinion == $f){
-                switch($opinions[$j]->status){
+        for ($f = 1; $f < 30; $f++) {
+          for ($j = 0; $j < 29; $j++) {
+            if ($f < 15) {
+              if ($opinions[$j]->opinion == $f) {
+                switch ($opinions[$j]->status) {
                   case 'suficiente':
                     $pertinenciaSocial += $opinions[$j]->top;
                     break;
                   case 'insuficiente':
-                    $pertinenciaSocial += $opinions[$j]->top/2;
+                    $pertinenciaSocial += $opinions[$j]->top / 2;
                     break;
                   case 'na':
                   default:
                     break;
                 }
               }
-            }elseif($f < 20){
-              if($opinions[$j]->opinion == $f){
-                switch($opinions[$j]->status){
+            } elseif ($f < 20) {
+              if ($opinions[$j]->opinion == $f) {
+                switch ($opinions[$j]->status) {
                   case 'suficiente':
                     $pertinenciaAcademica += $opinions[$j]->top;
                     break;
                   case 'insuficiente':
-                    $pertinenciaAcademica += $opinions[$j]->top/2;
+                    $pertinenciaAcademica += $opinions[$j]->top / 2;
                     break;
                   case 'na':
                   default:
                     break;
                 }
               }
-            }elseif ( $f < 26){
-              if($opinions[$j]->opinion == $f){
-                switch($opinions[$j]->status){
+            } elseif ($f < 26) {
+              if ($opinions[$j]->opinion == $f) {
+                switch ($opinions[$j]->status) {
                   case 'suficiente':
                     $pertinenciaLaboral += $opinions[$j]->top;
                     break;
                   case 'insuficiente':
-                    $pertinenciaLaboral += $opinions[$j]->top/2;
+                    $pertinenciaLaboral += $opinions[$j]->top / 2;
                     break;
                   case 'na':
                   default:
                     break;
                 }
               }
-            }elseif($f == 26){
-              if($opinions[$j]->opinion == $f){
-                switch($opinions[$j]->status){
+            } elseif ($f == 26) {
+              if ($opinions[$j]->opinion == $f) {
+                switch ($opinions[$j]->status) {
                   case 'suficiente':
                     $proyeccionMatricula += $opinions[$j]->top;
                     break;
                   case 'insuficiente':
-                    $proyeccionMatricula += $opinions[$j]->top/2;
+                    $proyeccionMatricula += $opinions[$j]->top / 2;
                     break;
                   case 'na':
                   default:
                     break;
                 }
               }
-            }else{
-              if($opinions[$j]->opinion == $f){
-                switch($opinions[$j]->status){
+            } else {
+              if ($opinions[$j]->opinion == $f) {
+                switch ($opinions[$j]->status) {
                   case 'suficiente':
                     $financiamiento += $opinions[$j]->top;
                     break;
                   case 'insuficiente':
-                    $financiamiento += $opinions[$j]->top/2;
+                    $financiamiento += $opinions[$j]->top / 2;
                     break;
                   case 'na':
                   default:
@@ -669,41 +674,41 @@ class RequisitionController extends Controller
           }
         }
         $template = new \PhpOffice\PhpWord\TemplateProcessor('DOCUMENTO_ESTADO.docx');
-        $puntajes = array($pertinenciaSocial,$pertinenciaAcademica,$pertinenciaLaboral,$proyeccionMatricula,$financiamiento);
+        $puntajes = array($pertinenciaSocial, $pertinenciaAcademica, $pertinenciaLaboral, $proyeccionMatricula, $financiamiento);
         $puntajeGeneral = 0;
         $puntajeDetallado = 0;
-        for($f = 1; $f<20;$f++){
-          for($j = 0;$j<19;$j++){
-            if($f < 12){
-              if($plans[$j]->plan == $f){
-                switch($plans[$j]->status){
+        for ($f = 1; $f < 20; $f++) {
+          for ($j = 0; $j < 19; $j++) {
+            if ($f < 12) {
+              if ($plans[$j]->plan == $f) {
+                switch ($plans[$j]->status) {
                   case 'cumple':
-                    $template->setValue(array('plan'.$f-1,'seccionGeneral'.$f-1,'porcentajeGeneral'.$f-1), array($plans[$j]->plan,$planNames[$f-1],'100'));
+                    $template->setValue(array('plan' . $f - 1, 'seccionGeneral' . $f - 1, 'porcentajeGeneral' . $f - 1), array($plans[$j]->plan, $planNames[$f - 1], '100'));
                     $puntajeGeneral += 100;
                     break;
                   case 'parcialmente':
-                    $template->setValue(array('plan'.$f-1,'seccionGeneral'.$f-1,'porcentajeGeneral'.$f-1), array($plans[$j]->plan,$planNames[$f-1],'50'));
+                    $template->setValue(array('plan' . $f - 1, 'seccionGeneral' . $f - 1, 'porcentajeGeneral' . $f - 1), array($plans[$j]->plan, $planNames[$f - 1], '50'));
                     $puntajeGeneral += 50;
                     break;
                   case 'na':
-                    $template->setValue(array('plan'.$f-1,'seccionGeneral'.$f-1,'porcentajeGeneral'.$f-1), array($plans[$j]->plan,$planNames[$f-1],'0'));
+                    $template->setValue(array('plan' . $f - 1, 'seccionGeneral' . $f - 1, 'porcentajeGeneral' . $f - 1), array($plans[$j]->plan, $planNames[$f - 1], '0'));
                   default:
                     break;
                 }
               }
-            }else{
-              if($plans[$j]->plan == $f){
-                switch($plans[$j]->status){
+            } else {
+              if ($plans[$j]->plan == $f) {
+                switch ($plans[$j]->status) {
                   case 'cumple':
-                    $template->setValue(array('plan'.$f-1,'seccionDetallada'.$f-1,'porcentajeDetallado'.$f-1), array($plans[$j]->plan,$planNames[$f-1],'100'));
+                    $template->setValue(array('plan' . $f - 1, 'seccionDetallada' . $f - 1, 'porcentajeDetallado' . $f - 1), array($plans[$j]->plan, $planNames[$f - 1], '100'));
                     $puntajeDetallado += 100;
                     break;
                   case 'parcialmente':
-                    $template->setValue(array('plan'.$f-1,'seccionDetallada'.$f-1,'porcentajeDetallado'.$f-1), array($plans[$j]->plan,$planNames[$f-1],'50'));
+                    $template->setValue(array('plan' . $f - 1, 'seccionDetallada' . $f - 1, 'porcentajeDetallado' . $f - 1), array($plans[$j]->plan, $planNames[$f - 1], '50'));
                     $puntajeDetallado += 50;
                     break;
                   case 'na':
-                    $template->setValue(array('plan'.$f-1,'seccionDetallada'.$f-1,'porcentajeDetallado'.$f-1), array($plans[$j]->plan,$planNames[$f-1],'0'));
+                    $template->setValue(array('plan' . $f - 1, 'seccionDetallada' . $f - 1, 'porcentajeDetallado' . $f - 1), array($plans[$j]->plan, $planNames[$f - 1], '0'));
                   default:
                     break;
                 }
@@ -727,64 +732,62 @@ class RequisitionController extends Controller
         $template->setValue('emailI', $correo);
         //formatos
         $rechazados = 0;
-        for($i=1;$i<6;$i++){
-          for($j = 0;$j<5;$j++){
-            if($formats[$j]->format == $i){
-              if($formats[$j]->valid){
+        for ($i = 1; $i < 6; $i++) {
+          for ($j = 0; $j < 5; $j++) {
+            if ($formats[$j]->format == $i) {
+              if ($formats[$j]->valid) {
                 $estado = 'Aceptado';
-              }
-              else{
+              } else {
                 $estado = 'Rechazado';
                 $rechazados += 1;
               }
-              $template->setValue(array('number'.$i-1,'format'.$i-1,'valid'.$i-1,'justification'.$i-1), array($formats[$j]->format,$formatNames[$i-1],$estado,ucfirst($formats[$j]->justification)));
+              $template->setValue(array('number' . $i - 1, 'format' . $i - 1, 'valid' . $i - 1, 'justification' . $i - 1), array($formats[$j]->format, $formatNames[$i - 1], $estado, ucfirst($formats[$j]->justification)));
             }
-          }    
+          }
         }
-        $template->setValue('rechazados',$rechazados);
+        $template->setValue('rechazados', $rechazados);
         //Factibilidad y pertinencia
-        for($i = 0;$i<5;$i++){
-          $template->setValue(array('seccion'.$i,'puntaje'.$i), array($secciones[$i],$puntajes[$i]));
+        for ($i = 0; $i < 5; $i++) {
+          $template->setValue(array('seccion' . $i, 'puntaje' . $i), array($secciones[$i], $puntajes[$i]));
         }
-        for($i = 0;$i<3;$i++){
-          switch($comments[$i]->name){
+        for ($i = 0; $i < 3; $i++) {
+          switch ($comments[$i]->name) {
             case 'opinionComment':
-              $template->setValue('observacionOpinion',$comments[$i]->observation);
+              $template->setValue('observacionOpinion', $comments[$i]->observation);
               break;
             case 'elementComment':
-              $template->setValue('observacionElement',$comments[$i]->observation);
+              $template->setValue('observacionElement', $comments[$i]->observation);
               break;
             case 'planComment':
-              $template->setValue('observacionPlan',$comments[$i]->observation);
+              $template->setValue('observacionPlan', $comments[$i]->observation);
               break;
           }
-        }    
-        $template->setValue('totalPuntaje',$puntajes[0]+$puntajes[1]+$puntajes[2]+$puntajes[3]+$puntajes[4]);    
+        }
+        $template->setValue('totalPuntaje', $puntajes[0] + $puntajes[1] + $puntajes[2] + $puntajes[3] + $puntajes[4]);
         //Elementos
         $ausentes = 0;
         $elementos = array();
-        for($i=1;$i<27;$i++){
-          for($j = 0;$j<26;$j++){
-            if($elements[$j]->element == $i){
-              if($elements[$j]->existing){
+        for ($i = 1; $i < 27; $i++) {
+          for ($j = 0; $j < 26; $j++) {
+            if ($elements[$j]->element == $i) {
+              if ($elements[$j]->existing) {
                 $estado = 'Presente';
-              }
-              else{
+              } else {
                 $estado = 'Ausente';
-                array_push($elementos,array('numero' => ($ausentes+1),'elemento' => $elementNames[$i-1]));
+                array_push($elementos, array('numero' => ($ausentes + 1), 'elemento' => $elementNames[$i - 1]));
                 $ausentes += 1;
               }
             }
-          }    
+          }
         }
-        $template->cloneBlock('block_elemento', 0, true, false, $elementos);        
-        $template->setValue('ausentes',$ausentes);
+        $template->cloneBlock('block_elemento', 0, true, false, $elementos);
+        $template->setValue('ausentes', $ausentes);
 
         //Planes
         $template->setValue('puntajeGeneral', $puntajeGeneral);
         $template->setValue('puntajeDetallado', $puntajeDetallado);
-        $template->setValue('puntajeTotal',$puntajeGeneral + $puntajeDetallado);    
-        
+        $template->setValue('puntajeTotal', $puntajeGeneral + $puntajeDetallado);
+
         //Conclusión                
         $template->setValue('evaluacionF', $resultadoF);
         $template->setValue('evaluacion', $resultado);
