@@ -8,10 +8,10 @@
             class="text-white p-2 bg-green-900 hover:bg-green-700 w-full sm:w-auto mb-5 sm:mb-0 rounded-lg">
             Limpiar Filtros
         </button>
-        <select id="filtro-anio" class="w-full border-gray-200 sm:w-auto mb-5 sm:mb-0 rounded-lg">
+        <select id="year" class="w-full border-gray-200 sm:w-auto mb-5 sm:mb-0 rounded-lg">
             <option selected disabled>Filtrar por Año</option>
         </select>
-        <select id="filtro-estado" class="w-full border-gray-200 sm:w-auto rounded-lg">
+        <select id="status" class="w-full border-gray-200 sm:w-auto rounded-lg">
             <option selected disabled>Filtrar por estado</option>
             <option value="activo">Activo</option>
             <option value="latencia">Latencia</option>
@@ -22,10 +22,10 @@
         </select>
     </form>
     @if (count($requisitions) != 0)
-        <div class="grid sm:grid-cols-2 lg:grid-cols-5 mt-10 mb-20 gap-2 p-2">
+        <div id="requisiciones" class="grid sm:grid-cols-2 lg:grid-cols-5 mt-10 mb-20 gap-2 p-2">
             @foreach ($requisitions as $requisition)
                 <a data-fecha="{{ $requisition->created_at->format('m-d-y') }}" data-estado="{{ $requisition->status }}"
-                    href="{{ route('requisitions.show', $requisition->id) }}"
+                    data-date-end="{{ $requisition->dueDate }}" href="{{ route('requisitions.show', $requisition->id) }}"
                     class="rounded-lg w-full requisicion requisition text-center py-3 @switch($requisition->status) @case('pendiente')
                     @case('latencia')
                     bg-light-yellow
@@ -42,11 +42,11 @@
                     text-dark-red
                     @endswitch">
                     <p class="uppercase font-bold m-0">{{ $requisition->estado }}</p>
-                    <p>Evaluacion: {{ $requisition->noEvaluacion }}</p>
+                    <p>Evaluacion: {{ $requisition->evaNum }}</p>
                     @if ($requisition->rvoe)
                         <p>{{ $requisition->rvoe }}</p>
                     @endif
-                    <p>{{ $requisition->created_at->format('m-d-Y') }}</p>
+                    <p class="font-bold">{{ $requisition->status }}</p>
                 </a>
             @endforeach
         </div>
@@ -114,40 +114,56 @@
 @endsection
 @section('script')
     <script>
-        const filtroEstado = document.querySelector('#filtro-estado')
+        const filtroEstado = document.querySelector('#status')
         const requisiciones = document.querySelectorAll('.requisicion')
         const btnLimpiarFiltros = document.querySelector('#limpiar-filtro')
-        const filtroAnio = document.querySelector('#filtro-anio')
+        const filtroAnio = document.querySelector('#year')
+        const requisitions = document.querySelector('#requisiciones');
+        let filtros = {};
 
         cargarEventListeners()
 
 
         function cargarEventListeners() {
             document.addEventListener("DOMContentLoaded", llenarSelectAnios)
-            filtroEstado.addEventListener('change', filtrarPorEstado)
+            filtroEstado.addEventListener('change', filtrar)
             btnLimpiarFiltros.addEventListener('click', limpiarFiltros)
-            filtroAnio.addEventListener('change', filtrarPorAnio)
+            filtroAnio.addEventListener('change', filtrar)
+            calcDaysToExpire();
         }
 
 
 
-        function filtrarPorEstado(e) {
-            const option = e.target.value
+        function filtrar(e) {
+            // limpiarHTMl();
+            filtros[e.target.id] = e.target.value;
+
             requisiciones.forEach(req => {
-                if (req.getAttribute('data-estado') != option) {
-                    req.classList.add('hide')
+                const year = req.getAttribute('data-fecha').split('-')[2]
+                const status = req.getAttribute('data-estado')
+                for (let key in filtros) {
+                    if (filtros[key] == year || filtros[key] == status) {
+                        req.classList.add(key); // year
+                        if (Object.keys(filtros).length == 2 && (req.classList.contains('status') && req.classList.contains('year'))) {
+                            req.classList.remove('hide');
+                        }
+
+                        if (Object.keys(filtros).length == 1) {
+                            req.classList.remove('hide');
+                        }
+                    } else {
+                        req.classList.remove(key);
+                        req.classList.add('hide');
+                    }
                 }
             })
         }
 
-        function filtrarPorAnio(e) {
-            const anio = e.target.value
-            requisiciones.forEach(req => {
-                if (req.getAttribute('data-fecha').split('-')[2] != anio) {
-                    req.classList.add('hide')
-                }
-            })
-        }
+        // function limpiarHTMl() {
+        //     while(requisitions.firstChild) {
+        //         requisitions.removeChild(requisitions.firstChild);
+        //     }
+        // }
 
 
         function llenarSelectAnios() {
@@ -170,6 +186,25 @@
         function limpiarFiltros() {
             requisiciones.forEach(req => {
                 req.classList.remove('hide')
+            })
+            filtros = {};
+        }
+
+        function calcDaysToExpire() {
+            requisiciones.forEach(req => {
+                const dateEnd = new Date(req.getAttribute('data-date-end')).getTime();
+                if (dateEnd) {
+                    const dateNow = new Date().getTime();
+                    let day_as_milliseconds = 86400000;
+                    let diff_in_millisenconds = dateEnd - dateNow;
+                    let diff_in_days = diff_in_millisenconds / day_as_milliseconds;
+                    const daysToExpireContainer = document.createElement('p');
+                    const daysToExpire = document.createElement('span');
+                    daysToExpireContainer.textContent = 'Dias restantes ';
+                    daysToExpire.textContent = Math.round(diff_in_days);
+                    daysToExpireContainer.appendChild(daysToExpire);
+                    req.appendChild(daysToExpireContainer);
+                }
             })
         }
 
