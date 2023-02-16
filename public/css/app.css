@@ -1190,10 +1190,6 @@ input:checked + .toggle-bg {
     --tw-border-opacity: 1;
     border-color: rgb(224 36 36 / var(--tw-border-opacity))
 }
-.border-green-700 {
-    --tw-border-opacity: 1;
-    border-color: rgb(4 108 78 / var(--tw-border-opacity))
-}
 .border-blue-700 {
     --tw-border-opacity: 1;
     border-color: rgb(26 86 219 / var(--tw-border-opacity))
@@ -1221,10 +1217,6 @@ input:checked + .toggle-bg {
 .bg-green-900 {
     --tw-bg-opacity: 1;
     background-color: rgb(1 71 55 / var(--tw-bg-opacity))
-}
-.bg-\[\#13322B\] {
-    --tw-bg-opacity: 1;
-    background-color: rgb(19 50 43 / var(--tw-bg-opacity))
 }
 .bg-transparent {
     background-color: transparent
@@ -1319,6 +1311,10 @@ input:checked + .toggle-bg {
     padding-left: 2.5rem;
     padding-right: 2.5rem
 }
+.py-6 {
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem
+}
 .px-6 {
     padding-left: 1.5rem;
     padding-right: 1.5rem
@@ -1326,10 +1322,6 @@ input:checked + .toggle-bg {
 .py-4 {
     padding-top: 1rem;
     padding-bottom: 1rem
-}
-.py-6 {
-    padding-top: 1.5rem;
-    padding-bottom: 1.5rem
 }
 .px-3 {
     padding-left: 0.75rem;
@@ -1439,13 +1431,13 @@ input:checked + .toggle-bg {
     --tw-text-opacity: 1;
     color: rgb(224 36 36 / var(--tw-text-opacity))
 }
-.text-gray-900 {
-    --tw-text-opacity: 1;
-    color: rgb(17 24 39 / var(--tw-text-opacity))
-}
 .text-gray-400 {
     --tw-text-opacity: 1;
     color: rgb(156 163 175 / var(--tw-text-opacity))
+}
+.text-gray-900 {
+    --tw-text-opacity: 1;
+    color: rgb(17 24 39 / var(--tw-text-opacity))
 }
 .text-green-500 {
     --tw-text-opacity: 1;
@@ -1454,6 +1446,10 @@ input:checked + .toggle-bg {
 .text-red-500 {
     --tw-text-opacity: 1;
     color: rgb(240 82 82 / var(--tw-text-opacity))
+}
+.text-green-900 {
+    --tw-text-opacity: 1;
+    color: rgb(1 71 55 / var(--tw-text-opacity))
 }
 .text-red-900 {
     --tw-text-opacity: 1;
@@ -1466,10 +1462,6 @@ input:checked + .toggle-bg {
 .text-blue-600 {
     --tw-text-opacity: 1;
     color: rgb(28 100 242 / var(--tw-text-opacity))
-}
-.text-green-900 {
-    --tw-text-opacity: 1;
-    color: rgb(1 71 55 / var(--tw-text-opacity))
 }
 .underline {
     -webkit-text-decoration-line: underline;
@@ -1565,10 +1557,6 @@ input:checked + .toggle-bg {
     --tw-bg-opacity: 1;
     background-color: rgb(155 28 28 / var(--tw-bg-opacity))
 }
-.hover\:bg-\[\#0C231E\]:hover {
-    --tw-bg-opacity: 1;
-    background-color: rgb(12 35 30 / var(--tw-bg-opacity))
-}
 .hover\:bg-gray-200:hover {
     --tw-bg-opacity: 1;
     background-color: rgb(229 231 235 / var(--tw-bg-opacity))
@@ -1609,6 +1597,10 @@ input:checked + .toggle-bg {
     --tw-text-opacity: 1;
     color: rgb(255 255 255 / var(--tw-text-opacity))
 }
+.hover\:text-green-700:hover {
+    --tw-text-opacity: 1;
+    color: rgb(4 108 78 / var(--tw-text-opacity))
+}
 .hover\:text-sky-900:hover {
     --tw-text-opacity: 1;
     color: rgb(12 74 110 / var(--tw-text-opacity))
@@ -1624,10 +1616,6 @@ input:checked + .toggle-bg {
 .hover\:text-gray-600:hover {
     --tw-text-opacity: 1;
     color: rgb(75 85 99 / var(--tw-text-opacity))
-}
-.hover\:text-green-700:hover {
-    --tw-text-opacity: 1;
-    color: rgb(4 108 78 / var(--tw-text-opacity))
 }
 .hover\:underline:hover {
     -webkit-text-decoration-line: underline;

@@ -273,10 +273,9 @@
 
             function checkStatus(e) {
                 const statusDiv = document.querySelector("#input-date");
-                if (e.target.value == 'activo') {
+                if (e.target.value == 'activo' || e.target.value == 'revocado') {
                     const inputDate = document.createElement('input');
                     inputDate.type = 'date';
-                    inputDate.required = true;
                     inputDate.name = 'fechaActivo';
                     console.log(inputDate);
                     statusDiv.appendChild(inputDate);
