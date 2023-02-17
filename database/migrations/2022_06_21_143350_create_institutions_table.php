@@ -15,10 +15,12 @@ return new class extends Migration
     {
         Schema::create('institutions', function (Blueprint $table) {
             $table->id();
-            $table->string('nombre')->nullable(false);
-            $table->string('director', 60)->nullable(false);
-            $table->string('direccion')->nullable(false);
-            $table->string('logotipo')->nullable(false);
+            $table->string('name')->nullable(false);
+            $table->string('owner', 60)->nullable(false);
+            $table->string('legalRep', 60)->nullable(false);
+            $table->string('email')->unique();
+            $table->string('address')->nullable(false);
+            $table->string('logo')->nullable(false);
             $table->string('logo_public_id')->nullable(false);
             $table->foreignId('municipalitie_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();

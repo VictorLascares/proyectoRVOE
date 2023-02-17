@@ -55,9 +55,10 @@ class CareerController extends Controller
   {
     if (Auth::user() != null) {
       $career = new Career();
-      $career->nombre = $request->nombre;
-      $career->modalidad = $request->modalidad;
-      $career->duracion = $request->duracion;
+      $career->name = $request->name;
+      $career->modality = $request->modality;
+      $career->typeOfPeriod = $request->typeOfPeriod;
+      $career->numOfPeriods = $request->numOfPeriods;
       $career->area_id = $request->area_id;
       $career->institution_id = $request->institution_id;
       $career->save();
@@ -108,8 +109,13 @@ class CareerController extends Controller
   {
     if (Auth::user() != null) {
       $data = Career::find($career);
-      $data->update($request->all());
-      return redirect('institutions');
+      $data->name = $request->name;
+      $data->modality = $request->modality;
+      $data->typeOfPeriod = $request->typeOfPeriod;
+      $data->numOfPeriods = $request->numOfPeriods;
+      $data->area_id = $request->area_id;
+      $data->save();
+      return redirect()->route('careers.show',$career);
     }
   }
 
@@ -133,7 +139,7 @@ class CareerController extends Controller
         $careers = Career::where('institution_id', $request->institutionId)->get();
         $careerArray = array();
         foreach ($careers as $career) {
-          $careerArray[$career->id] = $career->nombre;
+          $careerArray[$career->id] = $career->name;
         }
         return response()->json($careerArray);
       }

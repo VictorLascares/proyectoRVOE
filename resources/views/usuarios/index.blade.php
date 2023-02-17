@@ -10,7 +10,7 @@
           <div class="flex justify-end items-center gap-2">
             <form action="{{ route('users.create') }}" method="GET" enctype="multipart/form-data">
               @csrf
-              <button type="submit" class="text-white bg-[#13322B] hover:bg-[#0C231E] p-3">Nuevo Usuario</button>
+              <button type="submit" class="rounded-lg text-white bg-green-900 hover:bg-green-700 p-3">Nuevo Usuario</button>
             </form>
           </div>
         </div>
@@ -18,9 +18,9 @@
         <div class="flex flex-col">
           <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
             <div class="py-2 inline-block min-w-full sm:px-6 lg:px-8">
-              <div class="overflow-hidden">
+              <div class="overflow-hidden rounded-lg">
                 <table class="min-w-full">
-                  <thead class="border-b bg-[#13322B]">
+                  <thead class="border-b bg-green-900">
                     <tr>
                       <th class="text-sm font-bold text-white px-6 py-4 text-left">#</th>
                       <th class="text-sm font-bold text-white px-6 py-4 text-left">Nombre</th>

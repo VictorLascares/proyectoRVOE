@@ -3,7 +3,7 @@
   Actualizar Usuario
 @endsection
 @section('contenido')
-<div class="md:flex md:justify-center px-4">
+<div class="md:flex md:justify-center px-4 my-20">
     <div class="md:w-10/12">
         <form method="POST" action="{{ route('users.update', $user->id) }}" novalidate>
             @csrf
@@ -11,28 +11,28 @@
             <div class="grid md:grid-cols-2 gap-4">
                 <div>
                     <label for="name" class="mb-2 block uppercase text-gray-500 font-bold">Nombre</label>
-                    <input type="text" class="w-full border p-3 @error('name') border-red-600 @enderror" id="name" name="name" placeholder="Nombre" value="{{$user->name}}">
+                    <input type="text" class="w-full rounded-lg border p-3 @error('name') border-red-600 @enderror" id="name" name="name" placeholder="Nombre" value="{{$user->name}}">
                     @error('name')
                         <p class="text-red-600 text-sm">{{ $message }}</p>
                     @enderror
                 </div>
                 <div>
                     <label for="email" class="mb-2 block uppercase text-gray-500 font-bold">Correo electronico</label>
-                    <input type="email" class="w-full border p-3 @error('email') border-red-600 @enderror" id="email" name="email" placeholder="Correo Electronico" value="{{$user->email}}">
+                    <input type="email" class="w-full rounded-lg border p-3 @error('email') border-red-600 @enderror" id="email" name="email" placeholder="Correo Electronico" value="{{$user->email}}">
                     @error('email')
                         <p class="text-red-600 text-sm">{{ $message }}</p>
                     @enderror
                 </div>
                 <div>
                     <label for="telefono" class="mb-2 block uppercase text-gray-500 font-bold">Numero de Telefono</label>
-                    <input type="text" name="telefono" class="w-full border p-3 @error('telefono') border-red-600 @enderror" id="telefono" value="{{$user->telefono}}">
+                    <input type="text" name="telefono" class="w-full rounded-lg border p-3 @error('telefono') border-red-600 @enderror" id="telefono" value="{{$user->telefono}}">
                     @error('telefono')
                         <p class="text-red-600 text-sm">{{ $message }}</p>
                     @enderror
                 </div>
                 <div>
                     <label for="tipoUsuario" class="mb-2 block uppercase text-gray-500 font-bold">Tipo de Usuario</label>
-                    <select id="tipoUsuario" class="w-full border p-3 @error('tipoUsuario') border-red-600 @enderror" name="tipoUsuario">
+                    <select id="tipoUsuario" class="w-full rounded-lg border p-3 @error('tipoUsuario') border-red-600 @enderror" name="tipoUsuario">
                         <option selected disabled>-- Seleccione el tipo de usuario --</option>
                         <option value="administrador" @if ($user->tipoUsuario =='administrador') selected @endif>Administrador</option>
                         <option value="planeacion" @if ($user->tipoUsuario =='planeacion') selected @endif>Planeación</option>
@@ -45,7 +45,7 @@
             </div>
             
             <div class="flex justify-end mt-4">
-                <button type="submit" class="bg-[#13322B] hover:bg-[#0C231E] p-3 text-white transition-colors w-full md:w-auto">Actualizar</button>
+                <button type="submit" class="bg-green-900 hover:bg-green-700 rounded-lg p-3 text-white transition-colors w-full md:w-auto">Actualizar</button>
             </div>
         </form>
         
@@ -55,7 +55,7 @@
             <div class="grid md:grid-cols-2 gap-4">
                 <div>
                     <label for="password" class="mb-2 block uppercase text-gray-500 font-bold">Contraseña</label>
-                    <input type="password" class="w-full border p-3 @error('password') border-red-600 @enderror" id="password" name="password" placeholder="Contraseña">
+                    <input type="password" class="w-full rounded-lg border p-3 @error('password') border-red-600 @enderror" id="password" name="password" placeholder="Contraseña">
                     @error('password')
                         <p class="text-red-600 text-sm">{{ $message }}</p>
                     @enderror
@@ -70,12 +70,12 @@
                       name="password_confirmation"
                       id="password_confirmation"
                       placeholder="Confirmar contraseña"
-                      class="border p-3 w-full"
+                      class="rounded-lg border p-3 w-full"
                     >
                 </div>
             </div>
             <div class="flex justify-end mt-4">
-                <button type="submit" class="bg-[#13322B] hover:bg-[#0C231E] p-3 text-white transition-colors w-full md:w-auto">Actualizar Contraseña</button>
+                <button type="submit" class="bg-green-900 hover:bg-green-700 rounded-lg p-3 text-white transition-colors w-full md:w-auto">Actualizar Contraseña</button>
             </div>
         </form>
     </div>

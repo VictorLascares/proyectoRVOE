@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Plan;
 
 use App\Models\Career;
+use App\Models\Comment;
 use App\Models\Element;
 use App\Models\Institution;
+use App\Models\Opinion;
 use App\Models\Requisition;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -27,62 +29,37 @@ class ElementController extends Controller
             $career = Career::find($requisition->career_id);
             $institution = Institution::find($career->institution_id);
             $elements = Element::searchrequisitionid($requisition->id)->get();
+            $elementComment = Comment::searchname('elementComment')->searchrequisitionid($requisition->id)->get()[0];
             $elementName = array(
-                "Documento de posesión legal del inmueble*",
-                "El inmueble en el que se impartirá el RVOE*",
-                "Dimensiones del predio (m2)*",
-                "Dimensiones de construcción (m2)*",
-                "Dimensiones útiles para la impartición del Plan y Programas de estudio*",
-                "¿En el inmueble se realizan actividades que están directa o indirectamente relacionadas con otros servicios educativos?*",
-                "Detallar las actividades que se realizan en el inmueble",
-                "Tipo de estudios que se imparten en el inmueble actualmente*",
-                "Descripción del área fisíca destinada para el resguardo de la documentación de control escolar*",
-                "Número total de aulas en el inmueble*",
-                "Estado de las Aulas destinadas que serán destinadas a la impartición del Plan y Programa de estudio objeto de RVOE*",
-                "Número de aulas que serán destinadas a la impartición del Plan y Programas de estudio objeto de RVOE",
-                "Capacidad promedio de cada aula (cupo de alumnos)*",
-                "Tipo de ilumminación de las aulas",
-                "Tipo de ventilación de las aulas",
-                "Número total de cubiculos en el inmueble*",
-                "Número de cubiculos que serán destinados a la impartición del Plan y Programas de estudio objeto de RVOE",
-                "Estado de los cubilos destinados a la impartición del Plan y Programas de estudio objeto de RVOE",
-                "Tipo de iluminación de los cubiculos",
-                "Tipo de ventilación de los cubiculos",
-                "¿Cuenta con instalaciones especiales?",
-                "Denominación del tipo de instalación",
-                "Cantidad",
-                "Equipo con que cuenta",
-                "Tipo de iluminación",
-                "¿Cuenta con ventilación?",
-                "Tipo de Ventilación",
-                "Asignatura o unidad de aprendizaje que se imparte en la instalación especial",
-                "¿Cuenta con equipo tecnológico?*",
-                "Condiciones en las que se encuentra el equipo*",
-                "Tipo del equipo tecnológico al servicio del alumno",
-                "Cantidad de equipo tecnológico por alumno",
-                "Ubicación del equipo tecnológico del alumno dentro del inmueble",
-                "Tipo de equipo tecnológico al servicio del administrativo",
-                "Cantidad de equipos por administrativo",
-                "Ubicación del equipo tecnológico del administrativo dentro de l inmueble",
-                "Tipo de equipo tecnológico al servicio del docente",
-                "Cantidad de equipos por docente",
-                "Ubicación del equipo tecnológico del docente dentro del inmueble",
-                "Cuenta con servicio de telefonia*",
-                "Total de equipos telefónicos",
-                "¿Cuenta con el servicio de internet?*",
-                "Velocidad en MB*",
-                "Razonamiento técnico que justifica la idoneidad de las instalaciones para el servicio educativo que se brindará*",
-                "Población estudiantil máxima que podrá ser atendida en el inmueble*",
-                "¿Existe un plan interno de protección civil?*",
-                "Nivel de accesibilidad*",
-                "Forma en la que se abastece de agua",
-                "Tipo de drenaje sanitario existente en el inmueble",
-                "Número total de sanitarios en el inmueble",
-                "¿El diseño de la infraestructura educativa incorporó un modelo de sostenibilidad?*",
-                "¿El diseño de la infraestructura educativa incorporó el uso de energía sostenible?*"
+                "Cuenta con escritura pública",
+                "Cuenta con contrato de arrendamiento",
+                "En el contrato de arrendamiento especifica que el uso del inmueble sera impartir educación",
+                "Cuenta con contrato de comodato",
+                "En el contrato de comodato especifica que el uso del inmueble sera impartir educación",
+                "Cuenta con acreditación de seguridad estructural del inmueble",
+                "Cuenta con acreditación de permiso de uso de suelo ó equivalente",
+                "Cuenta con dictamen de la secretaria de protección civil estatal o municipal",
+                "Cuenta con cédula de funcionamiento vigente",
+                "La cédula de funcionamiento se encuentra debidamente exhibida",
+                "El terreno se encuentra debidamente delimitado de exterior y colindancias",
+                "Cuenta con áreas de recreación y/o esparcimiento",
+                "Cuenta con áreas verdes",
+                "Cuenta con servicio de cafetería",
+                "Cuenta con estacionamiento propio",
+                "El inmueble presenta condiciones de accesibilidad para personas discapacitadas",
+                "Cuenta con sanitarios exclusivos y adaptados para personas discapacitadas",
+                "Cuenta con botiquín de primeros auxilios",
+                "Se cuenta con dispensadores de agua para el consumo humano",
+                "Cuenta con extintores vigentes",
+                "Cuenta con señalamientos",
+                "Cuenta con rutas de evacuación",
+                "Cuenta con alerta sísmica",
+                "Cuenta con puntos de reunión",
+                "Cuenta con cubículos",
+                "Cuenta con sala de maestros"
             );
 
-            return view('requisiciones.instaEva', compact('requisition', 'career', 'institution', 'elements', 'elementName'));
+            return view('requisiciones.instaEva', compact('requisition', 'career', 'elementComment', 'institution', 'elements', 'elementName'));
         }
     }
 
@@ -92,56 +69,53 @@ class ElementController extends Controller
         if (Auth::user() != null) {
             $requisition = Requisition::find($request->requisition_id);
             $plans = Plan::searchrequisitionid($request->requisition_id)->first();
-            if ($requisition->noEvaluacion == 4 && $requisition->estado == 'pendiente') {
+            $opinions = Opinion::searchrequisitionid($request->requisition_id)->first();
+            if ($requisition->evaNum >= 5 && $requisition->status == 'pendiente') {
                 $imagen = $request->formatoInstalaciones;
                 // if (!is_null($imagen)) {
-                    for ($elementName = 1; $elementName < 53; $elementName++) {
+                    for ($elementName = 1; $elementName < 27; $elementName++) {
                         $element = Element::searchElemento($elementName)->searchrequisitionid($requisition->id)->first();
                         $elemento = 'elemento' . $elementName;
                         if(is_null($request->input($elemento))){
-                            $element->existente = false;
+                            $element->existing = false;
                         }else{
-                            $element->existente = $request->input($elemento);
-                        }
-                        $noRequired = [7, 12, 14, 15, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 31, 32, 33, 34, 35, 36, 37, 38, 39, 41, 48, 49, 50];
-                        if ( ($request->input($elemento) == 'false' || is_null($request->input($elemento))) && !in_array($elementName, $noRequired)) {
-                            $requisition->estado = 'rechazado';
-                        }
-                        $elementoj = $elemento . 'o';
-                        if (!is_null($request->input($elementoj))) {
-                            $element->observacion = $request->input($elementoj);
-                        }else{
-                            return response()->json([
-                                'error' => 'Algunas observaciones no se encuentran especificadas.'
-                              ]);
+                            $element->existing = $request->input($elemento);
                         }
                         $element->save();
                     }
-                    $requisition->noEvaluacion = $requisition->noEvaluacion + 1;
-
-                    if ($requisition->formatoInstalaciones != null) {
-                        Cloudinary()->destroy($requisition->formato_public_id);
+                    $elementComment = Comment::searchName("elementComment")->searchRequisitionid($requisition->id)->first();
+                    if (!is_null($request->input("elementoC"))) {
+                        $elementComment->observation = $request->input("elementoC");
+                        $elementComment->save();
                     }
-                    
+                    if($requisition->evaNum == 5){
+                        $requisition->evaNum = $requisition->evaNum + 1;
+                    }
+                    if ($requisition->facilitiesFormat != null) {
+                        Cloudinary()->destroy($requisition->format_public_id);
+                    }                    
                     //Guardar imagen
-
-                    if ($request->formatoInstalaciones) {
-                        $path = $request->file('formatoInstalaciones')->getRealPath();
+                    if ($request->facilitiesFormat) {
+                        $path = $request->file('facilitiesFormat')->getRealPath();
                         $response = Cloudinary()->upload($path);
                         $secureURL = $response->getSecurePath();
                         $public_id = $response->getPublicId();
                         
-                        $requisition->formatoInstalaciones = $secureURL;
-                        $requisition->formato_public_id = $public_id;
+                        $requisition->facilitiesFormat = $secureURL;
+                        $requisition->format_public_id = $public_id;
                     }
                     // Se crean los planes para evaluación
                     if (is_null($plans)) {
-                        for ($planName = 1; $planName < 4; $planName++) {
+                        for ($planName = 1; $planName < 20; $planName++) {
                             $plan = new Plan();
                             $plan->plan = $planName;
                             $plan->requisition_id = $requisition->id;
                             $plan->save();
                         }
+                        $planComment = new Comment();
+                        $planComment->name = "planComment";
+                        $planComment->requisition_id = $requisition->id;
+                        $planComment->save();
                     }
                     $requisition->save();
                 // }

@@ -7,9 +7,11 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\CareerController;
 use App\Http\Controllers\FormatController;
 use App\Http\Controllers\ElementController;
+use App\Http\Controllers\OpinionController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\ConsultController;
+use App\Http\Controllers\FactibilidadYPertinenciaController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InstitutionController;
 use App\Http\Controllers\RequisitionController;
@@ -72,7 +74,8 @@ Route::get('/dashboard', [RequisitionController::class,'showRequisition']);
 
 //****************FORMATS ROUTES*****************
 //Ruta para realizar evaluación de los formatos
-Route::get('/evaluate/formats/{requisition_id}', [FormatController::class,'evaluateFormats'])->name('evaluate.formats');
+Route::get('/formats/{requisition_id}/evaluate/{no_evaluation}', [FormatController::class,'evaluateFormats'])->name('evaluate.formats');
+//'as' => 'makeEvaluation', 'uses' => 'FormatController@evaluateFormats']);
 //Ruta para actualizar los formatos
 Route::post('/update/formats', [FormatController::class,'updateFormats']);
 
@@ -81,6 +84,12 @@ Route::post('/update/formats', [FormatController::class,'updateFormats']);
 Route::get('/evaluate/elements/{requisition_id}', [ElementController::class,'evaluateElements']);
 //Ruta para actualizar los elementos
 Route::post('/update/elements', [ElementController::class,'updateElements']);
+
+//****************FACTIBILIDAD Y PERTINENCIA ROUTES*****************
+//Ruta para realizar evaluación de los elementos
+Route::get('/evaluate/opinions/{requisition_id}', [OpinionController::class,'evaluateOpinions']);
+//Ruta para actualizar los elementos
+Route::post('/update/opinions', [OpinionController::class,'updateOpinions']);
 
 //****************PLANS ROUTES*****************
 //Ruta para realizar evaluación de los elementos
@@ -97,4 +106,9 @@ Route::post('/login',[LoginController::class,'store']);
 
 //Descargar archivo OTA
 Route::get('/download/{requisition_id}',[RequisitionController::class,'downloadOta']);
-Route::get('/evaluacion-anterior/{requisition_id}',[RequisitionController::class,'revertirEvaluacion']);
+//Habilita descargar OTA y añade favorable o no favorable
+Route::post('/solicitud/{requisition_id}',[RequisitionController::class,'evaluarSolicitud'])->name('solicitud');
+//Descarga archivo STATUS de las evaluaciones
+Route::get('/download/status/{requisition_id}',[RequisitionController::class,'downloadStatus']);
+
+//Route::get('/evaluacion-anterior/{requisition_id}',[RequisitionController::class,'revertirEvaluacion']);

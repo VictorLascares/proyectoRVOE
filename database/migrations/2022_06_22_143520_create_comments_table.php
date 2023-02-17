@@ -13,10 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('municipalities', function (Blueprint $table) {
-            $table->id();
-            $table->string('name')->nullable(false);
-            $table->string('key')->nullable(false);
+        Schema::create('comments', function (Blueprint $table) {
+            $table->id(); //identificador
+            $table->text('name')->nullable();
+            $table->text('observation')->nullable();
+            $table->foreignId('requisition_id')->constrained()->onUpdate('cascade')->onDelete('cascade'); 
             $table->timestamps();
         });
     }
@@ -28,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('municipalities');
+        Schema::dropIfExists('comments');
     }
 };

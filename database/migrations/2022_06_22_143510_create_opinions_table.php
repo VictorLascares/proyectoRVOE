@@ -13,11 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('plans', function (Blueprint $table) {
+        Schema::create('opinions', function (Blueprint $table) {
             $table->id(); //identificador
-            $table->integer('plan')->nullable(false); //Plan del 1 - 29 :: 1-12 46 _ 13 - 29  142
-            $table->enum('status', ['cumple', 'parcialmente', 'na'])->nullable()->default('na'); //Indicadores
-            $table->foreignId('requisition_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
+            $table->integer('opinion')->nullable(false); //Opinion 1 - 29
+            $table->float('top')->nullable();  // Maximo
+            $table->enum('status', ['suficiente', 'insuficiente', 'na'])->nullable()->default('na'); //Indicadores
+            $table->foreignId('requisition_id')->constrained()->onUpdate('cascade')->onDelete('cascade'); 
             $table->timestamps();
         });
     }
@@ -29,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('plans');
+        Schema::dropIfExists('opinions');
     }
 };

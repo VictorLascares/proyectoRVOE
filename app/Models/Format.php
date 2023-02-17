@@ -12,17 +12,17 @@ class Format extends Model
 
 
     protected $fillable = [
-        'formato',
-        'valido',
-        'justificacion',
+        'format',
+        'valid',
+        'justification',
     ];
 
     public function scopeSearchrequisitionid($query,$requisition_id){
         return $query->where('requisition_id',$requisition_id);
     }
 
-    public function scopeSearchformato($query,$formato){
-        return $query->where('formato',$formato);
+    public function scopeSearchformat($query,$formato){
+        return $query->where('format',$formato);
     }
 
 }

@@ -15,9 +15,8 @@ return new class extends Migration
     {
         Schema::create('elements', function (Blueprint $table) {
             $table->id();
-            $table->integer('elemento')->nullable(false);
-            $table->boolean('existente')->default(false);
-            $table->text('observacion')->nullable();
+            $table->integer('element')->nullable(false);
+            $table->boolean('existing')->default(false);
             $table->foreignId('requisition_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
         });

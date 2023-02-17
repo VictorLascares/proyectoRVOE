@@ -3,11 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Area;
-use App\Models\Career;
 use App\Models\Institution;
-use Illuminate\Support\Str;
 use App\Models\Municipality;
-use Cloudinary\Transformation\Qualifier\Dimensions\Width;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -28,9 +25,8 @@ class InstitutionController extends Controller
     public function index()
     {
         if (Auth::user() != null) {
-            $municipalities = Municipality::all();
             $institutions = Institution::paginate(12);
-            return view('instituciones.index', compact('institutions', 'municipalities'));
+            return view('instituciones.index', compact('institutions'));
         }
     }
 
@@ -41,7 +37,8 @@ class InstitutionController extends Controller
      */
     public function create()
     {
-        return view('instituciones.create');
+        $municipalities = Municipality::all();
+        return view('instituciones.create', compact('municipalities'));
     }
 
     /**
@@ -54,15 +51,17 @@ class InstitutionController extends Controller
     {
         if (Auth::user() != null) {
             $this->validate($request, [
-                'nombre' => ['required', 'max:255'],
-                'director' => ['required', 'max:60'],
+                'name' => ['required', 'max:255'],
+                'owner' => ['required', 'max:60'],
+                'legalRep' => ['required','max:60'],
+                'email' => ['required','unique:institutions','email','max:60'],
                 'municipalitie_id' => ['required'],
-                'direccion' => ['required', 'max:255'],
-                'logotipo' => ['required']
+                'address' => ['required', 'max:255'],
+                'logo' => ['required']
             ]);
             $institution = new Institution();
-            if ($request->logotipo) {
-                $path = $request->file('logotipo')->getRealPath();
+            if ($request->logo) {
+                $path = $request->file('logo')->getRealPath();
                 $image = Image::make($path, null);
                 $image->resize(250, 250)
                     ->save();
@@ -71,11 +70,13 @@ class InstitutionController extends Controller
                 $public_id = $response->getPublicId();
             }
 
-            $institution->logotipo = $secureURL;
+            $institution->logo = $secureURL;
             $institution->logo_public_id = $public_id;
-            $institution->nombre = $request->nombre;
-            $institution->director = $request->director;
-            $institution->direccion = $request->direccion;
+            $institution->name = $request->name;
+            $institution->owner = $request->owner;
+            $institution->legalRep = $request->legalRep;
+            $institution->email = $request->email;
+            $institution->address = $request->address;
             $institution->municipalitie_id = $request->municipalitie_id;
             $institution->save();
             return redirect('institutions');
@@ -124,11 +125,11 @@ class InstitutionController extends Controller
     {
         if (Auth::user() != null) {
             $data = Institution::find($institution);
-            $logotipo = $request->file('logotipo');
-            if ($logotipo != null) {
+            $logo = $request->file('logo');
+            if ($logo != null) {
                 Cloudinary()->destroy($data->logo_public_id);
 
-                $path = $request->file('logotipo')->getRealPath();
+                $path = $request->file('logo')->getRealPath();
                 $image = Image::make($path, null);
                 $image->resize(250, 250)
                     ->save();
@@ -136,16 +137,17 @@ class InstitutionController extends Controller
                 $secureURL = $response->getSecurePath();
                 $public_id = $response->getPublicId();
 
-                $institution->logotipo = $secureURL;
+                $institution->logo = $secureURL;
                 $institution->logo_public_id = $public_id;
             }
             $data->municipalitie_id = $request->municipalitie_id;
-            $data->nombre = $request->nombre;
-            $data->director = $request->director;
-            $data->direccion = $request->direccion;
-
+            $data->name = $request->name;
+            $data->owner = $request->owner;
+            $data->legalRep = $request->legalRep;
+            $data->email = $request->email;
+            $data->address = $request->address;
             $data->save();
-            return redirect('institutions');
+            return redirect()->route('institutions.show',$institution);
         }
     }
 
@@ -171,7 +173,7 @@ class InstitutionController extends Controller
             $institutions = Institution::where('municipalitie_id', $request->municipalityId)->get();
             $institutionArray = array();
             foreach ($institutions as $institution) {
-                $institutionArray[$institution->id] = $institution->nombre;
+                $institutionArray[$institution->id] = $institution->name;
             }
             return response()->json($institutionArray);
         }
