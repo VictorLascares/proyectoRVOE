@@ -54,8 +54,7 @@
         "post-install-cmd": [
             "php artisan clear-compiled",
             "@php artisan config:clear",
-            "@php artisan cache:clear",
-            "chmod -R 777 public/"
+            "@php artisan cache:clear"
         ]
     },
     "extra": {
